@@ -313,8 +313,8 @@ function headerLeft() {
 
     return (
       <Button
-      onPress={()=>navigation.navigate("MyBook",{ navigation:navigation, bookKey:bookKey})}   
-      title="나의 이별북"
+        onPress={() => navigation.goBack()}   
+        title="뒤로가기"
         color="#000"
       />
 
