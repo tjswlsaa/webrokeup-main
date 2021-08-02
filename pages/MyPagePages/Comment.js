@@ -82,7 +82,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
   
     useEffect(() => {
         firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+            .ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 let temp = [];
                //console.log({'temp.length (.)':temp.length});
@@ -145,7 +145,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
        //console.log('숫자열',regdate)// 2021-07-05T11:12:35.972Z
 
         firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/'+ commentKey)
+            .ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/'+ commentKey)
             .set({
                 creator: firebase.auth().currentUser.uid,
                 text:text,
@@ -323,7 +323,7 @@ const ChapterComment = (props)=> {
     const commentKeyforLikes=comment.key
 
 console.log('s없는 코멘트',comment)
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/`  + chapters.chapterKey + `/comments/${comment.key}/likes/`)    
+    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/`  + chapterKey + `/comments/${comment.key}/likes/`)    
 
 
 
