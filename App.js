@@ -25,59 +25,58 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const App = ({navigation}) =>{
     return (
       <NavigationContainer>
-              <StatusBar style="white" />
+        <StatusBar style="white" />
         <Stack.Navigator
           initialRouteName="LoadingScreen"
           screenOptions={{ headerShown: false }}
-          >
-             <Stack.Screen
+        >
+        <Stack.Screen
           name="LoadingScreen"
           component={LoadingScreen}
           options={{headerShown: false}}
         />
-            <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
-          <Stack.Screen
-        name="TabStackScreen"
-                screenOptions={{
-      gestureEnabled: false,
-      gestureDirection: 'horizontal',
-    }}
-        component={TabStackScreen}
-      />
-          <Stack.Screen
-        name="emailSignup"
-        component={emailSignup}
-        options={{headerShown: false}}
-      />
-                <Stack.Screen
-        name="GoogleCheck"
-        component={GoogleCheck}
-        options={{headerShown: false}}
-      />
-                <Stack.Screen
-        name="policyoneforlogin"
-        component={policyoneforlogin}
-        options={{headerShown: true, title:"서비스 약관",
-        headerLeft: () => (
-          <Icon.Button name='ios-menu' size={25}
-          backgroundColor= '#009387'  onPress={() => navigation.navigate('LoginScreen')}>
-          </Icon.Button>)
-      }}
-      />
-                      <Stack.Screen
-        name="policytwoforlogin"
-        component={policytwoforlogin}
-        options={{headerShown: true, title:"개인정보 처리방침"}}
-      />
-      <Stack.Screen
-        name="emailLogin"
-        component={emailLogin}
-        options={{headerShown: false}}
-      />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="TabStackScreen"
+          screenOptions={{
+          gestureEnabled: false,
+          gestureDirection: 'horizontal',}}
+          component={TabStackScreen}
+        />
+        <Stack.Screen
+          name="emailSignup"
+          component={emailSignup}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GoogleCheck"
+          component={GoogleCheck}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="policyoneforlogin"
+          component={policyoneforlogin}
+          options={{headerShown: true, title:"서비스 약관",
+          headerLeft: () => (
+            <Icon.Button name='ios-menu' size={25}
+              backgroundColor= '#009387'  onPress={() => navigation.navigate('LoginScreen')}>
+            </Icon.Button>)
+          }}
+        />
+        <Stack.Screen
+          name="policytwoforlogin"
+          component={policytwoforlogin}
+          options={{headerShown: true, title:"개인정보 처리방침"}}
+        />
+        <Stack.Screen
+          name="emailLogin"
+          component={emailLogin}
+          options={{headerShown: false}}
+        />
         </Stack.Navigator>
       </NavigationContainer>
     )
