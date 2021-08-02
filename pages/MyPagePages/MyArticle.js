@@ -308,12 +308,8 @@ const styles = StyleSheet.create({
 
 
 
-function headerLeft(props) {
-
+function headerLeft() {
     const navigation = useNavigation(); 
-
-    const { bookKey } = test1;
-    // const {navigation}= props
 
     return (
       <Button
