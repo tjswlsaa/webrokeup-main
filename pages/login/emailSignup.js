@@ -29,7 +29,7 @@ const emailSignup = ({ navigation }) => {
   }
   const onDonePress = () => {
     const onDateChange = () => {
-      console.log('여기서는 date나오나',date)
+     // console.log('여기서는 date나오나',date)
       setDate(date)
     };
     setShow(false)
@@ -41,14 +41,14 @@ const emailSignup = ({ navigation }) => {
 
   const checkPassword = async (password, confirmPassword) => {
     if (password !== confirmPassword) {
-      console.log('일치하지않으면?',password !== confirmPassword) //일치하지않으면 true -> 그러면 ischeckpassword는 undefined라고 반응
+     // console.log('일치하지않으면?',password !== confirmPassword) //일치하지않으면 true -> 그러면 ischeckpassword는 undefined라고 반응
       // Alert.alert("비밀번호가 일치하지 않습니다!")
       return;
     }
     else {
           var regExp = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; // 8자리 이상, 숫자포함, 영소문자포함, 특수문자포함// 
           const passwordform =regExp.test(password); 
-          console.log('이거값',passwordform) //안맞으면 false라고뜸
+         // console.log('이거값',passwordform) //안맞으면 false라고뜸
           return passwordform; // 형식에 맞는 경우 true 리턴} // 이함수도 제대로 안되고 있는듯 
     }
   }
@@ -57,41 +57,41 @@ const emailSignup = ({ navigation }) => {
   const passwordFormat = (password) => {
     var regExp = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/; 
     const check= regExp.test(password)
-    console.log('그린라이트', check)
+   // console.log('그린라이트', check)
     return check
   }
-  console.log('제발그리뉴ㅠㅠ',passwordFormat(password))
+ // console.log('제발그리뉴ㅠㅠ',passwordFormat(password))
 
   const checkEmail = (email) => {
-    console.log('checkEmail()');
-    console.log({ email });
+   // console.log('checkEmail()');
+   // console.log({ email });
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; // 대문자넣어도 통과 
     const isCheckEmail = regExp.test(email);
-    console.log({ isCheckEmail });
+   // console.log({ isCheckEmail });
     return isCheckEmail;
     // return regExp.test(email); // 형식에 맞는 경우 true 리턴
     //여기에 중복확인 함수 넣고 싶다....
   }
   const handleSignUp = async (gender, date, email, password, confirmPassword) => {
-    console.log('handleSignUp()');
-    // console.log({ email, password, confirmPassword });
-    // console.log({gender, date})
+   // console.log('handleSignUp()');
+    //// console.log({ email, password, confirmPassword });
+    //// console.log({gender, date})
 
     if (gender == ""){
       Alert.alert("성별을 입력주세요");
       return;
     }
-    console.log('gender is',gender)
+   // console.log('gender is',gender)
 
     if (moment(new Date(date)).format('YYYY년 MM월 DD일')== moment(new Date()).format('YYYY년 MM월 DD일')){
       Alert.alert("생년월일을 입력해주세요");
       return;
     }
-    console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
-    console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
+   // console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
+   // console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
 
     const isCheckEmail = await checkEmail(email); // 함수와 함수 파라미터의 관계
-    console.log({ isCheckEmail });
+   // console.log({ isCheckEmail });
     if (isCheckEmail == false){
       Alert.alert ("이메일을 다시 입력해주세요")
       return;
@@ -99,8 +99,8 @@ const emailSignup = ({ navigation }) => {
 
 
     const isCheckPassword = await checkPassword(password, confirmPassword);
-    console.log('비번',password)
-    console.log({ isCheckPassword });
+   // console.log('비번',password)
+   // console.log({ isCheckPassword });
     if (isCheckPassword == undefined) {
 
       Alert.alert("비밀번호가 일치하지 않습니다!")
@@ -111,7 +111,7 @@ const emailSignup = ({ navigation }) => {
       return;
     }
     // alert나고도 바로 회원가입이 되는 문제... 이게 둘다 true로 리턴되면 아래 함수를 시행하라는 코드는 어떻게 짜나요.?// return 고치면댐
-    console.log('.');
+   // console.log('.');
 
     // if (checked == false) {
     //   Alert.alert("약관에 동의해주세요")
@@ -121,11 +121,11 @@ const emailSignup = ({ navigation }) => {
     const userCredential = await firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(error => {
-        // console.log({ error }); //여기에서 기본 에러 발생한것
+        //// console.log({ error }); //여기에서 기본 에러 발생한것
         // alert(error);
       });
 
-    console.log('..');
+   // console.log('..');
     const isValid = (userCredential > ''); // 제가 (이은국씨가) 개인적으로 즐겨하는 truthy 체크 방법
     if (isValid == false) {
       Alert.alert("이미 가입되어있습니다. 로그인해주세요")
@@ -135,7 +135,7 @@ const emailSignup = ({ navigation }) => {
 
   
 
-    console.log('꼭확인자자',checked)
+   // console.log('꼭확인자자',checked)
 
     firebase
       .database()
@@ -152,12 +152,12 @@ const emailSignup = ({ navigation }) => {
         birth:moment(new Date(date)).format('YYYY년 MM월 DD일')
       })
       .then(function (snapshot) {
-        console.log('Snapshot', snapshot);
+       // console.log('Snapshot', snapshot);
       });
   }
 
-  console.log('gener!!',gender)
-  console.log('약관 동의',checked)
+ // console.log('gener!!',gender)
+ // console.log('약관 동의',checked)
 
 
   

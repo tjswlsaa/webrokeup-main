@@ -87,7 +87,7 @@ const EditBook = ({ navigation, route }) => {
 
         {
           text: '취소할래요',
-          onPress: () => console.log('Cancel Pressed'),
+          // onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {text: '넵', onPress: () => deletefunction()},
@@ -153,7 +153,7 @@ const EditBook = ({ navigation, route }) => {
                     aspect: [4, 3],
                     quality: 1,
                   })
-                  console.log(result)
+                 // console.log(result)
                   if (!result.cancelled) {
                     setImage2(result.uri)
                   }
@@ -266,7 +266,7 @@ async function EditChapter() {
   const response = await fetch(image2)//get in the data?
   const blob = await response.blob()//uploading the image blob of the uri which will pass along fire store
   const snapshot = await 저장할경로.put(blob)
-  // console.log(`transferred: ${snapshot.bytesTransferred}`)
+  //// console.log(`transferred: ${snapshot.bytesTransferred}`)
   const downloadNewURL = await 저장할경로.getDownloadURL()
 
  

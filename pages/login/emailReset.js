@@ -22,7 +22,7 @@ const emailReset = ({navigation}) => {
   return(
       <View style={{flex:1}}>
         <RNPickerSelect
-                      onValueChange={(value) => console.log(value)}
+                      // onValueChange={(value) => console.log(value)}
                       items={[
                           { label: 'Football', value: 'football' },
                           { label: 'Baseball', value: 'baseball' },

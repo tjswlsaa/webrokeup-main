@@ -23,11 +23,11 @@ const NewPage = ({ navigation, route }) => {
   if (user != null) {
     user_uid = user.uid;
   }
-  console.log('findsuer',user_uid)
+ // console.log('findsuer',user_uid)
   const chapterKey = Math.random().toString().replace(".", "");
   const chapterTitle = text1;
   const mainText = text2;
-  console.log('이거썌거',chapterKey)
+ // console.log('이거썌거',chapterKey)
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />

@@ -26,7 +26,7 @@ const GoogleCheck  = ({navigation,route}) => {
   }
   const onDonePress = () => {
     const onDateChange = () => {
-      console.log('여기서는 date나오나',date)
+     // console.log('여기서는 date나오나',date)
       setDate(date)
     };
     setShow(false)
@@ -34,22 +34,22 @@ const GoogleCheck  = ({navigation,route}) => {
   }
 
   const handleSignUp = async (gender, date) => {
-    console.log('handleSignUp()');
-    // console.log({ email, password, confirmPassword });
-    // console.log({gender, date})
+   // console.log('handleSignUp()');
+    //// console.log({ email, password, confirmPassword });
+    //// console.log({gender, date})
 
     if (gender == ""){
       Alert.alert("성별을 입력주세요");
       return;
     }
-    console.log('gender is',gender)
+   // console.log('gender is',gender)
 
     if (moment(new Date(date)).format('YYYY년 MM월 DD일')== moment(new Date()).format('YYYY년 MM월 DD일')){
       Alert.alert("생년월일을 입력해주세요");
       return;
     }
-    console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
-    console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
+   // console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
+   // console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
 
    
 
@@ -79,12 +79,12 @@ const GoogleCheck  = ({navigation,route}) => {
     return false;
   };
   const onSignIn = googleUser => {
-    console.log('Google Auth Response', googleUser);
+   // console.log('Google Auth Response', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
     var unsubscribe = firebase.auth().onAuthStateChanged(
       function(firebaseUser) {
         unsubscribe();
-        console.log("1")
+       // console.log("1")
         // Check if we are already signed-in Firebase with the correct user.
         if (!isUserEqual(googleUser, firebaseUser)) {
           // Build Firebase credential with the Google ID token.
@@ -92,10 +92,10 @@ const GoogleCheck  = ({navigation,route}) => {
             googleUser.idToken,
             googleUser.accessToken
           );
-          console.log("credential확인좀하자",credential)
-          // console.log("credential확인좀하자22",oauthAccessToken)
-          console.log("credential확인좀하자333",googleUser.idToken)
-          console.log("credential확인좀하자44",googleUser.idToken)
+         // console.log("credential확인좀하자",credential)
+          //// console.log("credential확인좀하자22",oauthAccessToken)
+         // console.log("credential확인좀하자333",googleUser.idToken)
+         // console.log("credential확인좀하자44",googleUser.idToken)
 
 
           // Sign in with credential from the Google user.
@@ -103,10 +103,10 @@ const GoogleCheck  = ({navigation,route}) => {
             .auth()
             .signInWithCredential(credential)
             .then(function(result) {
-              console.log("3")
-              console.log('user signed in ');
+             // console.log("3")
+             // console.log('user signed in ');
               if (result.additionalUserInfo.isNewUser) {
-                console.log("4")
+               // console.log("4")
                 firebase
                   .database()
                   .ref('/users/' + result.user.uid)
@@ -126,8 +126,8 @@ const GoogleCheck  = ({navigation,route}) => {
                     birth:moment(new Date(date)).format('YYYY년 MM월 DD일')
                   })
                   .then(function(snapshot) {
-                    console.log("5")
-                    console.log('Snapshot', snapshot)
+                   // console.log("5")
+                   // console.log('Snapshot', snapshot)
 
                   });
                   Alert.alert("회원가입 완료!")
@@ -144,7 +144,7 @@ const GoogleCheck  = ({navigation,route}) => {
               }
             })
             .catch(function(error) {
-              console.log("6")
+             // console.log("6")
               // Handle Errors here.
               var errorCode = error.code;
               var errorMessage = error.message;
@@ -155,7 +155,7 @@ const GoogleCheck  = ({navigation,route}) => {
               // ...
             });
         } else {
-          console.log('User already signed-in Firebase.');
+         // console.log('User already signed-in Firebase.');
         }
       }.bind(this)
     );
@@ -187,8 +187,8 @@ const GoogleCheck  = ({navigation,route}) => {
       };
 
   
-  console.log('gener!!',gender)
-  console.log('약관 동의',checked)
+ // console.log('gener!!',gender)
+ // console.log('약관 동의',checked)
 
     return(
 

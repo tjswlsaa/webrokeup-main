@@ -12,14 +12,14 @@ const emailLogin = ({navigation}) => {
 
   const loginUser = async (email, password) => {
     try {
-      console.log({ email })
+     // console.log({ email })
       const result = await firebase.auth()
         .signInWithEmailAndPassword(email, password)
         .catch(error => {
-          console.log({ error });
+         // console.log({ error });
           alert(error);
         });
-      console.log({ result })
+     // console.log({ result })
       const isValid = (result > '');
       if (isValid == false) {
         return; // 이 아래로 진행시키지 않는다.
@@ -32,7 +32,7 @@ const emailLogin = ({navigation}) => {
         });
       return result.email;
     } catch (error) {
-      console.log(error.toString(error));
+     // console.log(error.toString(error));
     }
   }
 

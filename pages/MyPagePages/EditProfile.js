@@ -13,7 +13,7 @@ const EditProfile = ({navigation}) => {
       user_uid = user.uid;  
     }
     var userID=user_uid.substring(0,6)
-        console.log (userID)
+       // console.log (userID)
     const [userinfo, setUserinfo] = useState([]);
 
 

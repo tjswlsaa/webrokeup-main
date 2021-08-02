@@ -48,7 +48,7 @@ export default function MainPage({navigation,route}) {
             title:'나만의 꿀팁'
         })
         firebase_db.ref('/tip').once('value').then((snapshot) => {
-          console.log("파이어베이스에서 데이터 가져왔습니다!!")
+         // console.log("파이어베이스에서 데이터 가져왔습니다!!")
           let tip = snapshot.val();
           setState(tip)
           setCateState(tip)
@@ -84,8 +84,8 @@ export default function MainPage({navigation,route}) {
       const temp = result.data.main.temp; 
       const condition = result.data.weather[0].main
       
-      console.log(temp)
-      console.log(condition)
+     // console.log(temp)
+     // console.log(condition)
 
       //오랜만에 복습해보는 객체 리터럴 방식으로 딕셔너리 구성하기!!
       //잘 기억이 안난다면 1주차 강의 6-5를 다시 복습해보세요!

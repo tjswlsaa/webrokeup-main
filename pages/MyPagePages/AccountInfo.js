@@ -18,8 +18,8 @@ const AccountInfo = ({navigation}) => {
             })
     }, []);
 
-    console.log('userinfo',userinfo)
-    console.log('userinfo.method',userinfo.method)
+   // console.log('userinfo',userinfo)
+   // console.log('userinfo.method',userinfo.method)
 
 
     const deleteAccount = async()=> {
@@ -39,7 +39,7 @@ const AccountInfo = ({navigation}) => {
                                firebase.auth().currentUser.delete()
                                Alert.alert("성공적탈퇴11!")
 
-                            console.log('delete successful?')
+                           // console.log('delete successful?')
                             Alert.alert("성공적탈퇴11~~~~!")
                             return;})
                         
@@ -68,7 +68,7 @@ const AccountInfo = ({navigation}) => {
     
             {
               text: '취소할래요',
-              onPress: () => console.log('Cancel Pressed'),
+              // onPress: () => console.log('Cancel Pressed'),
               style: 'cancel',
             },
             {text: '넵', onPress: () => deletefunction()},

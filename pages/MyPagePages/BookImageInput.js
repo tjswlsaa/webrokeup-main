@@ -17,7 +17,7 @@ const photoinput =({image, onImagePicked}) => {
 
   useEffect (()=> {
     if(image) {
-      console.log('useEffect:'+image);
+     // console.log('useEffect:'+image);
       setSelectedImage({uri:image});
     }
   }, [image] )
@@ -25,7 +25,7 @@ const photoinput =({image, onImagePicked}) => {
 pickImageHandler= ()=> {
  const options={};
  ImagePicker.launchImageLibrary(options,response => {
-     console.log ("response", response);
+    // console.log ("response", response);
  });
 };
 

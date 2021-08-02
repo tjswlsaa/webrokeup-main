@@ -30,8 +30,8 @@ const communityBoard = ({ navigation, route }) => {
         };
     });
   
-    console.log('availableDeviceWidth',availableDeviceWidth)
-    console.log('availableDeviceHeight',availableDeviceHeight)
+   // console.log('availableDeviceWidth',availableDeviceWidth)
+   // console.log('availableDeviceHeight',availableDeviceHeight)
 
       useEffect(() => {
         firebase_db
@@ -53,7 +53,7 @@ const communityBoard = ({ navigation, route }) => {
             })
     }, []) 
 
-console.log('이거떠야map',posts)
+    // console.log('이거떠야map',posts)
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -122,14 +122,14 @@ const PostItem=(props)=> {
         .on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-            console.log('useEffect()');
-            console.log({likeCount});
+           // console.log('useEffect()');
+           // console.log({likeCount});
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log({temp});
+           // console.log({temp});
             setLikedUsers(temp);
         })
     }, [])
@@ -144,9 +144,9 @@ const PostItem=(props)=> {
 
 
     // const likeCount = Object.values(post.likeCount.likeCount)
-    console.log('이거되면탈출!!!11',post)
+   // console.log('이거되면탈출!!!11',post)
 
-    console.log('이거되면탈출',likeCount)
+   // console.log('이거되면탈출',likeCount)
 
 
     const createdAt= new Date(post.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나

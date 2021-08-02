@@ -23,10 +23,10 @@ const IntroArticle = ({navigation, route}) => {
     navigation.navigate("NewPage", {bookKey:bookKey})
   }
   useEffect(()=>{
-    console.log("말머리 생성 완료")
+   // console.log("말머리 생성 완료")
     var changeDataRef = firebase.database().ref(`book/${bookKey}/`);
     changeDataRef.on("value",(snapshot) =>{
-      console.log(snapshot)
+     // console.log(snapshot)
       const tmp = [];
       snapshot.forEach((child)=>{
         tmp.unshift({
@@ -34,7 +34,7 @@ const IntroArticle = ({navigation, route}) => {
           introArticle:child.val().introArticle
         })
       })
-      console.log(tmp);
+     // console.log(tmp);
       setData(tmp);
     })
   },[])

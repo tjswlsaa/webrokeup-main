@@ -30,7 +30,7 @@ const MyPage = ({navigation, route}) => {
       user_uid = user.uid;  
     }
     var userID=user_uid.substring(0,6)
-        console.log (userID)
+       // console.log (userID)
    
     useEffect(()=>{
         firebase_db.ref(`users/${user_uid}`)
@@ -59,14 +59,14 @@ const MyPage = ({navigation, route}) => {
             })
     }, []) // 구 리엑트: componentDidMount에 해당함 -> 컴포넌트가 마운트 되었다면 -> 컴포넌트가 프로그래밍적으로, 변수틱하게, 생성되어서 처음으로 웹브라우저에 입성하는 순간 -> 처음으로 보일 때마다
     // 그럴 때마다.. 이 부분이 최초 단 한 번 만 딱 한 번 만 실행됩니다.
-    console.log('myBook',myBook)
-    console.log('myBook.bookKey', myBook.bookKey)
+   // console.log('myBook',myBook)
+   // console.log('myBook.bookKey', myBook.bookKey)
  
     const myBookFiltered= myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
 
-    //  console.log('myBookFiltered',myBookFiltered)
-// console.log('whatiswrong',myBookFiltered)
-// console.log('키값확인',myBookFiltered.length)
+    // // console.log('myBookFiltered',myBookFiltered)
+//// console.log('whatiswrong',myBookFiltered)
+//// console.log('키값확인',myBookFiltered.length)
 // const slideTo = (index) => swiper.slideTo(index);
 
 return (
@@ -122,7 +122,7 @@ return (
                             >
                                     {myBookFiltered.map(myitem => {
                                         test2.myitem=myitem
-                                        console.log('myitem여기서부터문제인가',myitem)
+                                       // console.log('myitem여기서부터문제인가',myitem)
                                     return (
                                         <MyBookItem
                                         key = {myitem.key}
@@ -243,12 +243,12 @@ const MyBookItem = (props) => {
     const {userinfo}=test1
     // const {myitem}=test2
     const { width, height } = Dimensions.get('window');
-    console.log('...')
-    console.log (typeof myitem)
-    console.log("MYBOOKITEM()")
-    console.log('myitem 확인해야함',myitem)
+   // console.log('...')
+   // console.log (typeof myitem)
+   // console.log("MYBOOKITEM()")
+   // console.log('myitem 확인해야함',myitem)
     const bookKey=myitem.bookKey
-    console.log('마이페이지 북키확인',bookKey)
+   // console.log('마이페이지 북키확인',bookKey)
     const url= myitem.url
     return(
         // <View style={styles.subContainer}>

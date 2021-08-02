@@ -83,7 +83,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
         user_uid = user.uid;
     }
     var userID = user_uid.substring(0, 6)
-    console.log(userID)
+   // console.log(userID)
 
     useEffect(() => {
         firebase_db.ref(`users/${user_uid}/`)
@@ -102,8 +102,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                 })
                 setBook(temp)
             })
-        // console.log(temp)  
-        console.log("book.bookKey: " + book.bookKey)
+        //// console.log(temp)  
+       // console.log("book.bookKey: " + book.bookKey)
     }, [])
 
     useEffect(() => {
@@ -112,19 +112,19 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             .ref(`book`)
             .on('value', (snapshot) => {
                 let hotlist = [];
-                console.log({ snapshot });
-                // console.log({'typeof snapshot': typeof snapshot});
-                // console.log({'snapshot.length': snapshot.length});
+               // console.log({ snapshot });
+                //// console.log({'typeof snapshot': typeof snapshot});
+                //// console.log({'snapshot.length': snapshot.length});
                 snapshot.forEach((child) => {
                     const book = child.val();
                     const { chapters } = book;
 
                     if (chapters == undefined){
-                        console.log("Main() 챕터가 없습니다")
+                       // console.log("Main() 챕터가 없습니다")
                     }else{
                         hotlist = [...hotlist, ...Object.values(chapters)];
                     }
-                    console.log({ chapters })
+                   // console.log({ chapters })
                      // spread를 통한 리스트 병합
                 });
                 hotlist.sort(function (a, b) {
@@ -142,8 +142,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                     hotChapter.push(hotlist[2]);
                 }
                 setHotChapter(hotChapter);
-                console.log({ hotChapter })
-                console.log("hotChapter.chapterkey: ~~~" + hotChapter.chapterKey)
+               // console.log({ hotChapter })
+               // console.log("hotChapter.chapterkey: ~~~" + hotChapter.chapterKey)
             })
     }, [])
 
@@ -177,8 +177,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             </View>
             <View style={{ flex: 1, backgroundColor: "#FAFAFA" }}>
                 <TouchableOpacity style={{marginTop: "5%"}} onPress={() => {
-                        console.log('Main.js (1), chapters: ',chapters);
-                        console.log('Main.js (1), bookKey: ',bookKey);
+                       // console.log('Main.js (1), chapters: ',chapters);
+                       // console.log('Main.js (1), bookKey: ',bookKey);
                         navigation.navigate(
                             'PopularArticle'
                             // ,
@@ -201,7 +201,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                     >
                         {hotChapter.map(chapters => (
                             test4.chapters=chapters,
-                            console.log("hotChapter 맵 운영 중"),
+                           // console.log("hotChapter 맵 운영 중"),
                             <ChapterItem
                                 key={chapters.key}
                                 navigation={navigation}
@@ -249,8 +249,8 @@ const BookItem = ({ navigation, item, bookKey }) => {
               setUserinfo2(userinfo2);
           })
   }, []);
-    // console.log(item);
-    console.log("bookitem running")
+    //// console.log(item);
+   // console.log("bookitem running")
     const {userinfo} = test1;
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} onPress={() => { navigation.navigate('readBook', { item: item, bookKey: bookKey, }) }}>
@@ -278,13 +278,13 @@ const BookItem = ({ navigation, item, bookKey }) => {
     )
 }
 const ChapterItem = ({ navigation, chapters, chapterKey }) => {
-    console.log('Main.js (1) chapters:', chapters);
+   // console.log('Main.js (1) chapters:', chapters);
 
     const { userinfo } = test1
     const { book } = test2
     const { hotChapter } = test3;
-    console.log("chapteritem running")
-    console.log({ chapters });
+   // console.log("chapteritem running")
+   // console.log({ chapters });
 
 
 

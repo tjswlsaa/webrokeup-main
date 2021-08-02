@@ -25,7 +25,7 @@ const MyArticle = ({navigation, route}) => {
         }
 
         
-    console.log('MyArticle_edit.js (1), chapters: ',chapters);
+   // console.log('MyArticle_edit.js (1), chapters: ',chapters);
 
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
 
@@ -43,10 +43,10 @@ const MyArticle = ({navigation, route}) => {
         )
     }
 
-    console.log('MyArticle_edit.js (2), chapters: ',chapters);
+   // console.log('MyArticle_edit.js (2), chapters: ',chapters);
 
     const delArticle = ()=>{
-        // console.log("챕터 삭제")
+        //// console.log("챕터 삭제")
         firebase_db
         .ref(`book/${bookKey}/chapters/` + chapters.chapterKey)
         .set(null)
@@ -64,7 +64,7 @@ const MyArticle = ({navigation, route}) => {
         .on('value', (snapshot) => {
             var likeCount = snapshot.numChildren();
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
 
             snapshot.forEach((child) => {
                 temp.push(child.val());
@@ -74,7 +74,7 @@ const MyArticle = ({navigation, route}) => {
     }, [])
 
     useEffect (()=>{
-        console.log('MyArticle_edit.js (3), chapters: ',chapters);
+       // console.log('MyArticle_edit.js (3), chapters: ',chapters);
 
         let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
         .on('value', (snapshot) => {
@@ -87,8 +87,8 @@ const MyArticle = ({navigation, route}) => {
         // 좋아요 누른 상태였으면 취소, 안 눌렀으면 좋아요 누르기 설정까지는 가능하나
         // useState처럼 즉각적으로 공감했다, 취소했다, 다시 공감하기 등 여러 번 실행은 불가
         let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
-        console.log("likedUsers: " +likedUsers)
-        console.log("meliked: " + meliked)
+       // console.log("likedUsers: " +likedUsers)
+       // console.log("meliked: " + meliked)
         if (meliked == ''){
             likeRef.child(user_uid).set({
                 user_uid: user_uid,
@@ -96,7 +96,7 @@ const MyArticle = ({navigation, route}) => {
             })
             likeReload();
         } else {
-            console.log ("좋아요 취소")
+           // console.log ("좋아요 취소")
             likeRef.child(user_uid).set(null)
             likeReload();
         }

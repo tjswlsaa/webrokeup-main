@@ -56,17 +56,17 @@ export default function Signup ({navigation,route, user}) {
               .auth()
               .signInAndRetrieveDataWithCredential(credential)
               .then(res => {
-                console.log("LoginScreen.js 17 | success, navigating to profileScreen");
+               // console.log("LoginScreen.js 17 | success, navigating to profileScreen");
                 this.updateUserData(credential);
                 navigation.navigate("ProfileScreen", { user });              })
               .catch(error => {
-                console.log("firebase cred err:", error);
+               // console.log("firebase cred err:", error);
               });
           } else {
             return { cancelled: true };
           }
         } catch (err) {
-          console.log("err:", err);
+         // console.log("err:", err);
         }
       };
     const signInWithGoogle = () => {

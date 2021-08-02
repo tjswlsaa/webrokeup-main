@@ -38,20 +38,20 @@ const MyArticle = ({navigation, route}) => {
     var  user_uid
     if (user != null) {user_uid = user.uid}
 
-    console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
+   // console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
     // const [chapters,setChapters]= useState('')
     const [chapters,setChapters]= useState({});
 
     useEffect(getChapters, []);
 
     function getChapters() {
-        console.log('북키',bookKey)
+       // console.log('북키',bookKey)
 
-        console.log('챕터키',chapterKey)
+       // console.log('챕터키',chapterKey)
         firebase_db
         .ref(`book/${bookKey}/chapters/` + chapterKey)
         .on('value', (snapshot) => {
-            console.log('getChapters() firebase_db.on()');
+           // console.log('getChapters() firebase_db.on()');
                 let temp = [];
             const chapters = snapshot. val()
             
@@ -61,41 +61,41 @@ const MyArticle = ({navigation, route}) => {
                 //          key: child.key, 
                 //      };
 
-            console.log('챕터확인1',chapters)
+           // console.log('챕터확인1',chapters)
             if (chapters > '') { // truthy check
                 setChapters(chapters);
             }
         });
-        console.log('챕터확인2',chapters)
+       // console.log('챕터확인2',chapters)
     } // function getChapters()
 
-    console.log('MyArticle.js chapters확인3',chapters) // MyArticle.js chapters확인3 null
+   // console.log('MyArticle.js chapters확인3',chapters) // MyArticle.js chapters확인3 null
 
     //    const regdate = moment();
-    // //    console.log(
+    // //   // console.log(
     // //      "Today's date is: " + 
     // //      regdate.format('YYYY년MM월DD일')
     // //    );
     
 
     // //    const regdate = moment();
-    // //    console.log(
+    // //   // console.log(
     // //      "Today's date is: " + 
     // //      regdate.format('YYYY년MM월DD일')
     // //    );
 
     // //    const regdateArticle = chapters.regdate
-    // console.log(regdate)
+    //// console.log(regdate)
 
     //        chapters.regdate = moment();
-    //        console.log(
+    //       // console.log(
     //         "Today's date is: " + 
     //         chapters.regdate.format('YYYY년MM월DD일')
     //       );
     //   const thisis =  chapters.regdate.format('YYYY년MM월DD일')
-    //   console.log('thisis')
+    //  // console.log('thisis')
 
-    // console.log('MyArticle.js (1), chapters: ',chapters);
+    //// console.log('MyArticle.js (1), chapters: ',chapters);
     // const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
 
@@ -104,20 +104,20 @@ const MyArticle = ({navigation, route}) => {
         let arr = likeRef.on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-            console.log('useEffect()');
-            console.log({likeCount});
+           // console.log('useEffect()');
+           // console.log({likeCount});
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log({temp});
+           // console.log({temp});
             setLikedUsers(temp);
         })
     }, [])
 
     useEffect (()=>{
-        // console.log('MyArticle.js (2), chapters: ',chapters);
+        //// console.log('MyArticle.js (2), chapters: ',chapters);
         // let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
         let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
         .on('value', (snapshot) => {
@@ -138,7 +138,7 @@ const MyArticle = ({navigation, route}) => {
                 </TouchableOpacity>  
                 <TouchableOpacity style={styles.deleteButton} >
                     <Text style={styles.deleteButtonText} onPress={()=>{
-                        console.log('MyArticle.js (3), chapters: ',chapters);
+                       // console.log('MyArticle.js (3), chapters: ',chapters);
                         
                         firebase_db
                         .ref(`book/${bookKey}/chapters/` + chapterKey)
@@ -164,15 +164,15 @@ const MyArticle = ({navigation, route}) => {
 
                 <View style={{ flexDirection:"row", height:"20%", }}>
                     <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
-                        console.log('MyArticle.likeButton.onPress()');
-                        console.log({likedUsers});
+                       // console.log('MyArticle.likeButton.onPress()');
+                       // console.log({likedUsers});
                         // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
                         let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
                         const isMeliked = (meliked > '');
                         const isMeliked2 = ((meliked == '') == false);
-                        console.log("likedUsers: " +likedUsers)
-                        console.log("meliked: " + meliked)
-                        console.log({isMeliked,isMeliked2});
+                       // console.log("likedUsers: " +likedUsers)
+                       // console.log("meliked: " + meliked)
+                       // console.log({isMeliked,isMeliked2});
                         let likeCount = 0; 
                         // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
                         // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
@@ -188,7 +188,7 @@ const MyArticle = ({navigation, route}) => {
                                 setLikeCount(likeCount)
                             })
                         } else {
-                            console.log ("좋아요 취소")
+                           // console.log ("좋아요 취소")
                             // likeRef.child(user_uid).set(null)
                             await likeRef.child(user_uid).remove();
                             // likeReload();
@@ -198,15 +198,15 @@ const MyArticle = ({navigation, route}) => {
                                 setLikeCount(likeCount)
                             })
                         }
-                        console.log({likeCount});
-                        console.log("여기여기: " + likeCount) 
+                       // console.log({likeCount});
+                       // console.log("여기여기: " + likeCount) 
                         // 이전: const [likeCount, setLikeCount] = useState(0);
                         // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
                         // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.
                         // 이후: let likeCount = 0;
                         // likeCount는 변수다
                         // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-                        // console.log('MyArticle.js (4), chapters: ',chapters);
+                        //// console.log('MyArticle.js (4), chapters: ',chapters);
                         firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey).child("likeCount").set(likeCount)
                         // likeRef.child(user_uid).set({
                         //     user_uid: user_uid,

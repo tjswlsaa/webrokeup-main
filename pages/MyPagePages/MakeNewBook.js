@@ -102,7 +102,7 @@ console.log('두줄만들자',bookTitle.length)
     });
     if (!result.cancelled) {
       setImage(result.uri)
-      console.log(result.uri)
+     // console.log(result.uri)
     }
     } 
 
@@ -301,12 +301,12 @@ console.log('두줄만들자',bookTitle.length)
     justifyContent:"center",
   }
   })
-  console.log('진행상황')
+ // console.log('진행상황')
 
   async function handleChapter(){
     const {bookTitle}=test3;
     const { image }=test2;
-    console.log('image!!!!!!!!!',image)
+   // console.log('image!!!!!!!!!',image)
     if (bookTitle == ""){
       Alert.alert("책 제목을 입력해주세요");
       return;
@@ -329,12 +329,12 @@ console.log('두줄만들자',bookTitle.length)
     const {userinfo}=test6;
     const {spinner}=test7;
   
-    console.log({ user_uid });
-    console.log('이거확인',user_uid)
+   // console.log({ user_uid });
+   // console.log('이거확인',user_uid)
     const bookKey = Math.random().toString().replace(".","");
-    console.log('진행상황2')
-    console.log('props 확인', image)
-    console.log('진행상황3')
+   // console.log('진행상황2')
+   // console.log('props 확인', image)
+   // console.log('진행상황3')
     const storage = firebase.storage();
     const storageRef = storage.ref();
     const SAVE_PATH = storageRef.child('bookCover/' + bookKey)

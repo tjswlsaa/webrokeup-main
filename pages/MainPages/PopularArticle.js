@@ -21,7 +21,7 @@ const PopularArticle = ({ navigation, route }) => {
                      const book = child.val();
                      const {chapters} = book;
                      if (chapters == undefined) {
-                             console.log("PopularArticle() 챕터가 없습니다")
+                            // console.log("PopularArticle() 챕터가 없습니다")
                          } else {
                              list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
                         }
@@ -42,25 +42,25 @@ const PopularArticle = ({ navigation, route }) => {
 
                 
         const viewHot = () => {
-                console.log("viewHot")
+               // console.log("viewHot")
                 const hotlist = [...list];
                 hotlist.sort(function(a, b) {
                         return (b.likeCount) - (a.likeCount)
                         })
                 setList(hotlist);
-                console.log("viewHot done")
-                console.log ("list 2 (hot): " + {list})
+               // console.log("viewHot done")
+               // console.log ("list 2 (hot): " + {list})
         }
 
         const viewNew = () => {
-                console.log("viewNew")
+               // console.log("viewNew")
                 const newlist = [...list]
                 newlist.sort(function(a, b) {
                         return new Date(b.regdate) - new Date(a.regdate);
                                 })
                 setList(newlist);
-                console.log("viewNew done")
-                console.log("list 3 (new): " + {list})
+               // console.log("viewNew done")
+               // console.log("list 3 (new): " + {list})
         }
         
 
@@ -100,14 +100,14 @@ const PopularArticle = ({ navigation, route }) => {
 
 
 const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
-        console.log('PopularArticle.js (1), chapters: ',chapters);
+       // console.log('PopularArticle.js (1), chapters: ',chapters);
 
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
         const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
         
-        console.log("likeRef: " +likeRef)
-        console.log({chapters})
+       // console.log("likeRef: " +likeRef)
+       // console.log({chapters})
 
         useEffect (()=>{
             // let temp = [];
@@ -115,10 +115,10 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
             .on('value', (snapshot) => {
                 let temp = [];
                 var likeCount = snapshot.numChildren();
-                console.log('useEffect()');
-                console.log({likeCount});
+               // console.log('useEffect()');
+               // console.log({likeCount});
                 setLikeCount(likeCount)
-                // console.log(likeCount)
+                //// console.log(likeCount)
                 snapshot.forEach((child) => {
                     temp.push(child.val());
                 })
@@ -126,7 +126,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         }, [])
     
         useEffect (()=>{
-                console.log('PopularArticle.js (2), chapters: ',chapters);
+               // console.log('PopularArticle.js (2), chapters: ',chapters);
 
             let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
             .on('value', (snapshot) => {
@@ -139,7 +139,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         return (
                 <View>
                         <TouchableOpacity style={styles.bookIndexOne} onPress={() => {
-                                        console.log('PopularArticle.js (2), chapters: ',chapters);
+                                       // console.log('PopularArticle.js (2), chapters: ',chapters);
                                         navigation.navigate('readArticle', { chapters: chapters, chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
                                 }>
                                 <Text style={styles.bookIndexOneTitle} numberOfLines={1}>{chapters.chapterTitle}</Text>
