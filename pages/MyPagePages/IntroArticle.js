@@ -1,6 +1,6 @@
 import React, {useState,useRef,useEffect} from 'react';
 import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, Touchable, Alert} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer,CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app';
@@ -13,6 +13,7 @@ const IntroArticle = ({navigation, route}) => {
   const [text, setText] = useState('');
   const [data,setData] = useState('');
   const {bookKey} = route.params;
+
   const saveIntroArticle = async() => {
     let introKey = "intro";
     var introArticle = text;
@@ -20,8 +21,20 @@ const IntroArticle = ({navigation, route}) => {
     .ref( `/book/${bookKey}/`+ introKey)
     .set(introArticle)
     Alert.alert("저장 완료!")
+    
+    navigation.dispatch(state => {
+      const routes = [...state.routes];
+      routes.pop();
+    
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
+    });
     navigation.navigate("NewPage", {bookKey:bookKey})
   }
+
   useEffect(()=>{
    // console.log("말머리 생성 완료")
     var changeDataRef = firebase.database().ref(`book/${bookKey}/`);

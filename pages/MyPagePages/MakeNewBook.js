@@ -15,6 +15,7 @@ import "firebase/firebase-storage"
 import { Switch } from 'react-native-switch';
 import PropTypes from 'prop-types';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {CommonActions} from '@react-navigation/native';
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -355,6 +356,18 @@ console.log('두줄만들자',bookTitle.length)
     // selfLetter:userinfo.selfLetter
   });
   Alert.alert("생성 완료")
+
+  navigation.dispatch(state => {
+    const routes = [...state.routes];
+    routes.pop();
+  
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
+  
   navigation.navigate("IntroArticle", {bookKey: bookKey})
 
   return (
