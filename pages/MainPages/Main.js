@@ -165,7 +165,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                     
                     {book.map(item => (
                         <BookItem
-                            key={item.key}
+                            key={item.bookKey}
                             users_uid={item.user_uid}
                             navigation={navigation}
                             item={item}
@@ -203,7 +203,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                             test4.chapters=chapters,
                            // console.log("hotChapter 맵 운영 중"),
                             <ChapterItem
-                                key={chapters.key}
+                                key={chapters.chapterKey}
                                 navigation={navigation}
                                 chapters={chapters}
                                 chapterKey={chapters.chapterKey}
@@ -223,7 +223,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                                     return (
                                         <WritingItem
                                             navigation={navigation}
-                                            key = {item.key}
+                                            key={item.writingKey}
                                             writing={item}
                                         />
                                     )
