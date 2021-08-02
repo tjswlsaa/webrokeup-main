@@ -1,5 +1,6 @@
 import { ActivityIndicator, StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { Component, useEffect, useState } from "react";
+import { CommonActions } from '@react-navigation/native';
 import firebase from "firebase";
 
 
@@ -12,8 +13,25 @@ const LoadingScreen = ({ navigation, route }) => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         navigation.navigate("TabStackScreen");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'TabStackScreen' },
+            ],
+          })
+        );
+        
       } else {
         navigation.navigate("LoginScreen");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 1,
+            routes: [
+              { name: 'LoginScreen' },
+            ],
+          })
+        );
       }
     },)},3000)
   }, []);
