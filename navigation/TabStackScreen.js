@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CardStyleInterpolators,TransitionSpecs, HeaderStyleInterpolators,TransitionPresets, createStackNavigator } from "@react-navigation/stack";
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -52,11 +53,13 @@ import editorBoard from "../pages/editors.js/editorBoard";
 import policyone from "../pages/MyPagePages/policyone";
 import policytwo from "../pages/MyPagePages/policytwo";
 import Practice from "../pages/community.js/Practice";
+
 const TabStack = createBottomTabNavigator();
 const MainStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const CommunityStack = createStackNavigator();
 const EditorStack = createStackNavigator();
+
 const MainStackScreen = () => {
     return (
       <MainStack.Navigator>
@@ -228,27 +231,55 @@ const TabStackScreen = () => {
     <TabStack.Navigator
     initialRouteName="메인"
          tabBarOptions={{
-          // style: { height: 50 },
           showLabel: false}}
         screenOptions={
           ({route})=> ({
               tabBarIcon: ({focused,color,size})=> {
                   let iconName;
-                  if(route.name==="메인"){
-                      iconName="book";}
-                      else if (route.name=="나의 이별록"){
-                       iconName="person-outline";}
-                        else if (route.name=="게시판"){
-                          iconName="person-outline"
-                        }
-                        return <Icon name={iconName} size={size}  color={color}/>;}
+                  let screen1 = route.name;
+                  let screen2;
+
+                  if(route.name==="MainStackScreen"){
+                      iconName="book";
+                      screen2="Main";
+                  } else if (route.name=="HomeStackScreen"){
+                    iconName="person-outline";
+                    screen2="MyPage";
+                  } else if (route.name=="CommunityStackScreen"){
+                    iconName="person-outline";
+                    screen2="communityBoard";
+                  }
+
+                  return <MyIcon iconName={iconName} size={size} color={color} screen1={screen1} screen2={screen2} />;
+                }
               })
           }
     >
-      <TabStack.Screen name="메인" component={MainStackScreen} />
-      <TabStack.Screen name="나의 이별록" component={HomeStackScreen} />
-      <TabStack.Screen name="게시판" component={CommunityStackScreen} />
+      <TabStack.Screen name="MainStackScreen" component={MainStackScreen} />
+      <TabStack.Screen name="HomeStackScreen" component={HomeStackScreen} />
+      <TabStack.Screen name="CommunityStackScreen" component={CommunityStackScreen} />
     </TabStack.Navigator>
   );
 };
+
+function MyIcon(props) {
+  const navigation = useNavigation();
+  const {iconName, size, color, screen1, screen2} = props;
+
+  useEffect(()=>{
+    const tabPress = navigation.addListener('tabPress', e => {
+      e.preventDefault();
+      navigation.navigate(screen1, { screen: screen2 }); 
+      // 참고: https://reactnavigation.org/docs/nesting-navigators
+      // 참고2: https://stackoverflow.com/a/68084839
+    });
+  
+    return tabPress;
+  }, []);
+
+  return (
+    <Icon name={iconName} size={size} color={color}/>
+  );
+}
+
 export default TabStackScreen;
