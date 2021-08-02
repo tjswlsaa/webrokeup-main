@@ -8,6 +8,7 @@ import Constants from 'expo-constants';
 import NewPage from './NewPage';
 import { NavigationEvents } from 'react-navigation';
 const IntroArticle = ({navigation, route}) => {
+
   const introArticle_a = useRef(null);
   const [text, setText] = useState('');
   const [data,setData] = useState('');
@@ -57,14 +58,14 @@ const IntroArticle = ({navigation, route}) => {
                     ref={introArticle_a}>
                 </TextInput>  
        </ScrollView>
-       <View style={styles.bottomButtonContainer}>
+       {/* <View style={styles.bottomButtonContainer}>
             <TouchableOpacity style={styles.likeButton}>                
                 <Text style={styles.likeButtonText}>공감</Text>
             </TouchableOpacity>  
             <TouchableOpacity style={styles.commentButton}>
                 <Text style={styles.commentButtonText}>댓글</Text>
             </TouchableOpacity>  
-        </View>
+        </View> */}
     </View>
   )}
 const styles = StyleSheet.create({ 

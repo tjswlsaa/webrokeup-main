@@ -43,14 +43,14 @@ const readIntroArticle = ({navigation, route}) => {
         <ScrollView style={styles.textContainer}>
             <Text style={styles.bookText}>{intro}</Text>
        </ScrollView>
-       <View style={styles.bottomButtonContainer}>
+       {/* <View style={styles.bottomButtonContainer}>
             <TouchableOpacity style={styles.likeButton}>                
                 <Text style={styles.likeButtonText}>공감</Text>
             </TouchableOpacity>  
             <TouchableOpacity style={styles.commentButton}>
                 <Text style={styles.commentButtonText}>댓글</Text>
             </TouchableOpacity>  
-        </View>
+        </View> */}
     </View>
   )}
 const styles = StyleSheet.create({ 

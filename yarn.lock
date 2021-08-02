@@ -2233,6 +2233,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/hooks@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/hooks/-/hooks-2.6.0.tgz#dd5f19601eb3684c6bcdd3df3d0c04cf44c24cff"
+  integrity sha512-emBGKvhJ0h++lLJQ5ejsj+od9G67nEaihjvfSx7/JWvNrQGAhP9U0OZqgb9dkKzor9Ufaj9SGt8RNY97cGzttw==
+
 "@react-native-firebase/app@^12.1.0":
   version "12.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.1.0.tgz#fa2c989af2bd876ed83f792c0152067184a7db27"
@@ -3312,7 +3317,7 @@ cosmiconfig@^5.0.5, cosmiconfig@^5.1.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-create-react-class@^15.6.2, create-react-class@^15.6.3:
+create-react-class@^15.6.0, create-react-class@^15.6.2, create-react-class@^15.6.3:
   version "15.7.0"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.7.0.tgz#7499d7ca2e69bb51d13faf59bd04f0c65a1d6c1e"
   integrity sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==
@@ -5423,6 +5428,11 @@ mockdate@^3.0.2:
   resolved "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
   integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
 
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -6008,7 +6018,7 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6138,6 +6148,20 @@ react-native-auto-scroll@0.0.1:
   resolved "https://registry.yarnpkg.com/react-native-auto-scroll/-/react-native-auto-scroll-0.0.1.tgz#c645c375b29811af6e4740eda436f1b36aad8d50"
   integrity sha1-xkXDdbKYEa9uR0DtpDbxs2qtjVA=
 
+react-native-check-box@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-check-box/-/react-native-check-box-2.1.7.tgz#f349d3505a13c15d19949ec4cec40c7adc4f3626"
+  integrity sha512-dPVOoz4jKs2je2HSHp7+XJXNyZFq8Kij7IHutigrQKzB550Dko6ZAQu/1mG1FzdUMFxxkZ2nX59KmbR0Co0T8Q==
+  dependencies:
+    prop-types "^15.5.7"
+
+react-native-checkbox@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-checkbox/-/react-native-checkbox-2.0.0.tgz#453bbfd2e055a21e69ebe7842414a055d50ff449"
+  integrity sha512-XTI7iZ0KuPYyNCvcg4p4eC5ZenuBkfraFUzec17Vao6DsIcn5AOUKkc6KSwLPVksJyWWlPc832M/HTvni5qk7A==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -6189,7 +6213,7 @@ react-native-image-picker@^4.0.3:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.3.tgz#dd8d393e0c57321688885c74b52244ad36e532d6"
   integrity sha512-S4a1jE4fAPDzmah/7OVTEAXGz1/wlGyClU+spygmek5rVLERR5BgwnkX3tLP/UvMQbfdPZNUbnH0hEe7su2AZg==
 
-react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0:
+react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0, react-native-iphone-x-helper@^1.3.1:
   version "1.3.1"
   resolved "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
@@ -6211,6 +6235,13 @@ react-native-keyboard-dismiss-view@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-dismiss-view/-/react-native-keyboard-dismiss-view-1.0.4.tgz#54b385ee23d58f3b91d54ff25ba5d9aa99e07432"
   integrity sha512-LksDmfyJTXpJkSmZlh1TMTxZ/neLbIZ0q3sN55JKe8Sui3okYH7eyDEDOSs3o9lbHvbKprxvqHgVcvkq0UdPoA==
+
+react-native-loading-spinner-overlay@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-2.0.0.tgz#30934b6f07cb39711020d6b422a02a2a56763a73"
+  integrity sha512-V38M+N1Wk9GlpbfrD6znsJA1K2+09b3naxq3UjDjqNTA3MOBfj4W87alKSI3P+4ZawczQASTv2fTzhEQ7Z+SVA==
+  dependencies:
+    prop-types "^15.6.2"
 
 react-native-looped-carousel-improved@^1.0.2:
   version "1.0.2"
@@ -6252,12 +6283,26 @@ react-native-smooth-pull-to-refresh@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-native-smooth-pull-to-refresh/-/react-native-smooth-pull-to-refresh-1.1.1.tgz#99f9110d945765729b8a8baca15f8fe719a57f98"
   integrity sha512-fdhtNk3ijnLI/kvOl3gxUtZPszYWUI4FvucUM+INRQ9lyns8QPCNcuIO5IKqGip+ealKhmebMZp7OzGZU9IENA==
 
+react-native-status-bar-height@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.6.0.tgz#b6afd25b6e3d533c43d0fcdcfd5cafd775592cea"
+  integrity sha512-z3SGLF0mHT+OlJDq7B7h/jXPjWcdBT3V14Le5L2PjntjjWM3+EJzq2BcXDwV+v67KFNJic5pgA26cCmseYek6w==
+
 react-native-swipeable-row@^0.8.1:
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/react-native-swipeable-row/-/react-native-swipeable-row-0.8.1.tgz#6076ab2568c36cd96bc73882470598cfac3b20c9"
   integrity sha512-DMarMMIPihwIyOlYtym2VwzCUvciDefrb38JEMHvHXUwoKhWGQgfYoBi1csYYHeg/AawBr1Oel2W1rowV4ixUA==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-swipeout@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/react-native-swipeout/-/react-native-swipeout-2.3.6.tgz#47dac8a835825cf3f2eef9e495574a3d9ab6d3fa"
+  integrity sha512-t9suUCspzck4vp2pWggWe0frS/QOtX6yYCawHnEes75A7dZCEE74bxX2A1bQzGH9cUMjq6xsdfC94RbiDKIkJg==
+  dependencies:
+    create-react-class "^15.6.0"
+    prop-types "^15.5.10"
+    react-tween-state "^0.1.5"
 
 react-native-swiper@^1.6.0-rc.3:
   version "1.6.0"

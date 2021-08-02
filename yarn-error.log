@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\seonj\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo-file-system@~11.0.2
+  C:\Program Files\nodejs\node.exe C:\Users\seonj\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-native-loading-spinner-overlay
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\seonj\AppData\Local\Microsoft\WindowsApps;C:\Users\seonj\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\seonj\AppData\Local\GitHubDesktop\bin;C:\Users\seonj\AppData\Roaming\npm
@@ -28,7 +28,6 @@ npm manifest:
     },
     "dependencies": {
       "-": "^0.0.1",
-      "@react-native-community/datetimepicker": "^3.5.2",
       "@react-native-firebase/app": "^12.1.0",
       "@react-native-firebase/auth": "^12.1.0",
       "@react-native-firebase/storage": "^12.1.0",
@@ -39,12 +38,14 @@ npm manifest:
       "@react-navigation/native": "^6.0.0-next.13",
       "@react-navigation/stack": "^5.14.5",
       "axios": "^0.21.1",
+      "base-64": "^1.0.0",
       "constants": "^0.0.2",
       "env-cmd": "^10.1.0",
       "expo": "^41.0.1",
       "expo-ads-admob": "~10.0.4",
       "expo-constants": "~10.1.3",
       "expo-facebook": "~11.0.5",
+      "expo-file-system": "~11.0.2",
       "expo-google-app-auth": "^8.1.7",
       "expo-google-sign-in": "^9.1.0",
       "expo-image-picker": "~10.1.4",
@@ -57,26 +58,42 @@ npm manifest:
       "firebase": "8.2.3",
       "formik": "^2.2.9",
       "korean-name-generator": "^1.0.4",
+      "moment": "^2.29.1",
       "native-base": "^2.15.2",
+      "prop-types": "^15.7.2",
       "react": "16.13.1",
       "react-dom": "16.13.1",
       "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+      "react-native-auto-scroll": "0.0.1",
+      "react-native-check-box": "^2.1.7",
+      "react-native-checkbox": "^2.0.0",
       "react-native-fbsdk": "^3.0.0",
       "react-native-fbsdk-next": "^4.3.0",
       "react-native-gesture-handler": "^1.10.3",
       "react-native-google-signin": "^2.1.1",
       "react-native-image-crop-picker": "^0.36.2",
       "react-native-image-picker": "^4.0.3",
+      "react-native-iphone-x-helper": "^1.3.1",
       "react-native-keyboard-avoiding-view": "^1.0.0",
       "react-native-keyboard-aware-scroll-view": "^0.9.4",
+      "react-native-keyboard-dismiss-view": "^1.0.4",
+      "react-native-loading-spinner-overlay": "^2.0.0",
+      "react-native-looped-carousel-improved": "^1.0.2",
       "react-native-reanimated": "~2.1.0",
       "react-native-safe-area-context": "^3.2.0",
       "react-native-screens": "~3.0.0",
+      "react-native-smooth-pull-to-refresh": "^1.1.1",
+      "react-native-status-bar-height": "^2.6.0",
+      "react-native-swipeable-row": "^0.8.1",
+      "react-native-swipeout": "^2.3.6",
+      "react-native-swiper": "^1.6.0-rc.3",
+      "react-native-switch": "^2.0.0",
       "react-native-vector-icons": "^8.1.0",
       "react-native-web": "~0.13.12",
       "react-navigation": "^4.4.4",
       "react-navigation-stack": "^2.10.4",
       "react-paypal-express-checkout": "^1.0.5",
+      "rn-toggle-switch": "^1.0.2",
       "styled-components": "^5.3.0"
     },
     "devDependencies": {
@@ -2318,7 +2335,7 @@ Lockfile:
       sudo-prompt "^9.0.0"
       wcwidth "^1.0.1"
   
-  "@react-native-community/datetimepicker@^3.0.2", "@react-native-community/datetimepicker@^3.5.2":
+  "@react-native-community/datetimepicker@^3.0.2":
     version "3.5.2"
     resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
     integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
@@ -2860,6 +2877,11 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
     integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+  
+  base-64@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/base-64/-/base-64-1.0.0.tgz#09d0f2084e32a3fd08c2475b973788eee6ae8f4a"
+    integrity sha512-kwDPIFCGx0NZHog36dj+tHiwP4QMzsZ3AgMViUBKI0+V5n4U0ufTCUMhnQ04diaRI8EX/QcPfql7zlhZ7j4zgg==
   
   base64-js@^1.1.2, base64-js@^1.2.3, base64-js@^1.3.1, base64-js@^1.5.1:
     version "1.5.1"
@@ -5510,6 +5532,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/mockdate/-/mockdate-3.0.5.tgz"
     integrity sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==
   
+  moment@^2.29.1:
+    version "2.29.1"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+    integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+  
   ms@2.0.0:
     version "2.0.0"
     resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
@@ -6220,6 +6247,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
     integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
   
+  react-native-auto-scroll@0.0.1:
+    version "0.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-auto-scroll/-/react-native-auto-scroll-0.0.1.tgz#c645c375b29811af6e4740eda436f1b36aad8d50"
+    integrity sha1-xkXDdbKYEa9uR0DtpDbxs2qtjVA=
+  
   react-native-drawer@2.5.1:
     version "2.5.1"
     resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -6276,6 +6308,32 @@ Lockfile:
     resolved "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz"
     integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
   
+  react-native-keyboard-avoiding-view@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/react-native-keyboard-avoiding-view/-/react-native-keyboard-avoiding-view-1.0.0.tgz#3ce342caad0fb29d18a1b9581c147ceb551d2116"
+    integrity sha1-PONCyq0Psp0YoblYHBR861UdIRY=
+  
+  react-native-keyboard-aware-scroll-view@^0.9.4:
+    version "0.9.4"
+    resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.4.tgz#83b356062123070c4b75f57d34dd276b9dd5796a"
+    integrity sha512-9Q8lxGvUdEnyL2Q0/VZdcEjHUGjm1lOAMd/3bNnhknoA7RqjJDaRGOQDhOAjVW1iwrKUct+B1old87nIsiX6iw==
+    dependencies:
+      prop-types "^15.6.2"
+      react-native-iphone-x-helper "^1.0.3"
+  
+  react-native-keyboard-dismiss-view@^1.0.4:
+    version "1.0.4"
+    resolved "https://registry.yarnpkg.com/react-native-keyboard-dismiss-view/-/react-native-keyboard-dismiss-view-1.0.4.tgz#54b385ee23d58f3b91d54ff25ba5d9aa99e07432"
+    integrity sha512-LksDmfyJTXpJkSmZlh1TMTxZ/neLbIZ0q3sN55JKe8Sui3okYH7eyDEDOSs3o9lbHvbKprxvqHgVcvkq0UdPoA==
+  
+  react-native-looped-carousel-improved@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/react-native-looped-carousel-improved/-/react-native-looped-carousel-improved-1.0.2.tgz#3cc0386e4bc96b2f16997d8bf1e61c5be4e3131f"
+    integrity sha512-ctFU9rv9Hy4SikhOuY/0s1X8gXI8JpAa/J0l7/VXdEX6NrnNXBDCsl4++lJIDLK0ckT+ZE4lDVn1pjaXnqb2bg==
+    dependencies:
+      lodash.isequal "^4.5.0"
+      prop-types "^15.5.10"
+  
   react-native-reanimated@~2.1.0:
     version "2.1.0"
     resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.1.0.tgz"
@@ -6302,6 +6360,32 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.0.0.tgz"
     integrity sha512-35II5oxTaVp3OP8y0eLPOPpQkxG4fRKQ+dL1YSE1we5kCZFOU0l/Rn0T79HbyUu1LPwUZr6lZupPs0ULnRyMuQ==
+  
+  react-native-smooth-pull-to-refresh@^1.1.1:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/react-native-smooth-pull-to-refresh/-/react-native-smooth-pull-to-refresh-1.1.1.tgz#99f9110d945765729b8a8baca15f8fe719a57f98"
+    integrity sha512-fdhtNk3ijnLI/kvOl3gxUtZPszYWUI4FvucUM+INRQ9lyns8QPCNcuIO5IKqGip+ealKhmebMZp7OzGZU9IENA==
+  
+  react-native-swipeable-row@^0.8.1:
+    version "0.8.1"
+    resolved "https://registry.yarnpkg.com/react-native-swipeable-row/-/react-native-swipeable-row-0.8.1.tgz#6076ab2568c36cd96bc73882470598cfac3b20c9"
+    integrity sha512-DMarMMIPihwIyOlYtym2VwzCUvciDefrb38JEMHvHXUwoKhWGQgfYoBi1csYYHeg/AawBr1Oel2W1rowV4ixUA==
+    dependencies:
+      prop-types "^15.5.10"
+  
+  react-native-swiper@^1.6.0-rc.3:
+    version "1.6.0"
+    resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
+    integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+    dependencies:
+      prop-types "^15.5.10"
+  
+  react-native-switch@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/react-native-switch/-/react-native-switch-2.0.0.tgz#028371b946ba0520e421f02caa7685878cf4bd4e"
+    integrity sha512-Yy8GQBazGBz/VI/Xl2LkyO/4wElnt9hRQ+gY3j/7ZkdfIQftY6IAtvSpU2NEksezUxs4DgNAkcmeDfRO0t2wbg==
+    dependencies:
+      prop-types "^15.6.0"
   
   react-native-vector-icons@^7.0.0:
     version "7.1.0"
@@ -6592,6 +6676,11 @@ Lockfile:
     version "2.2.8"
     resolved "https://registry.npmjs.org/rimraf/-/rimraf-2.2.8.tgz"
     integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+  
+  rn-toggle-switch@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/rn-toggle-switch/-/rn-toggle-switch-1.0.2.tgz#72247b2de0efe9ca79e1ed4d15863e5de4ba907c"
+    integrity sha512-4zuyPdYU6nqinyTeaasUj2umHAoY8mCXe1l8AqmgDq3nkhOTcGxWPViF+Z83mfkDfqeqB0XSpYH8VuujFzvmgA==
   
   rsvp@^4.8.4:
     version "4.8.5"

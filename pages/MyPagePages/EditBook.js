@@ -82,7 +82,7 @@ const EditBook = ({ navigation, route }) => {
 
     Alert.alert(
       'Alert Title',
-      '책, 챕터가 모두 삭제됩니다, 그래도 진행하시겠습니까?',
+      '책, 챕터가 모두 삭제됩니다. 그래도 진행하시겠습니까?',
       [
 
         {
@@ -272,7 +272,7 @@ async function EditChapter() {
  
 
   firebase_db
-    .ref(`book/${bookKey}` + chapters.chapterKey)
+    .ref(`book/${bookKey}`)
     .update({
       bookTitle: bookTitle2,
       isPublic:isPublic,

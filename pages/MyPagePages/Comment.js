@@ -1,17 +1,22 @@
 
 import React, { useState, useEffect, useRef  } from 'react'
 import {StyleSheet,TouchableWithoutFeedback, RefreshControl
-,    View, Text, FlatList,Keyboard, Button, TextInput,ScrollView, TouchableOpacity, SafeAreaView, NativeModules  } from 'react-native'
+,    View, Text, FlatList,Keyboard, Button, TextInput,ScrollView, Dimensions, TouchableOpacity, SafeAreaView, NativeModules ,Alert } from 'react-native'
 const { StatusBarManager } = NativeModules
 
 import firebase from 'firebase/app'
 import {firebase_db} from '../../firebaseConfig';
-
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useScrollToTop } from '@react-navigation/native';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import {KeyboardAvoidingView} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import KeyboardDismissView, { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import {PullToRefreshView} from "react-native-smooth-pull-to-refresh";
+import Icon from 'react-native-vector-icons/AntDesign';
+
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { useKeyboard } from '@react-native-community/hooks'
 
 
 const test = {
@@ -36,7 +41,16 @@ const test6={
 const test7 ={
     item:""
 }
-function Comment({route}) {
+
+function Comment({navigation, route}) {
+
+
+    const keyboard = useKeyboard()
+
+console.log('keyboard isKeyboardShow: ', keyboard.keyboardShown)
+console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
+
+    
 
     console.log('Comment()');
  
@@ -52,9 +66,9 @@ function Comment({route}) {
     const [comments, setComments] = useState([]);
     test5.comments=comments
     const [data,setData] = useState("")
-    const [statusBarHeight, setStatusBarHeight] = useState(0);
+    // const [statusBarHeight, setStatusBarHeight] = useState(0);
 
-    
+    //     const realHeight = Dimensions.get('window').height - getStatusBarHeight()- getBottomSpace()-135-10
  
     var user = firebase.auth().currentUser;
     var  user_uid
@@ -111,20 +125,17 @@ function Comment({route}) {
             });
     }, []);
 
-    //console.log('comments',comments)
+    console.log('comments이거 모냐고!!!!!!!!',comments)
 
-    useEffect(()=>{
-        Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
-            setStatusBarHeight(statusBarFrameData.height)
-          }) : null
-    }, []);
+    // useEffect(()=>{
+    //     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
+    //         setStatusBarHeight(statusBarFrameData.height)
+    //       }) : null
+    // }, []);
 
-    var userID=user_uid.substring(0,6)
     const commentKey = Math.random().toString().replace(".","");
-    console.log('어디서 잘못된거니0',commentKey)
 
     test6.commentKey=commentKey
-    console.log('어디서 잘못된거니1',commentKey)
 
 
     const onCommentSend = () => {
@@ -139,43 +150,30 @@ function Comment({route}) {
                 creator: firebase.auth().currentUser.uid,
                 text:text,
                 regdate:new Date().toString(),
-                userID:userID,
             })
 
         dismissKeyboard()
-        console.log('어디서 잘못된거니2',commentKey)
 
     }
 
-    // const [isRefreshing,seIsRefreshing]=useState(false)
-
-    // const onInnerRefresh=()=> {
-        
-    //     setIsRefreshing(true)
-    
-    //     setTimeout(()=> {setIsRefreshing(false)},1500)
-    // } 
-
     return (
     
-        <SafeAreaView style={{flex:1, backgroundColor:"pink"}}> 
+        <SafeAreaView style={{flex:1,backgroundColor:"#EEEEEE" }}> 
             <KeyboardAvoidingView behavior="padding" 
             style={{flex:1}}
-             keyboardVerticalOffset={statusBarHeight+44} >
+            keyboardVerticalOffset={50} >
+
+             {/* keyboardVerticalOffset={statusBarHeight+14} > */}
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+                <TouchableOpacity style={{marginTop:10,marginLeft:10, }} onPress={()=>navigation.goBack()}>
+                    <Icon name="arrowleft" size="25" color="black"/>
+                </TouchableOpacity>
 
 
                 <View style={styles.scroll} >
-                {/* <PullToRefreshView
-                    minPullDistance={70}
-                    pullAnimHeight={70}
-                    pullAnimYValues={{from: -50, to: 10}}
-                    isRefreshing={isRefreshing}
-                    onRefresh={onInnerRefresh()}
-                    onTriggerToRefresh={this.onTriggerToRefresh}
-                    contentComponent={ */}
+
                             <ScrollView style={{flex:1}}>
-                                            <Text style = {{marginLeft: 10}}> {comments.length} </Text> 
+                                            {/* <Text style = {{marginLeft: 10}}> {comments.length} </Text>  */}
 
                                             {comments.length == 0 ? (
                                             <View style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }}>
@@ -211,7 +209,7 @@ function Comment({route}) {
                             placeholder='댓글을 남겨주세요'
                             textAlign='justify'
                             style={styles.commentInput}
-                            multiline = {false}
+                            multiline = {true}
                             onChangeText={(text) => setText(text)} />
                 </TouchableWithoutFeedback> 
 
@@ -221,7 +219,7 @@ function Comment({route}) {
                                           keyboardDismissMode="on-drag"
                                           keyboardShouldPersistTaps='handled'
                                           onPress={() => onCommentSend()}>
-                            <Icon name="checkmark-circle-outline" size={30} color="black" style={styles.addIcon}/>
+                            <Icon name="checkcircleo" size={30} color="black" style={styles.addIcon}/>
                         </TouchableOpacity>
 
                 </View>
@@ -241,8 +239,7 @@ function Comment({route}) {
 const styles = StyleSheet.create({
 
     scroll:{
-        height:"90%",
-        backgroundColor:"blue"
+        height:"85%",
     },
     bookCoverContainer: {
         width:'90%',
@@ -254,7 +251,7 @@ const styles = StyleSheet.create({
     commentInputBox:{
         flexDirection:"row",
         backgroundColor:"#C4C4C4",
-        height:"10%",
+        height:50,
         alignItems:"center",
         justifyContent:"center",
         borderRadius:5,
@@ -298,36 +295,37 @@ const styles = StyleSheet.create({
 
 const ChapterComment = (props)=> {
 
+
+    const [userinfo, setUserinfo] = useState([]);
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+      user_uid = user.uid;
+    }
+    useEffect(()=>{
+      firebase_db.ref(`users/${comment.creator}`)
+          .on('value', (snapshot) => {
+              let userinfo = snapshot.val();
+              setUserinfo(userinfo);
+          })
+  }, []);
+
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const { bookKey } = test;
     const { chapterKey } = test2;
     const { chapters } = test3;
-    const {user_uid}=test4
+    // const {user_uid}=test4
     const {comments}=test5
     const {commentKey}=test6
     const {item}=test7
     const {comment}=props;
     const commentKeyforLikes=comment.key
-    console.log({commentKeyforLikes})
 
-    console.log('key값확인 item!',item)
-    console.log('이거까지RHdhdhdhdhdhdhhdhdhdhhdh',item.key)
-    // console.log('어디서 잘못된거니4',commentKey)
-
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + `chapters/${chapterKey}` + `comments/${commentKeyforLikes}`)    
-    //(`book/${bookKey}/chapters/` + chapters.chapterKey + `comments/commentKey`)
-    
-    console.log('ref확인 bookKey!',bookKey)
-    console.log('ref확인 chapters!',chapters)
-    console.log('ref확인 chapterKey!',chapterKey)
-    console.log('ref확인 comments!',comments)
-    console.log('ref확인 comment.key!',comment.key)
+console.log('s없는 코멘트',comment)
+    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/`  + chapters.chapterKey + `/comments/${comment.key}/likes/`)    
 
 
-    // firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + 'comments/commentKey').set(likes)
-    //.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
-    //'/comments/'+ commentKey
 
     useEffect (()=>{
         // let temp = [];
@@ -342,10 +340,12 @@ const ChapterComment = (props)=> {
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log({temp});
+            console.log('이게 뜨네',temp);
             setLikedUsers(temp);
         })
     }, [])
+
+    console.log('이게 들어야 확인해줌',user_uid)
 
         const likes = async ()=>{
         console.log('MyArticle.likeButton.onPress()');
@@ -397,7 +397,7 @@ const ChapterComment = (props)=> {
          //     regdate: new Date().toString(),
          // })
          // likeReload();
-         Alert.alert('MyArticle.likeButton.onPress() end');
+        //  Alert.alert('MyArticle.likeButton.onPress() end');
         }
 
     const createdAt= new Date(comment.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
@@ -427,25 +427,27 @@ const ChapterComment = (props)=> {
     return(
 
             <View style={{
-                    backgroundColor:"gray",flexDirection:"row",
+                    backgroundColor:"white",flexDirection:"row",
                     marginBottom:10,
+                    marginTop:10,
+
                     justifyContent:"center",
-                    backgroundColor:"#C4C4C4",
+                    // backgroundColor:"#C4C4C4",
                     borderRadius:5,
                     width:"90%",
                     alignSelf:"center",}}>
 
-                <View style={{}}>
-                    <TouchableOpacity style={{backgroundColor:"yellow"}} onPress={()=>likes()}>
-                        <Text>조아요</Text>
+                <View style={{justifyContent:"center"}}>
+                    <TouchableOpacity onPress={()=>likes()} >
+                    <Icon name="like2" size={25} color="black" style={{}} />
                     </TouchableOpacity>
                     <Text> {likeCount} </Text>
                 </View>
 
                 <View style={{flexDirection: "column"}}>
-                    <Text style={{fontSize:15, marginTop:10,marginBottom:10,marginLeft:60}}>{comment.text}</Text>
+                    <Text style={{fontSize:15, marginTop:10,marginBottom:10,marginLeft:50, width:200,}}>{comment.text}</Text>
                     <View style={{flexDirection:"row"}}>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:60,marginBottom:10}}>{comment.userID+'.이별록작가'}</Text>
+                        <Text style={{fontSize:11,color:"gray", marginLeft:50,marginBottom:10}}>{userinfo.iam}</Text>
                         <Text style={{fontSize:11,color:"gray", marginLeft:100}}>{displayedAt(createdAt)}</Text>
                     </View>
                 </View>

@@ -1,6 +1,6 @@
 
 import React, {useEffect,useState,useRef} from 'react';
-import {TouchableWithoutFeedback, ImageBackground,Animated, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, ScrollView, TouchableHighlight, TextInput, Route} from 'react-native';
+import {TouchableWithoutFeedback, ActivityIndicator , ImageBackground,Animated, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, ScrollView, TouchableHighlight, TextInput, Route} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {firebase_db} from '../../firebaseConfig';
 //import * as firebase from 'firebase/app';
@@ -14,6 +14,8 @@ import "firebase/firebase-storage"
 // import SwitchToggle from 'react-native-switch-toggle';
 import { Switch } from 'react-native-switch';
 import PropTypes from 'prop-types';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
@@ -34,14 +36,42 @@ const test4 ={
 const test5={
   navigation:''
 }
-
+const test6={
+  userinfo:''
+}
+const test7={
+  spinner:''
+}
 const MakeNewBook = ({navigation,route}) => {
-test5.navigation=navigation
-const user = firebase.auth().currentUser;
-const user_uid = user ? user.uid : null;
-const userID = user ? user_uid.substring(0, 6) : null
-test.user_uid = user_uid;
 
+  const [spinner,setSpinner]=useState(false)
+  test7.spinner=spinner
+
+  useEffect(()=>{
+    setInterval(()=>{
+      setSpinner(spinner)
+    },3000)
+  })
+
+
+  const user = firebase.auth().currentUser;
+  const user_uid = user ? user.uid : null;
+  const userID = user ? user_uid.substring(0, 6) : null
+  const [userinfo, setUserinfo] = useState([]);
+  test6.userinfo=userinfo
+  useEffect(()=>{
+    firebase_db.ref(`users/${user_uid}`)
+        .on('value', (snapshot) => {
+            let userinfo = snapshot.val();
+            setUserinfo(userinfo);
+        })
+}, []);
+
+console.log('userinfo',userinfo)
+test5.navigation=navigation
+
+test.user_uid = user_uid;
+const [newText,setText]=useState('')
 const [bookTitle, setBookTitle] = useState('');   
 test3.bookTitle=bookTitle
 console.log('두줄만들자',bookTitle.length)
@@ -136,11 +166,14 @@ console.log('두줄만들자',bookTitle.length)
 
                 <TextInput style={styles.titleInputText} 
                 value={bookTitle}
+                // numberOfLines={2}
+                // maxHeight={60} 
+                onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                setText(newText);  } }
                 multiline={true}  
-                maxLength ={12}
+                maxLength ={16}
                 returnKeyType="done"
                 onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                // onchangeText={onChangeText()}
                 placeholder="제목을 두줄로 작성해주세요"/>
 
               {/* )} */}
@@ -170,7 +203,7 @@ console.log('두줄만들자',bookTitle.length)
 
           ):(
             <TouchableOpacity onPress={()=>savePhoto()}>
-            <Image source={{ uri: image }} style={{ alignSelf:"center", marginTop:25, marginLeft:15, width: 250, height: 250 }} />
+            <Image source={{ uri: image }} style={{ alignSelf:"center", marginTop:15, marginLeft:15, width: 250, height: 250 }} />
             </TouchableOpacity>
 
           )
@@ -237,7 +270,7 @@ console.log('두줄만들자',bookTitle.length)
   },
   titleInput: {
     height:"15%",
-    width: "50%",
+    width: "60%",
     // backgroundColor:"yellow",
     marginLeft:20
   },
@@ -245,12 +278,10 @@ console.log('두줄만들자',bookTitle.length)
     fontSize: 20,
     marginLeft: "20%",
     flexShrink: 1,
-    marginBottom:"5%"
   },
   writer:{
     alignSelf: "flex-end",
     marginRight:"5%",
-    marginTop:"5%"
   },
   photoInputContainer:{
     marginTop:"10%",
@@ -271,6 +302,23 @@ console.log('두줄만들자',bookTitle.length)
   }
   })
   console.log('진행상황')
+
+  async function handleChapter(){
+    const {bookTitle}=test3;
+    const { image }=test2;
+    console.log('image!!!!!!!!!',image)
+    if (bookTitle == ""){
+      Alert.alert("책 제목을 입력해주세요");
+      return;
+    }
+    if (image == null){
+      Alert.alert("이미지를 넣어주세요");
+      return;
+    }
+
+    saveChapter()
+    
+  }
   async function saveChapter() {
 
     const { user_uid } = test;
@@ -278,9 +326,9 @@ console.log('두줄만들자',bookTitle.length)
     const {bookTitle}=test3;
     const {isPublic}=test4;
     const {navigation}=test5;
-
-    console.log('text saveChapter props', test2)
-
+    const {userinfo}=test6;
+    const {spinner}=test7;
+  
     console.log({ user_uid });
     console.log('이거확인',user_uid)
     const bookKey = Math.random().toString().replace(".","");
@@ -302,15 +350,31 @@ console.log('두줄만들자',bookTitle.length)
     regdate: new Date().toString(),
     url:downloadURL,
     bookKey:bookKey,
-    isPublic:isPublic
+    isPublic:isPublic,
+    // iam:userinfo.iam,
+    // selfLetter:userinfo.selfLetter
   });
   Alert.alert("생성 완료")
-  navigation.navigate("IntroArticle", {bookKey: bookKey})}
-  
+  navigation.navigate("IntroArticle", {bookKey: bookKey})
+
+  return (
+    <View style={styles.container}>
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+        // textStyle={styles.spinnerTextStyle}
+      />
+    </View>
+  );
+
+
+}
+
+
 function headerRight() {
     return (
       <Button
-        onPress={saveChapter}
+        onPress={handleChapter}
         title="저장하기"
         color="#000"
       />

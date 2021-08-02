@@ -17,8 +17,6 @@ const EditArticle = ({ navigation, route }) => {
         user_uid = user.uid
     }
     return (
-        <View style={styles.container}>
-            <StatusBar style="white" />
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
                     <TouchableOpacity style={styles.saveButton} onPress={() => {
@@ -67,7 +65,6 @@ const EditArticle = ({ navigation, route }) => {
                     </View>
                 </ImageBackground>
             </SafeAreaView>
-        </View>
     )
 }
 const styles = StyleSheet.create({

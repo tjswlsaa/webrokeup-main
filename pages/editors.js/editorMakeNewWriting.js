@@ -7,47 +7,55 @@ import Constants from 'expo-constants';
 import paper from '../../assets/paper.png';
 import moment from 'moment';
 
-const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-const NewPage = ({ navigation, route }) => {
+const editorMakeNewWriting = ({ navigation, route }) => {
 
-  
-  const title_a = useRef(null);
-  const maintext_a = useRef(null);
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const { bookKey } = route.params;
+    const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
+    const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
+  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+
   var user = firebase.auth().currentUser;
   var user_uid
   if (user != null) {
     user_uid = user.uid;
   }
-  console.log('findsuer',user_uid)
-  const chapterKey = Math.random().toString().replace(".", "");
-  const chapterTitle = text1;
-  const mainText = text2;
-  console.log('이거썌거',chapterKey)
+
+  const [userinfo, setUserinfo] = useState([]);
+
+  useEffect(()=>{
+    firebase_db.ref(`users/${user_uid}`)
+        .on('value', (snapshot) => {
+            let userinfo = snapshot.val();
+            setUserinfo(userinfo);
+        })
+}, []);
+
+console.log(userinfo)
+
+  const writingKey = Math.random().toString().replace(".", "");
+  const regdate=  new Date().toString()
+  const Kregdate= moment(new Date()).format('YYYY년 MM월 DD일') 
+
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar style="auto" />
+
       <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
           <TouchableOpacity style={styles.saveButton} onPress={() => {
      
             firebase_db
-              .ref(`/book/${bookKey}/chapters/` + chapterKey)
+              .ref(`/editor/${writingKey}/`)
               .set({
-                chapterKey: chapterKey,
-                chapterTitle: chapterTitle,
-                mainText: mainText,
-                regdate: new Date().toString(),
-                likeCount: 0,
-                Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
-                creator: user_uid,
-                bookKey:bookKey
+                creator:user_uid,
+                // iam:userinfo.iam,
+                writingKey: writingKey,
+                title:title,
+                text: text,
+                regdate: regdate,
+                Kregdate:Kregdate,
+
               });
             Alert.alert("집필 완료")
-            navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
+            navigation.navigate("readEditorWriting", { writingKey: writingKey})
             //title_a.current.clear();
             //maintext_a.current.clear();  
           }}>
@@ -56,24 +64,23 @@ const NewPage = ({ navigation, route }) => {
           <View style={styles.bookContainer}>
             <ImageBackground style={styles.bookImage} source={paper} >
               <ScrollView scrollEnabled={false}>
-                <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
-                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
-                    multiline={true} placeholder="제목을 입력하세요"
+                <View style={{  padding: 10, marginTop: 70 }}>
+                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
+                    multiline={true} placeholder="제목을 적어주세요"
                     returnKeyType="done"
-                    onChangeText={text1 => setText1(text1)}
-                    ref={title_a} />
+                    onChangeText={title => setTitle(title)}
+                     />
+                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
+                    multiline={true} placeholder="글을 적어주세요"
+                    returnKeyType="done"
+                    onChangeText={text => setText(text)}
+                     />
                 </View>
-                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', flex: 1, padding: 40, flexShrink: 1, fontSize: 17 }}
-                  multiline={true} placeholder="본문을 입력하세요"
-                  returnKeyType="done"
-                  onChangeText={text2 => setText2(text2)}
-                  ref={maintext_a} />
-              </ScrollView>
+             </ScrollView>
             </ImageBackground>
           </View>
         </ImageBackground>
       </SafeAreaView>
-    </View>
   )
 }
 const styles = StyleSheet.create({
@@ -106,4 +113,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
   }
 })
-export default NewPage;
+export default editorMakeNewWriting;

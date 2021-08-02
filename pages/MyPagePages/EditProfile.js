@@ -6,39 +6,55 @@ import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/AntDesign';
 //import defaultExport from '@react-native-firebase/auth';
 const EditProfile = ({navigation}) => {
-    const [ID,setID] = useState('실험');
-    const [selfLetter, setSelfLetter] = useState('');
-    const idtext = useRef(null);
-    const selflettertext = useRef(null);
+
     var user = firebase.auth().currentUser;
     var  user_uid
     if (user != null) {
-        user_uid = user.uid
+      user_uid = user.uid;  
     }
+    var userID=user_uid.substring(0,6)
+        console.log (userID)
+    const [userinfo, setUserinfo] = useState([]);
+
+
+    useEffect(()=>{
+        firebase_db.ref(`users/${user_uid}`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                setUserinfo(userinfo);
+            })
+    }, []);
+
+    const [ID,setID] = useState(userinfo.iam);
+    const [selfLetter, setSelfLetter] = useState(userinfo.selfLetter);
+    const idtext = useRef(null);
+    const selflettertext = useRef(null);
+
     var userID=user_uid.substring(0,6)
         return(
             <View style ={{flex: 1, backgroundColor: "#FAFAFA"}}>  
                 <View style={{flex: 1, marginTop: 10, height: "30%", backgroundColor: "white"}}>
-                    <View style = {{flex:2}}>
-                        <View style={{flex:1, flexDirection: "row", marginTop: 20}}>
-                            <Text style={{marginLeft: 30, marginTop: 30, alignSelf: "flex-start", fontSize:17}}>지은이</Text>
+                    {/* <View style = {{flex:2}}> */}
+                        <View style={{flex:1, flexDirection: "row", marginTop: 20, }}>
                             <TextInput 
                                 color = "#98C0ED"
                                 style={{marginLeft: 30, marginTop: 20, height: 40, fontWeight: "bold", fontSize: 25, alignSelf: "flex-start"}}
                                 returnKeyType="done"
-                                defaultValue = {userID} 
+                                multiline={false}
+                                defaultValue = {userinfo.iam} 
                                 onChangeText={ID=>setID(ID)}
                                 ref={idtext}/>
+
                         </View>
                             <TextInput 
                                 backgroundColor = "#FAFAFA"
-                                style={{marginHorizontal: 30, marginTop: 20, height: 150}}
+                                style={{marginHorizontal: 30, marginTop: 20, height: 150, fontSize:15}}
                                 multiline={true}
                                 returnKeyType="done"
-                                defaultValue = {"안녕하세요 이별록 작가" + userID + "입니다."}
+                                defaultValue = {userinfo.selfLetter}
                                 onChangeText={selfLetter=>setSelfLetter(selfLetter)}
                                 ref={selflettertext}/>
-                    </View>
+                    {/* </View> */}
                     <View style={{flex: 0.5, backgroundColor: "white", padding: 20}}>
                         {/* <TouchableOpacity style= {{marginTop: 30, marginRight: 20, height: 30, width: 30, backgroundColor: "white", borderRadius: 5}}>
                             <Icon name="edit" size={20} color = "#98C0ED"/>
@@ -48,10 +64,11 @@ const EditProfile = ({navigation}) => {
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
                                   .update({
-                                    id: ID,
-                                    self_letter: selfLetter,
+                                    iam: ID,
+                                    selfLetter: selfLetter,
                                   })
-                                navigation.navigate("Account")
+                                  Alert.alert("프로필 완료")
+                                  navigation.navigate("Account")
                             }}>
                             <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
                         </TouchableOpacity>
