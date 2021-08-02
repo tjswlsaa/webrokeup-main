@@ -22,7 +22,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 // import promiseMiddleware from 'redux-promise'
 // import ReduxThunk from 'redux-thunk'
 // const createStoreWithMiddleware =applyMiddleware(promiseMiddleware,ReduxThunk)(createStore)
-const App=  ({navigation}) =>{
+const App=  (props) =>{
+  const {navigation} = props;
     return (
       <NavigationContainer>
               <StatusBar style="white" />
