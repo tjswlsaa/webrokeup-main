@@ -7,22 +7,18 @@ import paper from '../../assets/paper.png';
 const EditIntroArticle = ({ navigation, route }) => {
     const {intro, bookKey} = route.params;
     const [text1, setText1] = useState(intro);
-
     const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
         user_uid = user.uid
     }
-
     const saveEditIntroArticle =()=>{
         let introKey = "intro";
         var introArticle = text1;
-
         firebase_db
         .ref( `/book/${bookKey}/`+ introKey)
         .set(introArticle)
-
         Alert.alert("집필 완료")
         navigation.navigate("MyBook", { bookKey: bookKey })
         //title_a.current.clear();
@@ -39,13 +35,11 @@ const EditIntroArticle = ({ navigation, route }) => {
                     <View style={styles.bookContainer}>
                         <ImageBackground style={styles.bookImage} source={paper} >
                              <Text style={styles.bookTitle}>말머리에서</Text>  
-
                                 <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
                                     <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
                                         multiline={true} defaultValue={intro}  returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)} />
                                 </View>
-                               
                         </ImageBackground>
                     </View>
                     <View style={styles.bottomButtonContainer}>

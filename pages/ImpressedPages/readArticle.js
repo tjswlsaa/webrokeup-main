@@ -4,88 +4,66 @@ import {NavigationContainer} from '@react-navigation/native';
 import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
-
 import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import { render } from 'react-dom';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import paper from '../../assets/paper.png';
-
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-
 const test1 = {
     bookKey: ''
   };
-  
-
   const test3 ={
     navigation :''
   }
 //import defaultExport from '@react-native-firebase/auth';
 const readArticle = ({navigation, route}) => {
     test3.navigation=navigation
-
     // const {myitem, chapters, chapterTitle} = route.params;
     const {bookKey, chapterKey} = route.params;
     test1.bookKey=bookKey
-
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-
     const user = firebase.auth().currentUser;
     var  user_uid
         if (user != null) {user_uid = user.uid}
-
         console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
-        const [chapters,setChapters]= useState('')
-
+        // const [chapters,setChapters]= useState('')
+        const [chapters,setChapters]= useState({})
         useEffect(getChapters, []);
-
     function getChapters() {
         console.log('북키',bookKey)
-
         console.log('챕터키',chapterKey)
         firebase_db
         .ref(`book/${bookKey}/chapters/` + chapterKey)
         .on('value', (snapshot) => {
                 let temp = [];
             const chapters = snapshot. val()
-            
                 // snapshot.forEach((child) => {
                 //      const item = {
                 //          ...child.val(), // 구조 분해 할당: 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%EA%B5%AC%EB%AC%B8
                 //          key: child.key, 
                 //      };
-
                 console.log('챕터확인1',chapters)
                 setChapters(chapters)
-
             });
                 console.log('챕터확인2',chapters)
             }
-               console.log('chapters확인3',chapters)
-
-
-
+               console.log('readArticle.js chapters확인3',chapters)
             //    const regdate = moment();
             // //    console.log(
             // //      "Today's date is: " + 
             // //      regdate.format('YYYY년MM월DD일')
             // //    );
-           
-
             // //    const regdate = moment();
             // //    console.log(
             // //      "Today's date is: " + 
             // //      regdate.format('YYYY년MM월DD일')
             // //    );
-
             // //    const regdateArticle = chapters.regdate
             // console.log(regdate)
-
-
         //        chapters.regdate = moment();
         //        console.log(
         //         "Today's date is: " + 
@@ -93,11 +71,9 @@ const readArticle = ({navigation, route}) => {
         //       );
         //   const thisis =  chapters.regdate.format('YYYY년MM월DD일')
         //   console.log('thisis')
-
-            
-
+        
+    console.log('readArticle.js (1), chapters: ',chapters);
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
-
     useEffect (()=>{
         // let temp = [];
         let arr = likeRef
@@ -115,19 +91,18 @@ const readArticle = ({navigation, route}) => {
             setLikedUsers(temp);
         })
     }, [])
-
     useEffect (()=>{
+        console.log('readArticle.js (2), chapters: ',chapters);
+
         let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
         .on('value', (snapshot) => {
            var commentsNumber = snapshot.numChildren();
            setCommentsNumber(commentsNumber)
         })
     }, [])
-
     return (
         <View style={{flex:1}}>
       <SafeAreaView style={{ flex: 1 }}>
-
         <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} >
         {chapters.creator==user_uid ? (  
             <View style={styles.upperButtonContainer}>
@@ -136,6 +111,8 @@ const readArticle = ({navigation, route}) => {
                 </TouchableOpacity>  
                 <TouchableOpacity style={styles.deleteButton} >
                     <Text style={styles.deleteButtonText} onPress={()=>{
+                        console.log('readArticle.js (3), chapters: ',chapters);
+
                         firebase_db
                         .ref(`book/${bookKey}/chapters/` + chapters.chapterKey)
                         .set(null)
@@ -147,11 +124,8 @@ const readArticle = ({navigation, route}) => {
                 </TouchableOpacity>  
             </View>
         ) : (<View style={{height:"6%"}}></View>)}
-
-
             <View>
             <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={paper} >
-
                 <View style={{height:"80%"}}>
                     <View>
                         <Text style={styles.bookTitle}>{chapters.chapterTitle}</Text>  
@@ -160,7 +134,6 @@ const readArticle = ({navigation, route}) => {
                         <Text style={styles.bookText}>{chapters.mainText}</Text>  
                     </ScrollView>
                 </View>
-
                 <View style={{ flexDirection:"row", height:"20%", }}>
                     <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
                         console.log('MyArticle.likeButton.onPress()');
@@ -205,7 +178,10 @@ const readArticle = ({navigation, route}) => {
                         // 이후: let likeCount = 0;
                         // likeCount는 변수다
                         // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-                        firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey).child("likeCount").set({"likeCount" : likeCount})
+                        
+                        console.log('readArticle.js (3), chapters: ',chapters);
+
+                        firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey).child("likeCount").set(likeCount)
                         // likeRef.child(user_uid).set({
                         //     user_uid: user_uid,
                         //     regdate: new Date().toString(),
@@ -214,16 +190,13 @@ const readArticle = ({navigation, route}) => {
                         Alert.alert('MyArticle.likeButton.onPress() end');
                     }}>                
                 <Icon name="like2" size={20} color="black" style={styles.addIcon}/>
-
                     </TouchableOpacity>  
                     <Text style = {{marginLeft: 10}}> {likeCount} </Text>
-
                     <TouchableOpacity 
                     onPress={()=>{navigation.navigate('Comment',{chapters:chapters, navigation:navigation,bookKey:bookKey, chapterKey:chapterKey})}}
                     style={styles.commentButton}
                     >
                 <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
-
                     </TouchableOpacity>
                         {/* <Button 
                         style={styles.commentButton}
@@ -233,7 +206,6 @@ const readArticle = ({navigation, route}) => {
                     <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
                     <Text style={{marginLeft: 70}}>{chapters.Kregdate}</Text>
                     </View>
-
                 </ImageBackground>
             </View>
             </ImageBackground>
@@ -277,7 +249,6 @@ const styles = StyleSheet.create({
         marginLeft: 60,
         marginTop:80,
         marginRight:60,
-
       },
       bookText:{
           marginTop: 50,
@@ -301,9 +272,4 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     }
 });
-
-
-
-
-
 export default readArticle;

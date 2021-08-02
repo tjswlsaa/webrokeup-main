@@ -14,7 +14,7 @@ const Impressed = ({navigation,route}) => {
     <View  style={styles.subContainer}>
 
         <TouchableOpacity style={StyleSheet.tag} onPress={()=>{navigation.navigate('subBook')}}>
-             <Text style={styles.tagText}>공감한 이별록 </Text>
+             <Text style={styles.tagText}>공감한 이별록 > </Text>
         </TouchableOpacity>
         
         <ScrollView style={styles.cardContainer} horizontal = {true}>
@@ -43,7 +43,7 @@ const Impressed = ({navigation,route}) => {
 
     <View style={styles.likeContainer}>
         <TouchableOpacity style={StyleSheet.tag} onPress={()=>{navigation.navigate('likedArticle')}}>
-             <Text style={styles.tagText}>공감한 이별록 </Text>
+             <Text style={styles.tagText}>공감한 이별록 > </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.chOne} onPress={()=>{navigation.navigate('readArticle')}}>
                 <Text style={styles.chTitle}>01 이별 그 순간</Text>  

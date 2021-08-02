@@ -6,23 +6,23 @@ import Constants from 'expo-constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
+import backgroundimage from '../../assets/backgroundimage.jpg'
+
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 const bookSet ="https://postfiles.pstatic.net/MjAyMTA3MTJfMjQg/MDAxNjI2MDY4NzI5MzEw.3F5MOf0QbadAe51QtjxPYbLgqUKeOKxNogrpt7e-pIMg.Fr9zSwSUjAohp8ZNnJ7NOcrPw9FjFS4BDpBUH9wcg6Ug.PNG.asj0611/bookCover_(1).png?type=w773"
-import backgroundimage from '../../assets/backgroundimage.png';
-
-
+// import backgroundimage from '../../assets/backgroundimage.png';
 const test1 ={ 
     userinfo:''
 }
 const test2= {
     myitem:""
 }
-
 const MyPage = ({navigation, route}) => {
     const [myBook, setMyBook] = useState([]);
     const [userinfo, setUserinfo] = useState([]);
     test1.userinfo=userinfo
+    const [swiper, setSwiper] = useState(null);
     const { width, height } = Dimensions.get('window');
     var user = firebase.auth().currentUser;
     var  user_uid
@@ -31,8 +31,7 @@ const MyPage = ({navigation, route}) => {
     }
     var userID=user_uid.substring(0,6)
         console.log (userID)
-
-
+   
     useEffect(()=>{
         firebase_db.ref(`users/${user_uid}`)
             .on('value', (snapshot) => {
@@ -40,8 +39,7 @@ const MyPage = ({navigation, route}) => {
                 setUserinfo(userinfo);
             })
     }, []);
-
-
+    
     useEffect(() => {
         firebase_db.ref('book/')
             .on('value', (snapshot) => {
@@ -61,18 +59,18 @@ const MyPage = ({navigation, route}) => {
             })
     }, []) // 구 리엑트: componentDidMount에 해당함 -> 컴포넌트가 마운트 되었다면 -> 컴포넌트가 프로그래밍적으로, 변수틱하게, 생성되어서 처음으로 웹브라우저에 입성하는 순간 -> 처음으로 보일 때마다
     // 그럴 때마다.. 이 부분이 최초 단 한 번 만 딱 한 번 만 실행됩니다.
-    //console.log('myBook',myBook)
+    console.log('myBook',myBook)
+    console.log('myBook.bookKey', myBook.bookKey)
+ 
+    const myBookFiltered= myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
 
- const myBookFiltered= myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
-//  console.log('myBookFiltered',myBookFiltered)
-console.log('whatiswrong',myBookFiltered)
-
-console.log('키값확인',myBookFiltered.length)
-const [swiper, setSwiper] = useState(null);
+    //  console.log('myBookFiltered',myBookFiltered)
+// console.log('whatiswrong',myBookFiltered)
+// console.log('키값확인',myBookFiltered.length)
 // const slideTo = (index) => swiper.slideTo(index);
+
 return (
     <SafeAreaView style={{flex:1}}>
-
     <View style={{}}>
         <View style={{height:40,alignItems:"center",justifyContent:"center"}}>
             <Text style={{fontSize:15, fontWeight:"500"}}>나의 이별록</Text>
@@ -86,37 +84,25 @@ return (
             </View>
             <Text style={styles.profileUserDesc}> {userinfo.selfLetter}</Text>
         </View>
-
-
             <View style={{width:"95%",alignSelf:"center", marginBottom:10}}>
-
                 {myBookFiltered.length == 0 ? (
-
-                     <ImageBackground style={{height:250,resizeMode:"cover" }}  source={require('../../assets/backgroundimage.png')}>
-                        <TouchableOpacity style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }} onPress={()=>{navigation.navigate("MakeNewBook")}}>
+                     <View style={{height:250, resizeMode:"cover" }} source={bookBackground}>
+                    <TouchableOpacity style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }} onPress={()=>{navigation.navigate("MakeNewBook")}}>
                             <Text style={{fontSize:15}}>새로운 책을 만들어주세요</Text>
                         </TouchableOpacity>
-                    </ImageBackground>
-                    
+                    {/* </ImageBackground> */}
+                        </View>
                     ) :  (
-
-                        <View style={{height:"100%", resizeMode:"cover" }} 
-                        // source={{uri:bookBackground}}
-                        source={require('../../assets/backgroundimage.png')}
-                        >
-
+                        <View style={{height:450, resizeMode:"cover" }} source={{uri:bookBackground}}>
                             <TouchableOpacity style={styles.openButton} onPress={()=>{navigation.navigate("MakeNewBook")}}>
                                     <Text style={styles.openButtonText}>새로운 책 만들기</Text>
                             </TouchableOpacity>
-
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}
                             showsPagination={true}
                             onSwiper={setSwiper} 
-                            style={styles.wrapper} showsButtons={true}
-                            
-        
+                            style={styles.wrapper} showsButtons={false}
                             dot={<View style={{           // unchecked dot style
                                 backgroundColor: 'rgba(0,0,0,0.2)',
                                 width: 10,
@@ -126,16 +112,14 @@ return (
                                 marginRight: 9,
                             }}/>}
                             activeDot={<View style={{    // selected dots style
-                                backgroundColor: '#83ffcf',
+                                backgroundColor: '#060FBF',
                                 width: 10,
                                 height: 10,
                                 borderRadius: 4,
                                 marginLeft: 10,
                                 marginRight: 9,
                             }}/>}
-                            
                             >
-                        
                                     {myBookFiltered.map(myitem => {
                                         test2.myitem=myitem
                                         console.log('myitem여기서부터문제인가',myitem)
@@ -153,7 +137,6 @@ return (
                             </Swiper>
                         </View>
                     )
-
                     }
                     </View>
     </View>
@@ -256,7 +239,6 @@ console.log('.')
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
 console.log('..')
 const MyBookItem = (props) => {
-
     const {navigation,myitem}=props
     const {userinfo}=test1
     // const {myitem}=test2
@@ -270,9 +252,8 @@ const MyBookItem = (props) => {
     const url= myitem.url
     return(
         // <View style={styles.subContainer}>
-        <View style={{height:500,width:400,alignSelf:"center",}}>
-                    {/* <ImageBackground style={{height:200}} source={{uri:book}}> */}
-
+        <View style={{height:"100%",width:"90%", marginHorizontal: "5%", borderWidth: 1}}>
+                <ImageBackground style={{height:"100%", width: "100%", }} source={backgroundimage}>
                     <ImageBackground style={{height:400,width:300,marginTop:"8%",alignSelf:"center"}} source={{uri:book}} > 
                             <Text style={{marginTop:"18%", marginLeft:"27%",  fontSize:14,}}>{myitem.bookTitle}</Text>
                              <Text style={{marginTop:"10%", marginLeft:"50%",  fontSize:12,}}>{userinfo.iam} </Text> 
@@ -282,7 +263,7 @@ const MyBookItem = (props) => {
                                     <Image source={{ url: url }} style={{ flex:1, backgroundColor:"pink" }}/>
                             </TouchableOpacity>
                     </ImageBackground>
-                    {/* </ImageBackground> */}
+                </ImageBackground>
         </View>
     )
 }

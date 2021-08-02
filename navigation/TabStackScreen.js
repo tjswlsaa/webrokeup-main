@@ -156,12 +156,9 @@ const HomeStackScreen = () => {
         // },
         // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
       // mode="modal"
-      
       name="Comment" 
       component={Comment}/>
-      <HomeStack.Screen name="Account" component={Account} options={{title: "설정",
-            headerLeftTitle:"22"
-    }}/>
+      <HomeStack.Screen name="Account" component={Account} options={{title: "설정"}}/>
       <HomeStack.Screen name="MarketingSetting" component={MarketingSetting} options={{title: "마케팅 알림 설정"}}/>
       <HomeStack.Screen name="AccountInfo" component={AccountInfo} options={{title: "계정 정보"}}/>
       <HomeStack.Screen name="Notification" component={Notification} options={{title: "공지사항"}}/>
@@ -225,46 +222,13 @@ const CommunityStackScreen = () => {
     </CommunityStack.Navigator>
   )
 }
-// const EditorStackScreen = () => {
-//   return (
-//     <EditorStack.Navigator
-//     initialRouteName="editorBoard"
-//     >
-//         <EditorStack.Screen 
-//         name="editorMakeNewWriting" 
-//         options={{ headerShown: true }}
-//         component={editorMakeNewWriting}
-//         />
-//       <CommunityStack.Screen 
-//         name="readEditorWriting" 
-//         component={readEditorWriting.component}
-//         options={readEditorWriting.options}    
-//         />
-//               <CommunityStack.Screen 
-//         name="editWriting" 
-//         component={editWriting}
-//         />
-//                       <CommunityStack.Screen 
-//         name="editorBoard" 
-//         component={editorBoard}
-//         />
-//       {/* <CommunityStack.Screen 
-//         name="readPost" 
-//         component={readPost.component}
-//         options={readPost.options}        />
-//       <CommunityStack.Screen 
-//         name="editPost" 
-//         component={editPost}
-//         /> */}
-//     </EditorStack.Navigator>
-//   )
-// }
+
 const TabStackScreen = () => {
   return (
     <TabStack.Navigator
     initialRouteName="메인"
          tabBarOptions={{
-          style: { height: 50 },
+          // style: { height: 50 },
           showLabel: false}}
         screenOptions={
           ({route})=> ({
@@ -277,7 +241,6 @@ const TabStackScreen = () => {
                         else if (route.name=="게시판"){
                           iconName="person-outline"
                         }
-
                         return <Icon name={iconName} size={size}  color={color}/>;}
               })
           }

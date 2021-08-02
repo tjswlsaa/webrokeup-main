@@ -17,14 +17,15 @@
 //     firebase.initializeApp(firebaseConfig);
 //   }
 
-
 // export const firebase_db =firebase.database();
+
+
 
 import firebase from 'firebase/app';
 import "firebase/database";
 import "firebase/storage";
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAztNyV9LSQRPGlnDUjEFQrlz9amLio2vg",
   authDomain: "breakupdiary-9cdc8.firebaseapp.com",
   databaseURL: "https://breakupdiary-9cdc8-default-rtdb.asia-southeast1.firebasedatabase.app/",

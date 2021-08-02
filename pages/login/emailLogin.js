@@ -4,9 +4,12 @@ import { View, Text, StyleSheet, Button, TextInput, TouchableOpacity, Keyboard, 
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Header } from 'native-base'
 import firebase from 'firebase/app';
+
 const emailLogin = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+
   const loginUser = async (email, password) => {
     try {
       console.log({ email })
@@ -32,6 +35,7 @@ const emailLogin = ({navigation}) => {
       console.log(error.toString(error));
     }
   }
+
 return (
 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
   <View style={{flex:1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "15%"}}>
@@ -79,4 +83,5 @@ return (
 </TouchableWithoutFeedback>
     )
 }
+
 export default emailLogin;

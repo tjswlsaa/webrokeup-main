@@ -3,11 +3,15 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableH
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
+
 const aboutImage = "http://file.newswire.co.kr/data/datafile2/thumb_480/2010/05/2039103817_20100527105820_1069435867.jpg"
 const aboutBookImage = "http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0309/IE002297749_STD.jpg"
 const settingImage = "https://png.pngtree.com/element_our/20190530/ourlarge/pngtree-cartoon-gear-icon-download-image_1251421.jpg"
+
+
 const PopularBook = ({navigation,bookKey}) => {
   const [book, setBook] = useState([]);
+
   useEffect(() => {
     let temp = [];
     let data = firebase_db.ref('book/')
@@ -20,6 +24,8 @@ const PopularBook = ({navigation,bookKey}) => {
         })
     console.log(temp)
 }, [])
+
+
 const BookItem = ({ navigation, item }) => {
   // console.log(item);
   console.log("bookitem for popular book running")
@@ -30,6 +36,7 @@ const BookItem = ({ navigation, item }) => {
         <Text style={styles.bookTitle}>{item.bookTitle}</Text>  
         <Text style={styles.bookDesc}>{item.intro}</Text> 
         <Text style={styles.bookIndex}>총 챕터수 구해야 함</Text> 
+
       </View>
       <View style={styles.bookContainerOnePhoto}>
         <Image style={styles.bookContainerOnePhoto} source={{uri:item.url}}/>
@@ -38,6 +45,7 @@ const BookItem = ({ navigation, item }) => {
     </View>
   )
 }
+
     return (
         <View style={{flex: 1, backgroundColor: '#fff'}}>
           <StatusBar style="white" />
@@ -56,7 +64,13 @@ const BookItem = ({ navigation, item }) => {
         </ScrollView>
         </View>
     )}
+
+
+
+
 const styles = StyleSheet.create({
+
+
 bookContainer:{
     height: "100%",
   },
@@ -88,6 +102,9 @@ bookContainer:{
     marginTop:"5%",
     marginLeft:"8%",
     marginRight:"8%",
+
+
+
   },
   bookIndex:{
     fontSize: 15,
@@ -106,5 +123,8 @@ bookContainer:{
     shadowOpacity: 10, 
     shadowRadius: 10
   },
+
 })
+
+
 export default PopularBook;

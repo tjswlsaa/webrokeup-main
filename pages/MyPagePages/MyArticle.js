@@ -36,12 +36,13 @@ const MyArticle = ({navigation, route}) => {
 
     const user = firebase.auth().currentUser;
     var  user_uid
-        if (user != null) {user_uid = user.uid}
+    if (user != null) {user_uid = user.uid}
 
-        console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
-        const [chapters,setChapters]= useState('')
+    console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
+    // const [chapters,setChapters]= useState('')
+    const [chapters,setChapters]= useState({});
 
-        useEffect(getChapters, []);
+    useEffect(getChapters, []);
 
     function getChapters() {
         console.log('북키',bookKey)
@@ -50,6 +51,7 @@ const MyArticle = ({navigation, route}) => {
         firebase_db
         .ref(`book/${bookKey}/chapters/` + chapterKey)
         .on('value', (snapshot) => {
+            console.log('getChapters() firebase_db.on()');
                 let temp = [];
             const chapters = snapshot. val()
             
@@ -59,49 +61,47 @@ const MyArticle = ({navigation, route}) => {
                 //          key: child.key, 
                 //      };
 
-                console.log('챕터확인1',chapters)
-                setChapters(chapters)
-
-            });
-                console.log('챕터확인2',chapters)
+            console.log('챕터확인1',chapters)
+            if (chapters > '') { // truthy check
+                setChapters(chapters);
             }
-               console.log('chapters확인3',chapters)
+        });
+        console.log('챕터확인2',chapters)
+    } // function getChapters()
 
+    console.log('MyArticle.js chapters확인3',chapters) // MyArticle.js chapters확인3 null
 
+    //    const regdate = moment();
+    // //    console.log(
+    // //      "Today's date is: " + 
+    // //      regdate.format('YYYY년MM월DD일')
+    // //    );
+    
 
-            //    const regdate = moment();
-            // //    console.log(
-            // //      "Today's date is: " + 
-            // //      regdate.format('YYYY년MM월DD일')
-            // //    );
-           
+    // //    const regdate = moment();
+    // //    console.log(
+    // //      "Today's date is: " + 
+    // //      regdate.format('YYYY년MM월DD일')
+    // //    );
 
-            // //    const regdate = moment();
-            // //    console.log(
-            // //      "Today's date is: " + 
-            // //      regdate.format('YYYY년MM월DD일')
-            // //    );
+    // //    const regdateArticle = chapters.regdate
+    // console.log(regdate)
 
-            // //    const regdateArticle = chapters.regdate
-            // console.log(regdate)
+    //        chapters.regdate = moment();
+    //        console.log(
+    //         "Today's date is: " + 
+    //         chapters.regdate.format('YYYY년MM월DD일')
+    //       );
+    //   const thisis =  chapters.regdate.format('YYYY년MM월DD일')
+    //   console.log('thisis')
 
-
-        //        chapters.regdate = moment();
-        //        console.log(
-        //         "Today's date is: " + 
-        //         chapters.regdate.format('YYYY년MM월DD일')
-        //       );
-        //   const thisis =  chapters.regdate.format('YYYY년MM월DD일')
-        //   console.log('thisis')
-
-            
-
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
+    // console.log('MyArticle.js (1), chapters: ',chapters);
+    // const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
+    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
 
     useEffect (()=>{
         // let temp = [];
-        let arr = likeRef
-        .on('value', (snapshot) => {
+        let arr = likeRef.on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
             console.log('useEffect()');
@@ -117,7 +117,9 @@ const MyArticle = ({navigation, route}) => {
     }, [])
 
     useEffect (()=>{
-        let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+        // console.log('MyArticle.js (2), chapters: ',chapters);
+        // let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+        let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
         .on('value', (snapshot) => {
            var commentsNumber = snapshot.numChildren();
            setCommentsNumber(commentsNumber)
@@ -136,8 +138,10 @@ const MyArticle = ({navigation, route}) => {
                 </TouchableOpacity>  
                 <TouchableOpacity style={styles.deleteButton} >
                     <Text style={styles.deleteButtonText} onPress={()=>{
+                        console.log('MyArticle.js (3), chapters: ',chapters);
+                        
                         firebase_db
-                        .ref(`book/${bookKey}/chapters/` + chapters.chapterKey)
+                        .ref(`book/${bookKey}/chapters/` + chapterKey)
                         .set(null)
                         .then(function(){
                             Alert.alert("삭제 완료")
@@ -202,7 +206,8 @@ const MyArticle = ({navigation, route}) => {
                         // 이후: let likeCount = 0;
                         // likeCount는 변수다
                         // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-                        firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey).child("likeCount").set(likeCount)
+                        // console.log('MyArticle.js (4), chapters: ',chapters);
+                        firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey).child("likeCount").set(likeCount)
                         // likeRef.child(user_uid).set({
                         //     user_uid: user_uid,
                         //     regdate: new Date().toString(),
@@ -216,7 +221,7 @@ const MyArticle = ({navigation, route}) => {
                     <Text style = {{marginLeft: 10}}> {likeCount} </Text>
 
                     <TouchableOpacity 
-                    onPress={()=>{navigation.navigate('Comment',{chapters:chapters, navigation:navigation,bookKey:bookKey, chapterKey:chapterKey})}}
+                    onPress={()=>{navigation.navigate('Comment',{navigation:navigation,bookKey:bookKey, chapterKey:chapterKey})}}
                     style={styles.commentButton}
                     >
                 <Icon name="message1" size={20} color="black" style={styles.addIcon}/>

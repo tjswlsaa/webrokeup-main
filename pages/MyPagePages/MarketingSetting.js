@@ -2,9 +2,11 @@ import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, Switch, Touchable} from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
+
 const MarketingSetting = () => {
     const [isEmailEnabled, setEmailNotice] = useState(true);
     const [isPushEnabled, setPushNotice] = useState(true);
+
     return(
         <View style={{flex: 1, backgroundColor: "#FAFAFA"}}>
             <View backgroundColor = "white" style={{padding: 20}}>
@@ -31,4 +33,5 @@ const MarketingSetting = () => {
         </View>
         )
 }
+
 export default MarketingSetting;
