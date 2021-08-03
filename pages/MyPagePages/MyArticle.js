@@ -22,7 +22,6 @@ const test1 = {
   const test3 ={
     navigation :''
   }
-//import defaultExport from '@react-native-firebase/auth';
 const MyArticle = ({navigation, route}) => {
     test3.navigation=navigation
 

@@ -17,7 +17,6 @@ const test1 = {
   const test3 ={
     navigation :''
   }
-//import defaultExport from '@react-native-firebase/auth';
 const readArticle = ({navigation, route}) => {
     test3.navigation=navigation
     // const {myitem, chapters, chapterTitle} = route.params;

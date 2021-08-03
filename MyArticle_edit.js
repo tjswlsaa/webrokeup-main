@@ -7,7 +7,6 @@ import { StatusBar } from 'expo-status-bar';
 import {MakeNewBook} from './MakeNewBook';
 import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import { render } from 'react-dom';
-//import defaultExport from '@react-native-firebase/auth';
 
 
 const MyArticle = ({navigation, route}) => {

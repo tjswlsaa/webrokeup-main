@@ -4,7 +4,6 @@ import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/AntDesign';
-//import defaultExport from '@react-native-firebase/auth';
 const EditProfile = ({navigation}) => {
 
     var user = firebase.auth().currentUser;
