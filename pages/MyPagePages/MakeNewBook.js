@@ -386,11 +386,13 @@ console.log('두줄만들자',bookTitle.length)
 
 function headerRight() {
     return (
-      <Button
-        onPress={handleChapter}
-        title="저장하기"
-        color="#000"
-      />
+
+      <Icon.Button name='save' size={25}
+      backgroundColor= 'white' color="black" 
+      onPress={handleChapter}
+      
+      >
+    </Icon.Button>
 
     );
   }

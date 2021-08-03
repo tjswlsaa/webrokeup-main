@@ -35,22 +35,8 @@ const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
 
     return(
         <SafeAreaView style= {{flex: 1, backgroundColor: "pink"}}>
-            {/* <View style= {{height:553,marginHorizontal:"4%",backgroundColor: "green"}}>
-            </View> */}
-            {/* <View style= {{ marginHorizontal:"4%",backgroundColor: "black"}}> */}
-                <ScrollView  style= {{ backgroundColor: "blue"}} >
-                    <View style={{height:realScreen/2, backgroundColor:"white"}}>
-
-
-                    </View>  
-                     <View style={{height:realScreen/2, backgroundColor:"purple"}}>
-   
-                        <Text>1111</Text>
-            
-                     </View>
-                      
-                </ScrollView>
-            {/* </View> */}
+            <View style={{flex:1, backgroundColor:"red"}}></View>
+            <View style={{flex:12,marginHorizontal:"4%", backgroundColor:"blue"}}></View>
 
         </SafeAreaView>
     )

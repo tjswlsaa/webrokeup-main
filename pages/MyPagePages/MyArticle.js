@@ -314,7 +314,7 @@ function headerLeft() {
     return (
       <Button
         onPress={() => navigation.goBack()}   
-        title="뒤로가기"
+        title="뒤로가기?"
         color="#000"
       />
 
