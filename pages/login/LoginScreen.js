@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
 import firebase from 'firebase';
-import * as Google from 'expo-google-app-auth'
 import "firebase/auth";
 const LoginScreen  = ({navigation,route}) => {
 
@@ -18,12 +17,6 @@ const LoginScreen  = ({navigation,route}) => {
           <View style={{justifyContent: 'center'}}>
             <TouchableOpacity style={{borderWidth:1, alignSelf: "center", borderRadius: 10, paddingVertical: "5%"}} onPress={()=>{navigation.navigate("emailLogin")}}>
               <Text style={{alignSelf:"center", paddingHorizontal: "30%", fontSize:15}}> 이메일로 시작하기 </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{justifyContent: 'center', marginTop: 15}}>
-
-            <TouchableOpacity style={{borderWidth:1, alignSelf: "center", borderRadius: 10, paddingVertical: "5%"}} onPress={()=>navigation.navigate('GoogleCheck')}>
-              <Text style={{alignSelf:"center", paddingHorizontal: "30%", fontSize:15}}> Google로 시작하기 </Text>
             </TouchableOpacity>
           </View>
           <View style={{marginTop: 13}}>

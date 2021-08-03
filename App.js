@@ -14,7 +14,6 @@ import TabStackScreen from "./navigation/TabStackScreen";
 import { HeaderBackButton } from '@react-navigation/stack';
 import policyoneforlogin from './pages/MyPagePages/policyoneforlogin';
 import policytwoforlogin from './pages/MyPagePages/policytwoforlogin';
-import GoogleCheck from './pages/login/GoogleCheck';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 // import { applyMiddleware, createStore } from 'redux';
@@ -50,11 +49,6 @@ const App = ({navigation}) =>{
           <Stack.Screen
             name="emailSignup"
             component={emailSignup}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="GoogleCheck"
-            component={GoogleCheck}
             options={{headerShown: false}}
           />
           <Stack.Screen
