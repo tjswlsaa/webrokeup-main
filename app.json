@@ -11,7 +11,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.tjswlsaa.spartamyhoneytipahn"
+      "bundleIdentifier": "com.myhoneytip.ahn"
     }
   }
 }
