@@ -23,7 +23,6 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "1.0.0",
-      "bundleIdentifier": "com.myhoneytip.ahn",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1590390650623909~1144738049"
       }
