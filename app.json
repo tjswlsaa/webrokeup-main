@@ -1,14 +1,9 @@
 {
   "expo": {
     "name": "sparta-myhoneytip-ahn",
-    "slug": "sparta-myhoneytip-ahn2",
+    "slug": "sparta-myhoneytip-ahn",
     "version": "1.0.0",
     "orientation": "portrait",
-    "facebookAppId": "236589574645339",
-    "facebookScheme": "fb2126657990894930",
-    "facebookDisplayName": "webrokeup",
-    "facebookAutoInitEnabled": false,
-    "facebookAutoLogAppEventsEnabled": true,
     "updates": {
       "fallbackToCacheTimeout": 0
     },
