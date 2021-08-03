@@ -1,11 +1,17 @@
 {
   "build": {
-    "image": "latest",
+    "base": {
+      "ios": {
+        "image": "latest"
+      }
+    },
     "release": {
+      "extends": "base"
     },
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "extends": "base"
     }
   }
 }
