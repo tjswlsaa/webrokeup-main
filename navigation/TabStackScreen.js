@@ -201,7 +201,7 @@ const HomeStackScreen = () => {
       options={{
         title:"말머리에서",
         ...defaultScreenOptions,
-        ...IntroArticle.Options
+        ...IntroArticle.options
 
       }}
       />

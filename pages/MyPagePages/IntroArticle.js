@@ -123,5 +123,11 @@ const styles = StyleSheet.create({
     likeButton: {
         marginLeft: "10%"
     }
-})
-export default IntroArticle;
+});
+
+export default {
+  component: IntroArticle,
+  options: {
+
+  }
+};
