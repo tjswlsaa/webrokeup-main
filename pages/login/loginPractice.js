@@ -59,7 +59,7 @@ const Login =({navigation,route})=> {
                 <Formik
                 initialValues={{email:'', password:''}}
                 onSubmit={(values)=>{
-                    console.log(values);
+                   // console.log(values);
                     
                 }}
                 >

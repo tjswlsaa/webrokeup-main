@@ -52,7 +52,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
 
     
 
-    console.log('Comment()');
+   // console.log('Comment()');
  
     const [text, setText] = useState("")
 
@@ -88,7 +88,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
                //console.log({'temp.length (.)':temp.length});
                //console.log({'comments.length (.)':comments.length});
                
-               console.log({snapshot});
+              // console.log({snapshot});
                
                snapshot.forEach((child) => {
                    
@@ -125,7 +125,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
             });
     }, []);
 
-    console.log('comments이거 모냐고!!!!!!!!',comments)
+   // console.log('comments이거 모냐고!!!!!!!!',comments)
 
     // useEffect(()=>{
     //     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
@@ -333,31 +333,31 @@ console.log('s없는 코멘트',comment)
         .on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-            console.log('useEffect()');
-            console.log({likeCount});
+           // console.log('useEffect()');
+           // console.log({likeCount});
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log('이게 뜨네',temp);
+           // console.log('이게 뜨네',temp);
             setLikedUsers(temp);
         })
     }, [])
 
-    console.log('이게 들어야 확인해줌',user_uid)
+   // console.log('이게 들어야 확인해줌',user_uid)
 
         const likes = async ()=>{
-        console.log('MyArticle.likeButton.onPress()');
+       // console.log('MyArticle.likeButton.onPress()');
         // Alert.alert('MyArticle.likeButton.onPress()');
-        console.log({likedUsers});
+       // console.log({likedUsers});
         // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
         let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
          const isMeliked = (meliked > '');
          const isMeliked2 = ((meliked == '') == false);
-         console.log("likedUsers: " +likedUsers)
-         console.log("meliked: " + meliked)
-         console.log({isMeliked,isMeliked2});
+        // console.log("likedUsers: " +likedUsers)
+        // console.log("meliked: " + meliked)
+        // console.log({isMeliked,isMeliked2});
          let likeCount = 0; 
          // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
          // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
@@ -373,7 +373,7 @@ console.log('s없는 코멘트',comment)
                  setLikeCount(likeCount)
              })
          } else {
-             console.log ("좋아요 취소")
+            // console.log ("좋아요 취소")
              // likeRef.child(user_uid).set(null)
              await likeRef.child(user_uid).remove();
              // likeReload();
@@ -383,8 +383,8 @@ console.log('s없는 코멘트',comment)
                  setLikeCount(likeCount)
              })
          }
-         console.log({likeCount});
-         console.log("여기여기: " + likeCount) 
+        // console.log({likeCount});
+        // console.log("여기여기: " + likeCount) 
          // 이전: const [likeCount, setLikeCount] = useState(0);
          // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
          // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.

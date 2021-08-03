@@ -33,22 +33,22 @@ const MyBook = ({ navigation, route }) => {
     const statusBarHeight= getStatusBarHeight()
     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
 
-    console.log('시작!')
+   // console.log('시작!')
 
-    console.log('headerHeight',headerHeight)
-    console.log('ScreenWidth',ScreenWidth)
-    console.log('ScreenHeight',ScreenHeight)
-    console.log('BottomSpace',BottomSpace)
-    console.log('tabBarHeight',tabBarHeight)
-    console.log('statusBarHeight',statusBarHeight)
-    console.log('realScreen',realScreen)
+   // console.log('headerHeight',headerHeight)
+   // console.log('ScreenWidth',ScreenWidth)
+   // console.log('ScreenHeight',ScreenHeight)
+   // console.log('BottomSpace',BottomSpace)
+   // console.log('tabBarHeight',tabBarHeight)
+   // console.log('statusBarHeight',statusBarHeight)
+   // console.log('realScreen',realScreen)
 
     // const intro = Object.values(myitem.intro.introArticle)
-    // console.log('오류확인', myitem.intro.introArticle)
+    //// console.log('오류확인', myitem.intro.introArticle)
     // const chapters = Object.values(myitem.chapters)
     // const subChapters = Object.values(chapters);
     const [chapter, setChapter] = useState([]);
-    // console.log('북키가문제', bookKey)
+    //// console.log('북키가문제', bookKey)
     // const chaptersArray = Object.keys(myitem.chapters);
     // const chapterKey = chaptersArray.toString();
 
@@ -180,8 +180,8 @@ const MyBook = ({ navigation, route }) => {
 // Javascript의 가장 강력하고 가장 큰 특징... 중 하나: 함수 또한 값이다.
 function MyChapterItem(props) {
     const { navigation, chapters, chapterTitle, myitem, bookKey, chapterKey } = props;
-    console.log('아s가 어렵다',chapters.chapterKey)
-    console.log('이것도 찾나',chapterKey)
+   // console.log('아s가 어렵다',chapters.chapterKey)
+   // console.log('이것도 찾나',chapterKey)
 
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
@@ -195,14 +195,14 @@ function MyChapterItem(props) {
         .on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-            console.log('useEffect()');
-            console.log({likeCount});
+           // console.log('useEffect()');
+           // console.log({likeCount});
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log({temp});
+           // console.log({temp});
             setLikedUsers(temp);
         })
     }, [])

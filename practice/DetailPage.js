@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 
 export default function DetailPage({navigation,route}) {
     let user_idx = Constants.installationId
-    console.log(user_idx)
+   // console.log(user_idx)
     const [tip, setTip] = useState({
         "idx":9,
         "category":"재테크",
@@ -17,7 +17,7 @@ export default function DetailPage({navigation,route}) {
     })
     
     useEffect(()=>{
-        console.log(route)
+       // console.log(route)
         navigation.setOptions({
             title:route.params.title,
             headerStyle: {
@@ -43,7 +43,7 @@ export default function DetailPage({navigation,route}) {
         // 찜 데이터 방 > 사용자 방 > 어떤 찜인지 아이디
         const user_id = Constants.installationId;
         firebase_db.ref('/like/'+user_idx+'/'+ tip.idx).set(tip,function(error){
-            console.log(error)
+           // console.log(error)
             Alert.alert("찜 완료!")
         });
     }

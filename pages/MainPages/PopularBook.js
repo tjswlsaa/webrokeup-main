@@ -18,17 +18,17 @@ const PopularBook = ({navigation,bookKey}) => {
         .on('value', (snapshot) => {
             snapshot.forEach((child) => {
                 temp.push(child.val());
-                console.log({snapshot})
+               // console.log({snapshot})
             })
             setBook(temp)
         })
-    console.log(temp)
+   // console.log(temp)
 }, [])
 
 
 const BookItem = ({ navigation, item }) => {
-  // console.log(item);
-  console.log("bookitem for popular book running")
+  //// console.log(item);
+ // console.log("bookitem for popular book running")
   return (
     <View style={{height: "30%"}}>
     <TouchableOpacity style={styles.bookContainerOne} onPress={()=>{navigation.navigate('readBook')}} > 

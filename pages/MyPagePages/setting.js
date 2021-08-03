@@ -28,8 +28,8 @@ export default function setting ({navigation, route}) {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.accountDeleteButton} onPress={() => firebase.auth().currentUser.delete().then(function () {
-  console.log('delete successful?')
-  console.log(app.auth().currentUser)
+ // console.log('delete successful?')
+ // console.log(app.auth().currentUser)
 }).catch(function (error) {
   console.error({error})
 })}>

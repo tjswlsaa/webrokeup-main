@@ -40,7 +40,7 @@ const readEditorWriting = ({ navigation, route }) => {
   const text_a = useRef(null);
   const { writingKey } = route.params;
   test1.writingKey=writingKey
-  console.log('포스트키부터확인',writingKey)
+ // console.log('포스트키부터확인',writingKey)
 
   var user = firebase.auth().currentUser;
   var user_uid
@@ -87,7 +87,7 @@ const readEditorWriting = ({ navigation, route }) => {
            //console.log({'temp.length (.)':temp.length});
            //console.log({'comments.length (.)':comments.length});
            
-           console.log({snapshot});
+          // console.log({snapshot});
            
            snapshot.forEach((child) => {
                
@@ -146,14 +146,14 @@ const likeRef = firebase_db.ref(`editor/${writingKey}/` + '/likes/');
       .on('value', (snapshot) => {
           let temp = [];
           var likeCount = snapshot.numChildren();
-          console.log('useEffect()');
-          console.log({likeCount});
+         // console.log('useEffect()');
+         // console.log({likeCount});
           setLikeCount(likeCount)
-          // console.log(likeCount)
+          //// console.log(likeCount)
           snapshot.forEach((child) => {
               temp.push(child.val());
           })
-          console.log({temp});
+         // console.log({temp});
           setLikedUsers(temp);
       })
   }, [])
@@ -208,7 +208,7 @@ const deleteWriting = async()=> {
 
       {
         text: '취소',
-        onPress: () => console.log('취소되었습니다'),
+        // onPress: () => console.log('취소되었습니다'),
         style: 'cancel',
       },
       {text: '삭제', onPress: () => deletefunction()},
@@ -280,15 +280,15 @@ const displayedAt=(createdAt)=>{
 
           <View style={{backgroundColor:"pink", flexDirection:"row", alignItems:"center", marginLeft:15, marginTop:10}}>
                 <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
-                    console.log('MyArticle.likeButton.onPress()');
-                    console.log({likedUsers});
+                   // console.log('MyArticle.likeButton.onPress()');
+                   // console.log({likedUsers});
                     // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
                     let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
                      const isMeliked = (meliked > '');
                      const isMeliked2 = ((meliked == '') == false);
-                     console.log("likedUsers: " +likedUsers)
-                     console.log("meliked: " + meliked)
-                     console.log({isMeliked,isMeliked2});
+                    // console.log("likedUsers: " +likedUsers)
+                    // console.log("meliked: " + meliked)
+                    // console.log({isMeliked,isMeliked2});
                      let likeCount = 0; 
                      // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
                      // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
@@ -304,7 +304,7 @@ const displayedAt=(createdAt)=>{
                              setLikeCount(likeCount)
                          })
                      } else {
-                         console.log ("좋아요 취소")
+                        // console.log ("좋아요 취소")
                          // likeRef.child(user_uid).set(null)
                          await likeRef.child(user_uid).remove();
                          // likeReload();
@@ -314,8 +314,8 @@ const displayedAt=(createdAt)=>{
                              setLikeCount(likeCount)
                          })
                      }
-                     console.log({likeCount});
-                     console.log("여기여기: " + likeCount) 
+                    // console.log({likeCount});
+                    // console.log("여기여기: " + likeCount) 
  
                      firebase_db.ref(`editor/${writingKey}/`).child("likeCount").set({"likeCount" : likeCount})
 
@@ -471,7 +471,7 @@ const WritingComment = (props)=> {
 
   // const {user_uid}=test4
 
-  console.log('얘가 가지고 있는 값',comment)
+ // console.log('얘가 가지고 있는 값',comment)
 
   const likeRef = firebase_db.ref(`editor/${writingKey}/`  + `/comments/${comment.key}/likes/`)    
 
@@ -483,31 +483,31 @@ const WritingComment = (props)=> {
       .on('value', (snapshot) => {
           let temp = [];
           var likeCount = snapshot.numChildren();
-          console.log('useEffect()');
-          console.log({likeCount});
+         // console.log('useEffect()');
+         // console.log({likeCount});
           setLikeCount(likeCount)
-          // console.log(likeCount)
+          //// console.log(likeCount)
           snapshot.forEach((child) => {
               temp.push(child.val());
           })
-          console.log('이게 뜨네',temp);
+         // console.log('이게 뜨네',temp);
           setLikedUsers(temp);
       })
   }, [])
 
-  console.log('이게 들어야 확인해줌',user_uid)
+ // console.log('이게 들어야 확인해줌',user_uid)
 
       const likes = async ()=>{
-      console.log('MyArticle.likeButton.onPress()');
+     // console.log('MyArticle.likeButton.onPress()');
       // Alert.alert('MyArticle.likeButton.onPress()');
-      console.log({likedUsers});
+     // console.log({likedUsers});
       // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
       let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
        const isMeliked = (meliked > '');
        const isMeliked2 = ((meliked == '') == false);
-       console.log("likedUsers: " +likedUsers)
-       console.log("meliked: " + meliked)
-       console.log({isMeliked,isMeliked2});
+      // console.log("likedUsers: " +likedUsers)
+      // console.log("meliked: " + meliked)
+      // console.log({isMeliked,isMeliked2});
        let likeCount = 0; 
        // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
        // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
@@ -523,7 +523,7 @@ const WritingComment = (props)=> {
                setLikeCount(likeCount)
            })
        } else {
-           console.log ("좋아요 취소")
+          // console.log ("좋아요 취소")
            // likeRef.child(user_uid).set(null)
            await likeRef.child(user_uid).remove();
            // likeReload();
@@ -533,8 +533,8 @@ const WritingComment = (props)=> {
                setLikeCount(likeCount)
            })
        }
-       console.log({likeCount});
-       console.log("여기여기: " + likeCount) 
+      // console.log({likeCount});
+      // console.log("여기여기: " + likeCount) 
        // 이전: const [likeCount, setLikeCount] = useState(0);
        // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
        // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.

@@ -22,63 +22,61 @@ import Icon from 'react-native-vector-icons/Ionicons';
 // import promiseMiddleware from 'redux-promise'
 // import ReduxThunk from 'redux-thunk'
 // const createStoreWithMiddleware =applyMiddleware(promiseMiddleware,ReduxThunk)(createStore)
-const App=  (props) =>{
-  const {navigation} = props;
+const App = ({navigation}) =>{
     return (
       <NavigationContainer>
-              <StatusBar style="white" />
+        <StatusBar style="white" />
         <Stack.Navigator
           initialRouteName="LoadingScreen"
           screenOptions={{ headerShown: false }}
-          >
-             <Stack.Screen
-          name="LoadingScreen"
-          component={LoadingScreen}
-          options={{headerShown: false}}
-        />
-            <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-        options={{headerShown: false}}
-      />
+        >
           <Stack.Screen
-        name="TabStackScreen"
-                screenOptions={{
-      gestureEnabled: false,
-      gestureDirection: 'horizontal',
-    }}
-        component={TabStackScreen}
-      />
+            name="LoadingScreen"
+            component={LoadingScreen}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
-        name="emailSignup"
-        component={emailSignup}
-        options={{headerShown: false}}
-      />
-                <Stack.Screen
-        name="GoogleCheck"
-        component={GoogleCheck}
-        options={{headerShown: false}}
-      />
-                <Stack.Screen
-        name="policyoneforlogin"
-        component={policyoneforlogin}
-        options={{headerShown: true, title:"서비스 약관",
-        headerLeft: () => (
-          <Icon.Button name='ios-menu' size={25}
-          backgroundColor= '#009387'  onPress={() => navigation.navigate('LoginScreen')}>
-          </Icon.Button>)
-      }}
-      />
-                      <Stack.Screen
-        name="policytwoforlogin"
-        component={policytwoforlogin}
-        options={{headerShown: true, title:"개인정보 처리방침"}}
-      />
-      <Stack.Screen
-        name="emailLogin"
-        component={emailLogin}
-        options={{headerShown: false}}
-      />
+            name="LoginScreen"
+            component={LoginScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TabStackScreen"
+            screenOptions={{
+            gestureEnabled: false,
+            gestureDirection: 'horizontal',}}
+            component={TabStackScreen}
+          />
+          <Stack.Screen
+            name="emailSignup"
+            component={emailSignup}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="GoogleCheck"
+            component={GoogleCheck}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="policyoneforlogin"
+            component={policyoneforlogin}
+            options={{headerShown: true, title:"서비스 약관",
+            headerLeft: () => (
+              <Icon.Button name='ios-menu' size={25}
+                backgroundColor= '#009387'  onPress={() => navigation.navigate('LoginScreen')}>
+              </Icon.Button>)
+            }}
+          />
+          <Stack.Screen
+            name="policytwoforlogin"
+            component={policytwoforlogin}
+            options={{headerShown: true, title:"개인정보 처리방침"}}
+          />
+          <Stack.Screen
+            name="emailLogin"
+            component={emailLogin}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     )

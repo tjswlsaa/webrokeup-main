@@ -110,7 +110,7 @@ const readBook = ({ navigation, route }) => {
                     <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} />
                 </View>
                 {chapter.map(chapters => {
-                    console.log('readBook.js (1) chapters:', chapters);
+                   // console.log('readBook.js (1) chapters:', chapters);
 
                     return (
                         <MyChapterItem
@@ -134,10 +134,10 @@ const readBook = ({ navigation, route }) => {
 function MyChapterItem(props) {
     const { navigation, chapters, chapterTitle, myitem, bookKey, chapterKey } = props;
 
-    console.log('readBook.js (1), chapters: ',chapters);
+   // console.log('readBook.js (1), chapters: ',chapters);
 
-    console.log('아s가 어렵다',chapters.chapterKey)
-    console.log('이것도 찾나',chapterKey)
+   // console.log('아s가 어렵다',chapters.chapterKey)
+   // console.log('이것도 찾나',chapterKey)
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
@@ -148,19 +148,19 @@ function MyChapterItem(props) {
         .on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-            console.log('useEffect()');
-            console.log({likeCount});
+           // console.log('useEffect()');
+           // console.log({likeCount});
             setLikeCount(likeCount)
-            // console.log(likeCount)
+            //// console.log(likeCount)
             snapshot.forEach((child) => {
                 temp.push(child.val());
             })
-            console.log({temp});
+           // console.log({temp});
             setLikedUsers(temp);
         })
     }, [])
     useEffect (()=>{
-        console.log('readBook.js (2), chapters: ',chapters);
+       // console.log('readBook.js (2), chapters: ',chapters);
 
         let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
         .on('value', (snapshot) => {
@@ -171,7 +171,7 @@ function MyChapterItem(props) {
     return (
         <View>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { 
-                    console.log('readBook.js (3), chapters: ',chapters);
+                   // console.log('readBook.js (3), chapters: ',chapters);
                     navigation.navigate('readArticle', { myitem: myitem, chapters: chapters, navigation: navigation, chapterTitle: chapterTitle, bookKey: bookKey, chapterKey: chapters.chapterKey })
                 }}>
                 <Text style={styles.bookIndexOneTitle} numberOfLines={1}>{chapters.chapterTitle}</Text>

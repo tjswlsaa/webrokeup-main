@@ -49,10 +49,10 @@ const MakeNewBook = ({navigation,route}) => {
     })();
   }, []);
   useEffect(()=>{
-   // console.log("hello")
+   //// console.log("hello")
     var changeDataRef = firebase.database().ref('book/').orderByChild("regdate");
     changeDataRef.on("value",(snapshot) =>{
-     // console.log(snapshot)
+     //// console.log(snapshot)
       const bookKey=snapshot.bookKey;
       const tmp = [];
       snapshot.forEach((child)=>{
@@ -67,7 +67,7 @@ const MakeNewBook = ({navigation,route}) => {
           isPublic:isPublic
         })
       })
-    //  console.log(tmp);
+    // // console.log(tmp);
       setData(tmp);
     })
   },[])

@@ -13,10 +13,10 @@ const readIntroArticle = ({navigation, route}) => {
   const [data,setData] = useState('');
   const {bookKey, myitem, intro} = route.params;
   useEffect(()=>{
-    console.log("말머리 생성 완료")
+   // console.log("말머리 생성 완료")
     var changeDataRef = firebase.database().ref(`book/${bookKey}/`);
     changeDataRef.on("value",(snapshot) =>{
-      console.log(snapshot)
+     // console.log(snapshot)
       const tmp = [];
       snapshot.forEach((child)=>{
         tmp.unshift({
@@ -24,7 +24,7 @@ const readIntroArticle = ({navigation, route}) => {
           introArticle:child.val().intro
         })
       })
-      console.log(tmp);
+     // console.log(tmp);
       setData(tmp);
     })
   },[])

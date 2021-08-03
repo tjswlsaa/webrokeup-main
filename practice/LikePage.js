@@ -17,9 +17,9 @@ export default function LikePage({navigation,route}){
         })
         const user_id = Constants.installationId;
         firebase_db.ref('/like/'+user_id).once('value').then((snapshot) => {
-            console.log("파이어베이스에서 데이터 가져왔습니다!!")
+           // console.log("파이어베이스에서 데이터 가져왔습니다!!")
             let tip = snapshot.val();
-            console.log(tip)
+           // console.log(tip)
             let tip_list = Object.values(tip)
             if(tip_list.length > 0){
                 setTip(tip_list)
