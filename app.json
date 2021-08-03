@@ -9,6 +9,9 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.tjswlsaa.spartamyhoneytipahn"
+    }
   }
 }
