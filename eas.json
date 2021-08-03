@@ -1,12 +1,11 @@
 {
   "build": {
+    "image": "latest",
     "release": {
-      "image": "latest"
     },
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "image": "latest"
+      "distribution": "internal"
     }
   }
 }
