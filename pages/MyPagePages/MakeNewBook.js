@@ -28,9 +28,9 @@ const test2 ={
   image:''
 };
 
-const test3 ={
-  bookTitle:''
-}
+// const test3 ={
+//   bookTitle:''
+// }
 const test4 ={
   isPublic:''
 }
@@ -68,14 +68,16 @@ const MakeNewBook = ({navigation,route}) => {
         })
 }, []);
 
-console.log('userinfo',userinfo)
+// console.log('userinfo',userinfo)
 test5.navigation=navigation
 
 test.user_uid = user_uid;
-const [newText,setText]=useState('')
-const [bookTitle, setBookTitle] = useState('');   
-test3.bookTitle=bookTitle
-console.log('두줄만들자',bookTitle.length)
+const [text,setText]=useState('')
+const [text2,setText2]=useState('')
+
+// const [bookTitle, setBookTitle] = useState('');   
+// test3.bookTitle=bookTitle
+// console.log('두줄만들자',bookTitle.length)
   const [image, setImage] = useState(null);
   test2.image=image;
   const [isPublic, setPublic] = useState(true);
@@ -95,11 +97,14 @@ console.log('두줄만들자',bookTitle.length)
     })();
   }, []);
   const savePhoto= async () => {
+    console.log('savePhoto() quality: 0.01');
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      // quality: 0.1,
+      // quality: 0.05,
+      quality: 0.01,
     });
     if (!result.cancelled) {
       setImage(result.uri)
@@ -166,17 +171,31 @@ console.log('두줄만들자',bookTitle.length)
               ):( */}
 
                 <TextInput style={styles.titleInputText} 
-                value={bookTitle}
+                value={text}
+                // value={bookTitle}
                 // numberOfLines={2}
                 // maxHeight={60} 
-                onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                setText(newText);  } }
-                multiline={true}  
-                maxLength ={16}
+                // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                // setText(newText);  } }
+                multiline={false}  
+                maxLength ={8}
                 returnKeyType="done"
-                onChangeText={bookTitle=> setBookTitle(bookTitle)}
+                onChangeText={text=> setText(text)}
                 placeholder="제목을 두줄로 작성해주세요"/>
 
+                <TextInput style={styles.titleInputText} 
+                value={text2}
+                // value={bookTitle}
+                // numberOfLines={2}
+                // maxHeight={60} 
+                // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                // setText(newText);  } }
+                onChangeText={text2=> setText2(text2)}
+                multiline={false}  
+                maxLength ={8}
+                returnKeyType="done"
+                // onChangeText={bookTitle=> setBookTitle(bookTitle)}
+                placeholder="제목을 두줄로 작성해주세요"/>
               {/* )} */}
                   {/* <TextInput style={styles.titleInputText} 
                 multiline={true}  
@@ -336,13 +355,21 @@ console.log('두줄만들자',bookTitle.length)
    // console.log('진행상황2')
    // console.log('props 확인', image)
    // console.log('진행상황3')
+
+    console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
     const storageRef = storage.ref();
     const SAVE_PATH = storageRef.child('bookCover/' + bookKey)
+    console.log('saveChapter() ..', new Date());
     const response = await fetch(image); //get in the data?
+    console.log('saveChapter() ...', new Date());
     const blob = await response.blob();//uploading the image blob of the uri which will pass along fire store
+    console.log('saveChapter() ....', new Date());
     await SAVE_PATH.put(blob);
+    console.log('saveChapter() .....', new Date());
     const downloadURL= await SAVE_PATH.getDownloadURL()
+    console.log('saveChapter() ..... .', new Date());
+
   firebase_db
   .ref('book/'+bookKey)
   .set({
