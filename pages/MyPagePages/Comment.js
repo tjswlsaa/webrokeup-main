@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { useKeyboard } from '@react-native-community/hooks'
+import Swipeable from 'react-native-gesture-handler/Swipeable'
 
 
 const test = {
@@ -136,6 +137,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
     const commentKey = Math.random().toString().replace(".","");
 
     test6.commentKey=commentKey
+    const text_a = useRef(null);
 
 
     const onCommentSend = () => {
@@ -153,6 +155,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
             })
 
         dismissKeyboard()
+        text_a.current.clear();
 
     }
 
@@ -209,6 +212,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
                             placeholder='댓글을 남겨주세요'
                             textAlign='justify'
                             style={styles.commentInput}
+                            ref={text_a}
                             multiline = {true}
                             onChangeText={(text) => setText(text)} />
                 </TouchableWithoutFeedback> 
@@ -333,8 +337,7 @@ console.log('s없는 코멘트',comment)
         .on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
-           // console.log('useEffect()');
-           // console.log({likeCount});
+
             setLikeCount(likeCount)
             //// console.log(likeCount)
             snapshot.forEach((child) => {
@@ -348,19 +351,13 @@ console.log('s없는 코멘트',comment)
    // console.log('이게 들어야 확인해줌',user_uid)
 
         const likes = async ()=>{
-       // console.log('MyArticle.likeButton.onPress()');
-        // Alert.alert('MyArticle.likeButton.onPress()');
-       // console.log({likedUsers});
-        // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
+
         let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
          const isMeliked = (meliked > '');
          const isMeliked2 = ((meliked == '') == false);
-        // console.log("likedUsers: " +likedUsers)
-        // console.log("meliked: " + meliked)
-        // console.log({isMeliked,isMeliked2});
+
          let likeCount = 0; 
-         // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
-         // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
+
          if (meliked == ''){
              await likeRef.child(user_uid).set({
                  user_uid: user_uid,
@@ -383,23 +380,60 @@ console.log('s없는 코멘트',comment)
                  setLikeCount(likeCount)
              })
          }
-        // console.log({likeCount});
-        // console.log("여기여기: " + likeCount) 
-         // 이전: const [likeCount, setLikeCount] = useState(0);
-         // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
-         // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.
-         // 이후: let likeCount = 0;
-         // likeCount는 변수다
-         // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-        //  firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey).child("likeCount").set({"likeCount" : likeCount})
-         // likeRef.child(user_uid).set({
-         //     user_uid: user_uid,
-         //     regdate: new Date().toString(),
-         // })
-         // likeReload();
-        //  Alert.alert('MyArticle.likeButton.onPress() end');
+
         }
 
+        const deleteCommentfunction=async()=>{
+
+            Alert.alert(
+              'Alert Title',
+              '삭제하겠습니까?',
+              [
+          
+                {
+                  text: '취소',
+                  onPress: () => closeSwipeable(),
+                  style: 'cancel',
+                },
+                {text: '삭제', onPress: () => deleteit()},
+          
+              ],
+              {cancelable: false},
+            )
+          
+            const deleteit=()=> {
+              firebase_db
+              .ref(`book/${bookKey}/chapters/` + chapterKey + `/comments/${comment.key}/`)
+              .set(null)
+              .then(function(){
+                Alert.alert("삭제 완료") })
+                    }
+          
+                  }
+
+                  const DeleteButton = () => {
+
+
+                    return (
+                      <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={()=>deleteCommentfunction()}
+                          style={styles.button}
+                      >
+                          <Text style={styles.text}>
+                              삭제
+                          </Text>
+                      </TouchableOpacity>
+                    )
+                    }        
+
+                    const swipeableRef = useRef(null);
+
+                    const closeSwipeable = () => {
+                      swipeableRef.current.close();
+                    }
+                    
+                    
     const createdAt= new Date(comment.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
     ////console.log('comment.regdate',comment.regdate)
     ////console.log('createdAt',createdAt)
@@ -424,35 +458,96 @@ console.log('s없는 코멘트',comment)
         const years = days / 365
         return `${Math.floor(years)}년 전`
       }
-    return(
+    return (
+<View>
 
-            <View style={{
-                    backgroundColor:"white",flexDirection:"row",
-                    marginBottom:10,
-                    marginTop:10,
+{comment.creator==user_uid ? (   
 
-                    justifyContent:"center",
-                    // backgroundColor:"#C4C4C4",
-                    borderRadius:5,
-                    width:"90%",
-                    alignSelf:"center",}}>
+  <View style={{
+    backgroundColor:"pink",
+    flexDirection:"row",
+    marginBottom:10,
+    marginTop:10,
 
-                <View style={{justifyContent:"center"}}>
-                    <TouchableOpacity onPress={()=>likes()} >
-                    <Icon name="like2" size={25} color="black" style={{}} />
-                    </TouchableOpacity>
-                    <Text> {likeCount} </Text>
-                </View>
+    // backgroundColor:"#C4C4C4",
+    borderRadius:5,
+    width:"90%",
+    alignSelf:"center",}}>
 
-                <View style={{flexDirection: "column"}}>
-                    <Text style={{fontSize:15, marginTop:10,marginBottom:10,marginLeft:50, width:200,}}>{comment.text}</Text>
+
+
+              <Swipeable
+                ref={swipeableRef}
+              renderRightActions={()=><DeleteButton/>}>
+                <View style={{flexDirection:"row"}}>
+              <View style={{flexDirection: "column"}}>
+                <TouchableOpacity
+                          activeOpacity={0.8}
+                          // onPress={()=>deleteComment()}
+                          // style={{backgroundColor:"pink"}}
+                          // style={done ? styles.done : styles.check}
+                      >
+                    <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
                     <View style={{flexDirection:"row"}}>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:50,marginBottom:10}}>{userinfo.iam}</Text>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:100}}>{displayedAt(createdAt)}</Text>
+                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{userinfo.iam}</Text>
+                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
                     </View>
-                </View>
-            </View>
-    )
+                  </TouchableOpacity>
+
+              </View>
+
+              <View style={{marginLeft:70,justifyContent:"center"}}>
+                  <TouchableOpacity onPress={()=>likes()} >
+                  <Icon name="like2" size={20} color="black" style={{}} />
+                  </TouchableOpacity>
+                  <Text> {likeCount} </Text>
+              </View>
+              </View>
+              </Swipeable>
+              </View>
+
+  ) : (
+    <View style={{
+      backgroundColor:"pink",
+      flexDirection:"row",
+      marginBottom:10,
+      marginTop:10,
+
+      // backgroundColor:"#C4C4C4",
+      borderRadius:5,
+      width:"90%",
+      alignSelf:"center",}}>
+              <View style={{flexDirection:"row"}}>
+              <View style={{flexDirection: "column"}}>
+                <TouchableOpacity
+                          activeOpacity={0.8}
+                          // onPress={()=>deleteComment()}
+                          // style={{backgroundColor:"pink"}}
+                          // style={done ? styles.done : styles.check}
+                      >
+                    <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{comment.iam}</Text>
+                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
+                    </View>
+                  </TouchableOpacity>
+
+              </View>
+
+              <View style={{marginLeft:70,justifyContent:"center"}}>
+                  <TouchableOpacity onPress={()=>likes()} >
+                  <Icon name="like2" size={20} color="black" style={{}} />
+                  </TouchableOpacity>
+                  <Text> {likeCount} </Text>
+              </View>
+              </View>
+              </View>
+
+
+  ) }
+
+  </View>
+  )
 }
 
 
