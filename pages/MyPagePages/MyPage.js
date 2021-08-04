@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
 import backgroundimage from '../../assets/backgroundimage.jpg'
+import BookComponent from '../../components/BookComponent';
+
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -16,7 +18,7 @@ const test1 ={
     userinfo:''
 }
 const test2= {
-    myitem:""
+    item:""
 }
 const MyPage = ({navigation, route}) => {
     const [myBook, setMyBook] = useState([]);
@@ -45,11 +47,11 @@ const MyPage = ({navigation, route}) => {
             .on('value', (snapshot) => {
                 let temp = [];
                 snapshot.forEach((child) => {
-                    const myitem={
+                    const item={
                     ...child.val(), 
                     key: child.key, 
                 }
-                temp.push(myitem)
+                temp.push(item)
             })
             temp.sort(function (a, b) {
                 return new Date(a.regdate) - new Date(b.regdate);
@@ -70,33 +72,32 @@ const MyPage = ({navigation, route}) => {
 // const slideTo = (index) => swiper.slideTo(index);
 
 return (
-    <SafeAreaView style={{flex:1}}>
-    <View style={{}}>
-        <View style={{height:40,alignItems:"center",justifyContent:"center"}}>
-            <Text style={{fontSize:15, fontWeight:"500"}}>나의 이별록</Text>
-        </View>
-        <View style={styles.profileContainer}>
-            <View style={styles.settingPlusUserNameContainer}>
-                <Text style={styles.profileUserName}>{userinfo.iam}</Text>
-                <TouchableOpacity onPress={()=>{navigation.navigate('Account')}}>
-                    <Icon name="settings-outline" size={25} color="black" style={styles.settingIcon}/>
-                </TouchableOpacity>
+    <SafeAreaView style={{flex: 1}}>
+        <View style={{flex: 1}}>
+            <StatusBar style="white"/>
+            <View style={{flex: 1, alignItems:"center", justifyContent:"center", borderWidth: 1, backgroundColor: "#fff"}}>
+                <Text style={{fontSize:17, fontWeight:"600", }}>나의 이별록</Text>
             </View>
-            <Text style={styles.profileUserDesc}> {userinfo.selfLetter}</Text>
-        </View>
-            <View style={{width:"95%",alignSelf:"center", marginBottom:10}}>
+            <View style={{flex: 2, borderWidth: 1}}>
+                <View style={{flex: 1, flexDirection: "row", backgroundColor: "#fff", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
+                    <Text style={{flex: 1, }}>{userinfo.iam}</Text>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('Account')}}>
+                        <Icon name="settings-outline" size={25} color="black" style={styles.settingIcon}/>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.profileUserDesc}> {userinfo.selfLetter}</Text>
+            </View>
+            <View style={{flex: 8, borderWidth: 1, alignSelf:"center", marginBottom:10}}>
                 {myBookFiltered.length == 0 ? (
-                     <View style={{height:250, resizeMode:"cover" }} source={bookBackground}>
+                        <View style={{height:250, resizeMode:"cover" }} source={bookBackground}>
                     <TouchableOpacity style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }} onPress={()=>{navigation.navigate("MakeNewBook")}}>
                             <Text style={{fontSize:15}}>새로운 책을 만들어주세요</Text>
                         </TouchableOpacity>
                     {/* </ImageBackground> */}
                         </View>
                     ) :  (
-                        <View style={{height:450, resizeMode:"cover" }} source={{uri:bookBackground}}>
-                            <TouchableOpacity style={styles.openButton} onPress={()=>{navigation.navigate("MakeNewBook")}}>
-                                    <Text style={styles.openButtonText}>새로운 책 만들기</Text>
-                            </TouchableOpacity>
+                        <View style={{height:450, resizeMode:"cover" }}>
+                            
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}
@@ -112,7 +113,7 @@ return (
                                 marginRight: 9,
                             }}/>}
                             activeDot={<View style={{    // selected dots style
-                                backgroundColor: '#060FBF',
+                                backgroundColor: "#7685C1",
                                 width: 10,
                                 height: 10,
                                 borderRadius: 4,
@@ -120,26 +121,33 @@ return (
                                 marginRight: 9,
                             }}/>}
                             >
-                                    {myBookFiltered.map(myitem => {
-                                        test2.myitem=myitem
-                                       // console.log('myitem여기서부터문제인가',myitem)
+                                    {myBookFiltered.map(item => {
+                                        test2.item=item
+                                        console.log('item여기서부터문제인가',item)
                                     return (
-                                        <MyBookItem
-                                        key = {myitem.key}
-                                        myitem={myitem}
-                                        url={myitem.url}
-                                        bookTitle={myitem.bookTitle}
+                                        <BookComponent
+                                        key = {item.key}
+                                        item={item}
+                                        url={item.url}
+                                        bookTitle={item.bookTitle}
                                         navigation = {navigation}
                                         userID={userID}
                                     />
                                             )
                                         })}
-                            </Swiper>
+                            </Swiper>  
                         </View>
+                       
                     )
                     }
-                    </View>
-    </View>
+                <View style={{flex:1, borderWidth: 1}}>
+                    <TouchableOpacity style={{width: "94%", height: "70%", backgroundColor: "#7685C1", alignSelf: "center", borderRadius: 15, justifyContent: "center", marginTop: "5%"}} onPress={()=>{navigation.navigate("MakeNewBook")}}>
+                                <Text style={{textAlign: "center", fontSize: 15, color: "white"}}> 새 이별집 만들기</Text>
+                    </TouchableOpacity>
+                </View>
+                
+            </View>
+        </View>
     </SafeAreaView>
 )}
 const styles = StyleSheet.create({
@@ -223,7 +231,7 @@ const styles = StyleSheet.create({
       openButton:{
         height:"5%",
         width:"40%",
-        backgroundColor:"#C4C4C4",
+        backgroundColor:"#D3D6EC",
         borderRadius:5,
         marginRight:"6%" ,
         marginTop:"5%",
@@ -239,27 +247,27 @@ console.log('.')
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
 console.log('..')
 const MyBookItem = (props) => {
-    const {navigation,myitem}=props
+    const {navigation,item}=props
     const {userinfo}=test1
-    // const {myitem}=test2
+    // const {item}=test2
     const { width, height } = Dimensions.get('window');
    // console.log('...')
-   // console.log (typeof myitem)
+   // console.log (typeof item)
    // console.log("MYBOOKITEM()")
-   // console.log('myitem 확인해야함',myitem)
-    const bookKey=myitem.bookKey
+   // console.log('item 확인해야함',item)
+    const bookKey=item.bookKey
    // console.log('마이페이지 북키확인',bookKey)
-    const url= myitem.url
+    const url= item.url
     return(
         // <View style={styles.subContainer}>
         <View style={{height:"100%",width:"90%", marginHorizontal: "5%", borderWidth: 1}}>
                 <ImageBackground style={{height:"100%", width: "100%", }} source={backgroundimage}>
                     <ImageBackground style={{height:400,width:300,marginTop:"8%",alignSelf:"center"}} source={{uri:book}} > 
-                            <Text style={{marginTop:"18%", marginLeft:"27%",  fontSize:14,}}>{myitem.bookTitle}</Text>
+                            <Text style={{marginTop:"18%", marginLeft:"27%",  fontSize:14,}}>{item.bookTitle}</Text>
                              <Text style={{marginTop:"10%", marginLeft:"50%",  fontSize:12,}}>{userinfo.iam} </Text> 
                             <TouchableOpacity 
                             style={{ width: width/2, height: width/2, marginTop:"5%",marginLeft:"3%", backgroundColor:"yellow",alignSelf:"center"  }} 
-                            onPress={()=>{navigation.navigate('MyBook', {myitem: myitem, bookKey:bookKey})}} > 
+                            onPress={()=>{navigation.navigate('MyBook', {item: item, bookKey:bookKey})}} > 
                                     <Image source={{ url: url }} style={{ flex:1, backgroundColor:"pink" }}/>
                             </TouchableOpacity>
                     </ImageBackground>

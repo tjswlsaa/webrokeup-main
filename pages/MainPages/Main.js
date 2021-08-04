@@ -177,15 +177,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             </View>
             <View style={{ flex: 1, backgroundColor: "#FAFAFA" }}>
                 <TouchableOpacity style={{marginTop: "5%"}} onPress={() => {
-                       // console.log('Main.js (1), chapters: ',chapters);
-                       // console.log('Main.js (1), bookKey: ',bookKey);
                         navigation.navigate(
                             'PopularArticle'
-                            // ,
-                            // {
-                            //     chapterKey: chapters && chapters.chapterKey, // optional: 없어도 된다면.
-                            //     bookKey: bookKey // optional: 없어도 된다면..
-                            // }
                         ); }
                     }>
                     <Text style={{ fontSize: 20, fontWeight: "400" }}>인기 이별록 </Text>

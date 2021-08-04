@@ -65,9 +65,7 @@ const MainStackScreen = () => {
         <MainStack.Screen
           name="Main"
           component={Main}
-          options={{
-            title: "모든 이별록",
-          }}
+            options={{ headerShown: false }}
         />
         <MainStack.Screen name="NewArticle" component={NewArticle} />
         <MainStack.Screen name="PopularArticle" component={PopularArticle} />
