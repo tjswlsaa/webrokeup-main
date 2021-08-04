@@ -7,9 +7,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const PopularArticle = ({ navigation, route }) => {
    const [list, setList] = useState([]);
-   const [book, setBook] = useState([]);
-   const [color, setColor] = useState('#E9E9E9')
+   const [hotcolor, setHotColor] = useState("#D1EAEE")
+   const [newcolor, setNewColor] = useState("#E9E9E9")
 //    const [book, setBook] = useState([]);
+//"#D1EAEE"
 
    useEffect(()=>{
         firebase_db
@@ -29,15 +30,8 @@ const PopularArticle = ({ navigation, route }) => {
                                 return (b.likeCount) - (a.likeCount)
                                 })
                         setList(list);
-                    
-                    const item = {
-                            ...child.val(),
-                            key: child.key,
-                    }
-                    temp.push(item)
+                    })
                 })
-                setBook(temp)
-             })
         }, [])
 
                 
@@ -48,8 +42,11 @@ const PopularArticle = ({ navigation, route }) => {
                         return (b.likeCount) - (a.likeCount)
                         })
                 setList(hotlist);
-               // console.log("viewHot done")
-               // console.log ("list 2 (hot): " + {list})
+                console.log("viewHot done")
+                console.log ("list 2 (hot): " + {list});
+
+                setHotColor("#D1EAEE");
+                setNewColor("#E9E9E9")
         }
 
         const viewNew = () => {
@@ -59,8 +56,11 @@ const PopularArticle = ({ navigation, route }) => {
                         return new Date(b.regdate) - new Date(a.regdate);
                                 })
                 setList(newlist);
-               // console.log("viewNew done")
-               // console.log("list 3 (new): " + {list})
+                console.log("viewNew done")
+                console.log("list 3 (new): " + {list});
+
+                setHotColor("#E9E9E9")
+                setNewColor("#D1EAEE")
         }
         
 
@@ -69,12 +69,12 @@ const PopularArticle = ({ navigation, route }) => {
         <View style={{flex: 1}}>
         <View style={{flexDirection: "row", height: "3%", marginTop: "2%"}}>
                 <TouchableOpacity 
-                        style={{flex:1, borderRadius: 5, backgroundColor: "#D1EAEE", marginLeft: "2%", marginRight: "1%"}} 
+                        style={{flex:1, borderRadius: 5, backgroundColor: hotcolor, marginLeft: "2%", marginRight: "1%"}} 
                         onPress={()=>viewHot()}>
                         <Text style={{alignSelf: "center", fontSize: 16}} > 인기 이별록 </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                        style={{flex:1, borderRadius: 5, backgroundColor: "#E9E9E9", marginRight: "2%", marginRight: "1%"}} 
+                        style={{flex:1, borderRadius: 5, backgroundColor: newcolor, marginRight: "2%", marginRight: "1%"}} 
                         onPress={()=>viewNew()}>
                         <Text style={{alignSelf: "center", fontSize: 16}}> 최신 이별록 </Text>
                 </TouchableOpacity>

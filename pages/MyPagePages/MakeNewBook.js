@@ -73,8 +73,6 @@ test5.navigation=navigation
 
 test.user_uid = user_uid;
 const [text,setText]=useState('')
-const [text2,setText2]=useState('')
-
 // const [bookTitle, setBookTitle] = useState('');   
 // test3.bookTitle=bookTitle
 // console.log('두줄만들자',bookTitle.length)
@@ -177,10 +175,10 @@ const [text2,setText2]=useState('')
                 // maxHeight={60} 
                 // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
                 // setText(newText);  } }
-                multiline={false}  
-                maxLength ={8}
+                multiline={true}  
+                maxLength ={16}
                 returnKeyType="done"
-                onChangeText={text=> setText(text)}
+                // onChangeText={bookTitle=> setBookTitle(bookTitle)}
                 placeholder="제목을 두줄로 작성해주세요"/>
 
                 <TextInput style={styles.titleInputText} 
@@ -188,11 +186,10 @@ const [text2,setText2]=useState('')
                 // value={bookTitle}
                 // numberOfLines={2}
                 // maxHeight={60} 
-                // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                // setText(newText);  } }
-                onChangeText={text2=> setText2(text2)}
-                multiline={false}  
-                maxLength ={8}
+                onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                setText(newText);  } }
+                multiline={true}  
+                maxLength ={16}
                 returnKeyType="done"
                 // onChangeText={bookTitle=> setBookTitle(bookTitle)}
                 placeholder="제목을 두줄로 작성해주세요"/>

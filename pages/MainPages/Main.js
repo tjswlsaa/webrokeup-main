@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
 import Swiper from 'react-native-swiper';
-import book from '../../assets/book.png';
+import bookPng from '../../assets/book.png';
 import BookComponent from '../../components/BookComponent';
 
 const test1 = {
@@ -99,7 +99,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             .on('value', (snapshot) => {
                 snapshot.forEach((child) => {
                     temp.push(child.val());
-                })
+                });
+                console.log({temp});
                 setBook(temp)
             })
         //// console.log(temp)  
@@ -162,7 +163,6 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                     style={{ marginTop: "5%" }} 
                     showsButtons={false}
                 >
-                    
                     {book.map(item => (
                         <BookItem
                             key={item.bookKey}
@@ -177,15 +177,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             </View>
             <View style={{ flex: 1, backgroundColor: "#FAFAFA" }}>
                 <TouchableOpacity style={{marginTop: "5%"}} onPress={() => {
-                       // console.log('Main.js (1), chapters: ',chapters);
-                       // console.log('Main.js (1), bookKey: ',bookKey);
                         navigation.navigate(
                             'PopularArticle'
-                            // ,
-                            // {
-                            //     chapterKey: chapters && chapters.chapterKey, // optional: 없어도 된다면.
-                            //     bookKey: bookKey // optional: 없어도 된다면..
-                            // }
                         ); }
                     }>
                     <Text style={{ fontSize: 20, fontWeight: "400" }}>인기 이별록 </Text>
@@ -255,6 +248,15 @@ const BookItem = ({ navigation, item, bookKey }) => {
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} onPress={() => { navigation.navigate('readBook', { item: item, bookKey: bookKey, }) }}>
             <View style= {{flex: 1, flexDirection: "row"}}>
+                <BookComponent
+                    users_uid={item.user_uid}
+                    navigation={navigation}
+                    item={item}
+                />
+                
+                {/* {(()=> {
+                    console.log({book});
+                })()} */}
                 {/* {book.map(item => (
                         <BookComponent
                             key={item.key}
@@ -264,11 +266,12 @@ const BookItem = ({ navigation, item, bookKey }) => {
                         />
                         // <Text>{item.bookTitle}</Text>
                     ))} */}
-                <ImageBackground style={{flex: 1,  flexDirection: 'column', width: "100%", height: "100%", marginRight: 5, marginLeft: 16,}} source={book} >
+                {/* <ImageBackground style={{flex: 1,  flexDirection: 'column', width: "100%", height: "100%", marginRight: 5, marginLeft: 16,}} source={book} >
                     <Text style={{marginLeft: "12%", marginTop: "20%", fontSize: 17}}>{item.bookTitle}</Text>
                     <Text style={{alignSelf: "flex-end", marginTop: "6%", marginRight: "10%", fontSize: 13}}>{userinfo2.iam}</Text>
                     <Image style={{flex: 1, width: "75%", height: "45%", marginLeft: "15%", marginBottom: "30%"}} source={{ uri: item.url }} resizeMode={"center"} />
-                </ImageBackground>
+                </ImageBackground> */}
+
                 <View style={{flex: 1, backgroundColor: "white", width: "100%", height: "82%", marginRight: 5, marginRight: 16,}}>
                     <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
                     <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{userinfo2.iam}-</Text>

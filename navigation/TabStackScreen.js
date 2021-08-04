@@ -15,7 +15,6 @@ import MyPage from "../pages/MyPagePages/MyPage";
 import MyBook from "../pages/MyPagePages/MyBook";
 import MyArticle from "../pages/MyPagePages/MyArticle";
 import Impressed from "../pages/ImpressedPages/Impressed";
-import subBook from "../pages/ImpressedPages/subBook";
 import readBook from "../pages/ImpressedPages/readBook";
 import readArticle from "../pages/ImpressedPages/readArticle";
 import likedArticle from "../pages/ImpressedPages/likedArticle";
@@ -84,9 +83,8 @@ const MainStackScreen = () => {
         <MainStack.Screen
           name="Main"
           component={Main}
-          options={{
-            headerShown: false
-          }}
+
+            options={{ headerShown: false }}
         />
         <MainStack.Screen name="NewArticle" 
         options={{
