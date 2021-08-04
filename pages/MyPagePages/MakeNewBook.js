@@ -28,9 +28,9 @@ const test2 ={
   image:''
 };
 
-// const test3 ={
-//   bookTitle:''
-// }
+const test3 ={
+  bookTitle:''
+}
 const test4 ={
   isPublic:''
 }
@@ -42,6 +42,9 @@ const test6={
 }
 const test7={
   spinner:''
+}
+const test8={
+  smallBookTitle:''
 }
 const MakeNewBook = ({navigation,route}) => {
 
@@ -72,8 +75,10 @@ const MakeNewBook = ({navigation,route}) => {
 test5.navigation=navigation
 
 test.user_uid = user_uid;
-const [text,setText]=useState('')
-// const [bookTitle, setBookTitle] = useState('');   
+const [bookTitle, setBookTitle] = useState('');   
+test3. bookTitle=bookTitle
+const [smallBookTitle, setSmallBookTitle] = useState('');   
+test8.smallBookTitle=smallBookTitle
 // test3.bookTitle=bookTitle
 // console.log('두줄만들자',bookTitle.length)
   const [image, setImage] = useState(null);
@@ -157,7 +162,7 @@ const [text,setText]=useState('')
           <View style={styles.bookContainer}>
           <ImageBackground style={styles.bookImage} source={{uri:book}} >
           <View style={styles.bookContainer}>
-            <View style={styles.titleInput}>
+            <View style={{marginLeft:20, width:"80%"}}>
 
               {/* {bookTitle.length > 12 ? (
 
@@ -169,30 +174,30 @@ const [text,setText]=useState('')
               ):( */}
 
                 <TextInput style={styles.titleInputText} 
-                value={text}
+                value={bookTitle}
                 // value={bookTitle}
                 // numberOfLines={2}
                 // maxHeight={60} 
                 // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
                 // setText(newText);  } }
-                multiline={true}  
-                maxLength ={16}
+                multiline={false}  
+                maxLength ={10}
                 returnKeyType="done"
-                // onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                placeholder="제목을 두줄로 작성해주세요"/>
+                onChangeText={bookTitle=> setBookTitle(bookTitle)}
+                placeholder="제목을 작성해주세요"/>
 
-                <TextInput style={styles.titleInputText} 
-                value={text2}
-                // value={bookTitle}
+
+                <TextInput style={{fontSize:15,marginLeft: "20%"}} 
+                value={smallBookTitle}
                 // numberOfLines={2}
                 // maxHeight={60} 
-                onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                setText(newText);  } }
-                multiline={true}  
-                maxLength ={16}
+                // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                // setText(newText);  } }
+                multiline={false}  
+                maxLength ={14}
                 returnKeyType="done"
-                // onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                placeholder="제목을 두줄로 작성해주세요"/>
+                onChangeText={smallBookTitle=> setSmallBookTitle(smallBookTitle)}
+                placeholder="소제를 작성해주세요"/>
               {/* )} */}
                   {/* <TextInput style={styles.titleInputText} 
                 multiline={true}  
@@ -323,6 +328,8 @@ const [text,setText]=useState('')
   async function handleChapter(){
     const {bookTitle}=test3;
     const { image }=test2;
+    const {smallBookTitle}=test8;
+
    // console.log('image!!!!!!!!!',image)
     if (bookTitle == ""){
       Alert.alert("책 제목을 입력해주세요");
@@ -345,7 +352,7 @@ const [text,setText]=useState('')
     const {navigation}=test5;
     const {userinfo}=test6;
     const {spinner}=test7;
-  
+    const {smallBookTitle}=test8;
    // console.log({ user_uid });
    // console.log('이거확인',user_uid)
     const bookKey = Math.random().toString().replace(".","");
@@ -371,6 +378,7 @@ const [text,setText]=useState('')
   .ref('book/'+bookKey)
   .set({
     bookTitle: bookTitle,
+    smallBookTitle:smallBookTitle,
     user_uid: user_uid,
     regdate: new Date().toString(),
     url:downloadURL,
