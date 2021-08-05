@@ -16,9 +16,7 @@ import { Switch } from 'react-native-switch';
 import PropTypes from 'prop-types';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {CommonActions} from '@react-navigation/native';
-import imageCompression from "browser-image-compression";
-// import Compress  from "react-image-file-resizer";
-// import Compress from "browser-image-compression";
+import * as ImageManipulator from 'expo-image-manipulator';
 
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
@@ -104,23 +102,27 @@ test8.smallBookTitle=smallBookTitle
     })();
   }, []);
 
-  const savePhoto= async () => {
-    console.log('savePhoto() quality: 0.01');
+  const savePhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      maxWidth:300,	
-      maxHeight:300,
       allowsEditing: true,
       aspect: [4, 3],
-      // quality: 0.1,
-      // quality: 0.05,
-      quality: 0.01,
     });
+
     if (!result.cancelled) {
-      setImage(result.uri)
-     console.log(result.uri)
+      const image = result;
+
+      const manipResult = await ImageManipulator.manipulateAsync(
+        image.localUri || image.uri,
+        [
+          {resize: { width: 600 }} // width: 600px에 맞춰서 자동 resize
+        ],
+        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+      );
+
+      setImage(manipResult.uri);
     }
-    } 
+  }
 
 
   return ( 
