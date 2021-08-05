@@ -67,7 +67,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
     const [comments, setComments] = useState([]);
     test5.comments=comments
     const [data,setData] = useState("")
-    // const [statusBarHeight, setStatusBarHeight] = useState(0);
+    const [statusBarHeight, setStatusBarHeight] = useState(0);
 
     //     const realHeight = Dimensions.get('window').height - getStatusBarHeight()- getBottomSpace()-135-10
  
@@ -128,11 +128,11 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
 
    // console.log('comments이거 모냐고!!!!!!!!',comments)
 
-    // useEffect(()=>{
-    //     Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
-    //         setStatusBarHeight(statusBarFrameData.height)
-    //       }) : null
-    // }, []);
+    useEffect(()=>{
+        Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
+            setStatusBarHeight(statusBarFrameData.height)
+          }) : null
+    }, []);
 
     const commentKey = Math.random().toString().replace(".","");
 
@@ -164,7 +164,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
         <SafeAreaView style={{flex:1,backgroundColor:"#EEEEEE" }}> 
             <KeyboardAvoidingView behavior="padding" 
             style={{flex:1}}
-            keyboardVerticalOffset={50} >
+            keyboardVerticalOffset={44 + statusBarHeight} >
 
              {/* keyboardVerticalOffset={statusBarHeight+14} > */}
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
