@@ -3,7 +3,7 @@
     "name": "sparta-myhoneytip-ahn",
     "slug": "sparta-myhoneytip-ahn",
     "icon": "./icon.png",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "updates": {
       "fallbackToCacheTimeout": 0
