@@ -20,6 +20,8 @@
     "constants": "^0.0.2",
     "env-cmd": "^10.1.0",
     "expo": "^41.0.1",
+    "expo-application": "^3.2.0",
+    "expo-auth-session": "~3.2.3",
     "expo-constants": "~10.1.3",
     "expo-google-app-auth": "^8.2.2",
     "expo-image-manipulator": "~9.2.2",
