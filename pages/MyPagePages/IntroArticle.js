@@ -1,5 +1,5 @@
 import React, {useState,useRef,useEffect} from 'react';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, Touchable, Alert} from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, Touchable, Alert, SafeAreaView} from 'react-native';
 import {NavigationContainer,CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import {firebase_db} from '../../firebaseConfig';
@@ -52,6 +52,9 @@ const IntroArticle = ({navigation, route}) => {
     })
   },[])
   return (
+    <SafeAreaView>
+    <KeyboardAvoidingView behavior="padding" 
+    style={{flex:1}}>
     <View style={styles.container}>
         <StatusBar style="white" />
         <View style={styles.upperButtonContainer}>
@@ -80,6 +83,8 @@ const IntroArticle = ({navigation, route}) => {
             </TouchableOpacity>  
         </View> */}
     </View>
+    </KeyboardAvoidingView >
+    </SafeAreaView>
   )}
 const styles = StyleSheet.create({ 
     container: {
