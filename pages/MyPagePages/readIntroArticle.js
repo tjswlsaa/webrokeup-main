@@ -1,12 +1,7 @@
 import React, {useState,useRef,useEffect} from 'react';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, Touchable, Alert} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app';
-import Constants from 'expo-constants';
-import NewPage from './NewPage';
-import { NavigationEvents } from 'react-navigation';
 const readIntroArticle = ({navigation, route}) => {
   const introArticle_a = useRef(null);
   const [text, setText] = useState('');

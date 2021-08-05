@@ -1,19 +1,13 @@
 
-import React, {useEffect,useState,useRef} from 'react';
-import {TouchableWithoutFeedback, ActivityIndicator , ImageBackground,Animated, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, ScrollView, TouchableHighlight, TextInput, Route} from 'react-native';
+import React, {useEffect,useState} from 'react';
+import {TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {firebase_db} from '../../firebaseConfig';
-//import * as firebase from 'firebase/app';
-//import Constants from 'expo-constants'
-//import { add, Value } from 'react-native-reanimated';
 import * as ImagePicker from 'expo-image-picker';
-import {KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase'
 import "firebase/firestore"
 import "firebase/firebase-storage"
-// import SwitchToggle from 'react-native-switch-toggle';
 import { Switch } from 'react-native-switch';
-import PropTypes from 'prop-types';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {CommonActions} from '@react-navigation/native';
 import * as ImageManipulator from 'expo-image-manipulator';

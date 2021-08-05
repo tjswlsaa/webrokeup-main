@@ -1,14 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { SafeAreaView, Dimensions, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
-import Constants from 'expo-constants';
-import paper from '../../assets/paper.png';
-import EditBook from '../MyPagePages/EditBook';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
-import KeyboardDismissView, { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
+import { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import Swipeout from 'react-native-swipeout';
 // import SwipeToDelete from 'react-swipe-to-delete-component';
 // import Swipeable from 'react-native-swipeable-row';

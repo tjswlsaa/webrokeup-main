@@ -1,12 +1,10 @@
 import React, {useState,useRef,useEffect} from 'react';
 import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, Touchable, Alert, SafeAreaView} from 'react-native';
-import {NavigationContainer,CommonActions} from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app';
-import Constants from 'expo-constants';
-import NewPage from './NewPage';
-import { NavigationEvents } from 'react-navigation';
+
 const IntroArticle = ({navigation, route}) => {
 
   const introArticle_a = useRef(null);

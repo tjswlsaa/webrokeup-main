@@ -1,14 +1,11 @@
-import React, {Children, useEffect, useState} from 'react';
-import { AppRegistry, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, TouchableOpacity,ImageBackground, ScrollView, TouchableHighlight, Platform, ImageStore} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { AppRegistry, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, TouchableOpacity,ImageBackground} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { firebase_db } from '../../firebaseConfig';
-import Constants from 'expo-constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
 import backgroundimage from '../../assets/backgroundimage.jpg'
-import BookComponent from '../../components/BookComponent';
-
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
