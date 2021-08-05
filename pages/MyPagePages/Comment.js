@@ -80,7 +80,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
       user_uid = user.uid;  
     }
   
-  
+  console.log({statusBarHeight})
     useEffect(() => {
         firebase_db
             .ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
@@ -164,7 +164,7 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
         <SafeAreaView style={{flex:1,backgroundColor:"#EEEEEE" }}> 
             <KeyboardAvoidingView behavior="padding" 
             style={{flex:1}}
-            keyboardVerticalOffset={44 + statusBarHeight} >
+            keyboardVerticalOffset={35 + statusBarHeight} >
 
              {/* keyboardVerticalOffset={statusBarHeight+14} > */}
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
@@ -210,14 +210,20 @@ console.log('keyboard keyboardHeight: ', keyboard.keyboardHeight)
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <TextInput
                             placeholder='댓글을 남겨주세요'
-                            textAlign='justify'
-                            style={styles.commentInput}
+                            textAlign='left'
+                            textAlignVertical="center"
+                            style={{        width:"85%",
+                            backgroundColor:"white",
+                            height:"80%",
+                            borderRadius:10,
+                            justifyContent:"center",
+                            paddingTop: 30, paddingBottom: 0 ,
+                            textAlignVertical:"center"}}
                             ref={text_a}
                             multiline = {true}
                             onChangeText={(text) => setText(text)} />
                 </TouchableWithoutFeedback> 
 
-                {/* <Button title="Dismiss keyboard" onPress={dismissKeyboard} /> */} 
         
                         <TouchableOpacity style={styles.commentSendBox}     
                                           keyboardDismissMode="on-drag"
@@ -265,8 +271,12 @@ const styles = StyleSheet.create({
         width:"85%",
         backgroundColor:"white",
         height:"80%",
-        borderRadius:5,
+        borderRadius:10,
         justifyContent:"center",
+        paddingTop: 20, paddingBottom: 0 ,
+        textAlignVertical:"center"
+
+
         // alignSelf:"center",
         // textAlignVertical : "top" 
         
@@ -418,8 +428,12 @@ console.log('s없는 코멘트',comment)
                       <TouchableOpacity
                           activeOpacity={0.8}
                           onPress={()=>deleteCommentfunction()}
-                          style={styles.button}
-                      >
+                          style={{    width: 60,
+                            height: 60,
+                            backgroundColor: '#FE5746',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            alignSelf:"center"}} >
                           <Text style={styles.text}>
                               삭제
                           </Text>
