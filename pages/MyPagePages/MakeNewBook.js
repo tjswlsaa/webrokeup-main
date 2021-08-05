@@ -16,6 +16,10 @@ import { Switch } from 'react-native-switch';
 import PropTypes from 'prop-types';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {CommonActions} from '@react-navigation/native';
+import imageCompression from "browser-image-compression";
+// import Compress  from "react-image-file-resizer";
+// import Compress from "browser-image-compression";
+
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -99,10 +103,13 @@ test8.smallBookTitle=smallBookTitle
       }
     })();
   }, []);
+
   const savePhoto= async () => {
     console.log('savePhoto() quality: 0.01');
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      maxWidth:300,	
+      maxHeight:300,
       allowsEditing: true,
       aspect: [4, 3],
       // quality: 0.1,
@@ -111,28 +118,10 @@ test8.smallBookTitle=smallBookTitle
     });
     if (!result.cancelled) {
       setImage(result.uri)
-     // console.log(result.uri)
+     console.log(result.uri)
     }
     } 
 
-  //   const maxLines= PropTypes.number
-
-
-  //   const onChangeText = bookTitle => {
-  //     // const lines = bookTitle.split("\n");
-  
-  //     if (bookTitle.length <= (maxLines || 2)) {
-  //       onChangeText(bookTitle);
-  //       setBookTitle({ value: bookTitle });
-  //     }
-  //  };
-
-    
-    // Animated.timing(this.state.animatedValue, {
-    //   toValue: 1,
-    //   duration: 400,
-    //   useNativeDriver: true, // <-- Add this Line
-    // }).start();
 
   return ( 
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -344,6 +333,8 @@ test8.smallBookTitle=smallBookTitle
     
   }
   async function saveChapter() {
+    // const reduce = require('image-blob-reduce')();
+
 
     const { user_uid } = test;
     const { image }=test2;
@@ -359,6 +350,8 @@ test8.smallBookTitle=smallBookTitle
    // console.log('진행상황2')
    // console.log('props 확인', image)
    // console.log('진행상황3')
+    // const [compressedFile,setCompressedFile]=useState("")
+   
 
     console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
@@ -373,6 +366,42 @@ test8.smallBookTitle=smallBookTitle
     console.log('saveChapter() .....', new Date());
     const downloadURL= await SAVE_PATH.getDownloadURL()
     console.log('saveChapter() ..... .', new Date());
+
+
+      // const response = await fetch(image); //get in the data?
+      // console.log('saveChapter() ...', new Date());
+
+    //   const options = {
+    //     // As the key specify the maximum size
+    //     // Leave blank for infinity
+    //     maxSizeMB: 1.5,
+    //     // Use webworker for faster compression with
+    //     // the help of threads
+    //     useWebWorker: true
+    // }
+
+    // console.log('saveChapter(compressed) ...', new Date());
+
+    // const compressed = await imageCompression(response, options)
+    //   .then(function (compressedFile) {
+    //       // Compressed file is of Blob type
+    //       // You can drop off here if you want to work with a Blob file
+    //       console.log({compressedFile})
+    //       return compressedFile
+    //   })
+    //   .catch(function(error){
+    //     console.log(error.message)
+    //   })
+    //       // Show the user a toast message or notification that something went wrong while compressing file
+    //   console.log({compressed})
+    //   console.log ('typeof',typeof compressed)
+
+    // const blob = await compressed.blob();//uploading the image blob of the uri which will pass along fire store
+    // console.log('saveChapter() ....', new Date());
+    // await SAVE_PATH.put(blob);
+    // console.log('saveChapter() .....', new Date());
+    // const downloadURL= await SAVE_PATH.getDownloadURL()
+    // console.log('saveChapter() ..... .', new Date());
 
   firebase_db
   .ref('book/'+bookKey)
