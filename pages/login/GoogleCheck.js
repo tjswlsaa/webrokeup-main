@@ -4,14 +4,10 @@ import { Picker, Header, Left, Body, Right, Title } from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
-// import * as Google from 'expo-google-app-auth'//이전 사용하던 library
-import "firebase/auth";
-
-// via https://docs.expo.dev/guides/authentication/#googButtonle
-import { ResponseType } from 'expo-auth-session';
 import * as Google from 'expo-auth-session/providers/google';
 import firebase from 'firebase';
-
+import "firebase/auth";
+import { firebase_db } from '../../firebaseConfig';
 
 const GoogleCheck = ({ navigation, route }) => {
   const [gender, setGender] = useState('');
@@ -23,27 +19,96 @@ const GoogleCheck = ({ navigation, route }) => {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     // androidClientId: YOUR_CLIENT_ID_HERE,
     // webClientId:"893078063657-hqlb9pf8sdkqmriffualtcie04am0sjb.apps.googleusercontent.com",
-    // iosClientId: "893078063657-dnf375hiptljg5t7hltutq290n00gi5u.apps.googleusercontent.com",
+    iosClientId: "893078063657-dnf375hiptljg5t7hltutq290n00gi5u.apps.googleusercontent.com",
     expoClientId: '893078063657-mmmhu8trmjtok0mslsl015ec0hc7no30.apps.googleusercontent.com',
   });
 
-  // promptAsync: expo를 통해서 구글 로그인 창을 띄워준다
-
-  const callbackGoogleLogin = () => {
-    if (response?.type === 'success') {
-      const { id_token } = response.params;
-
-      const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
-      firebase.auth().signInWithCredential(credential);
-    }
-  };
+  // request: Google.useIdTokenAuthRequest()가 준비가 되면 true가 된다
+  // promptAsync(): expo를 통해서 구글 로그인 창을 띄워준다
+  // response: promptAsync()로 구글 로그인이 끝나면, response가 변경된다
 
   useEffect(callbackGoogleLogin, [response]);
-
-  // response: promptAsync()로 구글 로그인이 끝나면, response가 변경된다
   // useEffect(callbackGoogleLogin, [response]): response가 변경되면, callbackGoogleLogin()를 호출한다
+
   // callbackGoogleLogin: response.params.id_token을 통해 firebase에 로그인을 한다.
-  // -> 이후 LoadingScreen.js의 firebase.auth().onAuthStateChanged()가 트리거된다.
+  function callbackGoogleLogin() {
+    if (response?.type !== 'success') {
+      return; // early return
+    }
+
+    const { id_token } = response.params;
+    const googleAuthProviderCredential = firebase.auth.GoogleAuthProvider.credential(id_token);
+    firebase.auth()
+      .signInWithCredential(googleAuthProviderCredential)
+      .then(signInUserCredential => {
+        afterSignInWithCredential(signInUserCredential, googleAuthProviderCredential);
+      });
+  };
+
+  // afterSignInWithCredential(): firebase 로그인이 끝나면 실행된다.
+  // 신규 회원인지, 기존 회원인지 확인, 분기한다.
+  function afterSignInWithCredential(signInUserCredential, googleAuthProviderCredential) {
+    console.log('afterSignInWithCredential()');
+    console.log({signInUserCredential, googleAuthProviderCredential});
+
+    const { user } = signInUserCredential;
+    const { uid } = user;
+
+    firebase_db.ref(`users/${uid}/`)
+      .once('value', (snapshot) => {
+        const userinfo = snapshot.val();
+        const isNewUser = (userinfo === null);
+        if (isNewUser) {
+          newUsersSet(signInUserCredential, googleAuthProviderCredential);
+
+        } else { // if (isNewUser == false)
+          existsUsersUpdate(signInUserCredential);
+        }
+      });
+  }
+
+  // 1. 새로 회원 가입하려는 사람이 구글 로그인했을 경우
+  // 추가 한다
+  function newUsersSet(signInUserCredential, googleAuthProviderCredential) {
+    const firebaseRefUsers = {
+      method: "gmail 회원가입",
+      email: signInUserCredential.user.email,
+      profile_picture: signInUserCredential.additionalUserInfo.profile.picture,
+      first_name: signInUserCredential.additionalUserInfo.profile.given_name,
+      last_name: signInUserCredential.additionalUserInfo.profile.family_name,
+      user_uid: signInUserCredential.user.uid,
+      iam: signInUserCredential.user.uid.substring(0, 6) + ".지은이",
+      selfLetter: "안녕하세요. 이별록 작가" + signInUserCredential.user.uid.substring(0, 6) + "입니다",
+      created_at: Date.now(),
+      idToken: googleAuthProviderCredential.idToken,
+      // accessToken: accessToken,
+      gender: gender,
+      birth: moment(new Date(date)).format('YYYY년 MM월 DD일')
+    };
+
+    firebase
+      .database()
+      .ref('/users/' + signInUserCredential.user.uid)
+      .set(firebaseRefUsers)
+      .then(function (snapshot) {
+        console.log({snapshot});
+        // console.log("5")
+        // console.log('Snapshot', snapshot)
+      });
+    Alert.alert("회원가입 완료!")
+  }
+
+  // 2. 이미 회원 가입된 사람이 구글 로그인했을 경우
+  // last_logged_in을 update한다.
+  function existsUsersUpdate(signInUserCredential) {
+    firebase
+      .database()
+      .ref('/users/' + signInUserCredential.user.uid)
+      .update({
+        last_logged_in: Date.now()
+      });
+  }
+
 
   const onChange = (e, selectedDate) => {
     setDate(moment(selectedDate))
