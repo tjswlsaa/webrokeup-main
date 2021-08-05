@@ -52,7 +52,7 @@ const IntroArticle = ({navigation, route}) => {
     })
   },[])
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1}}>
     <KeyboardAvoidingView behavior="padding" 
     style={{flex:1}}>
     <View style={styles.container}>
@@ -74,14 +74,7 @@ const IntroArticle = ({navigation, route}) => {
                     ref={introArticle_a}>
                 </TextInput>  
        </ScrollView>
-       {/* <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity style={styles.likeButton}>                
-                <Text style={styles.likeButtonText}>공감</Text>
-            </TouchableOpacity>  
-            <TouchableOpacity style={styles.commentButton}>
-                <Text style={styles.commentButtonText}>댓글</Text>
-            </TouchableOpacity>  
-        </View> */}
+
     </View>
     </KeyboardAvoidingView >
     </SafeAreaView>
