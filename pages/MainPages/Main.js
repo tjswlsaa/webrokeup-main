@@ -96,15 +96,12 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
     useEffect(() => {
         let temp = [];
         let data = firebase_db.ref('book/')
-            .on('value', (snapshot) => {
+            .once('value', (snapshot) => {
                 snapshot.forEach((child) => {
                     temp.push(child.val());
                 });
-                console.log({temp});
-                setBook(temp)
+                setBook(temp);
             })
-        //// console.log(temp)  
-       // console.log("book.bookKey: " + book.bookKey)
     }, [])
 
     useEffect(() => {
