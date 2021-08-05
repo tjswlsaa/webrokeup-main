@@ -7,9 +7,9 @@ import Swiper from 'react-native-swiper';
 import bookPng from '../../assets/book.png';
 import BookComponent from '../../components/BookComponent';
 
-const test1 = {
-    userinfo: ''
-}
+// const test1 = {
+//     userinfo: ''
+// }
 
 const test2 = {
     bookTitle: '',
@@ -36,8 +36,22 @@ const test4 = {
 }
 
 const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
-    const [userinfo, setUserinfo] = useState([]);
-    test1.userinfo = userinfo;
+    // const [userinfo, setUserinfo] = useState([]);
+    const [userinfo, setUserinfo] = useState({});
+
+    useEffect(() => {
+        firebase_db.ref(`users/${user_uid}/`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
+    
+    // test1.userinfo = userinfo;
+
+
     const [book, setBook] = useState([]);
     test2.book = book;
     const [hotChapter, setHotChapter] = useState([]);
@@ -84,14 +98,6 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
     }
     var userID = user_uid.substring(0, 6)
    // console.log(userID)
-
-    useEffect(() => {
-        firebase_db.ref(`users/${user_uid}/`)
-            .on('value', (snapshot) => {
-                let userinfo = snapshot.val();
-                setUserinfo(userinfo);
-            })
-    }, []);
 
     useEffect(() => {
         let temp = [];
@@ -198,6 +204,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                                 chapters={chapters}
                                 chapterKey={chapters.chapterKey}
                                 bookKey={chapters.bookKey}
+                                userinfo={userinfo}
                             />)
                         )}
                     </Swiper>
@@ -226,7 +233,8 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
 // sub components
 const BookItem = ({ navigation, item, bookKey }) => {
 
-    const [userinfo2, setUserinfo2] = useState([]);
+    const [userinfo2, setUserinfo2] = useState({});
+    
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
@@ -236,12 +244,15 @@ const BookItem = ({ navigation, item, bookKey }) => {
       firebase_db.ref(`users/${item.user_uid}`)
           .on('value', (snapshot) => {
               let userinfo2 = snapshot.val();
-              setUserinfo2(userinfo2);
+              if (userinfo2 > '') {
+                  setUserinfo2(userinfo2);
+              }
           })
   }, []);
+
     //// console.log(item);
    // console.log("bookitem running")
-    const {userinfo} = test1;
+    // const {userinfo} = test1;
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} onPress={() => { navigation.navigate('readBook', { item: item, bookKey: bookKey, }) }}>
             <View style= {{flex: 1, flexDirection: "row"}}>
@@ -277,10 +288,11 @@ const BookItem = ({ navigation, item, bookKey }) => {
         </TouchableOpacity>
     )
 }
-const ChapterItem = ({ navigation, chapters, chapterKey }) => {
+// const ChapterItem = ({ navigation, chapters, chapterKey }) => {
+const ChapterItem = ({ navigation, chapters, chapterKey, userinfo }) => {
    // console.log('Main.js (1) chapters:', chapters);
 
-    const { userinfo } = test1
+    // const { userinfo } = test1
     const { book } = test2
     const { hotChapter } = test3;
    // console.log("chapteritem running")
@@ -300,7 +312,8 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
 const WritingItem=(props)=> {
     const {writing, navigation}=props;
-    const [userinfo, setUserinfo] = useState([]);
+    // const [userinfo, setUserinfo] = useState([]);
+    const [userinfo, setUserinfo] = useState({});
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
@@ -310,7 +323,9 @@ const WritingItem=(props)=> {
       firebase_db.ref(`users/${writing.creator}`)
           .on('value', (snapshot) => {
               let userinfo = snapshot.val();
-              setUserinfo(userinfo);
+              if (userinfo> '') {
+                  setUserinfo(userinfo);
+              }
           })
   }, []);
     return (

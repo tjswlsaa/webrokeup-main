@@ -8,7 +8,8 @@ import { firebase_db } from '../firebaseConfig';
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
 export default function BookComponent({item}) {
     
-    const [userinfo2, setUserinfo2] = useState([]);
+    // const [userinfo2, setUserinfo2] = useState([]);
+    const [userinfo2, setUserinfo2] = useState({});
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
@@ -18,7 +19,9 @@ export default function BookComponent({item}) {
       firebase_db.ref(`users/${item.user_uid}`)
           .on('value', (snapshot) => {
               let userinfo2 = snapshot.val();
-              setUserinfo2(userinfo2);
+              if (userinfo2 > '') {
+                setUserinfo2(userinfo2);
+              }
           })
   }, []);
 
