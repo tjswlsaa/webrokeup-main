@@ -99,12 +99,15 @@ const PostItem=(props)=> {
       user_uid = user.uid;  
     }
   
-    const [userinfo, setUserinfo]=useState("")
+    const [userinfo, setUserinfo]=useState({});
+
     useEffect(()=>{
         firebase_db.ref(`users/${post.creator}`)
             .on('value', (snapshot) => {
                 let userinfo = snapshot.val();
-                setUserinfo(userinfo);
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
             })
     }, []);
   
