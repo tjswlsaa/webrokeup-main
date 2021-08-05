@@ -1,20 +1,49 @@
 import React, {useEffect, useState} from 'react';
 import { View, ScrollView, Text, StyleSheet, Share, TextInput, TouchableOpacity, KeyboardAvoidingView, Modal, TouchableHighlight, Platform, SafeAreaView, Button, DatePickerIOS, DatePickerAndroid, Alert } from 'react-native';
 import { Picker, Header, Left, Body, Right, Title } from "native-base";
-import firebase from 'firebase';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
-import * as Google from 'expo-google-app-auth'
+// import * as Google from 'expo-google-app-auth'//이전 사용하던 library
 import "firebase/auth";
-// import { GoogleSignin } from 'react-native-google-signin';
 
-const GoogleCheck  = ({navigation,route}) => {
-    const [gender, setGender] = useState('');
+// via https://docs.expo.dev/guides/authentication/#googButtonle
+import { ResponseType } from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
+import firebase from 'firebase';
+
+
+const GoogleCheck = ({ navigation, route }) => {
+  const [gender, setGender] = useState('');
   const [date, setDate] = useState(moment());
   const [show, setShow] = useState(false);
   const defaultDate = new Date(date);
   const [checked, setChecked] = useState(false);
+
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    // androidClientId: YOUR_CLIENT_ID_HERE,
+    // webClientId:"893078063657-hqlb9pf8sdkqmriffualtcie04am0sjb.apps.googleusercontent.com",
+    // iosClientId: "893078063657-dnf375hiptljg5t7hltutq290n00gi5u.apps.googleusercontent.com",
+    expoClientId: '893078063657-mmmhu8trmjtok0mslsl015ec0hc7no30.apps.googleusercontent.com',
+  });
+
+  // promptAsync: expo를 통해서 구글 로그인 창을 띄워준다
+
+  const callbackGoogleLogin = () => {
+    if (response?.type === 'success') {
+      const { id_token } = response.params;
+
+      const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
+      firebase.auth().signInWithCredential(credential);
+    }
+  };
+
+  useEffect(callbackGoogleLogin, [response]);
+
+  // response: promptAsync()로 구글 로그인이 끝나면, response가 변경된다
+  // useEffect(callbackGoogleLogin, [response]): response가 변경되면, callbackGoogleLogin()를 호출한다
+  // callbackGoogleLogin: response.params.id_token을 통해 firebase에 로그인을 한다.
+  // -> 이후 LoadingScreen.js의 firebase.auth().onAuthStateChanged()가 트리거된다.
 
   const onChange = (e, selectedDate) => {
     setDate(moment(selectedDate))
@@ -77,6 +106,7 @@ const GoogleCheck  = ({navigation,route}) => {
     }
     return false;
   };
+
   const onSignIn = googleUser => {
    // console.log('Google Auth Response', googleUser);
     // We need to register an Observer on Firebase Auth to make sure auth is initialized.
@@ -160,30 +190,38 @@ const GoogleCheck  = ({navigation,route}) => {
     );
   };
  
+  // const signInWithGoogleAsync = async () => {
 
+  //   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+  //     // androidClientId: YOUR_CLIENT_ID_HERE,
+  //     // webClientId:"893078063657-hqlb9pf8sdkqmriffualtcie04am0sjb.apps.googleusercontent.com",
+  //     // iosClientId: "893078063657-dnf375hiptljg5t7hltutq290n00gi5u.apps.googleusercontent.com",
+  //     expoClientId: '893078063657-mmmhu8trmjtok0mslsl015ec0hc7no30.apps.googleusercontent.com',
+  //   });
 
-      const signInWithGoogleAsync = async () => {
-        try {
-          const result = await Google.logInAsync({
-            // androidClientId: YOUR_CLIENT_ID_HERE,
-            iosClientId: "34800305578-6itscrs0mg3t5m6p4asbdathmabl8nqt.apps.googleusercontent.com",
-            scopes: ['profile', 'email']
-          });
-          if (result.type === 'success') {
-            const { idToken, accessToken } = result;
-            const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
-            firebase
-            .auth()
-            .signInWithCredential(credential)
-            onSignIn(result);
-            return result.accessToken;
-          } else {
-            return { cancelled: true };
-          }
-        } catch (e) {
-          return { error: true };
-        }
-      };
+  //   // React.
+  //   useEffect(() => {
+  //     if (response?.type === 'success') {
+  //       const { id_token } = response.params;
+
+  //       const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
+  //       firebase.auth().signInWithCredential(credential);
+  //     }
+  //   }, [response]);
+
+  //   // if (result.type === 'success') {
+  //   //   const { idToken, accessToken } = result;
+  //   //   const credential = firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
+  //   //   firebase
+  //   //   .auth()
+  //   //   .signInWithCredential(credential)
+  //   //   onSignIn(result);
+  //   //   return result.accessToken;
+  //   // } else {
+  //   //   return { cancelled: true };
+  //   // }
+
+  // };
 
   
  // console.log('gener!!',gender)
@@ -309,10 +347,17 @@ const GoogleCheck  = ({navigation,route}) => {
 
 
                         </View>
-                        <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "35%", backgroundColor:"#4cb2c8"}}
-                        onPress={() => handleSignUp(gender, date)}>
-                        <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>이별록 시작하기</Text>
+
+                        <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "35%", backgroundColor: "#4cb2c8" }}
+                          onPress={() => signInWithGoogleAsync()}>
+                          <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>이별록 시작하기</Text>
                         </TouchableOpacity>
+
+                        <Button
+                          disabled={!request}
+                          title="Login"
+                          onPress={promptAsync}
+                        />
                     </View>
                     
         </ScrollView>
