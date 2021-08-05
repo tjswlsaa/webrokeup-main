@@ -78,7 +78,7 @@ return (
             <View style={{flex: 1, alignItems:"center", justifyContent:"center", borderWidth: 1, backgroundColor: "#fff"}}>
                 <Text style={{fontSize:17, fontWeight:"600", }}>나의 이별록</Text>
             </View>
-            <View style={{flex: 0.1, borderWidth: 1}}>
+            <View style={{flex: 3, borderWidth: 1}}>
                 <View style={{flex: 1, flexDirection: "row", backgroundColor: "#fff", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
                     <Text style={{flex: 1, }}>{userinfo.iam}</Text>
                     <TouchableOpacity onPress={()=>{navigation.navigate('Account')}}>
