@@ -22,6 +22,7 @@
     "expo": "^41.0.1",
     "expo-constants": "~10.1.3",
     "expo-google-app-auth": "^8.2.2",
+    "expo-image-manipulator": "~9.2.2",
     "expo-image-picker": "~10.1.4",
     "expo-linking": "~2.2.3",
     "expo-localization": "~10.1.0",
