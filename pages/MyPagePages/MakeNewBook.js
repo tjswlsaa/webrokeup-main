@@ -43,21 +43,18 @@ const test6={
   userinfo:''
 }
 const test7={
-  spinner:''
+  spinner:'',
+  setSpinner: undefined,
 }
 const test8={
-  smallBookTitle:''
+  smallBookTitle:'',
 }
 const MakeNewBook = ({navigation,route}) => {
 
-  const [spinner,setSpinner]=useState(false)
-  test7.spinner=spinner
+  const [spinner,setSpinner]=useState(false);
 
-  useEffect(()=>{
-    setInterval(()=>{
-      setSpinner(spinner)
-    },3000)
-  })
+  test7.spinner=spinner
+  test7.setSpinner = setSpinner;
 
 
   const user = firebase.auth().currentUser;
@@ -125,37 +122,45 @@ test8.smallBookTitle=smallBookTitle
   }
 
 
-  return ( 
+  return (
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-    <View style={styles.container}>
+      <View style={styles.container}>
 
-        <ImageBackground style={styles.bookBackgroundImage} source={{uri:bookBackground}} >
+        {spinner && (
+          <Spinner
+            visible={true}
+            textContent={'Loading...'}
+            textStyle={styles.spinnerTextStyle}
+          />
+        )}
+
+        <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
           <View style={styles.openButtonContainer}>
-            <Switch 
-                            style={styles.button}
-                            value={isPublic}
-                            // useNativeDriver={true}
-                            activeText={'공개'}
-                            inActiveText={'비공개'}
-                            onValueChange={(value)=>setPublic(value)}
-                            backgroundActive={'#C4C4C4'}
-                            backgroundInactive={'#4D6DAA'}
-                            circleSize={30} //사이즈 조정이 안댐
-                            barHeight={30}
-                            barWidth={100}
+            <Switch
+              style={styles.button}
+              value={isPublic}
+              // useNativeDriver={true}
+              activeText={'공개'}
+              inActiveText={'비공개'}
+              onValueChange={(value) => setPublic(value)}
+              backgroundActive={'#C4C4C4'}
+              backgroundInactive={'#4D6DAA'}
+              circleSize={30} //사이즈 조정이 안댐
+              barHeight={30}
+              barWidth={100}
 
-                            circleActiveColor={'#4D6DAA'}
-                            circleInActiveColor={'#C4C4C4'}
-                        />
+              circleActiveColor={'#4D6DAA'}
+              circleInActiveColor={'#C4C4C4'}
+            />
           </View>
           <View style={styles.bookContainer}>
-          <ImageBackground style={styles.bookImage} source={{uri:book}} >
-          <View style={styles.bookContainer}>
-            <View style={{marginLeft:20, width:"80%"}}>
+            <ImageBackground style={styles.bookImage} source={{ uri: book }} >
+              <View style={styles.bookContainer}>
+                <View style={{ marginLeft: 20, width: "80%" }}>
 
-              {/* {bookTitle.length > 12 ? (
+                  {/* {bookTitle.length > 12 ? (
 
                 <TextInput style={styles.titleInputText}
                   defaultValue={bookTitle.substring(0,12)} 
@@ -164,32 +169,32 @@ test8.smallBookTitle=smallBookTitle
 
               ):( */}
 
-                <TextInput style={styles.titleInputText} 
-                value={bookTitle}
-                // value={bookTitle}
-                // numberOfLines={2}
-                // maxHeight={60} 
-                // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                // setText(newText);  } }
-                multiline={false}  
-                maxLength ={10}
-                returnKeyType="done"
-                onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                placeholder="제목을 작성해주세요"/>
+                  <TextInput style={styles.titleInputText}
+                    value={bookTitle}
+                    // value={bookTitle}
+                    // numberOfLines={2}
+                    // maxHeight={60} 
+                    // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                    // setText(newText);  } }
+                    multiline={false}
+                    maxLength={10}
+                    returnKeyType="done"
+                    onChangeText={bookTitle => setBookTitle(bookTitle)}
+                    placeholder="제목을 작성해주세요" />
 
 
-                <TextInput style={{fontSize:15,marginLeft: "20%"}} 
-                value={smallBookTitle}
-                // numberOfLines={2}
-                // maxHeight={60} 
-                // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                // setText(newText);  } }
-                multiline={false}  
-                maxLength ={14}
-                returnKeyType="done"
-                onChangeText={smallBookTitle=> setSmallBookTitle(smallBookTitle)}
-                placeholder="소제를 작성해주세요"/>
-              {/* )} */}
+                  <TextInput style={{ fontSize: 15, marginLeft: "20%" }}
+                    value={smallBookTitle}
+                    // numberOfLines={2}
+                    // maxHeight={60} 
+                    // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                    // setText(newText);  } }
+                    multiline={false}
+                    maxLength={14}
+                    returnKeyType="done"
+                    onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
+                    placeholder="소제를 작성해주세요" />
+                  {/* )} */}
                   {/* <TextInput style={styles.titleInputText} 
                 multiline={true}  
                 maxlength='5'
@@ -198,45 +203,45 @@ test8.smallBookTitle=smallBookTitle
                 // onchangeText={onChangeText()}
                 placeholder="제목을 두줄로 작성해주세요"/> */}
 
-            {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
-      
-            {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
-            </View>
-            <View>
-            <Text style={styles.writer}> {userID}.이별록작가 </Text>
-            </View>
+                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
 
-          {image==undefined ? (
- 
+                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
+                </View>
+                <View>
+                  <Text style={styles.writer}> {userID}.이별록작가 </Text>
+                </View>
+
+                {image == undefined ? (
+
                   <TouchableOpacity style={styles.photoInputContainer}>
-                  {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
-                  <Button title="표지 이미지를 넣어주세요" onPress={()=>savePhoto()} />
-                  {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
+                    {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
+                    <Button title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
                   </TouchableOpacity>
 
-          ):(
-            <TouchableOpacity onPress={()=>savePhoto()}>
-            <Image source={{ uri: image }} style={{ alignSelf:"center", marginTop:15, marginLeft:15, width: 250, height: 250 }} />
-            </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={() => savePhoto()}>
+                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: 15, marginLeft: 15, width: 250, height: 250 }} />
+                  </TouchableOpacity>
 
-          )
-          }
-
-
+                )
+                }
 
 
 
 
+
+
+              </View>
+            </ImageBackground>
           </View>
         </ImageBackground>
-        </View>
-        </ImageBackground>
-    </View>
+      </View>
     </TouchableWithoutFeedback>
 
     // {/* </KeyboardAvoidingView > */}
   )
-  }
+}
 
   const styles = StyleSheet.create({ 
     container:{
@@ -312,8 +317,11 @@ test8.smallBookTitle=smallBookTitle
     marginRight:"6%" ,
     marginLeft:"10%",
     justifyContent:"center",
-  }
-  })
+  },
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
+})
  // console.log('진행상황')
 
   async function handleChapter(){
@@ -332,11 +340,16 @@ test8.smallBookTitle=smallBookTitle
     }
 
     saveChapter()
-    
   }
+
   async function saveChapter() {
     // const reduce = require('image-blob-reduce')();
 
+    const {setSpinner}=test7;
+    setSpinner(true);
+    // 저장중일때 함수의 실행을 막아야한다. 두번 저장되면 안됨!
+    // 그런데, react-native-loading-spinner-overlay 얘가 화면 전체 터치 disable 덕분에 프로그래밍적으로 처리안해도댐
+    // 즉, 현재 방심중임
 
     const { user_uid } = test;
     const { image }=test2;
@@ -442,8 +455,6 @@ test8.smallBookTitle=smallBookTitle
       />
     </View>
   );
-
-
 }
 
 
