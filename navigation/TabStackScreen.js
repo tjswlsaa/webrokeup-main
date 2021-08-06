@@ -95,6 +95,8 @@ const MainStackScreen = () => {
             name="PopularArticle" 
             component={PopularArticle} 
             options={{
+              title: "오늘의 이별록",
+              headerTintColor: "#21381c",
               ...defaultScreenOptions,
             }} />
         <MainStack.Screen 
