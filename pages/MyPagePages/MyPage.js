@@ -7,7 +7,6 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
 import backgroundimage from '../../assets/backgroundimage.jpg'
-<<<<<<< HEAD
 import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -15,8 +14,6 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
-=======
->>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
 
 const test1 ={ 
     userinfo:''
