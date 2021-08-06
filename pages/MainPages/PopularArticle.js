@@ -94,14 +94,14 @@ useEffect(()=>{
                 </TouchableOpacity>
         </View>
         <View style={{flex:5, backgroundColor: "#E9E9E9"}}>
-                <ScrollView style={{flex:1, borderWidth: 1, marginHorizontal: "2%", backgroundColor:"yellow"}}>
-                        {list.map(item => (
+                <ScrollView style={{flex:1, marginHorizontal: "2%", backgroundColor:"#FAFAFA"}}>
+                        {list.map(chapters => (
                                 <ChapterItem
-                                        key={item.key}
+                                        key={chapters.key}
                                         navigation={navigation}
-                                        item={item}
-                                        chapterKey={item.chapterKey}
-                                        bookKey={item.bookKey}
+                                        chapters={chapters}
+                                        chapterKey={chapters.chapterKey}
+                                        bookKey={chapters.bookKey}
                                         />))
                         }
                 </ScrollView>
@@ -113,19 +113,19 @@ useEffect(()=>{
 
 
 
-const ChapterItem = ({ navigation, item, chapterKey, bookKey }) => {
-       // console.log('PopularArticle.js (1), item: ',item);
+const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
+       // console.log('PopularArticle.js (1), chapters: ',chapters);
         const [book,setBook] = useState([]);
+        const [item, setItem] = useState([]);
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
-        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + item.chapterKey + '/likes/');
+        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
         const BottomSpace = getBottomSpace()
         const tabBarHeight = useBottomTabBarHeight();
         const statusBarHeight = getStatusBarHeight();
         const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
-
 
         var user = firebase.auth().currentUser;
         var user_uid
@@ -134,19 +134,17 @@ const ChapterItem = ({ navigation, item, chapterKey, bookKey }) => {
         }
         
         var userID = user_uid.substring(0, 6)
-       // console.log("likeRef: " +likeRef)
-       // console.log({item})
 
-       useEffect(() => {
-        let temp = [];
-        let data = firebase_db.ref('book/')
-            .once('value', (snapshot) => {
-                snapshot.forEach((child) => {
-                    temp.push(child.val());
-                });
-                setBook(temp);
-            })
-    }, [])
+        useEffect(() => {
+                let temp = [];
+                let data = firebase_db.ref(`book/${bookKey}`)
+                    .once('value', (snapshot) => {
+                        temp.push(snapshot);
+                        });
+                        setItem(temp);
+                        console.log("temp: " + temp)
+            }, [])
+   
 
         useEffect (()=>{
             // let temp = [];
@@ -167,7 +165,7 @@ const ChapterItem = ({ navigation, item, chapterKey, bookKey }) => {
         useEffect (()=>{
                // console.log('PopularArticle.js (2), item: ',item);
 
-            let arr = firebase_db.ref(`book/${bookKey}/chapters/` + item.chapterKey + '/comments/')
+            let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
             .on('value', (snapshot) => {
                var commentsNumber = snapshot.numChildren();
                setCommentsNumber(commentsNumber)
@@ -176,30 +174,28 @@ const ChapterItem = ({ navigation, item, chapterKey, bookKey }) => {
 
 
         return (
-                <View style={{height: realScreen*0.3, borderColor: "red", borderWidth: 1}}>
+                <View style={{height: realScreen*0.35, backgroundColor: "white", marginBottom: "1%"}}>
                         <TouchableOpacity style={{  flex:1, marginVertical: "1%", }} onPress={() => {
-                                       // console.log('PopularArticle.js (2), item: ',item);
-                                        navigation.navigate('readArticle', { chapters: item, chapterKey: item.chapterKey, bookKey: item.bookKey }) }
+                                       console.log('PopularArticle.js (2), chapters: ',chapters);
+                                        navigation.navigate('readArticle', { chapters: chapters, chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
                                 }>
                                 <View style={{flex:1,  flexDirection: "row", }}>
-                                        <View style={{flex:1, borderWidth: 1, marginHorizontal: "5%", marginTop: "2%"}}>
+                                        <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%"}}>
                                                 <View style={{flex:5}}>
-                                                <Text style={styles.bookIndexOneTitle} numberOfLines={1}>{item.chapterTitle}</Text>
-                                                <Text style={{ fontWeight: '700', marginLeft: "5%", marginTop: "2%"}} numberOfLines={3} line>{item.mainText}</Text>
+                                                <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "3%"}} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} line>{chapters.mainText}</Text>
                                                 </View>
                                                 <View>
-                                                        <Text style={{ marginLeft: "5%", fontSize: 10 }}>{item.Kregdate}</Text>
+                                                        <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
                                                 </View>
                                                 <View style={{ flex: 1, flexDirection: "row"}}>
-                                                        {/* <Text style={styles.bookIndexText}>{post.iam}</Text> //이별록 포스팅에서 이용 */}
                                                         <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
                                                         <Text style={styles.bookIndexText}>{likeCount}</Text>
                                                         <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
                                                         <Text style={styles.bookIndexText}>{commentsNumber}</Text>
                                                 </View>
-                                                <View style={{borderBottomColor: "#21381C", borderBottomWidth: 1, marginTop: "4%"}}/>
                                         </View>
-                                        <View style={{flex:1, marginTop: "2%"}}>
+                                        <View>
                                                 <BookComponent
                                                 users_uid={item.user_uid}
                                                 navigation={navigation}
