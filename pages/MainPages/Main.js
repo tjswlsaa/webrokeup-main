@@ -255,26 +255,13 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
 // sub components
 const BookItem = ({ navigation, item, bookKey }) => {
 
-<<<<<<< HEAD
-    // const [userinfo2, setUserinfo2] = useState([]);
-=======
     const [userinfo2, setUserinfo2] = useState({});
     
->>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
       user_uid = user.uid;
     }
-<<<<<<< HEAD
-//     useEffect(()=>{
-//       firebase_db.ref(`users/${item.user_uid}`)
-//           .on('value', (snapshot) => {
-//               let userinfo2 = snapshot.val();
-//               setUserinfo2(userinfo2);
-//           })
-//   }, []);
-=======
     useEffect(()=>{
       firebase_db.ref(`users/${item.user_uid}`)
           .on('value', (snapshot) => {
@@ -285,7 +272,6 @@ const BookItem = ({ navigation, item, bookKey }) => {
           })
   }, []);
 
->>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
     //// console.log(item);
    // console.log("bookitem running")
     // const {userinfo} = test1;
@@ -312,17 +298,13 @@ const BookItem = ({ navigation, item, bookKey }) => {
 const ChapterItem = ({ navigation, chapters, chapterKey, userinfo }) => {
    // console.log('Main.js (1) chapters:', chapters);
 
-<<<<<<< HEAD
-    const { userinfo } = test1
-=======
     // const { userinfo } = test1
     const { book } = test2
     const { hotChapter } = test3;
    // console.log("chapteritem running")
    // console.log({ chapters });
+   
 
-
->>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
 
     return (
             <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "88%", backgroundColor: "#fff", borderColor: "#A2A2A2", borderWidth: 1}} 
