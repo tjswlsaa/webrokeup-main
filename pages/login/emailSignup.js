@@ -143,7 +143,6 @@ const emailSignup = ({ navigation }) => {
       .set({
         method:"email 회원가입",
         email: userCredential.user.email,
-        pw:password,
         user_uid: userCredential.user.uid,
         iam: userCredential.user.uid.substring(0, 6)+".지은이", 
         selfLetter: "안녕하세요. 이별록 작가 " + userCredential.user.uid.substring(0, 6) + " 입니다.",
