@@ -12,9 +12,9 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
-const test1 = {
-    userinfo: ''
-}
+// const test1 = {
+//     userinfo: ''
+// }
 
 const test2 = {
     bookTitle: '',
@@ -41,8 +41,22 @@ const test4 = {
 }
 
 const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
-    const [userinfo, setUserinfo] = useState([]);
-    test1.userinfo = userinfo;
+    // const [userinfo, setUserinfo] = useState([]);
+    const [userinfo, setUserinfo] = useState({});
+
+    useEffect(() => {
+        firebase_db.ref(`users/${user_uid}/`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
+    
+    // test1.userinfo = userinfo;
+
+
     const [book, setBook] = useState([]);
     test2.book = book;
     const [hotChapter, setHotChapter] = useState([]);
@@ -88,25 +102,14 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
    // console.log(userID)
 
     useEffect(() => {
-        firebase_db.ref(`users/${user_uid}/`)
-            .on('value', (snapshot) => {
-                let userinfo = snapshot.val();
-                setUserinfo(userinfo);
-            })
-    }, []);
-
-    useEffect(() => {
         let temp = [];
         let data = firebase_db.ref('book/')
-            .on('value', (snapshot) => {
+            .once('value', (snapshot) => {
                 snapshot.forEach((child) => {
                     temp.push(child.val());
                 });
-                console.log({temp});
-                setBook(temp)
+                setBook(temp);
             })
-        //// console.log(temp)  
-       // console.log("book.bookKey: " + book.bookKey)
     }, [])
 
     useEffect(() => {
@@ -215,6 +218,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                                 chapters={chapters}
                                 chapterKey={chapters.chapterKey}
                                 bookKey={chapters.bookKey}
+                                userinfo={userinfo}
                             />)
                         )}
                     </Swiper>
@@ -251,12 +255,18 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
 // sub components
 const BookItem = ({ navigation, item, bookKey }) => {
 
+<<<<<<< HEAD
     // const [userinfo2, setUserinfo2] = useState([]);
+=======
+    const [userinfo2, setUserinfo2] = useState({});
+    
+>>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
       user_uid = user.uid;
     }
+<<<<<<< HEAD
 //     useEffect(()=>{
 //       firebase_db.ref(`users/${item.user_uid}`)
 //           .on('value', (snapshot) => {
@@ -264,9 +274,21 @@ const BookItem = ({ navigation, item, bookKey }) => {
 //               setUserinfo2(userinfo2);
 //           })
 //   }, []);
+=======
+    useEffect(()=>{
+      firebase_db.ref(`users/${item.user_uid}`)
+          .on('value', (snapshot) => {
+              let userinfo2 = snapshot.val();
+              if (userinfo2 > '') {
+                  setUserinfo2(userinfo2);
+              }
+          })
+  }, []);
+
+>>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
     //// console.log(item);
    // console.log("bookitem running")
-    const {userinfo} = test1;
+    // const {userinfo} = test1;
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} 
         onPress={() => { navigation.navigate('readBook', { item: item, bookKey: bookKey, }) }}>
@@ -286,10 +308,21 @@ const BookItem = ({ navigation, item, bookKey }) => {
         </TouchableOpacity>
     )
 }
-const ChapterItem = ({ navigation, chapters, chapterKey }) => {
+// const ChapterItem = ({ navigation, chapters, chapterKey }) => {
+const ChapterItem = ({ navigation, chapters, chapterKey, userinfo }) => {
    // console.log('Main.js (1) chapters:', chapters);
 
+<<<<<<< HEAD
     const { userinfo } = test1
+=======
+    // const { userinfo } = test1
+    const { book } = test2
+    const { hotChapter } = test3;
+   // console.log("chapteritem running")
+   // console.log({ chapters });
+
+
+>>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
 
     return (
             <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "88%", backgroundColor: "#fff", borderColor: "#A2A2A2", borderWidth: 1}} 
@@ -303,7 +336,8 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
 const WritingItem=(props)=> {
     const {writing, navigation}=props;
-    const [userinfo, setUserinfo] = useState([]);
+    // const [userinfo, setUserinfo] = useState([]);
+    const [userinfo, setUserinfo] = useState({});
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
@@ -313,7 +347,9 @@ const WritingItem=(props)=> {
       firebase_db.ref(`users/${writing.creator}`)
           .on('value', (snapshot) => {
               let userinfo = snapshot.val();
-              setUserinfo(userinfo);
+              if (userinfo> '') {
+                  setUserinfo(userinfo);
+              }
           })
   }, []);
     return (

@@ -15,7 +15,7 @@ import { HeaderBackButton } from '@react-navigation/stack';
 import policyoneforlogin from './pages/MyPagePages/policyoneforlogin';
 import policytwoforlogin from './pages/MyPagePages/policytwoforlogin';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import GoogleCheck from './pages/login/GoogleCheck';
 // import { applyMiddleware, createStore } from 'redux';
 // import {Provider} from 'react-redux'
 // import promiseMiddleware from 'redux-promise'
@@ -29,6 +29,11 @@ const App = ({navigation}) =>{
           initialRouteName="LoadingScreen"
           screenOptions={{ headerShown: false }}
         >
+                    <Stack.Screen
+            name="GoogleCheck"
+            component={GoogleCheck}
+            options={{headerShown: false}}
+          />
           <Stack.Screen
             name="LoadingScreen"
             component={LoadingScreen}

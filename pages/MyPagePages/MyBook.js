@@ -114,7 +114,7 @@ const MyBook = ({ navigation, route }) => {
     return (
         <SafeAreaView style={{flex:1}}>
             <ScrollView style={{backgroundColor: "#F5F4F4",flex: 1}}>
-                <View style={{ height: realScreen*0.68,marginHorizontal:"4%",alignItems:"center"}}>
+                <View style={{ height: realScreen*0.5,marginHorizontal:"4%",alignItems:"center"}}>
                     <View style={{ height: realScreen*0.1,}}>
                         <TouchableOpacity style={{        marginLeft: "80%",
                                                             justifyContent: "center",

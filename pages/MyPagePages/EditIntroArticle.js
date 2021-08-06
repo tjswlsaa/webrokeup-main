@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, TouchableWithoutFeedback } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
@@ -25,9 +25,10 @@ const EditIntroArticle = ({ navigation, route }) => {
         //maintext_a.current.clear();  
     }
     return (
-        <View style={styles.container}>
-            <StatusBar style="white" />
-            <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex:1}}>
+        <KeyboardAvoidingView behavior="padding" style={{flex:1}} keyboardVerticalOffset={50}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
                 <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
                     <TouchableOpacity style={styles.saveButton} onPress={saveEditIntroArticle}>
                         <Text style={{ alignSelf: "center" }}>저장하기</Text>
@@ -36,7 +37,7 @@ const EditIntroArticle = ({ navigation, route }) => {
                         <ImageBackground style={styles.bookImage} source={paper} >
                              <Text style={styles.bookTitle}>말머리에서</Text>  
                                 <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
-                                    <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
+                                    <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17 }}
                                         multiline={true} defaultValue={intro}  returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)} />
                                 </View>
@@ -52,8 +53,9 @@ const EditIntroArticle = ({ navigation, route }) => {
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
-            </SafeAreaView>
-        </View>
+                </TouchableWithoutFeedback>
+        </KeyboardAvoidingView >
+        </SafeAreaView>
     )
 }
 const styles = StyleSheet.create({

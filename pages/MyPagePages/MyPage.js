@@ -1,13 +1,13 @@
-import React, {Children, useEffect, useState} from 'react';
-import { AppRegistry, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, TouchableOpacity,ImageBackground, ScrollView, TouchableHighlight, Platform, ImageStore} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { AppRegistry, StyleSheet, Text, View, Image, Dimensions, SafeAreaView, TouchableOpacity,ImageBackground} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { firebase_db } from '../../firebaseConfig';
-import Constants from 'expo-constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
 import backgroundimage from '../../assets/backgroundimage.jpg'
+<<<<<<< HEAD
 import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -15,6 +15,8 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
+=======
+>>>>>>> f87787fe56b8dffea19a17e780255536f4c472d0
 
 const test1 ={ 
     userinfo:''
@@ -137,9 +139,8 @@ return (
                             >
                                     {myBookFiltered.map(item => {
                                         test2.item=item
-                                        console.log('item여기서부터문제인가',item)
                                     return (
-                                        <BookComponent
+                                        <MyBookItem
                                         key = {item.key}
                                         item={item}
                                         url={item.url}
@@ -259,9 +260,8 @@ const styles = StyleSheet.create({
         fontSize:14,
     },
 })
-console.log('.')
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
-console.log('..')
+
 const MyBookItem = (props) => {
     const {navigation,item}=props
     const {userinfo}=test1

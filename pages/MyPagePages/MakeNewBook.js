@@ -1,21 +1,17 @@
 
-import React, {useEffect,useState,useRef} from 'react';
-import {TouchableWithoutFeedback, ActivityIndicator , ImageBackground,Animated, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, ScrollView, TouchableHighlight, TextInput, Route} from 'react-native';
+import React, {useEffect,useState} from 'react';
+import {TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {firebase_db} from '../../firebaseConfig';
-//import * as firebase from 'firebase/app';
-//import Constants from 'expo-constants'
-//import { add, Value } from 'react-native-reanimated';
 import * as ImagePicker from 'expo-image-picker';
-import {KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase'
 import "firebase/firestore"
 import "firebase/firebase-storage"
-// import SwitchToggle from 'react-native-switch-toggle';
 import { Switch } from 'react-native-switch';
-import PropTypes from 'prop-types';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {CommonActions} from '@react-navigation/native';
+import * as ImageManipulator from 'expo-image-manipulator';
+
 
 const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -41,21 +37,18 @@ const test6={
   userinfo:''
 }
 const test7={
-  spinner:''
+  spinner:'',
+  setSpinner: undefined,
 }
 const test8={
-  smallBookTitle:''
+  smallBookTitle:'',
 }
 const MakeNewBook = ({navigation,route}) => {
 
-  const [spinner,setSpinner]=useState(false)
-  test7.spinner=spinner
+  const [spinner,setSpinner]=useState(false);
 
-  useEffect(()=>{
-    setInterval(()=>{
-      setSpinner(spinner)
-    },3000)
-  })
+  test7.spinner=spinner
+  test7.setSpinner = setSpinner;
 
 
   const user = firebase.auth().currentUser;
@@ -99,72 +92,69 @@ test8.smallBookTitle=smallBookTitle
       }
     })();
   }, []);
-  const savePhoto= async () => {
-    console.log('savePhoto() quality: 0.01');
+
+  const savePhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      // quality: 0.1,
-      // quality: 0.05,
-      quality: 0.01,
     });
+
     if (!result.cancelled) {
-      setImage(result.uri)
-     // console.log(result.uri)
+      const image = result;
+
+      const manipResult = await ImageManipulator.manipulateAsync(
+        image.localUri || image.uri,
+        [
+          {resize: { width: 600 }} // width: 600px에 맞춰서 자동 resize
+        ],
+        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+      );
+
+      setImage(manipResult.uri);
     }
-    } 
-
-  //   const maxLines= PropTypes.number
+  }
 
 
-  //   const onChangeText = bookTitle => {
-  //     // const lines = bookTitle.split("\n");
-  
-  //     if (bookTitle.length <= (maxLines || 2)) {
-  //       onChangeText(bookTitle);
-  //       setBookTitle({ value: bookTitle });
-  //     }
-  //  };
-
-    
-    // Animated.timing(this.state.animatedValue, {
-    //   toValue: 1,
-    //   duration: 400,
-    //   useNativeDriver: true, // <-- Add this Line
-    // }).start();
-
-  return ( 
+  return (
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-    <View style={styles.container}>
+      <View style={styles.container}>
 
-        <ImageBackground style={styles.bookBackgroundImage} source={{uri:bookBackground}} >
+        {spinner && (
+          <Spinner
+            visible={true}
+            textContent={'Loading...'}
+            textStyle={styles.spinnerTextStyle}
+          />
+        )}
+
+        <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
           <View style={styles.openButtonContainer}>
-            <Switch 
-                            style={styles.button}
-                            value={isPublic}
-                            // useNativeDriver={true}
-                            activeText={'공개'}
-                            inActiveText={'비공개'}
-                            onValueChange={(value)=>setPublic(value)}
-                            backgroundActive={'#C4C4C4'}
-                            backgroundInactive={'#4D6DAA'}
-                            circleSize={30} //사이즈 조정이 안댐
-                            barHeight={30}
-                            barWidth={100}
+            <Switch
+              style={styles.button}
+              value={isPublic}
+              // useNativeDriver={true}
+              activeText={'공개'}
+              inActiveText={'비공개'}
+              onValueChange={(value) => setPublic(value)}
+              backgroundActive={'#C4C4C4'}
+              backgroundInactive={'#4D6DAA'}
+              circleSize={30} //사이즈 조정이 안댐
+              barHeight={30}
+              barWidth={100}
 
-                            circleActiveColor={'#4D6DAA'}
-                            circleInActiveColor={'#C4C4C4'}
-                        />
+              circleActiveColor={'#4D6DAA'}
+              circleInActiveColor={'#C4C4C4'}
+            />
           </View>
           <View style={styles.bookContainer}>
-          <ImageBackground style={styles.bookImage} source={{uri:book}} >
-          <View style={styles.bookContainer}>
-            <View style={{marginLeft:20, width:"80%"}}>
+            <ImageBackground style={styles.bookImage} source={{ uri: book }} >
+              <View style={styles.bookContainer}>
+                <View style={{ marginLeft: 20, width: "80%" }}>
 
-              {/* {bookTitle.length > 12 ? (
+                  {/* {bookTitle.length > 12 ? (
 
                 <TextInput style={styles.titleInputText}
                   defaultValue={bookTitle.substring(0,12)} 
@@ -173,32 +163,32 @@ test8.smallBookTitle=smallBookTitle
 
               ):( */}
 
-                <TextInput style={styles.titleInputText} 
-                value={bookTitle}
-                // value={bookTitle}
-                // numberOfLines={2}
-                // maxHeight={60} 
-                // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                // setText(newText);  } }
-                multiline={false}  
-                maxLength ={10}
-                returnKeyType="done"
-                onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                placeholder="제목을 작성해주세요"/>
+                  <TextInput style={styles.titleInputText}
+                    value={bookTitle}
+                    // value={bookTitle}
+                    // numberOfLines={2}
+                    // maxHeight={60} 
+                    // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                    // setText(newText);  } }
+                    multiline={false}
+                    maxLength={10}
+                    returnKeyType="done"
+                    onChangeText={bookTitle => setBookTitle(bookTitle)}
+                    placeholder="제목을 작성해주세요" />
 
 
-                <TextInput style={{fontSize:15,marginLeft: "20%"}} 
-                value={smallBookTitle}
-                // numberOfLines={2}
-                // maxHeight={60} 
-                // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                // setText(newText);  } }
-                multiline={false}  
-                maxLength ={14}
-                returnKeyType="done"
-                onChangeText={smallBookTitle=> setSmallBookTitle(smallBookTitle)}
-                placeholder="소제를 작성해주세요"/>
-              {/* )} */}
+                  <TextInput style={{ fontSize: 15, marginLeft: "20%" }}
+                    value={smallBookTitle}
+                    // numberOfLines={2}
+                    // maxHeight={60} 
+                    // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
+                    // setText(newText);  } }
+                    multiline={false}
+                    maxLength={14}
+                    returnKeyType="done"
+                    onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
+                    placeholder="소제를 작성해주세요" />
+                  {/* )} */}
                   {/* <TextInput style={styles.titleInputText} 
                 multiline={true}  
                 maxlength='5'
@@ -207,45 +197,45 @@ test8.smallBookTitle=smallBookTitle
                 // onchangeText={onChangeText()}
                 placeholder="제목을 두줄로 작성해주세요"/> */}
 
-            {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
-      
-            {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
-            </View>
-            <View>
-            <Text style={styles.writer}> {userID}.이별록작가 </Text>
-            </View>
+                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
 
-          {image==undefined ? (
- 
+                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
+                </View>
+                <View>
+                  <Text style={styles.writer}> {userID}.이별록작가 </Text>
+                </View>
+
+                {image == undefined ? (
+
                   <TouchableOpacity style={styles.photoInputContainer}>
-                  {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
-                  <Button title="표지 이미지를 넣어주세요" onPress={()=>savePhoto()} />
-                  {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
+                    {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
+                    <Button title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
                   </TouchableOpacity>
 
-          ):(
-            <TouchableOpacity onPress={()=>savePhoto()}>
-            <Image source={{ uri: image }} style={{ alignSelf:"center", marginTop:15, marginLeft:15, width: 250, height: 250 }} />
-            </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={() => savePhoto()}>
+                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: 15, marginLeft: 15, width: 250, height: 250 }} />
+                  </TouchableOpacity>
 
-          )
-          }
-
-
+                )
+                }
 
 
 
 
+
+
+              </View>
+            </ImageBackground>
           </View>
         </ImageBackground>
-        </View>
-        </ImageBackground>
-    </View>
+      </View>
     </TouchableWithoutFeedback>
 
     // {/* </KeyboardAvoidingView > */}
   )
-  }
+}
 
   const styles = StyleSheet.create({ 
     container:{
@@ -321,8 +311,11 @@ test8.smallBookTitle=smallBookTitle
     marginRight:"6%" ,
     marginLeft:"10%",
     justifyContent:"center",
-  }
-  })
+  },
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
+})
  // console.log('진행상황')
 
   async function handleChapter(){
@@ -341,9 +334,16 @@ test8.smallBookTitle=smallBookTitle
     }
 
     saveChapter()
-    
   }
+
   async function saveChapter() {
+    // const reduce = require('image-blob-reduce')();
+
+    const {setSpinner}=test7;
+    setSpinner(true);
+    // 저장중일때 함수의 실행을 막아야한다. 두번 저장되면 안됨!
+    // 그런데, react-native-loading-spinner-overlay 얘가 화면 전체 터치 disable 덕분에 프로그래밍적으로 처리안해도댐
+    // 즉, 현재 방심중임
 
     const { user_uid } = test;
     const { image }=test2;
@@ -359,6 +359,8 @@ test8.smallBookTitle=smallBookTitle
    // console.log('진행상황2')
    // console.log('props 확인', image)
    // console.log('진행상황3')
+    // const [compressedFile,setCompressedFile]=useState("")
+   
 
     console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
@@ -373,6 +375,42 @@ test8.smallBookTitle=smallBookTitle
     console.log('saveChapter() .....', new Date());
     const downloadURL= await SAVE_PATH.getDownloadURL()
     console.log('saveChapter() ..... .', new Date());
+
+
+      // const response = await fetch(image); //get in the data?
+      // console.log('saveChapter() ...', new Date());
+
+    //   const options = {
+    //     // As the key specify the maximum size
+    //     // Leave blank for infinity
+    //     maxSizeMB: 1.5,
+    //     // Use webworker for faster compression with
+    //     // the help of threads
+    //     useWebWorker: true
+    // }
+
+    // console.log('saveChapter(compressed) ...', new Date());
+
+    // const compressed = await imageCompression(response, options)
+    //   .then(function (compressedFile) {
+    //       // Compressed file is of Blob type
+    //       // You can drop off here if you want to work with a Blob file
+    //       console.log({compressedFile})
+    //       return compressedFile
+    //   })
+    //   .catch(function(error){
+    //     console.log(error.message)
+    //   })
+    //       // Show the user a toast message or notification that something went wrong while compressing file
+    //   console.log({compressed})
+    //   console.log ('typeof',typeof compressed)
+
+    // const blob = await compressed.blob();//uploading the image blob of the uri which will pass along fire store
+    // console.log('saveChapter() ....', new Date());
+    // await SAVE_PATH.put(blob);
+    // console.log('saveChapter() .....', new Date());
+    // const downloadURL= await SAVE_PATH.getDownloadURL()
+    // console.log('saveChapter() ..... .', new Date());
 
   firebase_db
   .ref('book/'+bookKey)
@@ -411,8 +449,6 @@ test8.smallBookTitle=smallBookTitle
       />
     </View>
   );
-
-
 }
 
 

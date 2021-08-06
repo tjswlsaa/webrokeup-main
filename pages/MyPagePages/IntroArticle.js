@@ -1,12 +1,10 @@
 import React, {useState,useRef,useEffect} from 'react';
-import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ScrollView, Touchable, Alert} from 'react-native';
-import {NavigationContainer,CommonActions} from '@react-navigation/native';
+import { StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, Touchable, Alert, SafeAreaView} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app';
-import Constants from 'expo-constants';
-import NewPage from './NewPage';
-import { NavigationEvents } from 'react-navigation';
+
 const IntroArticle = ({navigation, route}) => {
 
   const introArticle_a = useRef(null);
@@ -52,6 +50,9 @@ const IntroArticle = ({navigation, route}) => {
     })
   },[])
   return (
+    <SafeAreaView style={{flex:1}}>
+    <KeyboardAvoidingView behavior="padding" 
+    style={{flex:1}}>
     <View style={styles.container}>
         <StatusBar style="white" />
         <View style={styles.upperButtonContainer}>
@@ -71,15 +72,10 @@ const IntroArticle = ({navigation, route}) => {
                     ref={introArticle_a}>
                 </TextInput>  
        </ScrollView>
-       {/* <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity style={styles.likeButton}>                
-                <Text style={styles.likeButtonText}>공감</Text>
-            </TouchableOpacity>  
-            <TouchableOpacity style={styles.commentButton}>
-                <Text style={styles.commentButtonText}>댓글</Text>
-            </TouchableOpacity>  
-        </View> */}
+
     </View>
+    </KeyboardAvoidingView >
+    </SafeAreaView>
   )}
 const styles = StyleSheet.create({ 
     container: {

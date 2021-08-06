@@ -117,6 +117,20 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         />
+        
+        <HomeStack.Screen 
+          options={{
+                  title:"댓글",
+                  headerShown: false,
+                  // gestureEnabled: false,
+                  cardOverlayEnabled: true,
+                  // ... TransitionPresets.ModalSlideFromBottomIOS,
+                  ...TransitionPresets.ModalPresentationIOS,
+                  ...defaultScreenOptions,
+          }}
+          name="Comment" 
+          component={Comment}/>
+
         <HomeStack.Screen 
           name="editorMakeNewWriting" 
           options={{ headerShown: true }}
@@ -206,9 +220,7 @@ const HomeStackScreen = () => {
       <HomeStack.Screen name="NewPage" component={NewPage}/>
       <HomeStack.Screen name="EditArticle" component={EditArticle}/>
       <HomeStack.Screen 
-      //  defaultNavigationOptions: {
-      //   gesturesEnabled: false
-      // }
+
       options={{
               title:"댓글",
               headerShown: false,
@@ -219,16 +231,7 @@ const HomeStackScreen = () => {
               ...defaultScreenOptions,
 
       }}
-      // gestureEnabled={false}
-        // custom()
-        // headerShown: true,
-        // gestureDirection: 'horizontal',
-        // transitionSpec: {
-        //   open: config,
-        //   close: closeConfig,
-        // },
-        // cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
-      // mode="modal"
+  
       name="Comment" 
       component={Comment}/>
       <HomeStack.Screen 

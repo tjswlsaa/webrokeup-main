@@ -3,7 +3,6 @@ import { SafeAreaView, View, Alert, Button, FlatList, ScrollView, StyleSheet, Im
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
-import Constants from 'expo-constants';
 import paper from '../../assets/paper.png';
 import moment from 'moment';
 

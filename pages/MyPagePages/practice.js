@@ -206,9 +206,6 @@ import React, {useEffect,useState,useRef} from 'react';
 import {ImageBackground, StyleSheet, Button,Text, View, Image, Alert, TouchableOpacity, ScrollView, TouchableHighlight, TextInput, Route} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {firebase_db} from '../../firebaseConfig';
-//import * as firebase from 'firebase/app';
-//import Constants from 'expo-constants'
-//import { add, Value } from 'react-native-reanimated';
 import * as ImagePicker from 'expo-image-picker';
 import {KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase'

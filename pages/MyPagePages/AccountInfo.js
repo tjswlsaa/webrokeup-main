@@ -29,21 +29,35 @@ const AccountInfo = ({navigation}) => {
 
 
 
-            if (userinfo.method == "email 회원가입") {
+            if(userinfo.method == "email 회원가입"){
+
                 // Now you can use that to reauthenticate
+                
 
-                firebase.auth().currentUser.reauthenticateWithCredential(userinfo.email, userinfo.pw)
-                    .then(function () {
+                firebase.auth().currentUser.reauthenticateWithCredential(userinfo.email,userinfo.pw)
+                .then(function(){
+                       firebase.auth().currentUser.delete()
+                       Alert.alert("성공적탈퇴11!")
+
+                   // console.log('delete successful?')
+                    Alert.alert("성공적탈퇴11~~~~!")
+                    return;})
+                
+                }
+                else
+          
+                {
+
+                    const credential = firebase.auth.GoogleAuthProvider.credential(userinfo.idToken, userinfo.accessToken);
+                    firebase.auth().currentUser.reauthenticateWithCredential(credential)
+                    .then(function(){
                         firebase.auth().currentUser.delete()
-                        Alert.alert("성공적탈퇴11!")
-
-                        // console.log('delete successful?')
-                        Alert.alert("성공적탈퇴11~~~~!")
-                        return;
                     })
+                    Alert.alert("성공적탈퇴22!")
+                    navigation.navigate('LoginScreen')
+
+                }
             }
-        }
-                        
 
             
         Alert.alert(
