@@ -24,59 +24,48 @@ const AccountInfo = ({navigation}) => {
 
     const deleteAccount = async()=> {
 
-        const deletefunction =()=>{
-
-
-
-
-            if(userinfo.method == "email 회원가입"){
-
-                // Now you can use that to reauthenticate
-                
-
-                firebase.auth().currentUser.reauthenticateWithCredential(userinfo.email,userinfo.pw)
-                .then(function(){
-                       firebase.auth().currentUser.delete()
-                       Alert.alert("성공적탈퇴11!")
-
-                   // console.log('delete successful?')
-                    Alert.alert("성공적탈퇴11~~~~!")
-                    return;})
-                
-                }
-                else
-          
-                {
-
-                    const credential = firebase.auth.GoogleAuthProvider.credential(userinfo.idToken, userinfo.accessToken);
-                    firebase.auth().currentUser.reauthenticateWithCredential(credential)
-                    .then(function(){
-                        firebase.auth().currentUser.delete()
-                    })
-                    Alert.alert("성공적탈퇴22!")
-                    navigation.navigate('LoginScreen')
-
-                }
-            }
-
-            
         Alert.alert(
-          'Alert Title',
-          '모든 데이터가 삭제됩니다, 그래도 진행하시겠습니까?',
-          [
+            'Alert Title',
+            '모든 데이터가 삭제됩니다, 그래도 진행하시겠습니까?',
+            [
+      
+              {
+                text: '취소할래요',
+                // onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: '넵', onPress: () => deletefunction()},
+      
+            ],
+            {cancelable: false},
+          );
+
+        const deletefunction =async()=>{
+                     firebase.auth().currentUser.delete()
+                     .then(()=>{
+                        Alert.alert("탈퇴되었습니다") 
+                     }).catch((error)=>{
+                        Alert.alert("222장기간 로그인 시도가 없습니다. 다시 로그인 한 후 시도해주세요") 
+                        console.log("이게 로그인했을 때 왜 또다시 뜨지?")
+                     })
+
+
+        // try{
+        //  firebase.auth().currentUser.delete()
+        // }
+        // catch(error)
+        // {
+        //     Alert.alert("장기간 로그인 시도가 없습니다. 다시 로그인 한 후 시도해주세요") 
+        // }
+
+
+    }
+    }
+            
     
-            {
-              text: '취소할래요',
-              // onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            {text: '넵', onPress: () => deletefunction()},
-    
-          ],
-          {cancelable: false},
-        );
-    
-     }
+            
+
+     
     return(
         <View style= {{flex: 1, backgroundColor: "white"}}>
                 <View style={{flex: 1,  marginHorizontal : 10,}}>
