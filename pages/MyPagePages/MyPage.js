@@ -15,16 +15,17 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
 
-const test1 ={ 
-    userinfo:''
-}
+
 const test2= {
     item:""
 }
 const MyPage = ({navigation, item, bookKey}) => {
     const [myBook, setMyBook] = useState([]);
-    const [userinfo, setUserinfo] = useState([]);
-    test1.userinfo=userinfo
+    const [userinfo, setUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
+
     const [swiper, setSwiper] = useState(null);
     const { width, height } = Dimensions.get('window');
     const headerHeight = useHeaderHeight();
@@ -41,14 +42,14 @@ const MyPage = ({navigation, item, bookKey}) => {
       user_uid = user.uid;  
     }
     var userID=user_uid.substring(0,6)
-       // console.log (userID)
    
     useEffect(()=>{
         firebase_db.ref(`users/${user_uid}`)
             .on('value', (snapshot) => {
                 let userinfo = snapshot.val();
-                setUserinfo(userinfo);
-            })
+                if (userinfo> '') {
+                    setUserinfo(userinfo);
+                }})
     }, []);
     
     useEffect(() => {
@@ -167,33 +168,5 @@ return (
 
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
 
-const MyBookItem = (props) => {
-    const {navigation,item}=props
-    const {userinfo}=test1
-    // const {item}=test2
-    const { width, height } = Dimensions.get('window');
-   // console.log('...')
-   // console.log (typeof item)
-   // console.log("MYBOOKITEM()")
-   // console.log('item 확인해야함',item)
-    const bookKey=item.bookKey
-   // console.log('마이페이지 북키확인',bookKey)
-    const url= item.url
-    return(
-        // <View style={styles.subContainer}>
-        <View style={{height:"100%",width:"90%", marginHorizontal: "5%", borderWidth: 1}}>
-                <ImageBackground style={{height:"100%", width: "100%", }} source={backgroundimage}>
-                    <ImageBackground style={{height:400,width:300,marginTop:"8%",alignSelf:"center"}} source={{uri:book}} > 
-                            <Text style={{marginTop:"18%", marginLeft:"27%",  fontSize:14,}}>{item.bookTitle}</Text>
-                             <Text style={{marginTop:"10%", marginLeft:"50%",  fontSize:12,}}>{userinfo.iam} </Text> 
-                            <TouchableOpacity 
-                            style={{ width: width/2, height: width/2, marginTop:"5%",marginLeft:"3%", backgroundColor:"yellow",alignSelf:"center"  }} 
-                            onPress={()=>{navigation.navigate('MyBook', {item: item, bookKey:bookKey})}} > 
-                                    <Image source={{ url: url }} style={{ flex:1, backgroundColor:"pink" }}/>
-                            </TouchableOpacity>
-                    </ImageBackground>
-                </ImageBackground>
-        </View>
-    )
-}
+
 export default MyPage;
