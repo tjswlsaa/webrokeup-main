@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {View,Text,Image,ImageBackground} from "react-native";
 import book from '../assets/book.png';
-import coverimage from '../assets/coverimage_w.png';
+import coverimage from '../assets/coverimage.png';
 import firebase from 'firebase/app';
 import { firebase_db } from '../firebaseConfig';
 
@@ -24,11 +24,12 @@ export default function BookComponent({item}) {
 
     return (
     <View style={{flex:1, flexDirection: 'column'}}>
-        <ImageBackground style={{flex: 1, flexDirection: 'column', width: "100%", height: "100%"}} source={coverimage} resizeMode={"contain"}>
+        <ImageBackground style={{flex: 1, flexDirection: 'column', width: "100%", height: "100%", }} source={coverimage} resizeMode={"center"}>
             <View style= {{flex:1, flexDirection: 'column'}}>
-              <Text style={{flex:1, fontSize : 17, borderWidth: 1, marginTop: "20%", marginHorizontal: "25%"}}>{item.bookTitle}</Text>
-              <Text style={{flex: 1, alignSelf: "flex-end", borderWidth: 1, fontSize: 13, marginHorizontal: "25%"}}>{userinfo2.iam}</Text>
-              <Image style={{flex: 5, width: "50%", top: 0, borderWidth: 1, justifyContent: "flex-start", marginHorizontal: "25%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
+              <Text style={{flex:1, fontSize : 17, marginTop: "23%", marginHorizontal: "22%"}}>{item.bookTitle}</Text>
+              {/*에러 떠서 null처리함}
+              {/* <Text style={{flex: 1, alignSelf: "flex-end", fontSize: 13, marginHorizontal: "22%"}}>{userinfo2.iam}</Text> */}
+              <Image style={{flex: 5, width: "54%", top: 0, justifyContent: "flex-start", marginHorizontal: "24%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
             </View>
         </ImageBackground>
       </View>

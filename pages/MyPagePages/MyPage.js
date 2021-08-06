@@ -4,28 +4,38 @@ import { StatusBar } from 'expo-status-bar';
 import { firebase_db } from '../../firebaseConfig';
 import Constants from 'expo-constants';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon2 from 'react-native-vector-icons/Entypo';
 import firebase from 'firebase/app'
 import Swiper from 'react-native-swiper'
 import backgroundimage from '../../assets/backgroundimage.jpg'
 import BookComponent from '../../components/BookComponent';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
-const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-const bookSet ="https://postfiles.pstatic.net/MjAyMTA3MTJfMjQg/MDAxNjI2MDY4NzI5MzEw.3F5MOf0QbadAe51QtjxPYbLgqUKeOKxNogrpt7e-pIMg.Fr9zSwSUjAohp8ZNnJ7NOcrPw9FjFS4BDpBUH9wcg6Ug.PNG.asj0611/bookCover_(1).png?type=w773"
-// import backgroundimage from '../../assets/backgroundimage.png';
+
 const test1 ={ 
     userinfo:''
 }
 const test2= {
     item:""
 }
-const MyPage = ({navigation, route}) => {
+const MyPage = ({navigation, item, bookKey}) => {
     const [myBook, setMyBook] = useState([]);
     const [userinfo, setUserinfo] = useState([]);
     test1.userinfo=userinfo
     const [swiper, setSwiper] = useState(null);
     const { width, height } = Dimensions.get('window');
+    const headerHeight = useHeaderHeight();
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = useBottomTabBarHeight();
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+
+
     var user = firebase.auth().currentUser;
     var  user_uid
     if (user != null) {
@@ -72,48 +82,52 @@ const MyPage = ({navigation, route}) => {
 // const slideTo = (index) => swiper.slideTo(index);
 
 return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: "#fbfbfb"}}>
         <View style={{flex: 1}}>
             <StatusBar style="white"/>
-            <View style={{flex: 1, alignItems:"center", justifyContent:"center", borderWidth: 1, backgroundColor: "#fff"}}>
-                <Text style={{fontSize:17, fontWeight:"600", }}>나의 이별록</Text>
+            <View style={{height: realScreen*0.06, alignItems:"center", justifyContent:"center", backgroundColor: "#fbfbfb"}}>
+                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381C"}}>나의 이별록</Text>
             </View>
-            <View style={{flex: 2, borderWidth: 1}}>
-                <View style={{flex: 1, flexDirection: "row", backgroundColor: "#fff", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
-                    <Text style={{flex: 1, }}>{userinfo.iam}</Text>
-                    <TouchableOpacity onPress={()=>{navigation.navigate('Account')}}>
-                        <Icon name="settings-outline" size={25} color="black" style={styles.settingIcon}/>
+            <View style={{height: realScreen*0.17, marginHorizontal: "3%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
+                <View style={{flex: 1, flexDirection: "row",  alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
+                    <Text style={{flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop:"7%", marginLeft: "3%"}}>{userinfo.iam}</Text>
+                    <TouchableOpacity style={{backgroundColor: "#204040", alignSelf: "center", borderRadius: 50, height: 35, width: 35}} onPress={()=>{navigation.navigate('Account')}}>
+                        <Icon name="settings-outline" size={25} color="white" style={{alignSelf: "center", marginTop: "10%"}}/>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.profileUserDesc}> {userinfo.selfLetter}</Text>
+                <Text style={{flex: 1, fontSize: 15, fontWeight: "400", fontColor: "#204040", marginLeft: "3%"}}> {userinfo.selfLetter}</Text>
             </View>
-            <View style={{flex: 8, borderWidth: 1, alignSelf:"center", marginBottom:10}}>
+            <View style={{height: realScreen*0.7, width: "94%", alignSelf:"center", marginBottom:10}}>
                 {myBookFiltered.length == 0 ? (
-                        <View style={{height:250, resizeMode:"cover" }} source={bookBackground}>
-                    <TouchableOpacity style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }} onPress={()=>{navigation.navigate("MakeNewBook")}}>
-                            <Text style={{fontSize:15}}>새로운 책을 만들어주세요</Text>
+                        <View style={{height:realScreen*0.6, resizeMode:"cover" }} >
+                    <TouchableOpacity style= {{ flex:1, justifyContent:"center", alignItems:"center", }} 
+                        onPress={()=>{navigation.navigate("MakeNewBook")}}>
+                            <Icon2 name="plus" size = {30}/>
+                            <Text style={{fontSize:15, marginTop: "5%"}}>새로운 책을 만들어주세요</Text>
                         </TouchableOpacity>
                     {/* </ImageBackground> */}
                         </View>
                     ) :  (
-                        <View style={{height:450, resizeMode:"cover" }}>
-                            
+                        <View style={{flex:1, height: realScreen*0.6, resizeMode:"cover" }}>
+                            <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: bookKey})}}>
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}
                             showsPagination={true}
                             onSwiper={setSwiper} 
                             style={styles.wrapper} showsButtons={false}
-                            dot={<View style={{           // unchecked dot style
+                            dot={
+                            <View style={{           // unchecked dot style
                                 backgroundColor: 'rgba(0,0,0,0.2)',
                                 width: 10,
                                 height: 10,
                                 borderRadius: 4,
                                 marginLeft: 10,
                                 marginRight: 9,
-                            }}/>}
+                            }}
+                            />}
                             activeDot={<View style={{    // selected dots style
-                                backgroundColor: "#7685C1",
+                                backgroundColor: "#21381C",
                                 width: 10,
                                 height: 10,
                                 borderRadius: 4,
@@ -136,13 +150,15 @@ return (
                                             )
                                         })}
                             </Swiper>  
+                            
+                
+                            </TouchableOpacity>
                         </View>
-                       
                     )
                     }
-                <View style={{flex:1, borderWidth: 1}}>
-                    <TouchableOpacity style={{width: "94%", height: "70%", backgroundColor: "#7685C1", alignSelf: "center", borderRadius: 15, justifyContent: "center", marginTop: "5%"}} onPress={()=>{navigation.navigate("MakeNewBook")}}>
-                                <Text style={{textAlign: "center", fontSize: 15, color: "white"}}> 새 이별집 만들기</Text>
+                <View style={{height: realScreen*0.1}}>
+                    <TouchableOpacity style={{width: "60%", height: "50%", marginTop: "5%", backgroundColor: "#21381C", borderRadius: 20, alignSelf: "center"}} onPress={()=>{navigation.navigate("MakeNewBook")}}>
+                                <Text style={{alignSelf: "center", paddingVertical: 10, fontSize: 15, color: "white"}}> 새 이별집 만들기</Text>
                     </TouchableOpacity>
                 </View>
                 
