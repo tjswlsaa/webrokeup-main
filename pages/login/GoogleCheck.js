@@ -80,7 +80,7 @@ const GoogleCheck = ({ navigation, route }) => {
       iam: signInUserCredential.user.uid.substring(0, 6) + ".지은이",
       selfLetter: "안녕하세요. 이별록 작가" + signInUserCredential.user.uid.substring(0, 6) + "입니다",
       created_at: Date.now(),
-      idToken: googleAuthProviderCredential.idToken,
+      // idToken: googleAuthProviderCredential.idToken,
       // accessToken: accessToken,
       gender: gender,
       birth: moment(new Date(date)).format('YYYY년 MM월 DD일')
