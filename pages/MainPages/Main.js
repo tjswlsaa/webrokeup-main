@@ -193,7 +193,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             <View style={{ height: realScreen*0.22, backgroundColor: "#FAFAFA" , marginHorizontal: "3%"}}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%"}}>
                 <View style={{ flex: 4}}> 
-                    <Text style={{ fontSize: 20, fontWeight: "700" }}>인기 이별록 </Text>
+                    <Text style={{ fontSize: 20, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
                 </View>
                 <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
                     onPress={() => { navigation.navigate('PopularArticle')}}>
@@ -225,15 +225,15 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                 </View>
                 
             </View>
-            <View style={{ flex:1, height: realScreen*0.24,  marginHorizontal: "3%", borderWidth: 1}}>
+            <View style={{ flex:1, height: realScreen*0.24,  marginHorizontal: "3%"}}>
                 <View stlye={{flex: 1, flexDirection: "row", marginHorizontal:"3%", backgroundColor: "purple"}}>
-                    {/* <View style={{ flex: 1 }}>
+                    <View style={{ }}>
                         <Text style={{fontSize: 20, fontWeight: "700" }}> 이별 에디터 </Text>
                     </View>
                     <TouchableOpacity style={{borderRadius: 5, height: "100%", backgroundColor: "#21381c"}}
                         onPress={() => { navigation.navigate('editorBoard')}}>
                             <Text style={{alignSelf: "center", marginTop: "10%", color: "white"}}>더보기</Text>
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                 </View>
                 <View style= {{flex: 3}}>  
                     <ScrollView style={{flex: 1, marginTop: "3%"}} horizontal = {true}>

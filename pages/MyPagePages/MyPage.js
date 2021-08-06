@@ -87,14 +87,14 @@ return (
             <View style={{height: realScreen*0.06, alignItems:"center", justifyContent:"center", backgroundColor: "#fbfbfb"}}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381C"}}>나의 이별록</Text>
             </View>
-            <View style={{height: realScreen*0.17, marginHorizontal: "3%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
+            <View style={{height: realScreen*0.16, marginHorizontal: "3%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
                 <View style={{flex: 1, flexDirection: "row",  alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
                     <Text style={{flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop:"7%", marginLeft: "3%"}}>{userinfo.iam}</Text>
-                    <TouchableOpacity style={{backgroundColor: "#204040", alignSelf: "center", borderRadius: 50, height: 35, width: 35}} onPress={()=>{navigation.navigate('Account')}}>
+                    <TouchableOpacity style={{backgroundColor: "#204040", alignSelf: "center", borderRadius: 50, height: 34, width: 34}} onPress={()=>{navigation.navigate('Account')}}>
                         <Icon name="settings-outline" size={25} color="white" style={{alignSelf: "center", marginTop: "10%"}}/>
                     </TouchableOpacity>
                 </View>
-                <Text style={{flex: 1, fontSize: 15, fontWeight: "400", fontColor: "#204040", marginLeft: "3%"}}> {userinfo.selfLetter}</Text>
+                <Text style={{flex: 1, fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%"}}> {userinfo.selfLetter}</Text>
             </View>
             <View style={{height: realScreen*0.7, width: "94%", alignSelf:"center", marginBottom:10}}>
                 {myBookFiltered.length == 0 ? (
@@ -114,7 +114,7 @@ return (
                             loop={false}
                             showsPagination={true}
                             onSwiper={setSwiper} 
-                            style={styles.wrapper} showsButtons={false}
+                            style={{}} showsButtons={false}
                             dot={
                             <View style={{           // unchecked dot style
                                 backgroundColor: 'rgba(0,0,0,0.2)',
@@ -137,7 +137,7 @@ return (
                                     {myBookFiltered.map(item => {
                                         test2.item=item
                                     return (
-                                        <MyBookItem
+                                        <BookComponent
                                         key = {item.key}
                                         item={item}
                                         url={item.url}
@@ -164,99 +164,7 @@ return (
         </View>
     </SafeAreaView>
 )}
-const styles = StyleSheet.create({
-    container : {
-        backgroundColor: 'white',
-    },
-    container2: {
-        backgroundColor: 'yellow',
-    },
-    subContainer: {
-        height:"80%",
-    },
-    tag:{
-        height:"20%"
-    },
-    tagText:{
-        fontSize: 17,
-        fontWeight: "600",
-        marginLeft:"5%"
-    },
-    cardContainer:{
-        marginTop: "3%",
-        width: "100%",
-        height: "25%",
-        backgroundColor: "#fff",
-    },
-      wrap: {
-        backgroundColor: "green",
-        width: "80%",
-        height: "80%",
-        alignSelf: 'center',
-        alignItems: "center"
-    },
-    wrap3: {
-        width: "90%",
-        height: "80%",
-        alignSelf: 'center',
-        alignItems: "center",
-        justifyContent:"center"
-    },
-    profileContainer:{
-      width:'95%',
-      height:100,
-      padding:10,
-      alignSelf:"center",
-      backgroundColor:"white",
-      borderRadius:10,
-      marginBottom:10,
-    //   marginTop:10
-      },
-      settingPlusUserNameContainer:{
-      flexDirection:"row",
-    //   backgroundColor:"yellow"
-      },
-      profileUserName:{
-      fontSize: 15,
-      marginTop:15,
-      marginLeft:30,
-      width:250,
-    //   backgroundColor:"pink"
-      },
-      settingIcon:{
-      marginTop:10,
-      justifyContent:"flex-end",
-    //   backgroundColor:"green"
-      },
-      profileUserDesc: {
-      fontSize: 14,
-      marginTop:10,
-      marginLeft:25,
-    //   backgroundColor:"blue"
-      },
-      bookBackgroundImage:{
-        height:"100%",
-        resizeMode: "contain",
-      },
-      bookImage:{
-        height:"100%",
-        resizeMode: "contain",
-      },
-      openButton:{
-        height:"5%",
-        width:"40%",
-        backgroundColor:"#D3D6EC",
-        borderRadius:5,
-        marginRight:"6%" ,
-        marginTop:"5%",
-        alignItems:"center",
-        marginLeft:"50%",
-        justifyContent:"center"
-    },
-    openButtonText:{
-        fontSize:14,
-    },
-})
+
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
 
 const MyBookItem = (props) => {

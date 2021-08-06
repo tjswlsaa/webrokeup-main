@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TouchableH
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
+import BookComponent from '../../components/BookComponent';
 
 const aboutImage = "http://file.newswire.co.kr/data/datafile2/thumb_480/2010/05/2039103817_20100527105820_1069435867.jpg"
 const aboutBookImage = "http://ojsfile.ohmynews.com/STD_IMG_FILE/2018/0309/IE002297749_STD.jpg"
@@ -35,11 +36,16 @@ const BookItem = ({ navigation, item }) => {
       <View style={styles.bookContainerOneDesc}>
         <Text style={styles.bookTitle}>{item.bookTitle}</Text>  
         <Text style={styles.bookDesc}>{item.intro}</Text> 
-        <Text style={styles.bookIndex}>총 챕터수 구해야 함</Text> 
 
       </View>
       <View style={styles.bookContainerOnePhoto}>
-        <Image style={styles.bookContainerOnePhoto} source={{uri:item.url}}/>
+        <BookComponent
+                    users_uid={item.user_uid}
+                    navigation={navigation}
+                    item={item}
+                />
+
+        {/* <Image style={styles.bookContainerOnePhoto} source={{uri:item.url}}/> */}
       </View>
     </TouchableOpacity>
     </View>

@@ -84,8 +84,8 @@ const MainStackScreen = () => {
           name="Main"
           component={Main}
 
-            options={{ headerShown: false }}
-        />
+          options={{ headerShown: false }}
+        /> 
         <MainStack.Screen name="NewArticle" 
         options={{
           ...defaultScreenOptions,
@@ -101,6 +101,7 @@ const MainStackScreen = () => {
             name="PopularBook" 
             component={PopularBook} 
             options={{
+              title:"오늘의 이별록",
               ...defaultScreenOptions,
             }} />
         <HomeStack.Screen 
@@ -130,22 +131,22 @@ const MainStackScreen = () => {
           }}
           name="Comment" 
           component={Comment}/>
-
-        <HomeStack.Screen 
-          name="editorMakeNewWriting" 
-          options={{ headerShown: true }}
-          component={editorMakeNewWriting}
-          options={{
-            ...defaultScreenOptions,
-          }} 
-          />
+          
+      <HomeStack.Screen 
+        name="editorMakeNewWriting" 
+        options={{ headerShown: true }}
+        component={editorMakeNewWriting}
+        options={{
+          ...defaultScreenOptions,
+        }} 
+        />
       <HomeStack.Screen 
         name="readEditorWriting" 
         component={readEditorWriting.component}
         options={{
           ...defaultScreenOptions,
           ...readEditorWriting.options
-        }} 
+        }}     
         />
               <HomeStack.Screen 
         name="editWriting" 
@@ -154,7 +155,7 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         />
-                      <HomeStack.Screen 
+      <HomeStack.Screen 
         name="editorBoard" 
         component={editorBoard}
         options={{
@@ -174,7 +175,7 @@ const HomeStackScreen = () => {
         component={MyPage}
         options={{
           headerShown: false,
-        }}
+  }}
 
         />
         <HomeStack.Screen 
@@ -183,8 +184,8 @@ const HomeStackScreen = () => {
           ...defaultScreenOptions,
         }}  
         component={readArticle} />
-      <HomeStack.Screen name="MyBook" 
-      
+    <HomeStack.Screen name="MyBook" 
+
       component={MyBook.component} 
       options={MyBook.options} 
       options={{
@@ -192,31 +193,31 @@ const HomeStackScreen = () => {
       }} 
               />
       <HomeStack.Screen 
-        name="MyArticle" 
-        component={MyArticle.component}
-        options={{
-          ...defaultScreenOptions,
-        }}
-      />
+      name="MyArticle" 
+      component={MyArticle.component}
+      options={{
+        ...defaultScreenOptions,
+      }}
+    />
       <HomeStack.Screen
        name="MakeNewBook" 
        component={MakeNewBook.component}
        options={{
-         title:"책 만들기",
-        ...defaultScreenOptions,
-        ...MakeNewBook.options
-      }} />
-   
-      <HomeStack.Screen 
-      name="IntroArticle" 
-      component={IntroArticle.component}
-      options={{
-        title:"말머리에서",
-        ...defaultScreenOptions,
-        ...IntroArticle.options
+        title:"책 만들기",
+       ...defaultScreenOptions,
+       ...MakeNewBook.options
+     }} />
+  
+     <HomeStack.Screen 
+     name="IntroArticle" 
+     component={IntroArticle.component}
+     options={{
+       title:"말머리에서",
+       ...defaultScreenOptions,
+       ...IntroArticle.options
 
-      }}
-      />
+     }}
+       />
       <HomeStack.Screen name="NewPage" component={NewPage}/>
       <HomeStack.Screen name="EditArticle" component={EditArticle}/>
       <HomeStack.Screen 
@@ -231,7 +232,7 @@ const HomeStackScreen = () => {
               ...defaultScreenOptions,
 
       }}
-  
+      
       name="Comment" 
       component={Comment}/>
       <HomeStack.Screen 
