@@ -309,7 +309,7 @@ const WritingItem=(props)=> {
     
     useEffect(()=>{
       firebase_db.ref(`users/${writing.creator}`)
-          .on('value', (snapshot) => {
+          .once('value', (snapshot) => {
               let WritingItemUserinfo = snapshot.val();
               if (WritingItemUserinfo > '') {
                 setWritingItemUserinfo(WritingItemUserinfo);
