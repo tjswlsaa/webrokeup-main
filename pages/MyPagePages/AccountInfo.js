@@ -45,7 +45,7 @@ const AccountInfo = ({navigation}) => {
                      .then(()=>{
                         Alert.alert("탈퇴되었습니다") 
                      }).catch((error)=>{
-                        Alert.alert("222장기간 로그인 시도가 없습니다. 다시 로그인 한 후 시도해주세요") 
+                        Alert.alert("장기간 로그인 시도가 없습니다. 다시 로그인 한 후 시도해주세요") 
                         console.log("이게 로그인했을 때 왜 또다시 뜨지?")
                      })
 

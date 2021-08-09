@@ -285,16 +285,18 @@ const GoogleCheck = ({ navigation, route }) => {
 
                         </View>
 
-                        <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "35%", backgroundColor: "#4cb2c8" }}
-                          onPress={() => signInWithGoogleAsync()}>
+                        <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "20%", backgroundColor: "#4cb2c8" }}
+                               onPress={promptAsync} 
+                               disabled={!request}
+                               >
                           <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>이별록 시작하기</Text>
                         </TouchableOpacity>
-
+{/* 
                         <Button
                           disabled={!request}
-                          title="Login"
+                          title="실타래 시작하기"
                           onPress={promptAsync}
-                        />
+                        /> */}
                     </View>
                     
         </ScrollView>
