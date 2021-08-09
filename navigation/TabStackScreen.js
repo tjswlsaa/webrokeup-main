@@ -14,10 +14,6 @@ import {Button} from 'react-native';
 import MyPage from "../pages/MyPagePages/MyPage";
 import MyBook from "../pages/MyPagePages/MyBook";
 import MyArticle from "../pages/MyPagePages/MyArticle";
-import readBook from "../pages/ImpressedPages/readBook";
-import readArticle from "../pages/ImpressedPages/readArticle";
-import likedArticle from "../pages/ImpressedPages/likedArticle";
-import recentArticle from "../pages/ImpressedPages/recentArticle";
 import Main from "../pages/MainPages/Main";
 import PopularBook from "../pages/MainPages/PopularBook";
 import PopularArticle from "../pages/MainPages/PopularArticle";
@@ -90,6 +86,14 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         component={NewArticle} />
+              <MainStack.Screen 
+      name="MyArticle" 
+      component={MyArticle.component}
+      options={{
+        headerShown:false,
+        ...defaultScreenOptions,
+      }}
+    />
         <MainStack.Screen 
             name="PopularArticle" 
             component={PopularArticle} 
@@ -105,28 +109,20 @@ const MainStackScreen = () => {
               title:"오늘의 이별록",
               ...defaultScreenOptions,
             }} />
-        <HomeStack.Screen 
-        name="readArticle" 
-        component={readArticle} 
-        options={{
-          title: "모두의 이별록",
-          headerTintColor: "#21381c",
-          ...defaultScreenOptions,
-        }} 
-        />
-        <HomeStack.Screen 
-        name="readBook" 
-        component={readBook} 
-        options={{
-          title: "모두의 이별집",
-          headerTintColor: "#21381c",
-          ...defaultScreenOptions,
-        }} 
-        />
-        <HomeStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
+
+
+    <MainStack.Screen name="MyBook" 
+
+    component={MyBook.component} 
+    options={MyBook.options} 
+    options={{
+      ...defaultScreenOptions,
+    }} 
+            />
+        <MainStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
 
         
-        <HomeStack.Screen 
+        <MainStack.Screen 
           options={{
                   title:"댓글",
                   headerShown: false,
@@ -139,7 +135,7 @@ const MainStackScreen = () => {
           name="Comment" 
           component={Comment}/>
           
-      <HomeStack.Screen 
+      <MainStack.Screen 
         name="editorMakeNewWriting" 
         options={{ headerShown: true }}
         component={editorMakeNewWriting}
@@ -147,7 +143,7 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         />
-      <HomeStack.Screen 
+      <MainStack.Screen 
         name="readEditorWriting" 
         component={readEditorWriting.component}
         options={{
@@ -155,14 +151,14 @@ const MainStackScreen = () => {
           ...readEditorWriting.options
         }}     
         />
-              <HomeStack.Screen 
+              <MainStack.Screen 
         name="editWriting" 
         component={editWriting}
         options={{
           ...defaultScreenOptions,
         }} 
         />
-      <HomeStack.Screen 
+      <MainStack.Screen 
         name="editorBoard" 
         component={editorBoard}
         options={{
@@ -185,12 +181,7 @@ const HomeStackScreen = () => {
   }}
 
         />
-        <HomeStack.Screen 
-        name="readArticle"
-        options={{
-          ...defaultScreenOptions,
-        }}  
-        component={readArticle} />
+
     <HomeStack.Screen name="MyBook" 
 
       component={MyBook.component} 
@@ -203,6 +194,7 @@ const HomeStackScreen = () => {
       name="MyArticle" 
       component={MyArticle.component}
       options={{
+        headerShown:false,
         ...defaultScreenOptions,
       }}
     />

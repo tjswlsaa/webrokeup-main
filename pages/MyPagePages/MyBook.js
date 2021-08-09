@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions,ScrollView, Button, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import BookComponent from '../../components/BookComponent';
+
 const test3 ={
     navigation :''
   }
@@ -24,7 +27,9 @@ const MyBook = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
-
+    const user = firebase.auth().currentUser;
+    var  user_uid
+    if (user != null) {user_uid = user.uid}
     const headerHeight = useHeaderHeight();
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -33,26 +38,13 @@ const MyBook = ({ navigation, route }) => {
     const statusBarHeight= getStatusBarHeight()
     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
 
-   // console.log('시작!')
 
-   // console.log('headerHeight',headerHeight)
-   // console.log('ScreenWidth',ScreenWidth)
-   // console.log('ScreenHeight',ScreenHeight)
-   // console.log('BottomSpace',BottomSpace)
-   // console.log('tabBarHeight',tabBarHeight)
-   // console.log('statusBarHeight',statusBarHeight)
-   // console.log('realScreen',realScreen)
-
-    // const intro = Object.values(myitem.intro.introArticle)
-    //// console.log('오류확인', myitem.intro.introArticle)
-    // const chapters = Object.values(myitem.chapters)
-    // const subChapters = Object.values(chapters);
     const [chapter, setChapter] = useState([]);
-    //// console.log('북키가문제', bookKey)
-    // const chaptersArray = Object.keys(myitem.chapters);
-    // const chapterKey = chaptersArray.toString();
+    const [userinfo, setUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
 
-    // const isMyitem = (typeof myitem !== 'undefined');
 
     useEffect(getMyItem, []);
     function getMyItem() {
@@ -108,69 +100,74 @@ const MyBook = ({ navigation, route }) => {
 
 
 
-
+    useEffect(getUserId, [])
+    function getUserId(async) {
+        firebase_db.ref(`users/${myitem.user_uid}`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                  setUserinfo(userinfo);
+            }})
+    }
 
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <ScrollView style={{backgroundColor: "#F5F4F4",flex: 1}}>
-                <View style={{ height: realScreen*0.7,backgroundColor:"yellow",marginHorizontal:"4%",alignItems:"center"}}>
-                    <View style={{ height: realScreen*0.1,}}>
-                        <TouchableOpacity style={{        marginLeft: "80%",
-                                                            justifyContent: "center",
-                                                            marginTop: 15}}>
-                            <Icon name="book" size={25} color="black" style={styles.settingIcon} onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })} />
-                        </TouchableOpacity>
-                    </View>
-
-      
-                        <Image style={{    
-                                            height: realScreen*0.4,
-                                            width: realScreen*0.4,
-                                            resizeMode: "contain",
-                                            backgroundColor: "pink"}} source={{ uri: myitem.url ? myitem.url : null }}></Image>
-
-                    <View style={{       
-                                            height: realScreen*0.18,
-                                            }}>
-                        <Text style={{        fontSize: 15,
-                                                marginTop: "7%",
-                                                fontSize: 15,
-                                                alignSelf: "center"}}>{myitem.bookTitle}</Text>
-
-                        <TouchableOpacity style={styles.subButton} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
-                            <Text style={styles.subButtonText}>새로운 챕터 만들기</Text>
-                        </TouchableOpacity>
-                    </View>
+                  <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
+            {myitem.user_uid == user_uid ? (
+                <View style={{ height: realScreen * 0.06 }} onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}>
+                    <TouchableOpacity style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%" }}>
+                        <Text style={{ alignSelf: "center", color: "#21381C", marginTop: "3%" }}> 수정하기 </Text>
+                    </TouchableOpacity>
                 </View>
-
-                <View style={{height: realScreen*0.1}}>
-                    <View>
-                        <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem,  authorUser_uid:myitem.user_uid, chapters: myitem.chapters, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
-                            <Text style={styles.bookIndexOneTitle} numberOfLines={1}>말머리에서</Text>
-                            <Text style={styles.bookIndexText} numberofLines={3}>{myitem.intro}</Text>
-                        </TouchableOpacity>
-                        <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} />
-                    </View>
-
-
-                    {chapter.map(chapters => {
-                        return (
-                            <MyChapterItem
-                                key = {chapters.key}
-                                navigation={navigation}
-                                chapters={chapters}
-                                chapterTitle={chapters.chapterTitle}
-                                bookKey={bookKey}
-                                chapterKey={Object.keys(myitem.chapters).toString()}
-                                myitem={myitem}
-                            />
-                        )
-                    })}
-        
+            ) : (<View style={{ height: realScreen * 0.06 }}></View>)}
+            <View style={{ height: realScreen * 0.4, width: realScreen*0.33, alignSelf: "center"}}>
+                <View style={{ flex:1 }}>
+                    <BookComponent
+                        item={myitem}
+                        navigation={navigation}
+                    />
                 </View>
+                {/* <Image style={styles.bookCoverImage} source={{ uri: item.url ? item.url : null }}></Image> */}
+            </View>
+            <View style={{ height: realScreen * 0.2 }}>
+                <Text style={{ fontSize: 17, fontWidth: "700", alignSelf: "center", marginVertical: "5%" }}>{myitem.bookTitle}</Text>
+                {myitem.user_uid == user_uid ? (
+                    <TouchableOpacity style={{ backgroundColor: "#21381c", width: "40%", height: "25%", alignSelf: "center", borderRadius: 15 }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
+                        <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", marginTop: "5%" }}>새로운 챕터 만들기</Text>
+                    </TouchableOpacity>) :
+                    (
+                        <View style={{ backgroundColor: "#fafafa", width: "96%", height: "100%", alignSelf: "center", marginTop: "1%" }}>
+                            <View style={{ marginVertical: "2%" }}>
+                                <Text style={{ color: "#21381c", fontWeight: "700", textAlign: "center" }}>{userinfo.iam}</Text>
+                                <Text style={{ color: "#21381c", marginTop: "1%", textAlign: "center" }} numberofLines={2}>{userinfo.selfLetter}</Text>
+                            </View>
+                        </View>
+                    )}
+            </View>
+            <View style={{ backgroundColor: "#fafafa" }}>
+                <View style={{ marginHorizontal: "3%" }}>
+                    <TouchableOpacity style={{ marginVertical: "1%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters,authorUser_uid:myitem.user_uid,  intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
+                        <Text style={{ marginTop: "3%", marginHorizontal: "3%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
+                        <Text style={{ marginTop: "3%", marginHorizontal: "3%" }} numberofLines={2}>{myitem.intro}</Text>
+                    </TouchableOpacity>
+                </View>
+                {chapter.map(chapters => {
 
-            </ScrollView>
+                    return (
+                        <MyChapterItem
+                            key={chapters.key}
+                            navigation={navigation}
+                            chapters={chapters}
+                            chapterTitle={chapters.chapterTitle}
+                            bookKey={bookKey}
+                            chapterKey={Object.keys(myitem.chapters).toString()}
+                            myitem={myitem}
+                        />
+                    )
+                })}
+            </View>
+        </ScrollView>
         </SafeAreaView>
     );
 }

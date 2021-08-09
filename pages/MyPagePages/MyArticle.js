@@ -40,13 +40,12 @@ const MyArticle = ({navigation, route}) => {
    // console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
     // const [chapters,setChapters]= useState('')
     const [chapters,setChapters]= useState({});
+    console.log("myarticle author",chapters.creator)
 
     useEffect(getChapters, []);
 
     function getChapters() {
-       // console.log('북키',bookKey)
 
-       // console.log('챕터키',chapterKey)
         firebase_db
         .ref(`book/${bookKey}/chapters/` + chapterKey)
         .on('value', (snapshot) => {
@@ -54,48 +53,15 @@ const MyArticle = ({navigation, route}) => {
                 let temp = [];
             const chapters = snapshot. val()
             
-                // snapshot.forEach((child) => {
-                //      const item = {
-                //          ...child.val(), // 구조 분해 할당: 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%EA%B5%AC%EB%AC%B8
-                //          key: child.key, 
-                //      };
+  
 
-           // console.log('챕터확인1',chapters)
             if (chapters > '') { // truthy check
                 setChapters(chapters);
             }
         });
-       // console.log('챕터확인2',chapters)
     } // function getChapters()
 
-   // console.log('MyArticle.js chapters확인3',chapters) // MyArticle.js chapters확인3 null
 
-    //    const regdate = moment();
-    // //   // console.log(
-    // //      "Today's date is: " + 
-    // //      regdate.format('YYYY년MM월DD일')
-    // //    );
-    
-
-    // //    const regdate = moment();
-    // //   // console.log(
-    // //      "Today's date is: " + 
-    // //      regdate.format('YYYY년MM월DD일')
-    // //    );
-
-    // //    const regdateArticle = chapters.regdate
-    //// console.log(regdate)
-
-    //        chapters.regdate = moment();
-    //       // console.log(
-    //         "Today's date is: " + 
-    //         chapters.regdate.format('YYYY년MM월DD일')
-    //       );
-    //   const thisis =  chapters.regdate.format('YYYY년MM월DD일')
-    //  // console.log('thisis')
-
-    //// console.log('MyArticle.js (1), chapters: ',chapters);
-    // const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
 
     useEffect (()=>{
@@ -131,6 +97,7 @@ const MyArticle = ({navigation, route}) => {
 
         <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} >
 
+        {chapters.creator == user_uid ? (
             <View style={styles.upperButtonContainer}>
                 <TouchableOpacity style={styles.editButton}>                
                     <Text style={styles.editButtonText} onPress={()=>navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters, chapterKey: chapterKey})}>편집</Text>
@@ -148,7 +115,9 @@ const MyArticle = ({navigation, route}) => {
                         })
                     }}>삭제</Text>
                 </TouchableOpacity>  
-            </View>
+            </View>)
+            : (<View></View>)}
+            
             <View>
             <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={paper} >
 

@@ -110,6 +110,7 @@ return (
                         </View>
                     ) :  (
                         <View style={{height: realScreen*0.6, width: realScreen*0.5, marginTop: "5%"}}>
+                            
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}

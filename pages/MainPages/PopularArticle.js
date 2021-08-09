@@ -177,7 +177,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                 <View style={{height: realScreen*0.35, backgroundColor: "white", marginBottom: "1%"}}>
                         <TouchableOpacity style={{  flex:1, marginVertical: "1%", }} onPress={() => {
                                        console.log('PopularArticle.js (2), chapters: ',chapters);
-                                        navigation.navigate('readArticle', { chapters: chapters, chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
+                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
                                 }>
                                 <View style={{flex:1,  flexDirection: "row", }}>
                                         <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%"}}>

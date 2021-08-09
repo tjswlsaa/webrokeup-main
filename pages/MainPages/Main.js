@@ -272,7 +272,7 @@ const BookItem = ({ navigation, item, bookKey }) => {
 
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} 
-        onPress={() => { navigation.navigate('readBook', {bookKey: bookKey, }) }}>
+        onPress={() => { navigation.navigate('MyBook', {bookKey: bookKey, }) }}>
             <View style= {{flex: 1, flexDirection: "row"}}>
                 <BookComponent
                     navigation={navigation}
@@ -312,7 +312,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
     return (
             <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "88%", backgroundColor: "#fff", borderColor: "#A2A2A2", borderWidth: 1}} 
-            onPress={() => { navigation.navigate('readArticle', { chapters: chapters, chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
+            onPress={() => { navigation.navigate('MyArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
                 <Text style={{ fontSize: 16, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                 <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
                 <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%" }}> by. {ChapterItemUserinfo.iam} </Text>
