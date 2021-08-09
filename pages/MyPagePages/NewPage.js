@@ -27,43 +27,44 @@ const NewPage = ({ navigation, route }) => {
   const chapterTitle = text1;
   const mainText = text2;
  // console.log('이거썌거',chapterKey)
+  console.log("bookKey Newpage", bookKey)
+
+  const savePage = ()=> {
+    firebase_db
+    .ref(`/book/${bookKey}/chapters/` + chapterKey)
+    .set({
+      chapterKey: chapterKey,
+      chapterTitle: chapterTitle,
+      mainText: mainText,
+      regdate: new Date().toString(),
+      likeCount: 0,
+      Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
+      creator: user_uid,
+      bookKey:bookKey
+    });
+  Alert.alert("집필 완료")
+
+  navigation.dispatch(state => {
+    const routes = [...state.routes];
+    routes.pop();
+  
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
+
+  
+  navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-          <TouchableOpacity style={styles.saveButton} onPress={() => {
-     
-            firebase_db
-              .ref(`/book/${bookKey}/chapters/` + chapterKey)
-              .set({
-                chapterKey: chapterKey,
-                chapterTitle: chapterTitle,
-                mainText: mainText,
-                regdate: new Date().toString(),
-                likeCount: 0,
-                Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
-                creator: user_uid,
-                bookKey:bookKey
-              });
-            Alert.alert("집필 완료")
-
-            navigation.dispatch(state => {
-              const routes = [...state.routes];
-              routes.pop();
-            
-              return CommonActions.reset({
-                ...state,
-                routes,
-                index: routes.length - 1,
-              });
-            });
-
-            
-            navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
-            //title_a.current.clear();
-            //maintext_a.current.clear();  
-          }}>
+          <TouchableOpacity style={styles.saveButton} onPress={() => savePage()}>
             <Text style={styles.saveButtonText}> 저장하기</Text>
           </TouchableOpacity>
           <View style={styles.bookContainer}>

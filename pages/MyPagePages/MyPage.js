@@ -19,7 +19,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test2= {
     item:""
 }
-const MyPage = ({navigation, item, bookKey}) => {
+const MyPage = ({navigation}) => {
     const [myBook, setMyBook] = useState([]);
     const [userinfo, setUserinfo] = useState({
         iam:"익명의.지은이",
@@ -72,8 +72,9 @@ const MyPage = ({navigation, item, bookKey}) => {
     }, []) // 구 리엑트: componentDidMount에 해당함 -> 컴포넌트가 마운트 되었다면 -> 컴포넌트가 프로그래밍적으로, 변수틱하게, 생성되어서 처음으로 웹브라우저에 입성하는 순간 -> 처음으로 보일 때마다
     // 그럴 때마다.. 이 부분이 최초 단 한 번 만 딱 한 번 만 실행됩니다.
    // console.log('myBook',myBook)
-   // console.log('myBook.bookKey', myBook.bookKey)
- 
+   console.log('mypage.bookKey', myBook.bookKey)
+   console.log('mypage.', myBook)
+
     const myBookFiltered= myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
 
     // // console.log('myBookFiltered',myBookFiltered)
@@ -109,7 +110,6 @@ return (
                         </View>
                     ) :  (
                         <View style={{flex:1, height: realScreen*0.6, resizeMode:"cover" }}>
-                            <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: bookKey})}}>
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}
@@ -138,6 +138,8 @@ return (
                                     {myBookFiltered.map(item => {
                                         test2.item=item
                                     return (
+                                        <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: item.bookKey, navigation:navigation})}}>
+
                                         <BookComponent
                                         key = {item.key}
                                         item={item}
@@ -145,13 +147,16 @@ return (
                                         bookTitle={item.bookTitle}
                                         navigation = {navigation}
                                         userID={userID}
+                                        
                                     />
+                                          </TouchableOpacity>
+
+
                                             )
                                         })}
                             </Swiper>  
                             
                 
-                            </TouchableOpacity>
                         </View>
                     )
                     }

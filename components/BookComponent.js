@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
-import {View,Text,Image,ImageBackground} from "react-native";
+import {View,Text,Image,ImageBackground, TouchableOpacity} from "react-native";
 import book from '../assets/book.png';
 import coverimage from '../assets/coverimage.png';
 import firebase from 'firebase/app';
 import { firebase_db } from '../firebaseConfig';
 
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
-export default function BookComponent({item}) {
+export default function BookComponent({navigation,item}) {
     
     const [BookComponentUserinfo, setBookComponentUserinfo] = useState({
       iam:"익명의.지은이",
@@ -24,6 +24,7 @@ export default function BookComponent({item}) {
   }, []);
 
     return (
+
     <View style={{flex:1, flexDirection: 'column'}}>
         <ImageBackground style={{flex: 1, flexDirection: 'column', width: "100%", height: "100%", }} source={coverimage} resizeMode={"center"}>
             <View style= {{flex:1, flexDirection: 'column'}}>
