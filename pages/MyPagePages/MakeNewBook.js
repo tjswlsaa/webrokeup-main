@@ -156,22 +156,10 @@ test8.smallBookTitle=smallBookTitle
               <View style={styles.bookContainer}>
                 <View style={{ marginLeft: 20, width: "80%" }}>
 
-                  {/* {bookTitle.length > 12 ? (
 
-                <TextInput style={styles.titleInputText}
-                  defaultValue={bookTitle.substring(0,12)} 
-                  >
-                </TextInput>
-
-              ):( */}
 
                   <TextInput style={styles.titleInputText}
                     value={bookTitle}
-                    // value={bookTitle}
-                    // numberOfLines={2}
-                    // maxHeight={60} 
-                    // onChangeText={ (newText) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                    // setText(newText);  } }
                     multiline={false}
                     maxLength={10}
                     returnKeyType="done"
@@ -181,27 +169,13 @@ test8.smallBookTitle=smallBookTitle
 
                   <TextInput style={{ fontSize: 15, marginLeft: "20%" }}
                     value={smallBookTitle}
-                    // numberOfLines={2}
-                    // maxHeight={60} 
-                    // onChangeText={ (newText2) => {  if (newText [ newText.length - 1 ] == '\n' && (newText.match(/\n/g) || []).length > 1) { newText = newText.slice(0, newText.length - 1); }
-                    // setText(newText);  } }
+
                     multiline={false}
                     maxLength={14}
                     returnKeyType="done"
                     onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
                     placeholder="소제를 작성해주세요" />
-                  {/* )} */}
-                  {/* <TextInput style={styles.titleInputText} 
-                multiline={true}  
-                maxlength='5'
-                returnKeyType="done"
-                onChangeText={bookTitle=> setBookTitle(bookTitle)}
-                // onchangeText={onChangeText()}
-                placeholder="제목을 두줄로 작성해주세요"/> */}
 
-                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
-
-                  {/* <View style={{borderBottomColor: "#D3D3D3" ,borderBottomWidth: "1%", width:"100%",marginLeft:"20%", marginBottom:"3%" }}/> */}
                 </View>
                 <View>
                   <Text style={styles.writer}> {userID}.이별록작가 </Text>
