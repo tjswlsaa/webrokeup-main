@@ -40,7 +40,8 @@ const test4 = {
     chapteritem:""
 }
 
-const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
+const Main = ({navigation}) => {
+   
     const [userinfo, setUserinfo] = useState({});
 
     useEffect(() => {
@@ -52,6 +53,13 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                 }
             })
     }, []);
+
+    var user = firebase.auth().currentUser;
+var  user_uid
+if (user != null) {
+  user_uid = user.uid;  
+}
+
     
     test1.userinfo = userinfo;
 
@@ -92,13 +100,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
             })
     }, [])
 
-    var user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) {
-        user_uid = user.uid;
-    }
-    var userID = user_uid.substring(0, 6)
-   // console.log(userID)
+   
 
     useEffect(() => {
         let temp = [];
@@ -180,7 +182,6 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                         {book.map(item => (
                             <BookItem
                                 key={item.bookKey}
-                                users_uid={item.user_uid}
                                 navigation={navigation}
                                 item={item}
                                 bookKey={item.bookKey}
@@ -217,7 +218,6 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                                 chapters={chapters}
                                 chapterKey={chapters.chapterKey}
                                 bookKey={chapters.bookKey}
-                                userinfo={userinfo}
                             />)
                         )}
                     </Swiper>
@@ -242,6 +242,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                                                 navigation={navigation}
                                                 key={item.writingKey}
                                                 writing={item}
+
                                             />
                                         )
                                     })}
@@ -254,55 +255,59 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
 // sub components
 const BookItem = ({ navigation, item, bookKey }) => {
 
-    const [userinfo2, setUserinfo2] = useState({});
+    const [BookItemUserinfo, setBookItemUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
     
-    var user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) {
-      user_uid = user.uid;
-    }
     useEffect(()=>{
       firebase_db.ref(`users/${item.user_uid}`)
           .on('value', (snapshot) => {
-              let userinfo2 = snapshot.val();
-              if (userinfo2 > '') {
-                  setUserinfo2(userinfo2);
+              let BookItemUserinfo = snapshot.val();
+              if (BookItemUserinfo > '') {
+                setBookItemUserinfo(BookItemUserinfo);
               }
           })
   }, []);
 
-    //// console.log(item);
-   // console.log("bookitem running")
-    // const {userinfo} = test1;
     return (
         <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} 
-        onPress={() => { navigation.navigate('readBook', { item: item, bookKey: bookKey, }) }}>
+        onPress={() => { navigation.navigate('readBook', {bookKey: bookKey, }) }}>
             <View style= {{flex: 1, flexDirection: "row"}}>
                 <BookComponent
-                    users_uid={item.user_uid}
                     navigation={navigation}
                     item={item}
                 />
 
                 <View style={{flex: 1, backgroundColor: "#E9E9E9", borderWidth: 1, width: "100%", height: "72%", marginTop: "11%", marginRight:"8%"}}>
                     <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
-                    {/* userinfo2도 에러가 남  */}
-                    <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{userinfo2.iam}-</Text>
+                    <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{BookItemUserinfo.iam}-</Text>
+
                 </View>
             </View>
         </TouchableOpacity>
     )
 }
-// const ChapterItem = ({ navigation, chapters, chapterKey }) => {
-const ChapterItem = ({ navigation, chapters, chapterKey, userinfo }) => {
-   // console.log('Main.js (1) chapters:', chapters);
 
-    // const { userinfo } = test1
-    const { book } = test2
-    const { hotChapter } = test3;
-   // console.log("chapteritem running")
-   // console.log({ chapters });
-   
+const ChapterItem = ({ navigation, chapters, chapterKey }) => {
+
+    const [ChapterItemUserinfo, setChapterItemUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
+
+    console.log({chapters})
+  
+    
+    useEffect(()=>{
+      firebase_db.ref(`users/${chapters.creator}`)
+          .on('value', (snapshot) => {
+              let ChapterItemUserinfo = snapshot.val();
+              if (ChapterItemUserinfo > '') {
+                setChapterItemUserinfo(ChapterItemUserinfo);
+              }
+          })
+  }, []);
 
 
     return (
@@ -310,25 +315,32 @@ const ChapterItem = ({ navigation, chapters, chapterKey, userinfo }) => {
             onPress={() => { navigation.navigate('readArticle', { chapters: chapters, chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
                 <Text style={{ fontSize: 16, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                 <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%" }}> by. {userinfo.iam} </Text>
+                <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%" }}> by. {ChapterItemUserinfo.iam} </Text>
             </TouchableOpacity>
     )
 }
 
 const WritingItem=(props)=> {
     const {writing, navigation}=props;
+
+    const [WritingItemUserinfo, setWritingItemUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
+    
     const [userinfo, setUserinfo] = useState({});
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
       user_uid = user.uid;
     }
+
     useEffect(()=>{
       firebase_db.ref(`users/${writing.creator}`)
-          .on('value', (snapshot) => {
-              let userinfo = snapshot.val();
-              if (userinfo> '') {
-                  setUserinfo(userinfo);
+          .once('value', (snapshot) => {
+              let WritingItemUserinfo = snapshot.val();
+              if (WritingItemUserinfo > '') {
+                setWritingItemUserinfo(WritingItemUserinfo);
               }
           })
   }, []);
@@ -341,8 +353,8 @@ const WritingItem=(props)=> {
                         <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.text}</Text>
                     </View>
                 </View>
-                {/* //userinfo.iam이 오류가 남 ... ㅜ */}
-                <Text style={styles.bookIndexText}>{userinfo.iam}</Text>
+                <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
+
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
             <View style={{flexDirection:"row"}}>

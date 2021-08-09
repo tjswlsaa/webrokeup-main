@@ -142,13 +142,15 @@ function Comment({route}) {
     return (
     
         <SafeAreaView style={{flex:1, backgroundColor:"pink"}}> 
-            <KeyboardAvoidingView behavior="padding" 
+        <KeyboardAvoidingView behavior="padding" 
             style={{flex:1}}
-             keyboardVerticalOffset={statusBarHeight+44} >
+            //  keyboardVerticalOffset={statusBarHeight+44}
+             >
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
 
-                <View style={styles.scroll}>
+                {/* <View style={styles.scroll}> */}
+                <View>
                         <ScrollView style={{flex:1}}>
                                 <Text style = {{marginLeft: 10}}> {comments.length} </Text> 
 
@@ -165,17 +167,20 @@ function Comment({route}) {
                         </ScrollView>
                 </View>
 
-                <View style={styles.commentInputBox}>
+                {/* <View style={styles.commentInputBox}> */}
+                <View>
 
                         <TextInput
                             placeholder='댓글을 남겨주세요'
                             textAlign='justify'
-                            style={styles.commentInput}
+                            // style={styles.commentInput}
                             multiline = {false}
                             onChangeText={(text) => setText(text)} />
 
-                        <TouchableOpacity style={styles.commentSendBox} onPress={() => onCommentSend()}>
-                            <Icon name="checkmark-circle-outline" size={30} color="black" style={styles.addIcon}/>
+                        {/* <TouchableOpacity style={styles.commentSendBox} onPress={() => onCommentSend()}> */}
+                        <TouchableOpacity onPress={() => onCommentSend()}>
+                            {/* <Icon name="checkmark-circle-outline" size={30} color="black" style={styles.addIcon}/> */}
+                            <Icon name="checkmark-circle-outline" size={30} color="black" />
                         </TouchableOpacity>
 
                 </View>
@@ -183,8 +188,8 @@ function Comment({route}) {
 
                 {/* </TouchableWithoutFeedback> */}
                 </KeyboardAvoidingView >
+                </SafeAreaView>
 
-            </SafeAreaView>
         
     )
 }
@@ -195,16 +200,9 @@ function Comment({route}) {
 const styles = StyleSheet.create({
 
     scroll:{
-        height:"90%",
+        // height:"90%",
         backgroundColor:"blue"
     },
-    bookCoverContainer: {
-        width:'90%',
-        height:400,
-        alignSelf:"center",
-        backgroundColor:"yellow",
-    },
-
     commentInputBox:{
         flexDirection:"row",
         backgroundColor:"#C4C4C4",
@@ -384,7 +382,8 @@ const ChapterComment = (props)=> {
 
                 <Text style={{fontSize:15, marginTop:10,marginBottom:10,marginLeft:60}}>{comment.text}</Text>
                 <View style={{flexDirection:"row"}}>
-                    <Text style={{fontSize:11,color:"gray", marginLeft:60,marginBottom:10}}>{comment.userID+'.이별록작가'}</Text>
+                    {/* <Text style={{fontSize:11,color:"gray", marginLeft:60,marginBottom:10}}>{comment.userID+'.이별록작가'}</Text> */}
+                    <Text style={{fontSize:11,color:"gray", marginLeft:60}}>{comment.userID+'.이별록작가'}</Text>
                     <Text style={{fontSize:11,color:"gray", marginLeft:100}}>{displayedAt(createdAt)}</Text>
                 </View>
 

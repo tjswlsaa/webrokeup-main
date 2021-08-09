@@ -30,6 +30,21 @@ const EditProfile = ({navigation}) => {
     const selflettertext = useRef(null);
 
     var userID=user_uid.substring(0,6)
+
+
+    // const handleSubmit =()=>{
+
+
+
+    //     firebase_db
+    //     .ref('users/'+user_uid + '/')
+    //     .update({
+    //       iam: ID,
+    //       selfLetter: selfLetter,
+    //     })
+    //     Alert.alert("프로필 완료")
+    //     navigation.navigate("Account")
+    // }
         return(
             <View style ={{flex: 1, backgroundColor: "#FAFAFA"}}>  
                 <View style={{flex: 1, marginTop: 10, height: "30%", backgroundColor: "white"}}>
@@ -45,6 +60,21 @@ const EditProfile = ({navigation}) => {
                                 ref={idtext}/>
 
                         </View>
+                        <TouchableOpacity style= {{padding:10, width: "30%", backgroundColor: "#98C0ED", borderRadius: 10, alignSelf:"flex-end"}}
+                            onPress={()=>{
+                                firebase_db
+                                  .ref('users/'+user_uid + '/')
+                                  .update({
+                                    iam: ID,
+                                    // selfLetter: selfLetter,
+                                  })
+                                  Alert.alert("프로필 id 수정 완료")
+                                //   navigation.navigate("Account")
+                            }}>
+                            <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
+                        </TouchableOpacity>
+
+
                             <TextInput 
                                 backgroundColor = "#FAFAFA"
                                 style={{marginHorizontal: 30, marginTop: 20, height: 150, fontSize:15}}
@@ -53,21 +83,18 @@ const EditProfile = ({navigation}) => {
                                 defaultValue = {userinfo.selfLetter}
                                 onChangeText={selfLetter=>setSelfLetter(selfLetter)}
                                 ref={selflettertext}/>
-                    {/* </View> */}
                     <View style={{flex: 0.5, backgroundColor: "white", padding: 20}}>
-                        {/* <TouchableOpacity style= {{marginTop: 30, marginRight: 20, height: 30, width: 30, backgroundColor: "white", borderRadius: 5}}>
-                            <Icon name="edit" size={20} color = "#98C0ED"/>
-                        </TouchableOpacity> */}
+    
                         <TouchableOpacity style= {{padding:10, width: "30%", backgroundColor: "#98C0ED", borderRadius: 10, alignSelf:"flex-end"}}
                             onPress={()=>{
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
                                   .update({
-                                    iam: ID,
+                                    // iam: ID,
                                     selfLetter: selfLetter,
                                   })
-                                  Alert.alert("프로필 완료")
-                                  navigation.navigate("Account")
+                                  Alert.alert("프로필 소개 수정 완료")
+                                //   navigation.navigate("Account")
                             }}>
                             <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
                         </TouchableOpacity>

@@ -10,28 +10,8 @@ const communityBoard = ({ navigation, route }) => {
 
     const [posts, setPosts] =useState([])
 
-    const [availableDeviceWidth, setAvailableDivceWidth] = useState(
-        Dimensions.get('window').width
-    );
-    const [availableDeviceHeight, setAvailableDivceHeight] = useState(
-        Dimensions.get('window').height
-    );
 
-    useEffect(() => {
-        const updateLayout = () => {
-            setAvailableDivceWidth(Dimensions.get('window').width);
-            setAvailableDivceHeight(Dimensions.get('window').height);
-        };
      
-        Dimensions.addEventListener('change', updateLayout);
-     
-        return () => {
-            Dimensions.removeEventListener('change', updateLayout);
-        };
-    });
-  
-   // console.log('availableDeviceWidth',availableDeviceWidth)
-   // console.log('availableDeviceHeight',availableDeviceHeight)
 
       useEffect(() => {
         firebase_db
@@ -53,7 +33,6 @@ const communityBoard = ({ navigation, route }) => {
             })
     }, []) 
 
-    // console.log('이거떠야map',posts)
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -76,7 +55,7 @@ const communityBoard = ({ navigation, route }) => {
                 <View>
 
                     <TouchableOpacity 
-                    onPress={()=>navigation.navigate("Practice")}
+                    onPress={()=>navigation.navigate("communityMakeNewPost")}
                     style={{height:50, backgroundColor:"blue", justifyContent:"center"}}>
                         <Text style={{alignSelf:"center", fontSize:15}}>글쓰기</Text>
                     </TouchableOpacity>
@@ -91,28 +70,22 @@ const communityBoard = ({ navigation, route }) => {
 
 const PostItem=(props)=> {
 
-    var user = firebase.auth().currentUser;
-    var  user_uid
-    
-    if (user != null) {
-    
-      user_uid = user.uid;  
-    }
+    const {post, navigation}=props;
+    const postKey=post.key
   
-    const [userinfo, setUserinfo]=useState({});
+    const [PostItemUserinfo, setPostItemUserinfo]=useState({});
 
     useEffect(()=>{
         firebase_db.ref(`users/${post.creator}`)
             .on('value', (snapshot) => {
-                let userinfo = snapshot.val();
-                if (userinfo > '') {
-                    setUserinfo(userinfo);
+                let PostItemUserinfo = snapshot.val();
+                if (PostItemUserinfo > '') {
+                    setPostItemUserinfo(PostItemUserinfo);
                 }
             })
     }, []);
   
-    const {post, navigation}=props;
-    const postKey=post.key
+
 
     const likeRef = firebase_db.ref(`post/${postKey}/` + '/likes/');
 
@@ -146,10 +119,6 @@ const PostItem=(props)=> {
     }, [])
 
 
-    // const likeCount = Object.values(post.likeCount.likeCount)
-   // console.log('이거되면탈출!!!11',post)
-
-   // console.log('이거되면탈출',likeCount)
 
 
     const createdAt= new Date(post.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
@@ -183,7 +152,7 @@ const PostItem=(props)=> {
                 <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{post.text}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText}>{userinfo.iam}</Text>
+                <Text style={styles.bookIndexText}>{PostItemUserinfo.iam}</Text>
                 <Icon name="like2" size={18} color="black" style={{marginLeft:20,marginTop:3}}/>
                 <Text style={styles.bookIndexText}>{likeCount}</Text>
                 <Icon name="message1" size={20} color="black" style={{marginLeft:20,marginTop:3}}/>

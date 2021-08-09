@@ -114,7 +114,7 @@ const MyBook = ({ navigation, route }) => {
     return (
         <SafeAreaView style={{flex:1}}>
             <ScrollView style={{backgroundColor: "#F5F4F4",flex: 1}}>
-                <View style={{ height: realScreen*0.5,marginHorizontal:"4%",alignItems:"center"}}>
+                <View style={{ height: realScreen*0.7,backgroundColor:"yellow",marginHorizontal:"4%",alignItems:"center"}}>
                     <View style={{ height: realScreen*0.1,}}>
                         <TouchableOpacity style={{        marginLeft: "80%",
                                                             justifyContent: "center",
@@ -144,8 +144,7 @@ const MyBook = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <View style={styles.bookIndexContainer}>
-                </View>
+                <View style={{height: realScreen*0.1}}>
                     <View>
                         <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
                             <Text style={styles.bookIndexOneTitle} numberOfLines={1}>말머리에서</Text>
@@ -169,6 +168,7 @@ const MyBook = ({ navigation, route }) => {
                         )
                     })}
         
+                </View>
 
             </ScrollView>
         </SafeAreaView>

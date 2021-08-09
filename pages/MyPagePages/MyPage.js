@@ -15,16 +15,17 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
 
-const test1 ={ 
-    userinfo:''
-}
+
 const test2= {
     item:""
 }
-const MyPage = ({navigation, item, bookKey}) => {
+const MyPage = ({navigation}) => {
     const [myBook, setMyBook] = useState([]);
-    const [userinfo, setUserinfo] = useState([]);
-    test1.userinfo=userinfo
+    const [userinfo, setUserinfo] = useState({
+        iam:"익명의.지은이",
+        selfLetter:"안녕하세요 익명의 지은이입니다."
+    });
+
     const [swiper, setSwiper] = useState(null);
     const { width, height } = Dimensions.get('window');
     const headerHeight = useHeaderHeight();
@@ -41,14 +42,14 @@ const MyPage = ({navigation, item, bookKey}) => {
       user_uid = user.uid;  
     }
     var userID=user_uid.substring(0,6)
-       // console.log (userID)
    
     useEffect(()=>{
         firebase_db.ref(`users/${user_uid}`)
             .on('value', (snapshot) => {
                 let userinfo = snapshot.val();
-                setUserinfo(userinfo);
-            })
+                if (userinfo> '') {
+                    setUserinfo(userinfo);
+                }})
     }, []);
     
     useEffect(() => {
@@ -71,8 +72,9 @@ const MyPage = ({navigation, item, bookKey}) => {
     }, []) // 구 리엑트: componentDidMount에 해당함 -> 컴포넌트가 마운트 되었다면 -> 컴포넌트가 프로그래밍적으로, 변수틱하게, 생성되어서 처음으로 웹브라우저에 입성하는 순간 -> 처음으로 보일 때마다
     // 그럴 때마다.. 이 부분이 최초 단 한 번 만 딱 한 번 만 실행됩니다.
    // console.log('myBook',myBook)
-   // console.log('myBook.bookKey', myBook.bookKey)
- 
+   console.log('mypage.bookKey', myBook.bookKey)
+   console.log('mypage.', myBook)
+
     const myBookFiltered= myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
 
     // // console.log('myBookFiltered',myBookFiltered)
@@ -107,50 +109,54 @@ return (
                     {/* </ImageBackground> */}
                         </View>
                     ) :  (
-                        <View style={{height: realScreen*0.6, width: realScreen*0.5, marginTop: "5%"}}>
+                        <View style={{flex:1, height: realScreen*0.6, resizeMode:"cover" }}>
+                            <Swiper 
+                            index={myBook.bookKey}
+                            loop={false}
+                            showsPagination={true}
+                            onSwiper={setSwiper} 
+                            style={{}} showsButtons={false}
+                            dot={
+                            <View style={{           // unchecked dot style
+                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                width: 10,
+                                height: 10,
+                                borderRadius: 4,
+                                marginLeft: 10,
+                                marginRight: 9,
+                            }}
+                            />}
+                            activeDot={<View style={{    // selected dots style
+                                backgroundColor: "#21381C",
+                                width: 10,
+                                height: 10,
+                                borderRadius: 4,
+                                marginLeft: 10,
+                                marginRight: 9,
+                            }}/>}
+                            >
+                                    {myBookFiltered.map(item => {
+                                        test2.item=item
+                                    return (
+                                        <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: item.bookKey, navigation:navigation})}}>
 
-                                <Swiper 
-                                index={myBook.bookKey}
-                                loop={false}
-                                showsPagination={true}
-                                onSwiper={setSwiper} 
-                                showsButtons={false}
-                                dot={
-                                <View style={{           // unchecked dot style
-                                    backgroundColor: 'rgba(0,0,0,0.2)',
-                                    width: 10,
-                                    height: 10,
-                                    borderRadius: 4,
-                                    marginLeft: 10,
-                                    marginRight: 9,
-                                }}
-                                />}
-                                activeDot={
-                                <View style={{    // selected dots style
-                                    backgroundColor: "#21381C",
-                                    width: 10,
-                                    height: 10,
-                                    borderRadius: 4,
-                                    marginLeft: 10,
-                                    marginRight: 9,
-                                }}/>}
-                                >
-                                        {myBookFiltered.map(item => {
-                                            test2.item=item
-                                        return (
-                                            <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: bookKey})}}>
-                                                    <BookComponent
-                                                    key = {item.key}
-                                                    item={item}
-                                                    url={item.url}
-                                                    bookTitle={item.bookTitle}
-                                                    navigation = {navigation}
-                                                    userID={userID}/>
-                                            </TouchableOpacity>
+                                        <BookComponent
+                                        key = {item.key}
+                                        item={item}
+                                        url={item.url}
+                                        bookTitle={item.bookTitle}
+                                        navigation = {navigation}
+                                        userID={userID}
                                         
-                                                )
-                                            })}
-                                </Swiper> 
+                                    />
+                                          </TouchableOpacity>
+
+
+                                            )
+                                        })}
+                            </Swiper>  
+                            
+                
                         </View>
                     )
                     }
@@ -167,33 +173,5 @@ return (
 
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
 
-const MyBookItem = (props) => {
-    const {navigation,item}=props
-    const {userinfo}=test1
-    // const {item}=test2
-    const { width, height } = Dimensions.get('window');
-   // console.log('...')
-   // console.log (typeof item)
-   // console.log("MYBOOKITEM()")
-   // console.log('item 확인해야함',item)
-    const bookKey=item.bookKey
-   // console.log('마이페이지 북키확인',bookKey)
-    const url= item.url
-    return(
-        // <View style={styles.subContainer}>
-        <View style={{height:"100%",width:"90%", marginHorizontal: "5%", borderWidth: 1}}>
-                <ImageBackground style={{height:"100%", width: "100%", }} source={backgroundimage}>
-                    <ImageBackground style={{height:400,width:300,marginTop:"8%",alignSelf:"center"}} source={{uri:book}} > 
-                            <Text style={{marginTop:"18%", marginLeft:"27%",  fontSize:14,}}>{item.bookTitle}</Text>
-                             <Text style={{marginTop:"10%", marginLeft:"50%",  fontSize:12,}}>{userinfo.iam} </Text> 
-                            <TouchableOpacity 
-                            style={{ width: width/2, height: width/2, marginTop:"5%",marginLeft:"3%", backgroundColor:"yellow",alignSelf:"center"  }} 
-                            onPress={()=>{navigation.navigate('MyBook', {item: item, bookKey:bookKey})}} > 
-                                    <Image source={{ url: url }} style={{ flex:1, backgroundColor:"pink" }}/>
-                            </TouchableOpacity>
-                    </ImageBackground>
-                </ImageBackground>
-        </View>
-    )
-}
+
 export default MyPage;

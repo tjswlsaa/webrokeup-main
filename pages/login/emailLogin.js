@@ -17,7 +17,7 @@ const emailLogin = ({navigation}) => {
         .signInWithEmailAndPassword(email, password)
         .catch(error => {
          // console.log({ error });
-          alert(error);
+          alert("로그인 정보가 없습니다");
         });
      // console.log({ result })
       const isValid = (result > '');

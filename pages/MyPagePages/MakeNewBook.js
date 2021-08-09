@@ -87,7 +87,7 @@ test8.smallBookTitle=smallBookTitle
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
+          alert('갤러리 접근을 허용해주세요');
         }
       }
     })();
@@ -98,6 +98,8 @@ test8.smallBookTitle=smallBookTitle
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
+      quality: 1, //이게 없었던게 문제일수있을까
+
     });
 
     if (!result.cancelled) {
