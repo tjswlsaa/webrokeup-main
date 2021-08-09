@@ -139,7 +139,7 @@ const readBook = ({ navigation, route }) => {
             </View>
             <View style={{ backgroundColor: "#fafafa" }}>
                 <View style={{ marginHorizontal: "3%" }}>
-                    <TouchableOpacity style={{ marginVertical: "1%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: item, chapters: item.chapters, intro: item.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(item.chapters).toString() }) }}>
+                    <TouchableOpacity style={{ marginVertical: "1%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: item, chapters: item.chapters,authorUser_uid:item.user_uid,  intro: item.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(item.chapters).toString() }) }}>
                         <Text style={{ marginTop: "3%", marginHorizontal: "3%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
                         <Text style={{ marginTop: "3%", marginHorizontal: "3%" }} numberofLines={2}>{item.intro}</Text>
                     </TouchableOpacity>

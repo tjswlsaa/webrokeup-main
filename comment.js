@@ -168,12 +168,12 @@ function Comment({route}) {
                 </View>
 
                 {/* <View style={styles.commentInputBox}> */}
-                <View>
+                <View style={{borderWidth:10,backgroundColor:"pink",position:'absolute',bottom:0,alignSelf:'flex-end'}}>
 
                         <TextInput
-                            placeholder='댓글을 남겨주세요'
+                            placeholder='댓글을 남겨주세요!'
                             textAlign='justify'
-                            // style={styles.commentInput}
+                            style={styles.commentInput}
                             multiline = {false}
                             onChangeText={(text) => setText(text)} />
 
