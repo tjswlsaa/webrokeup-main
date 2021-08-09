@@ -171,13 +171,16 @@ if (user != null) {
                     </TouchableOpacity>
                     </View>
                 <View style= {{flex: 10}}> 
+
                     <Swiper
                         index={book.bookKey}
                         loop={false}
                         showsPagination={false}
                         onSwiper={setSwiper}
-                        showsButtons={false}
+                        showsButtons={true}
                         style={{backgroundColor: "white", marginHorizontal: "3%"}}
+                        nextButton={<Text style={styles.nextButtonText}>›</Text>}
+                        prevButton={<Text style={styles.prevButtonText}>›</Text>}
                     >
                         {book.map(item => (
                             <BookItem
@@ -203,11 +206,12 @@ if (user != null) {
                 <View style={{flex: 5}} horizontal={true}>
                     <Swiper
                         index={hotChapter.chapterKey}
-                        loop={false}
+                        loop={true}
                         showsPagination={false}
                         onSwiper={setAutoSwiper}
                         style={{ marginTop: "5%" }} 
                         showsButtons={false}
+                        autoplay={true}
                     >
                         {hotChapter.map(chapters => (
                             test4.chapters=chapters,
@@ -254,7 +258,12 @@ if (user != null) {
 }
 // sub components
 const BookItem = ({ navigation, item, bookKey }) => {
-
+    const headerHeight = useHeaderHeight();
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = useBottomTabBarHeight();
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
     const [BookItemUserinfo, setBookItemUserinfo] = useState({
         iam:"익명의.지은이",
         selfLetter:"안녕하세요 익명의 지은이입니다."
@@ -271,18 +280,17 @@ const BookItem = ({ navigation, item, bookKey }) => {
   }, []);
 
     return (
-        <TouchableOpacity style = {{flex: 1, shadowColor: "#E9E9E9", shadowOffset: {width: 10, height: 7}, shadowOpacity: 10, shadowRadius: 10}} 
+        <TouchableOpacity style = {{flex: 1}} 
         onPress={() => { navigation.navigate('MyBook', {bookKey: bookKey, }) }}>
-            <View style= {{flex: 1, flexDirection: "row"}}>
+            <View style= {{flex: 1, flexDirection: "row", marginRight: "12%", marginLeft: "5%", marginVertical: "10%", alignSelf: "center", borderWidth: 1}}>
                 <BookComponent
                     navigation={navigation}
                     item={item}
                 />
 
-                <View style={{flex: 1, backgroundColor: "#E9E9E9", borderWidth: 1, width: "100%", height: "72%", marginTop: "11%", marginRight:"8%"}}>
+                <View style={{flex: 1, backgroundColor: "#E9E9E9", borderWidth: 1, width: "100%", height: "90%", marginTop: "2%"}}>
                     <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
                     <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{BookItemUserinfo.iam}-</Text>
-
                 </View>
             </View>
         </TouchableOpacity>
@@ -402,6 +410,15 @@ const styles = StyleSheet.create({
         marginLeft: "5%",
         marginTop: "2%",
     },
+    nextButtonText: {
+        color: "#21381C",
+        fontSize: 50
+    },
+    prevButtonText: {
+        color: "#21381C",
+        fontSize: 50,
+        transform: [{rotate:"180deg"}]
+    }
 })
 
 AppRegistry.registerComponent('Main', () => SwiperComponent)
