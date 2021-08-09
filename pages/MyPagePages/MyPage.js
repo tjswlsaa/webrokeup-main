@@ -87,8 +87,8 @@ return (
             <View style={{height: realScreen*0.06, alignItems:"center", justifyContent:"center", backgroundColor: "#fbfbfb"}}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381C"}}>나의 이별록</Text>
             </View>
-            <View style={{height: realScreen*0.16, marginHorizontal: "3%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
-                <View style={{flex: 1, flexDirection: "row",  alignSelf: "center", marginHorizontal: "3%", borderRadius: 10}}>
+            <View style={{height: realScreen*0.16, marginHorizontal: "5%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
+                <View style={{flex: 1, flexDirection: "row",  alignSelf: "center", marginHorizontal: "3%",borderRadius: 10}}>
                     <Text style={{flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop:"7%", marginLeft: "3%"}}>{userinfo.iam}</Text>
                     <TouchableOpacity style={{backgroundColor: "#204040", alignSelf: "center", borderRadius: 50, height: 34, width: 34}} onPress={()=>{navigation.navigate('Account')}}>
                         <Icon name="settings-outline" size={25} color="white" style={{alignSelf: "center", marginTop: "10%"}}/>
@@ -107,50 +107,50 @@ return (
                     {/* </ImageBackground> */}
                         </View>
                     ) :  (
-                        <View style={{flex:1, height: realScreen*0.6, resizeMode:"cover" }}>
-                            <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: bookKey})}}>
-                            <Swiper 
-                            index={myBook.bookKey}
-                            loop={false}
-                            showsPagination={true}
-                            onSwiper={setSwiper} 
-                            style={{}} showsButtons={false}
-                            dot={
-                            <View style={{           // unchecked dot style
-                                backgroundColor: 'rgba(0,0,0,0.2)',
-                                width: 10,
-                                height: 10,
-                                borderRadius: 4,
-                                marginLeft: 10,
-                                marginRight: 9,
-                            }}
-                            />}
-                            activeDot={<View style={{    // selected dots style
-                                backgroundColor: "#21381C",
-                                width: 10,
-                                height: 10,
-                                borderRadius: 4,
-                                marginLeft: 10,
-                                marginRight: 9,
-                            }}/>}
-                            >
-                                    {myBookFiltered.map(item => {
-                                        test2.item=item
-                                    return (
-                                        <BookComponent
-                                        key = {item.key}
-                                        item={item}
-                                        url={item.url}
-                                        bookTitle={item.bookTitle}
-                                        navigation = {navigation}
-                                        userID={userID}
-                                    />
-                                            )
-                                        })}
-                            </Swiper>  
-                            
-                
-                            </TouchableOpacity>
+                        <View style={{height: realScreen*0.6, width: realScreen*0.5, marginTop: "5%"}}>
+
+                                <Swiper 
+                                index={myBook.bookKey}
+                                loop={false}
+                                showsPagination={true}
+                                onSwiper={setSwiper} 
+                                showsButtons={false}
+                                dot={
+                                <View style={{           // unchecked dot style
+                                    backgroundColor: 'rgba(0,0,0,0.2)',
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: 4,
+                                    marginLeft: 10,
+                                    marginRight: 9,
+                                }}
+                                />}
+                                activeDot={
+                                <View style={{    // selected dots style
+                                    backgroundColor: "#21381C",
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: 4,
+                                    marginLeft: 10,
+                                    marginRight: 9,
+                                }}/>}
+                                >
+                                        {myBookFiltered.map(item => {
+                                            test2.item=item
+                                        return (
+                                            <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: bookKey})}}>
+                                                    <BookComponent
+                                                    key = {item.key}
+                                                    item={item}
+                                                    url={item.url}
+                                                    bookTitle={item.bookTitle}
+                                                    navigation = {navigation}
+                                                    userID={userID}/>
+                                            </TouchableOpacity>
+                                        
+                                                )
+                                            })}
+                                </Swiper> 
                         </View>
                     )
                     }

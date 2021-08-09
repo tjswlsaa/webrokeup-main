@@ -155,9 +155,9 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: "#fbfbfb"}}>
             <StatusBar style= "white" />
-                <View style={{height: realScreen*0.06, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
-                    <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>이별록</Text>
-                </View>
+            <View style={{height: realScreen*0.06, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
+                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>이별록</Text>
+            </View>
             <View style={{ height: realScreen*0.45,}}>
                 <View style={{flex: 1, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%"}}>
                     <View style={{ flex:4, }} >
@@ -175,7 +175,7 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                         showsPagination={false}
                         onSwiper={setSwiper}
                         showsButtons={false}
-                        style={{flex: 1, backgroundColor: "white", marginHorizontal: "3%"}}
+                        style={{backgroundColor: "white", marginHorizontal: "3%"}}
                     >
                         {book.map(item => (
                             <BookItem
