@@ -123,6 +123,8 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         />
+        <HomeStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
+
         
         <HomeStack.Screen 
           options={{

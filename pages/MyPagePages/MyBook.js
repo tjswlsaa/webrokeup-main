@@ -146,7 +146,7 @@ const MyBook = ({ navigation, route }) => {
 
                 <View style={{height: realScreen*0.1}}>
                     <View>
-                        <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
+                        <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem,  authorUser_uid:myitem.user_uid, chapters: myitem.chapters, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
                             <Text style={styles.bookIndexOneTitle} numberOfLines={1}>말머리에서</Text>
                             <Text style={styles.bookIndexText} numberofLines={3}>{myitem.intro}</Text>
                         </TouchableOpacity>
