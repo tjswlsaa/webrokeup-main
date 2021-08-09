@@ -12,9 +12,9 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 
-// const test1 = {
-//     userinfo: ''
-// }
+const test1 = {
+    userinfo: ''
+}
 
 const test2 = {
     bookTitle: '',
@@ -42,6 +42,20 @@ const test4 = {
 
 const Main = (navigation ) => {
    
+const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
+    const [userinfo, setUserinfo] = useState({});
+
+    useEffect(() => {
+        firebase_db.ref(`users/${user_uid}/`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
+    
+    test1.userinfo = userinfo;
 
 
     const [book, setBook] = useState([]);
@@ -146,7 +160,7 @@ const Main = (navigation ) => {
                         <Text style={{ fontSize: 20, fontWeight: "700" }}> 오늘의 이별집 </Text>
                     </View>
                     <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
-                    onPress={() => { navigation.navigate('PopularBook'), {bookKey: bookKey} }}>
+                    onPress={() => { navigation.navigate('PopularArticle')}}>
                         <Text style={{alignSelf: "center", marginTop: "10%", color: "white"}}>더보기</Text>
                     </TouchableOpacity>
                     </View>
@@ -262,6 +276,7 @@ const BookItem = ({ navigation, item, bookKey }) => {
                 <View style={{flex: 1, backgroundColor: "#E9E9E9", borderWidth: 1, width: "100%", height: "72%", marginTop: "11%", marginRight:"8%"}}>
                     <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
                     <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{BookItemUserinfo.iam}-</Text>
+
                 </View>
             </View>
         </TouchableOpacity>
@@ -307,6 +322,13 @@ const WritingItem=(props)=> {
         selfLetter:"안녕하세요 익명의 지은이입니다."
     });
     
+    const [userinfo, setUserinfo] = useState({});
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+      user_uid = user.uid;
+    }
+
     useEffect(()=>{
       firebase_db.ref(`users/${writing.creator}`)
           .once('value', (snapshot) => {
@@ -326,6 +348,7 @@ const WritingItem=(props)=> {
                     </View>
                 </View>
                 <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
+
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
             <View style={{flexDirection:"row"}}>

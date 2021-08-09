@@ -14,11 +14,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 
 const window = Dimensions.get("window");
 
-// import {
-//   FlatList,
-//   RectButton,
-//   Swipeable
-// } from 'react-native-gesture-handler';
 
 const test1={
   postKey:""
@@ -36,17 +31,12 @@ const readPost = ({ navigation, route }) => {
   const text_a = useRef(null);
   const { postKey } = route.params;
   test1.postKey=postKey
- // console.log('findpostkey',postKey)
-
-  // const userID=user_uid.substring(0,6)
-
-
+  console.log("problempostKey",postKey)
   const [post, setPost] =useState({
     postKey:'',
     text:'',
     regdate:'',
     Kregdate:'',
-    creator:'',
   })
 
   useEffect(() => {
@@ -58,28 +48,34 @@ const readPost = ({ navigation, route }) => {
         })
 }, []) 
 
+ 
 var user = firebase.auth().currentUser;
 var  user_uid
-
 if (user != null) {
-
   user_uid = user.uid;  
 }
 
-const [userinfo, setUserinfo]=useState("")
+const [readPostUserinfo, setreadPostUserinfo]=useState({
+  iam:"익명의.지은이",
+  selfLetter:"안녕하세요 익명의 지은이입니다."
+})
+console.log("여기서부터")
+console.log("post",post)
+console.log('post.creator',post.creator)
 useEffect(()=>{
     firebase_db.ref(`users/${post.creator}`)
-        .on('value', (snapshot) => {
-            let userinfo = snapshot.val();
-            setUserinfo(userinfo);
+        .once('value', (snapshot) => {
+            let readPostUserinfo = snapshot.val();
+            if (readPostUserinfo > '') {
+              setreadPostUserinfo(readPostUserinfo);
+            }
         })
 }, []);
+console.log('readPostUserinfo',readPostUserinfo)
 
-console.log('post.creator!!!!!!!!!!!!!!!!',post.creator)
-console.log('post.creator/userinfo!!!!!!!!!!!!!!!!',userinfo)
+console.log('readPostUserinfo.iam',readPostUserinfo.iam)
 
   const [text, setText] = useState("")
-
   const [likeCount, setLikeCount] = useState(0);
   const [likedUsers, setLikedUsers] = useState([]);
   const [commentsNumber, setCommentsNumber] = useState(0);
@@ -267,10 +263,8 @@ const displayedAt=(createdAt)=>{
 
 
           <View style={{marginTop:20, marginLeft:10, marginRight:10, backgroundColor:"blue",padding:30, borderRadius:10, justifyContent:"center"}}>
-                  <Text style={{marginBottom:10}}>{userinfo.iam}</Text>               
-                  <Text>{post.text}</Text>
-                  <Text style={{marginBottom:10}}>{userinfo.iam}</Text>               
-               
+                  <Text style={{marginBottom:10}}>{readPostUserinfo.iam}</Text>               
+                  <Text>{post.text}</Text>               
                   <Text style={{marginTop:30,alignSelf:"flex-end"}}>{displayedAt(createdAt)}</Text>                 
           </View>
 
