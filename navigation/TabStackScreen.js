@@ -110,6 +110,8 @@ const MainStackScreen = () => {
         name="readArticle" 
         component={readArticle} 
         options={{
+          title: "모두의 이별록",
+          headerTintColor: "#21381c",
           ...defaultScreenOptions,
         }} 
         />
@@ -117,6 +119,8 @@ const MainStackScreen = () => {
         name="readBook" 
         component={readBook} 
         options={{
+          title: "모두의 이별집",
+          headerTintColor: "#21381c",
           ...defaultScreenOptions,
         }} 
         />
