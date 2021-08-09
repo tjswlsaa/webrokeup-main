@@ -14,7 +14,6 @@ import {Button} from 'react-native';
 import MyPage from "../pages/MyPagePages/MyPage";
 import MyBook from "../pages/MyPagePages/MyBook";
 import MyArticle from "../pages/MyPagePages/MyArticle";
-import Impressed from "../pages/ImpressedPages/Impressed";
 import readBook from "../pages/ImpressedPages/readBook";
 import readArticle from "../pages/ImpressedPages/readArticle";
 import likedArticle from "../pages/ImpressedPages/likedArticle";

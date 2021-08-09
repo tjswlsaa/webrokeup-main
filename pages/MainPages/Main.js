@@ -42,7 +42,6 @@ const test4 = {
 
 const Main = (navigation ) => {
    
-const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
     const [userinfo, setUserinfo] = useState({});
 
     useEffect(() => {
@@ -54,6 +53,13 @@ const Main = ({ navigation, bookKey, chapters, chapterKey, users_uid }) => {
                 }
             })
     }, []);
+
+    var user = firebase.auth().currentUser;
+var  user_uid
+if (user != null) {
+  user_uid = user.uid;  
+}
+
     
     test1.userinfo = userinfo;
 
