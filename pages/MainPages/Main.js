@@ -40,7 +40,7 @@ const test4 = {
     chapteritem:""
 }
 
-const Main = (navigation ) => {
+const Main = ({navigation}) => {
    
     const [userinfo, setUserinfo] = useState({});
 
