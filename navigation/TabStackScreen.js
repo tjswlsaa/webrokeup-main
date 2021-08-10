@@ -320,13 +320,13 @@ const TabStackScreen = () => {
                   let screen2;
 
                   if(route.name==="MainStackScreen"){
-                      iconName="book";
+                      iconName="book-outline";
                       screen2="Main";
                   } else if (route.name=="HomeStackScreen"){
                     iconName="person-outline";
                     screen2="MyPage";
                   } else if (route.name=="CommunityStackScreen"){
-                    iconName="person-outline";
+                    iconName="md-chatbubbles-outline";
                     screen2="communityBoard";
                   }
 
