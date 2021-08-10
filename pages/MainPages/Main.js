@@ -10,7 +10,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import covernpaper from '../../assets/covernpaper.png';
+import covernpaper from '../../assets/covernpapernew.png';
 
 
 const test1 = {
@@ -346,11 +346,13 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
 
     return (
-            <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "80%", backgroundColor: "#fff", borderColor: "#A2A2A2", borderWidth: 2}} 
+            <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "80%", backgroundColor: "#fff", borderColor: "#A2A2A2", shadowColor: "#e9e9e9", shadowRadius: 2, shadowOpacity: 3, shadowOffset:{width: 0, height: 0}}} 
             onPress={() => { navigation.navigate('MyArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
-                <Text style={{ fontSize: 16, fontWeight: '700', marginHorizontal: "5%", marginTop: "3%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
-                <Text style={{ fontSize: 15, fontWeight: '400', marginHorizontal: "5%", }}> by. {ChapterItemUserinfo.iam} </Text>
+                <View style={{height: "75%"}}>
+                <Text style={{ fontSize: 15, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                <Text style={{ fontSize: 13, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
+                </View>
+                <Text style={{ fontSize: 12, fontWeight: '400', marginHorizontal: "5%", }}> by. {ChapterItemUserinfo.iam} </Text>
             </TouchableOpacity>
     )
 }
@@ -380,7 +382,7 @@ const WritingItem=(props)=> {
           })
   }, []);
     return (
-        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
+        <View style={{marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
                 <View style={{backgroundColor:"#A2AD9C", width: 170, height: 100, borderRadius: 10}}>
                     <View style={{margin: "10%"}}>

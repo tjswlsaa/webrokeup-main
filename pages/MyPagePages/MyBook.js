@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
@@ -143,16 +144,16 @@ const MyBook = ({ navigation, route }) => {
                             <View style={{ backgroundColor: "#fafafa", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
                                 <View>
                                     <Text style={{ color: "#21381c", fontSize: 17, fontWeight: "700", textAlign: "center" }}>{userinfo.iam}</Text>
-                                    <Text style={{ color: "#21381c", fontSize: 15, marginTop: "2%", textAlign: "center" }} numberofLines={2}>{userinfo.selfLetter}</Text>
+                                    <Text style={{ color: "#21381c", fontSize: 15, marginTop: "2%", textAlign: "center" }} numberOfLines={2}>{userinfo.selfLetter}</Text>
                                 </View>
                             </View>
                         )}
                 </View>
-                <View style={{ backgroundColor: "#fafafa" }}>
-                    <View style={{ marginHorizontal: "3%" }}>
-                        <TouchableOpacity style={{ marginVertical: "1%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, authorUser_uid: myitem.user_uid, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
-                            <Text style={{ marginTop: "3%", marginHorizontal: "3%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
-                            <Text style={{ marginTop: "3%", marginHorizontal: "3%" }} numberofLines={2}>{myitem.intro}</Text>
+                <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
+                    <View style={{ marginHorizontal: "3%"}}>
+                        <TouchableOpacity style={{ marginVertical: "1%", marginTop: "2%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, authorUser_uid: myitem.user_uid, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
+                            <Text style={{ marginTop: "5%", marginHorizontal: "6%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
+                            <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
                     </View>
                     {chapter.map(chapters => {
@@ -186,8 +187,16 @@ function MyChapterItem(props) {
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
+    const headerHeight = useHeaderHeight();
+    const ScreenWidth = Dimensions.get('window').width  //screen 너비
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = useBottomTabBarHeight();
+    const statusBarHeight = getStatusBarHeight()
+    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
+
+
 
     useEffect(() => {
         // let temp = [];
@@ -215,20 +224,22 @@ function MyChapterItem(props) {
             })
     }, [])
     return (
-        <View>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { myitem: myitem, chapters: chapters, navigation: navigation, chapterTitle: chapterTitle, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
-                <Text style={styles.bookIndexOneTitle} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{chapters.mainText}</Text>
-
-                <View style={{ flexDirection: "row", marginTop: 10, }}>
-                    <Icon name="like2" size={15} color="black" style={{ marginLeft: 20, marginTop: 5 }} />
-                    <Text style={styles.bookIndexText}>{likeCount}</Text>
-                    <Icon name="message1" size={15} color="black" style={{ marginLeft: 20, marginTop: 5 }} />
-                    <Text style={styles.bookIndexText}>{commentsNumber}</Text>
-                    <Text style={{ marginLeft: "20%", marginTop: 3 }}>{chapters.Kregdate}</Text>
+        <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
+            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', { myitem: myitem, chapters: chapters, navigation: navigation, chapterTitle: chapterTitle, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
+                <View style={{height: realScreen*0.12}}>
+                    <Text style={{fontSize: 15, fontWeight: "600", marginHorizontal: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                    <Text style={{fontSize: 14, marginTop: "3%", marginHorizontal: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
+                </View>
+                <View style={{ flexDirection: "row", marginTop: "2%"}}>
+                    <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
+                        <Clover name="clover" size={16} color="green" style={{marginLeft: "3%"}}/>
+                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>{likeCount}</Text>
+                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
+                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%"}}>{commentsNumber}</Text>
+                    </View>
+                    <Text style={{flex: 1, fontSize: 11, marginLeft: "20%", alignSelf:"flex-end"}}>{chapters.Kregdate}</Text>
                 </View>
             </TouchableOpacity>
-            <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} />
         </View>
     )
 }
@@ -297,12 +308,12 @@ const styles = StyleSheet.create({
     },
     bookIndexOneTitle: {
         fontSize: 15,
-        marginLeft: "5%",
+        marginLeft: "3%",
 
     },
     bookIndexOnePunchLine: {
         fontWeight: '700',
-        marginLeft: "5%",
+        marginLeft: "3%",
         marginTop: "2%",
     },
     bookIndexText: {
