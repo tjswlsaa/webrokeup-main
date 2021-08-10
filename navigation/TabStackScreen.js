@@ -322,12 +322,24 @@ const TabStackScreen = () => {
                   if(route.name==="MainStackScreen"){
                       iconName="book-outline";
                       screen2="Main";
+                      if(focused){
+                        iconName="book";
+                        color="#21381C";
+                      }
                   } else if (route.name=="HomeStackScreen"){
                     iconName="person-outline";
                     screen2="MyPage";
+                      if(focused){
+                        iconName="person";
+                        color="#21381C";
+                      }
                   } else if (route.name=="CommunityStackScreen"){
                     iconName="md-chatbubbles-outline";
                     screen2="communityBoard";
+                      if(focused){
+                        iconName="md-chatbubbles";
+                        color="#21381C";
+                      }
                   }
 
                   return <MyIcon iconName={iconName} size={size} color={color} screen1={screen1} screen2={screen2} />;
