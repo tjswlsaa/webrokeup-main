@@ -4,10 +4,41 @@ import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
 import paper from '../../assets/paper.png';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+
+const test1 = {
+    navigation:""
+  }
+  
+  const test2 ={
+    text1:""
+  }
+  
+  const test3 ={
+    text2:""
+  }
+
+  const test4 ={
+    bookKey:""
+  }
+  
+  const test5 ={
+    chapters:""
+  }
+
 const EditArticle = ({ navigation, route }) => {
+    test1.navigation=navigation
+
     const { chapters, bookKey} = route.params;
+    test5.chapters=chapters
+    test4.bookKey=bookKey
+
     const [text1, setText1] = useState(chapters.chapterTitle);
     const [text2, setText2] = useState(chapters.mainText);
+    test2.text1=text1
+    test3.text2=text2
+
     const title_a = useRef(null);
     const maintext_a = useRef(null);
     const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -19,24 +50,7 @@ const EditArticle = ({ navigation, route }) => {
     return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-                    <TouchableOpacity style={styles.saveButton} onPress={() => {
-                            var chapterTitle = text1;
-                            var mainText = text2;
-                            firebase_db
-                                .ref(`/book/${bookKey}/chapters/` + chapters.chapterKey)
-                                .set({
-                                    chapterKey: chapters.chapterKey,
-                                    chapterTitle: chapterTitle,
-                                    mainText: mainText,
-                                    regdate: new Date().toString()
-                                });
-                            Alert.alert("집필 완료")
-                            navigation.navigate("MyPage", { bookKey: bookKey })
-                            //title_a.current.clear();
-                            //maintext_a.current.clear();  
-                    }}>
-                        <Text style={{ alignSelf: "center" }}>저장하기</Text>
-                    </TouchableOpacity>
+
                     <View style={styles.bookContainer}>
                         <ImageBackground style={styles.bookImage} source={paper} >
                             <View>
@@ -133,4 +147,48 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     }
 });
-export default EditArticle;
+
+
+async function savePage() {
+
+
+    const {navigation}=test1
+    const {text1}=test2
+    const {text2}= test3
+    const {bookKey}=test4
+    const {chapters}=test5
+
+    
+    firebase_db
+        .ref(`/book/${bookKey}/chapters/` + chapters.chapterKey)
+        .set({
+            chapterKey: chapters.chapterKey,
+            chapterTitle: text1,
+            mainText: text2,
+            regdate: new Date().toString()
+        });
+    Alert.alert("집필 완료")
+    navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey:chapters.chapterKey })
+  }
+  
+  
+  function headerRight() {
+    return (
+  
+      <Icon.Button name='save' size={25}
+      backgroundColor= 'white' color="black" 
+      onPress={savePage}
+      
+      >
+    </Icon.Button>
+  
+    );
+  }
+  const options = {
+    headerRight,
+  };
+  
+  export default {
+    component: EditArticle,
+    options,
+  };

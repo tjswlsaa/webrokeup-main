@@ -5,18 +5,32 @@ import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import paper from '../../assets/paper.png';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+const test2 ={
+  text:""
+}
+
+const test1 ={
+  navigation:""
+}
+const test3 ={
+  user_uid:""
+}
 const communityMakeNewPost = ({ navigation, route }) => {
+  test1.navigation=navigation
 
     const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
     const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
   const [text, setText] = useState('');
+  test2.text=text
+
   var user = firebase.auth().currentUser;
   var user_uid
   if (user != null) {
     user_uid = user.uid;
   }
-
+  test3.user_uid=user_uid;
   const [userinfo, setUserinfo] = useState([]);
 
   useEffect(()=>{
@@ -29,33 +43,13 @@ const communityMakeNewPost = ({ navigation, route }) => {
 
 console.log(userinfo)
 
-  const postKey = Math.random().toString().replace(".", "");
-  const regdate=  new Date().toString()
-  const Kregdate= moment(new Date()).format('YYYY년 MM월 DD일') 
+
 
   return (
 
       <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-          <TouchableOpacity style={styles.saveButton} onPress={() => {
-     
-            firebase_db
-              .ref(`/post/${postKey}/`)
-              .set({
-                creator:user_uid,
-                postKey: postKey,
-                text: text,
-                regdate: regdate,
-                Kregdate:Kregdate,
 
-              });
-            Alert.alert("집필 완료")
-            navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate})
-            //title_a.current.clear();
-            //maintext_a.current.clear();  
-          }}>
-            <Text style={styles.saveButtonText}> 저장하기</Text>
-          </TouchableOpacity>
           <View style={styles.bookContainer}>
             <ImageBackground style={styles.bookImage} source={paper} >
               <ScrollView scrollEnabled={false}>
@@ -103,4 +97,56 @@ const styles = StyleSheet.create({
     fontSize: 14,
   }
 })
-export default communityMakeNewPost;
+
+
+async function saveChapter() {
+  const postKey = Math.random().toString().replace(".", "");
+  const regdate=  new Date().toString()
+  const Kregdate= moment(new Date()).format('YYYY년 MM월 DD일') 
+
+
+
+  const {navigation} =test1
+  const {text}= test2;
+  const {user_uid}=test3;
+
+  firebase_db
+  .ref(`/post/${postKey}/`)
+  .set({
+    creator:user_uid,
+    postKey: postKey,
+    text: text,
+    regdate: regdate,
+    Kregdate:Kregdate,
+  
+  });
+  Alert.alert("집필 완료")
+  navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate})
+  //title_a.current.clear();
+  //maintext_a.current.clear();  
+
+}
+
+function headerRight() {
+  return (
+
+    <Icon.Button name='save' size={25}
+    backgroundColor= 'white' color="black" 
+    onPress={saveChapter}
+    
+    >
+  </Icon.Button>
+
+  );
+}
+const options = {
+  headerRight,
+};
+
+export default {
+  component: communityMakeNewPost,
+  options,
+};
+
+
+

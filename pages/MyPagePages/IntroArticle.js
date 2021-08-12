@@ -4,34 +4,48 @@ import {CommonActions} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import {firebase_db} from '../../firebaseConfig';
 import firebase from 'firebase/app';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+const test1 = {
+  bookKey:""
+}
+
+const test2 ={
+  text:""
+}
+
+const test3 ={
+  navigation:""
+}
 const IntroArticle = ({navigation, route}) => {
-
+  test3.navigation=navigation
   const introArticle_a = useRef(null);
   const [text, setText] = useState('');
+  test2.text=text
   const [data,setData] = useState('');
   const {bookKey} = route.params;
+  test1.bookKey=bookKey
 
-  const saveIntroArticle = async() => {
-    let introKey = "intro";
-    var introArticle = text;
-    firebase_db
-    .ref( `/book/${bookKey}/`+ introKey)
-    .set(introArticle)
-    Alert.alert("저장 완료!")
+  // const saveIntroArticle = async() => {
+  //   let introKey = "intro";
+  //   var introArticle = text;
+  //   firebase_db
+  //   .ref( `/book/${bookKey}/`+ introKey)
+  //   .set(introArticle)
+  //   Alert.alert("저장 완료!")
     
-    navigation.dispatch(state => {
-      const routes = [...state.routes];
-      routes.pop();
+  //   navigation.dispatch(state => {
+  //     const routes = [...state.routes];
+  //     routes.pop();
     
-      return CommonActions.reset({
-        ...state,
-        routes,
-        index: routes.length - 1,
-      });
-    });
-    navigation.navigate("NewPage", {bookKey:bookKey})
-  }
+  //     return CommonActions.reset({
+  //       ...state,
+  //       routes,
+  //       index: routes.length - 1,
+  //     });
+  //   });
+  //   navigation.navigate("NewPage", {bookKey:bookKey})
+  // }
 
   useEffect(()=>{
    // console.log("말머리 생성 완료")
@@ -56,9 +70,9 @@ const IntroArticle = ({navigation, route}) => {
     <View style={styles.container}>
         <StatusBar style="white" />
         <View style={styles.upperButtonContainer}>
-            <TouchableOpacity style={styles.deleteButton} onPress={()=>saveIntroArticle()}>
+            {/* <TouchableOpacity style={styles.deleteButton} onPress={()=>saveIntroArticle()}>
                 <Text style={styles.deleteButtonText} >저장</Text>
-            </TouchableOpacity>  
+            </TouchableOpacity>   */}
         </View>
         <View>
             <Text style={styles.bookTitle}>말머리에서</Text>  
@@ -121,9 +135,62 @@ const styles = StyleSheet.create({
     }
 });
 
+
+async function saveChapter() {
+
+  console.log("savecahptweintro")
+const {navigation} =test3
+const {bookKey}= test1;
+const {text}= test2;
+console.log("text",text)
+// const navigation = useNavigation();
+
+console.log("savecahptweintro2")
+
+  let introKey = "intro";
+  var introArticle = text;
+  firebase_db
+  .ref( `/book/${bookKey}/`+ introKey)
+  .set(introArticle)
+  Alert.alert("저장 완료!")
+  
+  console.log("savecahptweintro3")
+
+  navigation.dispatch(state => {
+    const routes = [...state.routes];
+    routes.pop();
+  
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
+
+  navigation.navigate("NewPage", {bookKey:bookKey})
+
+  console.log("savecahptweintro4")
+
+
+}
+
+function headerRight() {
+  return (
+
+    <Icon.Button name='save' size={25}
+    backgroundColor= 'white' color="black" 
+    onPress={saveChapter}
+    
+    >
+  </Icon.Button>
+
+  );
+}
+const options = {
+  headerRight,
+};
+
 export default {
   component: IntroArticle,
-  options: {
-
-  }
+  options,
 };

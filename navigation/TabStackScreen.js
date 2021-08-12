@@ -90,7 +90,7 @@ const MainStackScreen = () => {
       name="MyArticle" 
       component={MyArticle.component}
       options={{
-        headerShown:false,
+        headerShown:true,
         ...defaultScreenOptions,
       }}
     />
@@ -217,8 +217,22 @@ const HomeStackScreen = () => {
 
      }}
        />
-      <HomeStack.Screen name="NewPage" component={NewPage}/>
-      <HomeStack.Screen name="EditArticle" component={EditArticle}/>
+      <HomeStack.Screen name="NewPage" component={NewPage.component}
+           options={{
+            title:"새챕터 만들기",
+            ...defaultScreenOptions,
+            ...NewPage.options
+     
+          }}
+      />
+      <HomeStack.Screen name="EditArticle" component={EditArticle.component}
+           options={{
+            title:"챕터 수정하기",
+            ...defaultScreenOptions,
+            ...EditArticle.options
+     
+          }}
+      />
       <HomeStack.Screen 
 
       options={{
@@ -284,9 +298,13 @@ const CommunityStackScreen = () => {
         />
       <CommunityStack.Screen 
         name="communityMakeNewPost" 
-        component={communityMakeNewPost}
-        options={{title: "게시판 글쓰기",  ...defaultScreenOptions}}
-        />
+        component={communityMakeNewPost.component}
+        options={{
+          title:"게시판 글쓰기",
+          ...defaultScreenOptions,
+          ...communityMakeNewPost.options
+   
+        }}        />
       <CommunityStack.Screen 
         name="readPost" 
         component={readPost.component}
