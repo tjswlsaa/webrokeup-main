@@ -45,24 +45,19 @@ const MyBook = ({ navigation, route }) => {
     const [userinfo, setUserinfo] = useState({
         iam: "익명의.지은이",
         selfLetter: "안녕하세요 익명의 지은이입니다."
-    });
-
-    useEffect(getUserId, []);
-    function getUserId() {
-        firebase_db.ref(`users/${myitem.user_uid}`)
-            .on('value', (snapshot) => {
-                let userinfo = snapshot.val();
-                if (userinfo > '') {
-                  setUserinfo(userinfo);
-            }})
-    }
-
-    let iam = userinfo.iam;
-    console.log({iam})
-    let selfLetter = userinfo.selfLetter;
-    console.log({selfLetter})
-
-
+      });
+      useEffect(()=> {
+        function getUserId() {
+          firebase_db.ref(`users/${myitem.user_uid}`)
+              .on('value', (snapshot) => {
+                  let user = snapshot.val();
+                  if (user) {
+                    setUserinfo(userinfo);
+              }})
+        }
+      }, []);
+      const { iam, selfLetter } = useState;
+      
     useEffect(getMyItem, []);
     function getMyItem() {
         //console.log('getMyItem()');

@@ -116,7 +116,15 @@ useEffect(()=>{
 const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
         const [book,setBook] = useState([]);
-        const [item, setItem] = useState([]);
+        const [item, setItem] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+        });
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
         const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
@@ -136,15 +144,21 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         var userID = user_uid.substring(0, 6)
 
         useEffect(() => {
-                let temp = [];
-                let data = firebase_db.ref(`book/${bookKey}`)
-                    .once('value', (snapshot) => {
-                        temp.push(snapshot);
-                        });
-                        setItem(temp);
-                        console.log("temp: " + temp)
-            }, [])
-   
+                function getPopBook(){
+                        firebase_db.ref(`book/${bookKey}`)
+                        .on('value', (snapshot) =>{
+                                let popBook = snapshot.val();
+                                if (popBook) {
+                                        setBook(book)
+                                }
+                        })}
+                }, [])
+        const bookFiltered= book.filter(filteredBook => filteredBook.bookKey == bookKey)
+        useEffect (() => {
+                setItem(bookFiltered)
+                console.log({bookFiltered})
+        })
+
 
         useEffect (()=>{
             // let temp = [];
@@ -197,7 +211,6 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                         </View>
                                         <View style={{flex: 1}}>
                                                 <BookComponent
-                                                users_uid={item.user_uid}
                                                 navigation={navigation}
                                                 item={item}
                                                 />
