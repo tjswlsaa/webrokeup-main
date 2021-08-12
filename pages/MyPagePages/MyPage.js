@@ -89,11 +89,11 @@ return (
             <View style={{height: realScreen*0.06, alignItems:"center", justifyContent:"center", backgroundColor: "#fbfbfb"}}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381C"}}>나의 이별록</Text>
             </View>
-            <View style={{height: realScreen*0.16, marginHorizontal: "5%", borderRadius: 15, alignSelf: "center", backgroundColor: "#E9E9E9"}}>
+            <View style={{height: realScreen*0.16, marginHorizontal: "5%", borderRadius: 10, alignSelf: "center", backgroundColor: "#f2f2f2"}}>
                 <View style={{flex: 1, flexDirection: "row",  alignSelf: "center", marginHorizontal: "3%",borderRadius: 10}}>
                     <Text style={{flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop:"7%", marginLeft: "3%"}}>{userinfo.iam}</Text>
-                    <TouchableOpacity style={{backgroundColor: "#204040", alignSelf: "center", borderRadius: 50, height: 34, width: 34}} onPress={()=>{navigation.navigate('Account')}}>
-                        <Icon name="settings-outline" size={25} color="white" style={{alignSelf: "center", marginTop: "10%"}}/>
+                    <TouchableOpacity style={{alignSelf: "center", borderRadius: 50, height: 34, width: 34}} onPress={()=>{navigation.navigate('Account')}}>
+                        <Icon name="settings-outline" size={27} color="#21381c" style={{alignSelf: "center", marginTop: "10%", marginRight:"20%"}}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={{flex: 1, fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%"}}> {userinfo.selfLetter}</Text>
@@ -101,22 +101,20 @@ return (
             <View style={{height: realScreen*0.7, width: "94%", alignSelf:"center", marginBottom:10}}>
                 {myBookFiltered.length == 0 ? (
                         <View style={{height:realScreen*0.6, resizeMode:"cover" }} >
-                    <TouchableOpacity style= {{ flex:1, justifyContent:"center", alignItems:"center", }} 
-                        onPress={()=>{navigation.navigate("MakeNewBook")}}>
-                            <Icon2 name="plus" size = {30}/>
-                            <Text style={{fontSize:15, marginTop: "5%"}}>새로운 책을 만들어주세요</Text>
+                        <TouchableOpacity style= {{ flex:1, justifyContent:"center", alignItems:"center", }} 
+                            onPress={()=>{navigation.navigate("MakeNewBook")}}>
+                                <Icon2 name="plus" size = {30}/>
+                                <Text style={{fontSize:15, marginTop: "5%"}}>새로운 책을 만들어주세요</Text>
                         </TouchableOpacity>
-                    {/* </ImageBackground> */}
                         </View>
                     ) :  (
                         <View style={{height: realScreen*0.6, width: realScreen*0.5, marginTop: "5%"}}>
-                            
                             <Swiper 
                             index={myBook.bookKey}
                             loop={false}
                             showsPagination={true}
                             onSwiper={setSwiper} 
-                            style={{}} showsButtons={false}
+                            showsButtons={false}
                             dot={
                             <View style={{           // unchecked dot style
                                 backgroundColor: 'rgba(0,0,0,0.2)',
@@ -139,18 +137,16 @@ return (
                                     {myBookFiltered.map(item => {
                                         test2.item=item
                                     return (
-                                        <TouchableOpacity style={{flex:1}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: item.bookKey, navigation:navigation})}}>
-
-                                        <BookComponent
-                                        key = {item.key}
-                                        item={item}
-                                        url={item.url}
-                                        bookTitle={item.bookTitle}
-                                        navigation = {navigation}
-                                        userID={userID}
-                                        
-                                    />
-                                          </TouchableOpacity>
+                                        <TouchableOpacity style={{height: "90%", width: "80%", alignSelf: "center"}} onPress={()=>{navigation.navigate("MyBook", {item: item, bookKey: item.bookKey, navigation:navigation})}}>
+                                            <BookComponent
+                                            key = {item.key}
+                                            item={item}
+                                            url={item.url}
+                                            bookTitle={item.bookTitle}
+                                            navigation = {navigation}
+                                            userID={userID}
+                                            />
+                                        </TouchableOpacity>
 
 
                                             )

@@ -179,8 +179,8 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                        console.log('PopularArticle.js (2), chapters: ',chapters);
                                         navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
                                 }>
-                                <View style={{flex:1,  flexDirection: "row", }}>
-                                        <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%"}}>
+                                <View style={{flex:1,  flexDirection: "row", borderWidth: 1}}>
+                                        <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%", borderWidth: 1}}>
                                                 <View style={{flex:5}}>
                                                 <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "3%"}} numberOfLines={1}>{chapters.chapterTitle}</Text>
                                                 <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} line>{chapters.mainText}</Text>
@@ -195,7 +195,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                                         <Text style={styles.bookIndexText}>{commentsNumber}</Text>
                                                 </View>
                                         </View>
-                                        <View>
+                                        <View style={{flex: 1}}>
                                                 <BookComponent
                                                 users_uid={item.user_uid}
                                                 navigation={navigation}
