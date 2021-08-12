@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ImageBackground, TouchableOpacity, ScrollView, Button, Touchable, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, ImageBackground, TouchableOpacity, ScrollView, Button, Touchable, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
@@ -11,6 +11,11 @@ import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
+import Left from 'react-native-vector-icons/Feather'
+import { useHeaderHeight } from '@react-navigation/stack';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 // import paper from '../../assets/paper.png';
 
@@ -34,15 +39,23 @@ const MyArticle = ({ navigation, route }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
+    const [cloverColor, setCloverColor] = useState("#c1c1c1")
+    const [chapters, setChapters] = useState({});
+        // console.log("myarticle author", chapters.creator)
+
 
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
 
-    // console.log('우선 해당 챕터키 가져오는지 여부',chapterKey)
-    // const [chapters,setChapters]= useState('')
-    const [chapters, setChapters] = useState({});
-    console.log("myarticle author", chapters.creator)
+
+    const headerHeight = useHeaderHeight();
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = useBottomTabBarHeight();
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+
 
     useEffect(getChapters, []);
 
@@ -101,7 +114,10 @@ const MyArticle = ({ navigation, route }) => {
                     {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} > */}
 
                     {chapters.creator == user_uid ? (
-                        <View style={{height: "4%", marginTop: "1%", width: "90%", flexDirection: "row", alignSelf: "center"}}>
+                        <View style={{height: "4%", marginTop: "2%", width: "90%", flexDirection: "row", alignSelf: "center"}}>
+                            <TouchableOpacity style={{flex:1, marginTop: "1%"}} onPress={()=>{navigation.goBack()}}>
+                                <Left name = "chevron-left" size={25} />
+                            </TouchableOpacity>
                             <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: "15%", borderRadius: 15}}>
                                 <Text style={{alignSelf: "center", color: "#21381c", marginTop: "10%"}} 
                                     onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
@@ -125,13 +141,13 @@ const MyArticle = ({ navigation, route }) => {
 
                     <View>
                         {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={paper} > */}
-                        <View style={{ marginTop: "3%", backgroundColor: "#fff", height: "95%", width: "94%", alignSelf: "center" }}>
-                            <View style={{ height: "92%", borderWidth: 1}}>
-                                <View style={{borderWidth:1, flex:1, marginHorizontal: "5%", marginVertical: "5%", height: "15%"}}>
-                                    <Text style={{fontSize: 17, alignContent: "flex-end"}}>{chapters.chapterTitle}</Text>
+                        <View style={{ marginTop: "2%", backgroundColor: "#fff", height: "95%", width: "94%", alignSelf: "center" }}>
+                            <View style={{ height: "92%"}}>
+                                <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
+                                        <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                 </View>
-                                <ScrollView style={{borderWidth: 1, flex: 7}}>
-                                    <Text style={styles.bookText}>{chapters.mainText}</Text>
+                                <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
+                                    <Text style={{fontSize: 17}}>{chapters.mainText}</Text>
                                 </ScrollView>
                             </View>
 
@@ -160,6 +176,7 @@ const MyArticle = ({ navigation, route }) => {
                                             likeCount = snapshot.numChildren();
                                             setLikeCount(likeCount)
                                         })
+                                        await setCloverColor("green")
                                     } else {
                                         // console.log ("좋아요 취소")
                                         // likeRef.child(user_uid).set(null)
@@ -170,6 +187,8 @@ const MyArticle = ({ navigation, route }) => {
                                             likeCount = snapshot.numChildren();
                                             setLikeCount(likeCount)
                                         })
+                                        await setCloverColor("#c1c1c1")
+
                                     }
                                     // console.log({likeCount});
                                     // console.log("여기여기: " + likeCount) 
@@ -188,7 +207,7 @@ const MyArticle = ({ navigation, route }) => {
                                     // likeReload();
                                     // Alert.alert('MyArticle.likeButton.onPress() end');
                                 }}>
-                                    <Clover name="clover" size={20} color="grey" style={styles.addIcon} />
+                                    <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
 
                                 </TouchableOpacity>
                                 <Text style={{ marginLeft: "3%"}}> {likeCount} </Text>
@@ -206,7 +225,7 @@ const MyArticle = ({ navigation, route }) => {
                         onPress={()=>{navigation.navigate('Comment',{chapters:chapters, navigation:navigation,bookKey:bookKey, chapterKey:chapterKey})}}/>
                     */}
                                 <Text style={{ marginLeft: "3%" }}> {commentsNumber} </Text>
-                                <Text style={{ marginLeft: 70 }}>{chapters.Kregdate}</Text>
+                                <Text style={{ marginLeft: "25%", fontSize: 13, marginTop: "1%" }}>{chapters.Kregdate}</Text>
                             </View>
                         </View>
                         {/* </ImageBackground> */}
