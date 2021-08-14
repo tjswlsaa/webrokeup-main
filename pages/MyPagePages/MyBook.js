@@ -222,7 +222,7 @@ function MyChapterItem(props) {
     }, [])
     return (
         <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
-            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', { myitem: myitem, chapters: chapters, navigation: navigation, chapterTitle: chapterTitle, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
+            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticleApp', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
                 <View style={{height: realScreen*0.12}}>
                     <Text style={{fontSize: 15, fontWeight: "600", marginHorizontal: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
                     <Text style={{fontSize: 14, marginTop: "3%", marginHorizontal: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
