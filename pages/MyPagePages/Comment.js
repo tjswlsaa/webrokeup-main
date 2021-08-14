@@ -62,13 +62,15 @@ function Comment({ navigation, route }) {
     test2.chapterKey = chapterKey;
     test3.chapters = chapters
 
-    const { chapterTitle } = route.params;
+    const { chapterTitle } = route.params;textInputHeight
     const [commentsNumber, setCommentsNumber] = useState(0);
     const [comments, setComments] = useState([]);
     test5.comments = comments
     const [data, setData] = useState("")
     const [statusBarHeight, setStatusBarHeight] = useState(0);
-
+    const defaultTextInputHeight = 40;
+    const [textInputHeight, setTextInputHeight] = useState(defaultTextInputHeight);
+    
     //     const realHeight = Dimensions.get('window').height - getStatusBarHeight()- getBottomSpace()-135-10
 
     var user = firebase.auth().currentUser;
@@ -229,7 +231,15 @@ function Comment({ navigation, route }) {
 
                 </View>
 
-                <View style={{ flexDirection: "row", backgroundColor: "#e9e9e9", height: 50, alignItems: "center", justifyContent: "center", borderRadius: 5, }}>
+                <View style={{
+                    flexDirection: "row", 
+                    backgroundColor: "#e9e9e9", 
+                    // height: 50, 
+                    height: (textInputHeight + 10), 
+                    alignItems: "center", 
+                    justifyContent: "center", 
+                    borderRadius: 5,
+                }}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <TextInput
                             placeholder="댓글을 입력하세요"
@@ -237,14 +247,19 @@ function Comment({ navigation, route }) {
                             style={{
                                 width: "85%",
                                 backgroundColor: "white",
-                                height: "80%",
+                                // height: "80%",
+                                height: textInputHeight,
                                 borderRadius: 10,
                                 justifyContent: "center",
-                                
                             }}
                             ref={text_a}
                             multiline={true}
-                            onChangeText={(text) => setText(text)} />
+                            onChangeText={(text) => setText(text)}
+                            onContentSizeChange={(e) => {
+                                const textInputHeight = Math.max(e.nativeEvent.contentSize.height, defaultTextInputHeight);
+                                setTextInputHeight(textInputHeight);
+                            }}
+                        />
                     </TouchableWithoutFeedback>
 
 
