@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 import Left from 'react-native-vector-icons/Feather'
 import { useHeaderHeight } from '@react-navigation/stack';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+// import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -51,7 +51,8 @@ const MyArticle = ({ navigation, route }) => {
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
-    const tabBarHeight = useBottomTabBarHeight();
+    // const tabBarHeight = useBottomTabBarHeight();
+    const tabBarHeight = 0;
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
 
@@ -223,7 +224,7 @@ const MyArticle = ({ navigation, route }) => {
                                 <Text style={{ marginLeft: "3%"}}> {likeCount} </Text>
 
                                 <TouchableOpacity
-                                    onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
+                                    onPress={() => { navigation.navigate('CommentApp', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
                                     style={styles.commentButton}
                                 >
                                     <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
