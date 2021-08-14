@@ -86,14 +86,6 @@ const MainStackScreen = () => {
           ...defaultScreenOptions,
         }} 
         component={NewArticle} />
-              <MainStack.Screen 
-      name="MyArticle" 
-      component={MyArticle.component}
-      options={{
-        headerShown:true,
-        ...defaultScreenOptions,
-      }}
-    />
         <MainStack.Screen 
             name="PopularArticle" 
             component={PopularArticle} 
@@ -120,20 +112,6 @@ const MainStackScreen = () => {
     }} 
             />
         <MainStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
-
-        
-        <MainStack.Screen 
-          options={{
-                  title:"댓글",
-                  headerShown: false,
-                  // gestureEnabled: false,
-                  cardOverlayEnabled: true,
-                  // ... TransitionPresets.ModalSlideFromBottomIOS,
-                  ...TransitionPresets.ModalPresentationIOS,
-                  ...defaultScreenOptions,
-          }}
-          name="Comment" 
-          component={Comment}/>
           
       <MainStack.Screen 
         name="editorMakeNewWriting" 
@@ -376,6 +354,10 @@ function MyIcon(props) {
   const navigation = useNavigation();
   const {iconName, size, color, screen1, screen2} = props;
 
+  
+  /**
+   * 탭버튼을 눌렀을 때, 해당 탭의 첫 화면으로 무조건 랜딩한다.
+   */
   useEffect(()=>{
     const tabPress = navigation.addListener('tabPress', e => {
       e.preventDefault();

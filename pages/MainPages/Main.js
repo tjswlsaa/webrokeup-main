@@ -5,7 +5,7 @@ import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
 import Swiper from 'react-native-swiper';
 import bookPng from '../../assets/book.png';
-import BookComponent from '../../components/BookComponent';
+// import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
@@ -347,7 +347,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
     return (
             <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "80%", backgroundColor: "#fff", borderColor: "#A2A2A2", shadowColor: "#e9e9e9", shadowRadius: 2, shadowOpacity: 3, shadowOffset:{width: 0, height: 0}}} 
-            onPress={() => { navigation.navigate('MyArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
+            onPress={() => { navigation.navigate('MyArticleApp', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
                 <View style={{height: "75%"}}>
                 <Text style={{ fontSize: 15, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                 <Text style={{ fontSize: 13, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
