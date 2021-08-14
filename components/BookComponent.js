@@ -31,7 +31,7 @@ export default function BookComponent({navigation,item}) {
               <Text style={{flex:1, fontSize : 17, marginTop: "23%", marginHorizontal: "22%"}}>{item.bookTitle}</Text>
               <Text style={{flex:1, fontSize : 15, marginHorizontal: "22%"}}>{item.smallBookTitle}</Text>
               <Text style={{flex: 1, alignSelf: "flex-end", fontSize: 13, marginHorizontal: "22%"}}>{BookComponentUserinfo.iam}</Text>
-              <Image style={{flex: 5, width: "54%", top: 0, justifyContent: "flex-start", marginHorizontal: "24%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
+              {/* <Image style={{flex: 5, width: "54%", top: 0, justifyContent: "flex-start", marginHorizontal: "24%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} /> */}
             </View>
         </ImageBackground>
       </View>

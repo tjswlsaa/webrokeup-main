@@ -9,6 +9,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import coverimage from '../../assets/coverimage.png'
 
 const PopularArticle = ({ navigation, route }) => {
    const [list, setList] = useState([]);
@@ -21,30 +22,30 @@ const PopularArticle = ({ navigation, route }) => {
    const statusBarHeight = getStatusBarHeight();
    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
 
-
    
    
-useEffect(()=>{
-        firebase_db
-             .ref(`book`)
-             .on('value',(snapshot) =>{
-             let list = [];
-             let temp = [];
-             snapshot.forEach((child) => {
-                     const book = child.val();
-                     const {chapters} = book;
-                     if (chapters == undefined) {
-                            // console.log("PopularArticle() 챕터가 없습니다")
-                         } else {
-                             list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
-                        }
-                         list.sort(function(a, b) {
-                                return (b.likeCount) - (a.likeCount)
-                                })
-                        setList(list);
-                    })
-                })
+        useEffect(()=>{
+                firebase_db
+                .ref(`book`)
+                .on('value',(snapshot) =>{
+                let list = [];
+                let temp = [];
+                snapshot.forEach((child) => {
+                        const book = child.val();
+                        const {chapters} = book;
+                        if (chapters == undefined) {
+                                // console.log("PopularArticle() 챕터가 없습니다")
+                                } else {
+                                list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
+                                }
+                                list.sort(function(a, b) {
+                                        return (b.likeCount) - (a.likeCount)
+                                        })
+                                setList(list);
+                        })
+                        })
         }, [])
+
 
                 
         const viewHot = () => {
@@ -54,8 +55,8 @@ useEffect(()=>{
                         return (b.likeCount) - (a.likeCount)
                         })
                 setList(hotlist);
-                console.log("viewHot done")
-                console.log ("list 2 (hot): " + {list});
+                // console.log("viewHot done")
+                // console.log ("list 2 (hot): " + {list});
 
                 setHotColor("#21381C");
                 setNewColor("#E9E9E9")
@@ -68,8 +69,8 @@ useEffect(()=>{
                         return new Date(b.regdate) - new Date(a.regdate);
                                 })
                 setList(newlist);
-                console.log("viewNew done")
-                console.log("list 3 (new): " + {list});
+                // console.log("viewNew done")
+                // console.log("list 3 (new): " + {list});
 
                 setHotColor("#E9E9E9")
                 setNewColor("#21381C")
@@ -115,7 +116,6 @@ useEffect(()=>{
 
 const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
-        const [book,setBook] = useState([]);
         const [item, setItem] = useState({
                 bookKey: '',
                 bookTitle: '',
@@ -142,23 +142,19 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         }
         
         var userID = user_uid.substring(0, 6)
+    
 
-        useEffect(() => {
-                function getPopBook(){
-                        firebase_db.ref(`book/${bookKey}`)
-                        .on('value', (snapshot) =>{
-                                let popBook = snapshot.val();
-                                if (popBook) {
-                                        setBook(book)
-                                }
-                        })}
-                }, [])
-        const bookFiltered= book.filter(filteredBook => filteredBook.bookKey == bookKey)
-        useEffect (() => {
-                setItem(bookFiltered)
-                console.log({bookFiltered})
-        })
-
+        // useEffect(()=>{
+        //         firebase_db.ref(`book/${bookKey}/`)
+        //         .once('value')
+        //         .then((snapshot) => {
+        //                 const item = snapshot.val();
+        //                 console.log({item});
+        //                 setItem(item);
+        //         })
+        // })
+        // 여기 부분이 문제의 setItem 부분이에요!!!!!
+        // 여기를 각주 처리 안 하면 아예 페이지 access도 안 돼서 각주 처리했어요!!
 
         useEffect (()=>{
             // let temp = [];
@@ -190,7 +186,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         return (
                 <View style={{height: realScreen*0.35, backgroundColor: "white", marginBottom: "1%"}}>
                         <TouchableOpacity style={{  flex:1, marginVertical: "1%", }} onPress={() => {
-                                       console.log('PopularArticle.js (2), chapters: ',chapters);
+                                //        console.log('PopularArticle.js (2), chapters: ',chapters);
                                         navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
                                 }>
                                 <View style={{flex:1,  flexDirection: "row", borderWidth: 1}}>
@@ -212,8 +208,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                         <View style={{flex: 1}}>
                                                 <BookComponent
                                                 navigation={navigation}
-                                                item={item}
-                                                />
+                                                item={item}/>
                                         </View>
                                 </View>
                         </TouchableOpacity>
