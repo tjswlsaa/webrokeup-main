@@ -115,8 +115,9 @@ const MyBook = ({ navigation, route }) => {
             <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
                 {myitem.user_uid == user_uid ? (
                     <View style={{ height: realScreen * 0.06 }} >
-                        <TouchableOpacity style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%" }}
-                            onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}>
+                        <TouchableOpacity 
+                            onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}
+                            style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%" }}>
                             <Text style={{ alignSelf: "center", color: "#21381C", marginTop: "3%" }}> 수정하기 </Text>
                         </TouchableOpacity>
                     </View>
