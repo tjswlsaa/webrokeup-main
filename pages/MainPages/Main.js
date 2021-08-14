@@ -164,7 +164,7 @@ if (user != null) {
             <View style={{ height: realScreen*0.42}}>
                 <View style={{flex: 1, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%"}}>
                     <View style={{ flex:4, }} >
-                        <Text style={{ fontSize: 20, fontWeight: "700" }}> 오늘의 이별집 </Text>
+                        <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘의 이별집 </Text>
                     </View>
                     <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
                     onPress={() => { navigation.navigate('PopularArticle')}}>
@@ -197,7 +197,7 @@ if (user != null) {
             <View style={{ height: realScreen*0.23, backgroundColor: "#FAFAFA" }}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
                 <View style={{ flex: 4}}> 
-                    <Text style={{ fontSize: 20, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
+                    <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
                 </View>
                 <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
                     onPress={() => { navigation.navigate('PopularArticle')}}>
@@ -233,7 +233,7 @@ if (user != null) {
             <View style={{ height: realScreen*0.24, backgroundColor: "#fafafa"}}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
                     <View style={{flex: 4}}>
-                        <Text style={{fontSize: 20, fontWeight: "700" }}> 에디터 </Text>
+                        <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
                     </View>
                     <TouchableOpacity style={{ flex:1, borderRadius: 5, height: "100%", backgroundColor: "#21381c"}}
                         onPress={() => { navigation.navigate('editorBoard')}}>

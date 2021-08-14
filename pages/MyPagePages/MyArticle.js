@@ -43,7 +43,6 @@ const MyArticle = ({ navigation, route }) => {
     const [chapters, setChapters] = useState({});
         // console.log("myarticle author", chapters.creator)
 
-
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
@@ -67,8 +66,6 @@ const MyArticle = ({ navigation, route }) => {
                 // console.log('getChapters() firebase_db.on()');
                 let temp = [];
                 const chapters = snapshot.val()
-
-
 
                 if (chapters > '') { // truthy check
                     setChapters(chapters);
@@ -94,6 +91,7 @@ const MyArticle = ({ navigation, route }) => {
             // console.log({temp});
             setLikedUsers(temp);
         })
+
     }, [])
 
     useEffect(() => {
@@ -106,11 +104,23 @@ const MyArticle = ({ navigation, route }) => {
             })
     }, [])
 
+    // useEffect(()=>{
+    //     let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+    //     if (meliked == '') {
+    //         // console.log("likedUsers: " + likedUsers)
+    //         setCloverColor("#c1c1c1")
+    //     } else {
+    //         // console.log("likedUsers: " + likedUsers)
+    //         setCloverColor("green")
+    //     }
+    // }, [])
+
     return (
         <View style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
-
-                <View style={{ backgroundColor: "#e6ede8" }}>
+                <StatusBar style="white"/>
+                <View style={{}}> 
+                {/* <View style={{ backgroundColor: "#e6ede8" }}> */}
                     {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} > */}
 
                     {chapters.creator == user_uid ? (
