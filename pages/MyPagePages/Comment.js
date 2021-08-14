@@ -131,6 +131,8 @@ function Comment({ navigation, route }) {
     useEffect(() => {
         Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
             setStatusBarHeight(statusBarFrameData.height)
+            // console.log('Comment.js');
+            // console.log('statusBarFrameData.height: ', statusBarFrameData.height); // SE2: 20, iPhone11: 43
         }) : null
     }, []);
 
@@ -165,7 +167,26 @@ function Comment({ navigation, route }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
             <KeyboardAvoidingView behavior="padding"
                 style={{ flex: 1 }}
-                keyboardVerticalOffset={35 + statusBarHeight} 
+                // keyboardVerticalOffse이 ㅇ벖는 경우 
+                // 키보드 없을 경우: ㅇㅋ, 있을 경우: 절반쯤 말려들어감 
+                // B. 없을 경우: ㅇㅋ, 있을 경우: 아예 삼켜진다
+                
+                // keyboardVerticalOffset={30 + statusBarHeight} 
+                // 없을 경우: ㅇㅋ, 있을 경우: 좀 뜬다
+                // B. 없을 경우: ㅇㅋ, 있을 경우: 좀 뜬다
+
+
+                // keyboardVerticalOffset={statusBarHeight} 
+                // 없을 경우: ㅇㅋ, 있을 경우: 살짝 말린다
+                // B: 없을 경우: ㅇㅋ, 있을 경우: 아주 살짝 말린다
+                
+                // keyboardVerticalOffset={30}
+                // A(SE2): 없을 경우: ㅇㅋ, 있을 경우: 뭔가 딱인거 같다! <- BEST!!
+                // B(11): 없읔 경ㅇ: ㅇㅋ, 있을 경우: 1/4쯤? 말려들어감
+
+                // keyboardVerticalOffset={54} // 11: 작을 수ㅗㄱ, 가라앉는다, 54가 딱이다!
+                keyboardVerticalOffset={10 + statusBarHeight} 
+
                 >
 
                 {/* keyboardVerticalOffset={statusBarHeight+14} > */}
