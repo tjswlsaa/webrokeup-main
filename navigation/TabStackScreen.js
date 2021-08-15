@@ -11,59 +11,30 @@ import {
   View,
 } from 'react-native';
 import {Button} from 'react-native';
+
 import MyPage from "../pages/MyPagePages/MyPage";
-import MyBook from "../pages/MyPagePages/MyBook";
-import MyArticle from "../pages/MyPagePages/MyArticle";
 import Main from "../pages/MainPages/Main";
-import PopularBook from "../pages/MainPages/PopularBook";
-import PopularArticle from "../pages/MainPages/PopularArticle";
-import NewArticle from "../pages/MainPages/NewArticle";
-import MakeNewBook from "../pages/MyPagePages/MakeNewBook";
-import NewPage from "../pages/MyPagePages/NewPage";
-import IntroArticle from "../pages/MyPagePages/IntroArticle";
-import login from "../pages/login/LoginScreen";
-import LoadingScreen from "../pages/login/LoadingScreen";
-import LoginScreen from "../pages/login/LoginScreen";
-import emailSignup from "../pages/login/emailSignup";
-import EditArticle from "../pages/MyPagePages/EditArticle";
-import Comment from "../pages/MyPagePages/Comment";
+
 import Account from "../pages/MyPagePages/Account";
 import MarketingSetting from "../pages/MyPagePages/MarketingSetting";
 import AccountInfo from "../pages/MyPagePages/AccountInfo";
-import Notification from "../pages/MyPagePages/Notification";
 import Policy from "../pages/MyPagePages/Policy";
-import EditProfile from "../pages/MyPagePages/EditProfile";
-import readIntroArticle from "../pages/MyPagePages/readIntroArticle";
-import EditBook from "../pages/MyPagePages/EditBook";
-import EditIntroArticle from "../pages/MyPagePages/EditIntroArticle";
-import communityMakeNewPost from "../pages/community.js/communityMakeNewPost";
-import readPost from "../pages/community.js/readPost";
-import editPost from "../pages/community.js/editPost";
+
 import communityBoard from "../pages/community.js/communityBoard";
-import editorMakeNewWriting from "../pages/editors.js/editorMakeNewWriting";
-import readEditorWriting from "../pages/editors.js/readEditorWriting";
-import editWriting from "../pages/editors.js/editWriting";
-import editorBoard from "../pages/editors.js/editorBoard";
-import policyone from "../pages/MyPagePages/policyone";
-import policytwo from "../pages/MyPagePages/policytwo";
-import Practice from "../pages/community.js/Practice";
+
+
 
 const TabStack = createBottomTabNavigator();
 const MainStack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const CommunityStack = createStackNavigator();
-const EditorStack = createStackNavigator();
 
 const defaultScreenOptions = {
   headerLeft: function() {
     const navigation = useNavigation();
 
     return (
-      // <Button
-      //   onPress={navigation.goBack}
-      //   title="<"
-      //   color="#000"
-      // />
+
           <Icon.Button name='md-chevron-back-sharp' size={25}
           backgroundColor= 'white' color="black" onPress={navigation.goBack}>
         </Icon.Button>
@@ -78,74 +49,14 @@ const MainStackScreen = () => {
         <MainStack.Screen
           name="Main"
           component={Main}
-
           options={{ headerShown: false }}
         /> 
-        <MainStack.Screen name="NewArticle" 
-        options={{
-          ...defaultScreenOptions,
-        }} 
-        component={NewArticle} />
-        <MainStack.Screen 
-            name="PopularArticle" 
-            component={PopularArticle} 
-            options={{
-              title: "오늘의 이별록",
-              headerTintColor: "#21381c",
-              ...defaultScreenOptions,
-            }} />
-        <MainStack.Screen 
-            name="PopularBook" 
-            component={PopularBook} 
-            options={{
-              title:"오늘의 이별록",
-              ...defaultScreenOptions,
-            }} />
 
-
-    <MainStack.Screen name="MyBook" 
-
-    component={MyBook.component} 
-    options={MyBook.options} 
-    options={{
-      ...defaultScreenOptions,
-    }} 
-            />
-        <MainStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
-          
-      <MainStack.Screen 
-        name="editorMakeNewWriting" 
-        options={{ headerShown: true }}
-        component={editorMakeNewWriting}
-        options={{
-          ...defaultScreenOptions,
-        }} 
-        />
-      <MainStack.Screen 
-        name="readEditorWriting" 
-        component={readEditorWriting.component}
-        options={{
-          ...defaultScreenOptions,
-          ...readEditorWriting.options
-        }}     
-        />
-              <MainStack.Screen 
-        name="editWriting" 
-        component={editWriting}
-        options={{
-          ...defaultScreenOptions,
-        }} 
-        />
-      <MainStack.Screen 
-        name="editorBoard" 
-        component={editorBoard}
-        options={{
-          ...defaultScreenOptions,
-        }} 
-        />
       </MainStack.Navigator>
     );
   };
+
+
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator
@@ -160,72 +71,6 @@ const HomeStackScreen = () => {
 
         />
 
-    <HomeStack.Screen name="MyBook" 
-
-      component={MyBook.component} 
-      options={MyBook.options} 
-      options={{
-        ...defaultScreenOptions,
-      }} 
-              />
-      <HomeStack.Screen 
-      name="MyArticle" 
-      component={MyArticle.component}
-      options={{
-        headerShown:false,
-        ...defaultScreenOptions,
-      }}
-    />
-      <HomeStack.Screen
-       name="MakeNewBook" 
-       component={MakeNewBook.component}
-       options={{
-        title:"책 만들기",
-       ...defaultScreenOptions,
-       ...MakeNewBook.options
-     }} />
-  
-     <HomeStack.Screen 
-     name="IntroArticle" 
-     component={IntroArticle.component}
-     options={{
-       title:"말머리에서",
-       ...defaultScreenOptions,
-       ...IntroArticle.options
-
-     }}
-       />
-      <HomeStack.Screen name="NewPage" component={NewPage.component}
-           options={{
-            title:"새챕터 만들기",
-            ...defaultScreenOptions,
-            ...NewPage.options
-     
-          }}
-      />
-      <HomeStack.Screen name="EditArticle" component={EditArticle.component}
-           options={{
-            title:"챕터 수정하기",
-            ...defaultScreenOptions,
-            ...EditArticle.options
-     
-          }}
-      />
-      <HomeStack.Screen 
-
-      options={{
-              title:"댓글",
-              headerShown: false,
-              // gestureEnabled: false,
-              cardOverlayEnabled: true,
-              // ... TransitionPresets.ModalSlideFromBottomIOS,
-              ...TransitionPresets.ModalPresentationIOS,
-              ...defaultScreenOptions,
-
-      }}
-      
-      name="Comment" 
-      component={Comment}/>
       <HomeStack.Screen 
       name="Account" 
       component={Account} 
@@ -233,18 +78,9 @@ const HomeStackScreen = () => {
     }}/>
       <HomeStack.Screen name="MarketingSetting" component={MarketingSetting} options={{title: "마케팅 알림 설정",  ...defaultScreenOptions}}/>
       <HomeStack.Screen name="AccountInfo" component={AccountInfo} options={{title: "계정 정보",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen name="Notification" component={Notification} options={{title: "공지사항",  ...defaultScreenOptions}}/>
       <HomeStack.Screen name="Policy" component={Policy} options={{title: "약관 및 정책",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen name="policyone" component={policyone} options={{title: "이용 약관",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen name="policytwo" component={policytwo} options={{title: "개인정보 처리방침",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen name="EditProfile" component={EditProfile} options={{title: "프로필 수정",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen name="readIntroArticle" component={readIntroArticle} options={{title: "말머리에서",  ...defaultScreenOptions}}/>
-      <HomeStack.Screen
-       name="EditBook" 
-       component={EditBook.component}
-       options={{...EditBook.options, ...defaultScreenOptions}}
-       />
-      <HomeStack.Screen name="EditIntroArticle" component={EditIntroArticle}options={{title: "말머리에서 수정",  ...defaultScreenOptions}}/>
+
+  
     </HomeStack.Navigator>
   );
 };
@@ -274,30 +110,8 @@ const CommunityStackScreen = () => {
   }}
 
         />
-      <CommunityStack.Screen 
-        name="communityMakeNewPost" 
-        component={communityMakeNewPost.component}
-        options={{
-          title:"게시판 글쓰기",
-          ...defaultScreenOptions,
-          ...communityMakeNewPost.options
-   
-        }}        />
-      <CommunityStack.Screen 
-        name="readPost" 
-        component={readPost.component}
-        options={{...readPost.options, ...defaultScreenOptions, title:"게시판"}}        />
-      <CommunityStack.Screen 
-        name="editPost" 
-        component={editPost}
-        options={{title: "게시판 글 수정하기",  ...defaultScreenOptions}}
 
-        />
-              <CommunityStack.Screen 
-        name="Practice" 
-        component={Practice}
-        options={{headerShown:false}}
-        />
+              
     </CommunityStack.Navigator>
   )
 }
