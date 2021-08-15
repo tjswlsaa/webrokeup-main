@@ -116,15 +116,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
        console.log("popualr bookKey",bookKey)
         const [book,setBook] = useState([]);
-        const [item, setItem] = useState({
-                bookKey: '',
-                bookTitle: '',
-                chapters: {},
-                intro: '',
-                regdate: '',
-                url: '',
-                user_uid: '',
-        });
+
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
         const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
@@ -147,33 +139,27 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         function getPopBook(){
                         firebase_db.ref(`book/${bookKey}`)
                         .on('value', (snapshot) =>{
-                                // let popBook = snapshot.val();
-                                // if (popBook) {
-                                //         setBook(book)
-                                // }
-                                snapshot.forEach((child) => {
-                                        const newItem = {};
-                                        snapshot.forEach((child) => {
-                                            const key = child.key;
-                                            const value = child.val();
-                                            newItem[key] = value; // 우리가 잘 아는 javascript object가 된다!
-                                        });
-                                        setMyitem({
-                                            ...item, // 기본 바탕색
-                                            ...newItem, // 덧칠
-                                        });
+                                let book = snapshot.val();
+                                setBook(book)
+                                // snapshot.forEach((child) => {
+                                //         const newItem = {};
+                                //         snapshot.forEach((child) => {
+                                //             const key = child.key;
+                                //             const value = child.val();
+                                //             newItem[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                                //         });
+                                //         setItem({
+                                //             ...item, // 기본 바탕색
+                                //             ...newItem, // 덧칠
+                                //         });
 
 
-                        })})
+                        })
                 }
-        const bookFiltered= book.filter(filteredBook => filteredBook.bookKey == bookKey)
-        useEffect (() => {
-                setItem(bookFiltered)
-                console.log({bookFiltered})
-        })
 
-        console.log("item popular article", item)
-        console.log("bookFiltered popular article", bookFiltered)
+
+
+        console.log("book popular article", book)
 
 
         useEffect (()=>{
@@ -228,7 +214,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                         <View style={{flex: 1}}>
                                                 <BookComponent
                                                 navigation={navigation}
-                                                item={item}
+                                                item={book}
                                                 />
                                         </View>
                                 </View>

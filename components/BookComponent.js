@@ -8,6 +8,9 @@ import { firebase_db } from '../firebaseConfig';
 //비구조 할당 방식으로 넘긴 속성 데이터를 꺼내 사용함
 export default function BookComponent({navigation,item}) {
     
+// console.log("bookComponentitem",item)
+// console.log("bookComponentitem.user_uid",item.user_uid)
+
     const [BookComponentUserinfo, setBookComponentUserinfo] = useState({
       iam:"익명의.지은이",
       selfLetter:"안녕하세요 익명의 지은이입니다."
@@ -23,6 +26,7 @@ export default function BookComponent({navigation,item}) {
           })
   }, []);
 
+  // console.log("bookComponentitemBookComponentUserinfo",BookComponentUserinfo)
     return (
 
     <View style={{flex:1, flexDirection: 'column'}}>
@@ -31,7 +35,7 @@ export default function BookComponent({navigation,item}) {
               <Text style={{flex:1, fontSize : 17, marginTop: "23%", marginHorizontal: "22%"}}>{item.bookTitle}</Text>
               <Text style={{flex:1, fontSize : 15, marginHorizontal: "22%"}}>{item.smallBookTitle}</Text>
               <Text style={{flex: 1, alignSelf: "flex-end", fontSize: 13, marginHorizontal: "22%"}}>{BookComponentUserinfo.iam}</Text>
-              {/* <Image style={{flex: 5, width: "54%", top: 0, justifyContent: "flex-start", marginHorizontal: "24%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} /> */}
+              <Image style={{flex: 5, width: "54%", top: 0, justifyContent: "flex-start", marginHorizontal: "24%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
             </View>
         </ImageBackground>
       </View>
