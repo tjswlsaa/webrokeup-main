@@ -110,7 +110,7 @@ test8.smallBookTitle=smallBookTitle
         [
           {resize: { width: 600 }} // width: 600px에 맞춰서 자동 resize
         ],
-        { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+        { format: ImageManipulator.SaveFormat.JPEG }
       );
 
       setImage(manipResult.uri);

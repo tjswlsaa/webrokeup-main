@@ -115,6 +115,7 @@ useEffect(()=>{
 
 const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
+       console.log("popualr bookKey",bookKey)
         const [book,setBook] = useState([]);
         const [item, setItem] = useState({
                 bookKey: '',
@@ -143,21 +144,37 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         
         var userID = user_uid.substring(0, 6)
 
-        useEffect(() => {
-                function getPopBook(){
+        useEffect(getPopBook, []);
+        function getPopBook(){
                         firebase_db.ref(`book/${bookKey}`)
                         .on('value', (snapshot) =>{
-                                let popBook = snapshot.val();
-                                if (popBook) {
-                                        setBook(book)
-                                }
-                        })}
-                }, [])
+                                // let popBook = snapshot.val();
+                                // if (popBook) {
+                                //         setBook(book)
+                                // }
+                                snapshot.forEach((child) => {
+                                        const newItem = {};
+                                        snapshot.forEach((child) => {
+                                            const key = child.key;
+                                            const value = child.val();
+                                            newItem[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                                        });
+                                        setMyitem({
+                                            ...item, // 기본 바탕색
+                                            ...newItem, // 덧칠
+                                        });
+
+
+                        })})
+                }
         const bookFiltered= book.filter(filteredBook => filteredBook.bookKey == bookKey)
         useEffect (() => {
                 setItem(bookFiltered)
                 console.log({bookFiltered})
         })
+
+        console.log("item popular article", item)
+        console.log("bookFiltered popular article", bookFiltered)
 
 
         useEffect (()=>{
