@@ -6,6 +6,7 @@ import { firebase_db } from '../../firebaseConfig';
 import paper from '../../assets/paper.png';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { CommonActions } from '@react-navigation/native';
 
 const test2 ={
   text:""
@@ -121,6 +122,19 @@ async function saveChapter() {
   
   });
   Alert.alert("집필 완료")
+
+  navigation.dispatch(state => {
+    const routes = [...state.routes];
+    routes.pop();
+  
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
+
+  
   navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate})
   //title_a.current.clear();
   //maintext_a.current.clear();  
