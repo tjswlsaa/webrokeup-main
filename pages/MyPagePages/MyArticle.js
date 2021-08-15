@@ -245,7 +245,7 @@ const MyArticle = ({ navigation, route }) => {
                                 <Text style={{ marginLeft: "3%"}}> {likeCount} </Text>
 
                                 <TouchableOpacity
-                                    onPress={() => { navigation.navigate('CommentApp', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
+                                    onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
                                     style={styles.commentButton}
                                 >
                                     <Icon name="message1" size={20} color="grey" style={styles.addIcon} />

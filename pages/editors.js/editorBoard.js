@@ -57,11 +57,7 @@ const editorBoard = ({ navigation, route }) => {
                 
                 <View>
 
-                    <TouchableOpacity 
-                    onPress={()=>navigation.navigate("editorMakeNewWriting")}
-                    style={{height:50, backgroundColor:"blue", justifyContent:"center"}}>
-                        <Text style={{alignSelf:"center", fontSize:15}}>글쓰기</Text>
-                    </TouchableOpacity>
+
 
                 </View>
 
@@ -117,7 +113,7 @@ const WritingItem=(props)=> {
       }
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readWriting', { writingKey:writing.key, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
                 <View style={{backgroundColor:"pink"}}>
                 <Text style={styles.bookIndexOnePunchLine} >{writing.title}</Text>
 

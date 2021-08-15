@@ -6,7 +6,6 @@ import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -17,7 +16,7 @@ const PopularArticle = ({ navigation, route }) => {
    const headerHeight = useHeaderHeight();
    const ScreenHeight = Dimensions.get('window').height   //height
    const BottomSpace = getBottomSpace()
-   const tabBarHeight = useBottomTabBarHeight();
+   const tabBarHeight = 0
    const statusBarHeight = getStatusBarHeight();
    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
 
@@ -132,7 +131,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
         const BottomSpace = getBottomSpace()
-        const tabBarHeight = useBottomTabBarHeight();
+        const tabBarHeight = 0
         const statusBarHeight = getStatusBarHeight();
         const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
 

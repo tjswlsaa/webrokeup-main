@@ -6,7 +6,6 @@ import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useHeaderHeight } from '@react-navigation/stack';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BookComponent from '../../components/BookComponent';
@@ -36,7 +35,7 @@ const MyBook = ({ navigation, route }) => {
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
-    const tabBarHeight = useBottomTabBarHeight();
+    const tabBarHeight = 0;
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
@@ -189,7 +188,8 @@ function MyChapterItem(props) {
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
-    const tabBarHeight = useBottomTabBarHeight();
+    const tabBarHeight = 0;
+
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
@@ -222,7 +222,7 @@ function MyChapterItem(props) {
     }, [])
     return (
         <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
-            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticleApp', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
+            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
                 <View style={{height: realScreen*0.12}}>
                     <Text style={{fontSize: 15, fontWeight: "600", marginHorizontal: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
                     <Text style={{fontSize: 14, marginTop: "3%", marginHorizontal: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>

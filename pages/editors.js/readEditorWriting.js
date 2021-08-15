@@ -717,26 +717,8 @@ const closeSwipeable = () => {
   )
 
 }
-function headerLeft() {
-
-  const {navigation}=test4;
-
-  return (
-    <Button
-    onPress={()=>{navigation.navigate('editorBoard',{ navigation:navigation})}}   
-    title="게시판"
-      color="#000"
-    />
-
-  );
-}
 
 
-const options = {
-  headerLeft,
-};
 
-export default {
-  component: readEditorWriting,
-  options,
-};
+
+export default readEditorWriting;
