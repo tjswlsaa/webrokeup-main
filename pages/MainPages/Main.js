@@ -214,6 +214,7 @@ if (user != null) {
                         showsButtons={false}
                         autoplay={true}
                         autoplayTimeout={3}
+                        resizeMode="contain"
                     >
                         {hotChapter.map(chapters => (
                             test4.chapters=chapters,
@@ -307,8 +308,8 @@ const BookItem = ({ navigation, item, bookKey }) => {
                         <View style={{flex: 1}}> 
                             <View style={{flex:1, flexDirection: 'column'}}>
                                     <View style= {{flex:1, flexDirection: 'column'}}>
-                                    <Text style={{flex:1, fontSize : 16, marginTop: "23%", marginHorizontal: "22%"}}>{item.bookTitle}</Text>
-                                    <Text style={{flex:1, fontSize : 14, marginHorizontal: "22%"}}>{item.smallBookTitle}</Text>
+                                    <Text style={{flex:1, fontSize : 15, marginTop: "23%", marginLeft: "22%", marginRight: "5%"}}>{item.bookTitle}</Text>
+                                    <Text style={{flex:1, fontSize : 11, marginLeft: "22%", marginRight: "5%"}}>{item.smallBookTitle}</Text>
                                     <Text style={{flex: 1, fontSize: 11, alignSelf: "flex-end", marginTop: "2%", marginHorizontal: "12%"}}>{BookItemUserinfo.iam}</Text>
                                     <Image style={{flex: 5, width: "60%", top: 0, justifyContent: "flex-star", marginLeft: "26%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
                                     </View>

@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 import Left from 'react-native-vector-icons/Feather'
 import { useHeaderHeight } from '@react-navigation/stack';
-// import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
@@ -39,7 +39,7 @@ const MyArticle = ({ navigation, route }) => {
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-    const [cloverColor, setCloverColor] = useState("#c1c1c1");
+    const [cloverColor, setCloverColor] = useState("#c1c1c1")
     const [chapters, setChapters] = useState({});
         // console.log("myarticle author", chapters.creator)
 
@@ -51,10 +51,8 @@ const MyArticle = ({ navigation, route }) => {
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
-    // const tabBarHeight = useBottomTabBarHeight();
-    const tabBarHeight = 0;
     const statusBarHeight = getStatusBarHeight();
-    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+    const realScreen = ScreenHeight-headerHeight-BottomSpace
 
 
     useEffect(getChapters, []);
@@ -79,10 +77,7 @@ const MyArticle = ({ navigation, route }) => {
 
     useEffect(() => {
         // let temp = [];
-        let arr = likeRef.on('value', (snapshot) => { // ref.on(): (*) realtime db의 값이 달라지면 이 부분이 또! 실행될 것이다.
-            // (X) 다음 내용을 지금 바로! 실행해주세요
-            // (O) on(): 'value'가 발생할 때마다, 다음 내용을 실행해주세요... 라는 부탁을 지금 해주세요!
-
+        let arr = likeRef.on('value', (snapshot) => {
             let temp = [];
             var likeCount = snapshot.numChildren();
             // console.log('useEffect()');
@@ -93,21 +88,10 @@ const MyArticle = ({ navigation, route }) => {
                 temp.push(child.val());
             })
             // console.log({temp});
-            setLikedUsers(temp); // setLikedUsers(): 비로소 likedUsers의 값이 변경된다
-
-            let meliked = temp.filter(likedppl => likedppl.user_uid == user_uid)
-            if (meliked == '') {
-                // console.log("likedUsers: " + likedUsers)
-                console.log(`MyArticle()' meliked == ''`);
-                setCloverColor("#c1c1c1")
-            } else {
-                console.log(`MyArticle()' meliked != ''`);
-                // console.log("likedUsers: " + likedUsers)
-                setCloverColor("green")
-            }
+            setLikedUsers(temp);
         })
 
-    }, []) // []: useEffect의 (콜백)함수는, 딱 한번만 실행된다. 그러나... -> (*)
+    }, [])
 
     useEffect(() => {
         //// console.log('MyArticle.js (2), chapters: ',chapters);
@@ -117,25 +101,18 @@ const MyArticle = ({ navigation, route }) => {
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)
             })
-    }, []) //[] 딱 한번만 실행된다 라는 뜼임 !!!! -> 클래스형 컴포넌트의 componentDidMount()를 대체함
+    }, [])
 
-    // useEffect(()=>{
-    //     console.log('MyArticle()');
-        
-    //     console.log({likedUsers});
-
-    //     let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-    //     if (meliked == '') {
-    //         // console.log("likedUsers: " + likedUsers)
-    //         console.log(`MyArticle()' meliked == ''`);
-    //         setCloverColor("#c1c1c1")
-    //     } else {
-    //         console.log(`MyArticle()' meliked != ''`);
-    //         // console.log("likedUsers: " + likedUsers)
-    //         setCloverColor("green")
-    //     }
-    // // }, []) // []: 최초에 실행된다-> likedUsers는 항상 비어있다! -> 의도대로 동작하지 않는다
-    // }, [likedUsers]); // [likedUsers]: 이게 아마 의도대로가 아니실까..?
+    useEffect(()=>{
+        let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+        if (meliked == '') {
+            // console.log("likedUsers: " + likedUsers)
+            setCloverColor("#c1c1c1")
+        } else {
+            // console.log("likedUsers: " + likedUsers)
+            setCloverColor("green")
+        }
+    }, [])
 
     return (
         <View style={{ flex: 1 }}>
@@ -179,7 +156,7 @@ const MyArticle = ({ navigation, route }) => {
                                         <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                 </View>
                                 <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
-                                    <Text style={{fontSize: 17}}>{chapters.mainText}</Text>
+                                    <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
                                 </ScrollView>
                             </View>
 
