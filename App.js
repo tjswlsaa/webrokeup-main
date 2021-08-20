@@ -44,6 +44,7 @@ import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 
+import MyArticle2 from './pages/MyPagePages/MyArticle2';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -115,6 +116,15 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="MyArticle"
           component={MyArticle.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+
+        <Stack.Screen
+          name="MyArticle2"
+          component={MyArticle2.component}
           options={{
             headerShown: true,
             ...defaultScreenOptions,

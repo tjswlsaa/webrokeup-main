@@ -43,7 +43,7 @@ useEffect(()=>{
                         setList(list);
                     })
                 })
-        }, [])
+        }, [list])
 
                 
         const viewHot = () => {

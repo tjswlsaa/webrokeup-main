@@ -21,7 +21,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons';
 
 // const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
-console.log("myarticle")
+console.log("myarticle2")
 const test1 = {
     bookKey: ''
 };
@@ -31,20 +31,17 @@ const test3 = {
     navigation: ''
 }
 
-const MyArticle = ({ navigation, route }) => {
-
+const MyArticle2 = ({ navigation, route }) => {
     test3.navigation = navigation
 
+
+  
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
-
-    console.log("MyarticelchapterKey",chapterKey) //869069192155059700001
-    console.log("typeofchapterKey",typeof chapterKey) //string
-    const makechapterkeynumber= Number(chapterKey) //숫자열로 바꿔서 1을 더하고싶다! 왜냐면 다음 챕터로 넘어가기 하고싶어서
-    console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) //869069192155059700000 근데 왜 마지막1이 0으로 바뀌었나요ㅠㅠ
-    console.log("typeofmakechapterkeynumber",typeof makechapterkeynumber) //number
-    const nextChapterKey = makechapterkeynumber+1 // 그래서 덧셈해도 그대로 00000뜹니다.
-    console.log("MyArticlenextChapterKey",nextChapterKey) //869069192155059700000 
+    console.log({chapterKey})
+    const nextChapterKey = (chapterKey+1)
+    console.log("why")
+    console.log("myarticle2nextchapterKey",nextChapterKey)
 
     test1.bookKey = bookKey
 
@@ -147,17 +144,6 @@ const headerHeight = useHeaderHeight();
     //     }
     // // }, []) // []: 최초에 실행된다-> likedUsers는 항상 비어있다! -> 의도대로 동작하지 않는다
     // }, [likedUsers]); // [likedUsers]: 이게 아마 의도대로가 아니실까..?
-
-    const [CountChapter,setCountChapter]=useState("")
-
-    useEffect (()=>{
-      let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
-      .on('value', (snapshot) => {
-         var CountChapter = snapshot.numChildren();
-         setCountChapter(CountChapter)
-      })
-  }, [])
-  
 
     return (
         <View style={{ flex: 1 }}>
@@ -286,7 +272,7 @@ const headerHeight = useHeaderHeight();
 
                             <Icon2.Button name='md-chevron-back-sharp' size={25}
                             backgroundColor= 'white' color="black" 
-                            onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
+                            onPress={() => { navigation.navigate('MyArticle', { navigation: navigation, bookKey: bookKey, chapterKey: nextChapterKey }) }}
                             >
                             </Icon2.Button>
 
@@ -386,6 +372,6 @@ const options = {
 };
 
 export default {
-    component: MyArticle,
+    component: MyArticle2,
     options,
 };

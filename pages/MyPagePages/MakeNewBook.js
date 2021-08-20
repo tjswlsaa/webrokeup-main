@@ -43,12 +43,44 @@ const test7={
 const test8={
   smallBookTitle:'',
 }
+const test9={
+  bookKey:'',
+}
+
 const MakeNewBook = ({navigation,route}) => {
 
   const [spinner,setSpinner]=useState(false);
 
   test7.spinner=spinner
   test7.setSpinner = setSpinner;
+
+  function generateRandomCode(n) {
+    let str = ''
+    for (let i = 0; i < n; i++) {
+      str += Math.floor(Math.random() * 10)
+    }
+    return str
+  }
+
+  const bookKey= generateRandomCode(6)
+  console.log("MNB",bookKey)
+
+//   const [CountBookKey,setCountBookKey]=useState("")
+
+//   useEffect (()=>{
+//     let arr = firebase_db.ref(`book/${HeadBookKey}/`)
+//     .on('value', (snapshot) => {
+//        var CountBookKey = snapshot.numChildren();
+//        setCountBookKey(CountBookKey)
+//     })
+// }, [])
+  
+// console.log("CountBookKey",CountBookKey)
+
+// const bookKey=HeadBookKey+(CountBookKey+1)
+console.log("bookKey",bookKey)
+
+test9.bookKey = bookKey;
 
 
   const user = firebase.auth().currentUser;
@@ -329,14 +361,8 @@ test8.smallBookTitle=smallBookTitle
     const {userinfo}=test6;
     const {spinner}=test7;
     const {smallBookTitle}=test8;
-   // console.log({ user_uid });
-   // console.log('이거확인',user_uid)
-    const bookKey = Math.random().toString().replace(".","");
-   // console.log('진행상황2')
-   // console.log('props 확인', image)
-   // console.log('진행상황3')
-    // const [compressedFile,setCompressedFile]=useState("")
-   
+    const {bookKey}=test9;
+
 
     console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
@@ -352,42 +378,6 @@ test8.smallBookTitle=smallBookTitle
     const downloadURL= await SAVE_PATH.getDownloadURL()
     console.log('saveChapter() ..... .', new Date());
 
-
-      // const response = await fetch(image); //get in the data?
-      // console.log('saveChapter() ...', new Date());
-
-    //   const options = {
-    //     // As the key specify the maximum size
-    //     // Leave blank for infinity
-    //     maxSizeMB: 1.5,
-    //     // Use webworker for faster compression with
-    //     // the help of threads
-    //     useWebWorker: true
-    // }
-
-    // console.log('saveChapter(compressed) ...', new Date());
-
-    // const compressed = await imageCompression(response, options)
-    //   .then(function (compressedFile) {
-    //       // Compressed file is of Blob type
-    //       // You can drop off here if you want to work with a Blob file
-    //       console.log({compressedFile})
-    //       return compressedFile
-    //   })
-    //   .catch(function(error){
-    //     console.log(error.message)
-    //   })
-    //       // Show the user a toast message or notification that something went wrong while compressing file
-    //   console.log({compressed})
-    //   console.log ('typeof',typeof compressed)
-
-    // const blob = await compressed.blob();//uploading the image blob of the uri which will pass along fire store
-    // console.log('saveChapter() ....', new Date());
-    // await SAVE_PATH.put(blob);
-    // console.log('saveChapter() .....', new Date());
-    // const downloadURL= await SAVE_PATH.getDownloadURL()
-    // console.log('saveChapter() ..... .', new Date());
-
   firebase_db
   .ref('book/'+bookKey)
   .set({
@@ -398,10 +388,21 @@ test8.smallBookTitle=smallBookTitle
     url:downloadURL,
     bookKey:bookKey,
     isPublic:isPublic,
+    CountChapter:0
     // iam:userinfo.iam,
     // selfLetter:userinfo.selfLetter
   });
+
+  firebase_db
+  .ref(`/users/${user_uid}/myBook`)
+  .set({
+    bookKey:bookKey
+  })
+
+
+
   Alert.alert("생성 완료")
+  
 
   navigation.dispatch(state => {
     const routes = [...state.routes];

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef,useEffect } from 'react';
 import { SafeAreaView, View, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
@@ -35,9 +35,24 @@ const test5 ={
 const test6 ={
   user_uid:""
 }
+
+
 const NewPage = ({ navigation, route }) => {
 
   test1.navigation=navigation
+
+  const [CountChapter,setCountChapter]=useState("")
+
+  useEffect (()=>{
+    let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+    .on('value', (snapshot) => {
+       var CountChapter = snapshot.numChildren();
+       setCountChapter(CountChapter)
+    })
+}, [])
+
+
+console.log("Newpage countchapter",CountChapter)
 
   const title_a = useRef(null);
   const maintext_a = useRef(null);
@@ -53,7 +68,13 @@ const NewPage = ({ navigation, route }) => {
   }
   test6.user_uid=user_uid
  // console.log('findsuer',user_uid)
-  const chapterKey = Math.random().toString().replace(".", "");
+  // const chapterKey = Math.random().toString().replace(".", "");
+  const chapterKey = bookKey+(CountChapter+1)
+  console.log("11bookKey Newpage", bookKey)
+
+  console.log("22newpagechapterKey",chapterKey)
+
+
   test3.chapterKey=chapterKey
 
   const chapterTitle = text1;
@@ -64,7 +85,6 @@ const NewPage = ({ navigation, route }) => {
   test5.mainText=mainText
 
  // console.log('이거썌거',chapterKey)
-  console.log("bookKey Newpage", bookKey)
 
 
 
@@ -146,7 +166,7 @@ async function savePage() {
     likeCount: 0,
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
-    bookKey:bookKey
+    bookKey:bookKey,
   });
 Alert.alert("집필 완료")
 
