@@ -7,6 +7,9 @@ import { CommonActions } from '@react-navigation/native';
 import paper from '../../assets/paper.png';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -59,7 +62,13 @@ console.log("Newpage countchapter",CountChapter)
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const { bookKey } = route.params;
-  test2.bookKey=bookKey
+  test2.bookKey=bookKey;
+
+  const headerHeight = useHeaderHeight();
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const statusBarHeight = getStatusBarHeight();
+  const BottomSpace = getBottomSpace();
+  const realScreen = ScreenHeight-headerHeight-BottomSpace
 
   var user = firebase.auth().currentUser;
   var user_uid
@@ -89,32 +98,31 @@ console.log("Newpage countchapter",CountChapter)
 
 
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar style="auto" />
-      <SafeAreaView style={{ flex: 1 }}>
-        <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
- 
-          <View style={styles.bookContainer}>
-            <ImageBackground style={styles.bookImage} source={paper} >
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior ="padding" style={{flex:1}}>
+      <StatusBar style="white" />
+        {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
+          <View style={{height: "96%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
+            {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
               <ScrollView scrollEnabled={false}>
-                <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
-                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
+                <View style={{ height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
+                  <TextInput style={{ fontSize: 20, fontWeight: "600" }}
                     multiline={true} placeholder="제목을 입력하세요"
                     returnKeyType="done"
                     onChangeText={text1 => setText1(text1)}
                     ref={title_a} />
                 </View>
-                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', flex: 1, padding: 40, flexShrink: 1, fontSize: 17 }}
+                <TextInput style={{ marginHorizontal: "10%", fontSize: 15 }}
                   multiline={true} placeholder="본문을 입력하세요"
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}
                   ref={maintext_a} />
               </ScrollView>
-            </ImageBackground>
+            {/* </ImageBackground> */}
           </View>
-        </ImageBackground>
-      </SafeAreaView>
-    </View>
+        {/* </ImageBackground> */}
+        </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
@@ -189,12 +197,15 @@ navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
 function headerRight() {
   return (
 
-    <Icon.Button name='save' size={25}
-    backgroundColor= 'white' color="black" 
-    onPress={savePage}
+    <TouchableOpacity onPress={savePage}>
+      <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
+    </TouchableOpacity>
+  //   <Icon.Button name='save' size={25}
+  //   backgroundColor= 'white' color="black" 
+  //   onPress={savePage}
     
-    >
-  </Icon.Button>
+  //   >
+  // </Icon.Button>
 
   );
 }

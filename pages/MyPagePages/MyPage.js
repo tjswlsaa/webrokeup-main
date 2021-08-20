@@ -146,6 +146,7 @@ const MyPage = ({ navigation }) => {
                                                 bookTitle={item.bookTitle}
                                                 navigation={navigation}
                                                 userID={userID}
+                                                resizeMode="contain"
                                             />
                                         </TouchableOpacity>
 

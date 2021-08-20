@@ -1,47 +1,47 @@
 
-import React, {useEffect,useState} from 'react';
-import {TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button,Text, View, Image,Alert, TouchableOpacity, TextInput} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button, Text, View, Image, Alert, TouchableOpacity, TextInput, Touchable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {firebase_db} from '../../firebaseConfig';
+import { firebase_db } from '../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
 import firebase from 'firebase'
 import "firebase/firestore"
 import "firebase/firebase-storage"
 import { Switch } from 'react-native-switch';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {CommonActions} from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import * as ImageManipulator from 'expo-image-manipulator';
+import coverimage from '../../assets/coverimage.png';
 
-
-const book ="https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
+const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
 const test = {
   user_uid: ''
 };
 
-const test2 ={
-  image:''
+const test2 = {
+  image: ''
 };
 
-const test3 ={
-  bookTitle:''
+const test3 = {
+  bookTitle: ''
 }
-const test4 ={
-  isPublic:''
+const test4 = {
+  isPublic: ''
 }
-const test5={
-  navigation:''
+const test5 = {
+  navigation: ''
 }
-const test6={
-  userinfo:''
+const test6 = {
+  userinfo: ''
 }
-const test7={
-  spinner:'',
+const test7 = {
+  spinner: '',
   setSpinner: undefined,
 }
-const test8={
-  smallBookTitle:'',
+const test8 = {
+  smallBookTitle: '',
 }
 const test9={
   bookKey:'',
@@ -49,9 +49,9 @@ const test9={
 
 const MakeNewBook = ({navigation,route}) => {
 
-  const [spinner,setSpinner]=useState(false);
+  const [spinner, setSpinner] = useState(false);
 
-  test7.spinner=spinner
+  test7.spinner = spinner
   test7.setSpinner = setSpinner;
 
   function generateRandomCode(n) {
@@ -87,30 +87,30 @@ test9.bookKey = bookKey;
   const user_uid = user ? user.uid : null;
   const userID = user ? user_uid.substring(0, 6) : null
   const [userinfo, setUserinfo] = useState([]);
-  test6.userinfo=userinfo
-  useEffect(()=>{
+  test6.userinfo = userinfo
+  useEffect(() => {
     firebase_db.ref(`users/${user_uid}`)
-        .on('value', (snapshot) => {
-            let userinfo = snapshot.val();
-            setUserinfo(userinfo);
-        })
-}, []);
+      .on('value', (snapshot) => {
+        let userinfo = snapshot.val();
+        setUserinfo(userinfo);
+      })
+  }, []);
 
-// console.log('userinfo',userinfo)
-test5.navigation=navigation
+  // console.log('userinfo',userinfo)
+  test5.navigation = navigation
 
-test.user_uid = user_uid;
-const [bookTitle, setBookTitle] = useState('');   
-test3. bookTitle=bookTitle
-const [smallBookTitle, setSmallBookTitle] = useState('');   
-test8.smallBookTitle=smallBookTitle
-// test3.bookTitle=bookTitle
-// console.log('두줄만들자',bookTitle.length)
+  test.user_uid = user_uid;
+  const [bookTitle, setBookTitle] = useState('');
+  test3.bookTitle = bookTitle
+  const [smallBookTitle, setSmallBookTitle] = useState('');
+  test8.smallBookTitle = smallBookTitle
+  // test3.bookTitle=bookTitle
+  // console.log('두줄만들자',bookTitle.length)
   const [image, setImage] = useState(null);
-  test2.image=image;
+  test2.image = image;
   const [isPublic, setPublic] = useState(true);
-  test4.isPublic=isPublic
-  const db=firebase.firestore();
+  test4.isPublic = isPublic
+  const db = firebase.firestore();
   // const storage = firebase.storage(); 
   // const storageRef=storage.ref();
   // const 저장할경로= storageRef.child('bookCover/'+bookKey)
@@ -140,7 +140,7 @@ test8.smallBookTitle=smallBookTitle
       const manipResult = await ImageManipulator.manipulateAsync(
         image.localUri || image.uri,
         [
-          {resize: { width: 600 }} // width: 600px에 맞춰서 자동 resize
+          { resize: { width: 600 } } // width: 600px에 맞춰서 자동 resize
         ],
         { format: ImageManipulator.SaveFormat.JPEG }
       );
@@ -154,43 +154,41 @@ test8.smallBookTitle=smallBookTitle
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <View style={styles.container}>
+      <View style={{ flex: 1, flexDirection: "column" }}>
 
         {spinner && (
           <Spinner
             visible={true}
             textContent={'Loading...'}
-            textStyle={styles.spinnerTextStyle}
+            textStyle={{ color: '#FFF' }}
           />
         )}
 
-        <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-          <View style={styles.openButtonContainer}>
+        {/* <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} > */}
+        <View style={{flex: 1}}>
+          <View style={{ flex: 1, flexDirection: "row", width: "20%", alignSelf: "flex-end", marginRight: "5%", marginTop: "3%"}}>
             <Switch
-              style={styles.button}
               value={isPublic}
               // useNativeDriver={true}
               activeText={'공개'}
               inActiveText={'비공개'}
               onValueChange={(value) => setPublic(value)}
               backgroundActive={'#C4C4C4'}
-              backgroundInactive={'#4D6DAA'}
+              backgroundInactive={'#21381c'}
               circleSize={30} //사이즈 조정이 안댐
               barHeight={30}
-              barWidth={100}
+              barWidth={10}
 
-              circleActiveColor={'#4D6DAA'}
+              circleActiveColor={'#21381c'}
               circleInActiveColor={'#C4C4C4'}
             />
           </View>
-          <View style={styles.bookContainer}>
-            <ImageBackground style={styles.bookImage} source={{ uri: book }} >
-              <View style={styles.bookContainer}>
-                <View style={{ marginLeft: 20, width: "80%" }}>
+          <View style={{ flex: 14, marginBottom: "30%"}}>
+            <ImageBackground style={{ height: "100%", width: "100%"}} resizeMode="contain" source={coverimage} >
+              <View style={{ height: "70%", marginRight: "6%", marginLeft: "10%", marginTop: "33%"}}>
+                <View style={{ marginLeft: "12%", width: "80%"}}>
 
-
-
-                  <TextInput style={styles.titleInputText}
+                  <TextInput style={{ fontSize: 20, flexShrink: 1, }}
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
@@ -199,7 +197,7 @@ test8.smallBookTitle=smallBookTitle
                     placeholder="제목을 작성해주세요" />
 
 
-                  <TextInput style={{ fontSize: 15, marginLeft: "20%" }}
+                  <TextInput style={{ fontSize: 17, marginTop: "3%"}}
                     value={smallBookTitle}
 
                     multiline={false}
@@ -210,12 +208,20 @@ test8.smallBookTitle=smallBookTitle
 
                 </View>
                 <View>
-                  <Text style={styles.writer}> {userID}.이별록작가 </Text>
+                  <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
 
                 {image == undefined ? (
 
-                  <TouchableOpacity style={styles.photoInputContainer}>
+                  <TouchableOpacity style={{
+                    marginTop: "10%",
+                    height: "50%",
+                    width: "85%",
+                    marginLeft: "5%",
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}>
                     {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
                     <Button title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
                     {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
@@ -223,21 +229,16 @@ test8.smallBookTitle=smallBookTitle
 
                 ) : (
                   <TouchableOpacity onPress={() => savePhoto()}>
-                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: 15, marginLeft: 15, width: 250, height: 250 }} />
+                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: "10%" , marginLeft: "3%", width: 250, height: 250 }} />
                   </TouchableOpacity>
 
                 )
                 }
-
-
-
-
-
-
               </View>
             </ImageBackground>
           </View>
-        </ImageBackground>
+        </View>
+        {/* </ImageBackground> */}
       </View>
     </TouchableWithoutFeedback>
 
@@ -245,104 +246,104 @@ test8.smallBookTitle=smallBookTitle
   )
 }
 
-  const styles = StyleSheet.create({ 
-    container:{
-        flex:1,
-        flexDirection: "column"
-    },
-    bookContainer:{
-      marginTop:"11%",
-      marginRight:"6%",
-      marginLeft:"6%",
-      height:"92%",
-    },
-    bookBackgroundImage:{
-      height:"100%",
-        resizeMode: "cover",
-    },
-    bookImage:{
-      height:"100%",
-      resizeMode: "cover",
-    },
-    openButtonContainer:{
-      height: "5%",
-      width:"20%",
-      // alignItems:"flex-end",
-      marginTop:30,
-      marginLeft:270,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column"
   },
-  button:{
-    marginLeft:50,
-    marginTop:10
+  bookContainer: {
+    marginTop: "11%",
+    marginRight: "6%",
+    marginLeft: "6%",
+    height: "92%",
+  },
+  bookBackgroundImage: {
+    height: "100%",
+    resizeMode: "cover",
+  },
+  bookImage: {
+    height: "100%",
+    resizeMode: "cover",
+  },
+  openButtonContainer: {
+    height: "5%",
+    width: "20%",
+    // alignItems:"flex-end",
+    marginTop: 30,
+    marginLeft: 270,
+  },
+  button: {
+    marginLeft: 50,
+    marginTop: 10
 
   },
-  openButton:{
-      height:"40%",
-      width:"22.67%",
-      backgroundColor:"#C4C4C4",
-      borderRadius:5,
-      marginRight:"6%" ,
-      justifyContent:"center",
+  openButton: {
+    height: "40%",
+    width: "22.67%",
+    backgroundColor: "#C4C4C4",
+    borderRadius: 5,
+    marginRight: "6%",
+    justifyContent: "center",
   },
-  openButtonText:{
-      marginLeft:"15%",
-      fontSize:14,
+  openButtonText: {
+    marginLeft: "15%",
+    fontSize: 14,
   },
   titleInput: {
-    height:"15%",
+    height: "15%",
     width: "60%",
     // backgroundColor:"yellow",
-    marginLeft:20
+    marginLeft: 20
   },
-  titleInputText:{
+  titleInputText: {
     fontSize: 20,
     marginLeft: "20%",
     flexShrink: 1,
   },
-  writer:{
+  writer: {
     alignSelf: "flex-end",
-    marginRight:"5%",
+    marginRight: "5%",
   },
-  photoInputContainer:{
-    marginTop:"10%",
-    height:"50%",
-    width:"85%",
-    marginLeft:"5%",
-    alignSelf:"center",
+  photoInputContainer: {
+    marginTop: "10%",
+    height: "50%",
+    width: "85%",
+    marginLeft: "5%",
+    alignSelf: "center",
     justifyContent: "center",
     alignItems: "center"
   },
-  publicButton:{
-    height:"40%",
-    width:"22.67%",
-    borderRadius:5,
-    marginRight:"6%" ,
-    marginLeft:"10%",
-    justifyContent:"center",
+  publicButton: {
+    height: "40%",
+    width: "22.67%",
+    borderRadius: 5,
+    marginRight: "6%",
+    marginLeft: "10%",
+    justifyContent: "center",
   },
   spinnerTextStyle: {
     color: '#FFF'
   },
 })
- // console.log('진행상황')
+// console.log('진행상황')
 
-  async function handleChapter(){
-    const {bookTitle}=test3;
-    const { image }=test2;
-    const {smallBookTitle}=test8;
+async function handleChapter() {
+  const { bookTitle } = test3;
+  const { image } = test2;
+  const { smallBookTitle } = test8;
 
-   // console.log('image!!!!!!!!!',image)
-    if (bookTitle == ""){
-      Alert.alert("책 제목을 입력해주세요");
-      return;
-    }
-    if (image == null){
-      Alert.alert("이미지를 넣어주세요");
-      return;
-    }
-
-    saveChapter()
+  // console.log('image!!!!!!!!!',image)
+  if (bookTitle == "") {
+    Alert.alert("책 제목을 입력해주세요");
+    return;
   }
+  if (image == null) {
+    Alert.alert("이미지를 넣어주세요");
+    return;
+  }
+
+  saveChapter()
+}
 
   async function saveChapter() {
     // const reduce = require('image-blob-reduce')();
@@ -407,22 +408,22 @@ test8.smallBookTitle=smallBookTitle
   navigation.dispatch(state => {
     const routes = [...state.routes];
     routes.pop();
-  
+
     return CommonActions.reset({
       ...state,
       routes,
       index: routes.length - 1,
     });
   });
-  
-  navigation.navigate("IntroArticle", {bookKey: bookKey})
+
+  navigation.navigate("IntroArticle", { bookKey: bookKey })
 
   return (
     <View style={styles.container}>
       <Spinner
         visible={spinner}
         textContent={'Loading...'}
-        // textStyle={styles.spinnerTextStyle}
+      // textStyle={styles.spinnerTextStyle}
       />
     </View>
   );
@@ -430,21 +431,23 @@ test8.smallBookTitle=smallBookTitle
 
 
 function headerRight() {
-    return (
+  return (
+    <TouchableOpacity onPress={handleChapter}>
+      <Text style={{fontSize: 15, fontWeight: "600"}}> 다음 </Text>
+    </TouchableOpacity>
+    // <Icon.Button name='save' size={25}
+    //   backgroundColor='white' color="black"
+    //   onPress={handleChapter}
 
-      <Icon.Button name='save' size={25}
-      backgroundColor= 'white' color="black" 
-      onPress={handleChapter}
-      
-      >
-    </Icon.Button>
+    // >
+    // </Icon.Button>
 
-    );
-  }
-  const options = {
-    headerRight,
-  };
-  export default {
-    component: MakeNewBook,
-    options,
-  };
+  );
+}
+const options = {
+  headerRight,
+};
+export default {
+  component: MakeNewBook,
+  options,
+};
