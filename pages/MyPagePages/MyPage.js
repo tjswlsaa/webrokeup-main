@@ -12,10 +12,6 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-
-
-
-
 const test2 = {
     item: ""
 }
@@ -25,24 +21,22 @@ const MyPage = ({ navigation }) => {
         iam: "익명의.지은이",
         selfLetter: "안녕하세요 익명의 지은이입니다."
     });
-
     const [swiper, setSwiper] = useState(null);
     const { width, height } = Dimensions.get('window');
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width
+    console.log(ScreenWidth)
     const BottomSpace = getBottomSpace()
     const tabBarHeight = useBottomTabBarHeight();
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
-
-
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
         user_uid = user.uid;
     }
     var userID = user_uid.substring(0, 6)
-
     useEffect(() => {
         firebase_db.ref(`users/${user_uid}`)
             .on('value', (snapshot) => {
@@ -52,7 +46,6 @@ const MyPage = ({ navigation }) => {
                 }
             })
     }, []);
-
     useEffect(() => {
         firebase_db.ref('book/')
             .on('value', (snapshot) => {
@@ -75,103 +68,152 @@ const MyPage = ({ navigation }) => {
     // console.log('myBook',myBook)
     console.log('mypage.bookKey', myBook.bookKey)
     console.log('mypage.', myBook)
-
     const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
-
     // // console.log('myBookFiltered',myBookFiltered)
     //// console.log('whatiswrong',myBookFiltered)
     //// console.log('키값확인',myBookFiltered.length)
     // const slideTo = (index) => swiper.slideTo(index);
-
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#FBFBFB" }}>
             <View style={{ flex: 1 }}>
                 <StatusBar style="white" />
-                <View style={{ height: realScreen * 0.06, alignItems: "center", justifyContent: "center", backgroundColor: "#fbfbfb" }}>
-                    <Text style={{ fontSize: 17, fontWeight: "700", marginTop: "2%", color: "#21381C" }}>나의 이별록</Text>
+                <View style={{ height: realScreen * 0.06, alignItems: "center", justifyContent: "center", backgroundColor: "#FBFBFB" }}>
+                    <Text style={{ fontSize: 17, fontWeight: "700", marginTop: "2%", color: "#21381C" }}>FEEL ME FILL ME</Text>
                 </View>
-                <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, alignSelf: "center", backgroundColor: "#f2f2f2" }}>
+                <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, alignSelf: "center", backgroundColor: "#F2F2F2" }}>
                     <View style={{ flex: 1, flexDirection: "row", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10 }}>
                         <Text style={{ flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop: "7%", marginLeft: "3%" }}>{userinfo.iam}</Text>
                         <TouchableOpacity style={{ alignSelf: "center", borderRadius: 50, height: 34, width: 34 }} onPress={() => { navigation.navigate('Account') }}>
-                            <Icon name="settings-outline" size={27} color="#21381c" style={{ alignSelf: "center", marginTop: "10%", marginRight: "20%" }} />
+                            <Icon name="settings-outline" size={27} color="#21381C" style={{ alignSelf: "center", marginTop: "10%", marginRight: "20%" }} />
                         </TouchableOpacity>
                     </View>
                     <Text style={{ flex: 1, fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%" }}> {userinfo.selfLetter}</Text>
                 </View>
-                <View style={{ height: realScreen * 0.7, width: "94%", alignSelf: "center", marginBottom: 10 }}>
-                    {myBookFiltered.length == 0 ? (
-                        <View style={{ height: realScreen * 0.6, resizeMode: "cover" }} >
-                            <TouchableOpacity style={{ flex: 1, justifyContent: "center", alignItems: "center", }}
-                                onPress={() => { navigation.navigate("MakeNewBook") }}>
-                                <Icon2 name="plus" size={30} />
-                                <Text style={{ fontSize: 15, marginTop: "5%" }}>새로운 책을 만들어주세요</Text>
-                            </TouchableOpacity>
-                        </View>
-                    ) : (
-                        <View style={{ height: realScreen * 0.6, width: realScreen * 0.5, marginTop: "5%" }}>
-                            <Swiper
-                                index={myBook.bookKey}
-                                loop={false}
-                                showsPagination={true}
-                                onSwiper={setSwiper}
-                                showsButtons={false}
-                                dot={
-                                    <View style={{           // unchecked dot style
-                                        backgroundColor: 'rgba(0,0,0,0.2)',
-                                        width: 10,
-                                        height: 10,
-                                        borderRadius: 4,
-                                        marginLeft: 10,
-                                        marginRight: 9,
-                                    }}
-                                    />}
-                                activeDot={<View style={{    // selected dots style
-                                    backgroundColor: "#21381C",
-                                    width: 10,
-                                    height: 10,
-                                    borderRadius: 4,
-                                    marginLeft: 10,
-                                    marginRight: 9,
-                                }} />}
-                            >
-                                {myBookFiltered.map(item => {
-                                    test2.item = item
-                                    return (
-                                        <TouchableOpacity style={{ height: "90%", width: "80%", alignSelf: "center" }} onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}>
-                                            <BookComponent
-                                                key={item.key}
-                                                item={item}
-                                                url={item.url}
-                                                bookTitle={item.bookTitle}
-                                                navigation={navigation}
-                                                userID={userID}
-                                                resizeMode="contain"
-                                            />
-                                        </TouchableOpacity>
-
-
-                                    )
-                                })}
-                            </Swiper>
-
-
-                        </View>
-                    )
-                    }
-                    <View style={{ height: realScreen * 0.1 }}>
-                        <TouchableOpacity style={{ width: "60%", height: "50%", marginTop: "5%", backgroundColor: "#21381C", borderRadius: 20, alignSelf: "center" }} onPress={() => { navigation.navigate("MakeNewBook") }}>
-                            <Text style={{ alignSelf: "center", paddingVertical: 10, fontSize: 15, color: "white" }}> 새 이별집 만들기</Text>
+                <View style={{ height: realScreen * 0.7, width: "94%", alignSelf: "center", marginBottom: 10, padding:"2%"}}>
+                    
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={{marginTop:"3%"}}>내 감정의 색깔은? </Text>
+                        <TouchableOpacity style={{marginLeft:"45%", marginTop:"3%"}}>
+                            <Text>감정도움말</Text>
                         </TouchableOpacity>
                     </View>
 
+                    <View style={{ flexDirection: "row", marginTop:"5%"}}>
+                                    <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
+
+                                    <View style={{ backgroundColor: '#FF4A4A', opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                                    </View>
+
+                                    <View style={{ backgroundColor: "#FF9F9F",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                        <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                            <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간 감정은</Text>
+                                            <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
+
+                                            <View style={{ backgroundColor: "#FE5C5C", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                            </View>
+
+                                            <View style={{backgroundColor:"white", marginTop:"30%", alignSelf:"center", height:40, width:ScreenWidth * 0.35, opacity:0.5}}>
+                                                <Text style={{alignSelf:"center", marginTop:"10%"}}>책 시작하기</Text>
+                                            </View>
+
+                                        </View>
+                                    </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 , marginLeft:80}}>
+
+                                            <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                                            </View>
+
+                                            <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란 감정은</Text>
+                                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
+
+                                                    <View style={{ backgroundColor: "yellow", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                                    </View>
+
+                                                    <View style={{backgroundColor:"white", marginTop:"30%", alignSelf:"center", height:40, width:ScreenWidth * 0.35, opacity:0.5}}>
+                                                        <Text style={{alignSelf:"center", marginTop:"10%"}}>책 시작하기</Text>
+                                                    </View>
+
+                                                </View>
+                                            </View>
+                                    </TouchableOpacity>
+ 
+                    </View>
+
+
+                    {myBookFiltered.length == 0 ? (
+                                    <TouchableOpacity style={{zIndex:2, position: "absolute",backgroundColor:"gray", height:1, justifyContent:"center", width:100, alignItems:"center", alignSelf:"center", marginTop:"50%"}}>
+                                        <Text>도움말보기</Text>
+                                    </TouchableOpacity>) :(
+                                        <View></View>
+                                    )}
+
+                    <View style={{ flexDirection: "row" }}>
+                        <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
+
+                            <View style={{ backgroundColor: 'red', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                            </View>
+
+                            <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간 감정은</Text>
+                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
+
+                                    <View style={{ backgroundColor: "#FE5C5C", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    </View>
+
+                                    <View style={{ backgroundColor: "white", marginTop: "30%", alignSelf: "center", height: 40, width: ScreenWidth * 0.35, opacity: 0.5 }}>
+                                        <Text style={{ alignSelf: "center", marginTop: "10%" }}>책 시작하기</Text>
+                                    </View>
+
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
+
+                            <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                            </View>
+
+                            <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란 감정은</Text>
+                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
+
+                                    <View style={{ backgroundColor: "yellow", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    </View>
+
+                                    <View style={{ backgroundColor: "white", marginTop: "30%", alignSelf: "center", height: 40, width: ScreenWidth * 0.35, opacity: 0.5 }}>
+                                        <Text style={{ alignSelf: "center", marginTop: "10%" }}>책 시작하기</Text>
+                                    </View>
+
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                    </View>
+
+
+
+                    {/* {myBookFiltered.length == 0 ? (
+                        <View style={{ height: realScreen * 0.6, resizeMode: "cover", backgroundColor:"yellow" }} >
+
+
+                        </View>
+                    ) : (
+                        <View style={{ height: realScreen * 0.6, width: realScreen * 0.5, marginTop: "5%" }}>
+                        </View>
+                    )
+                    } */}
                 </View>
             </View>
         </SafeAreaView>
     )
 }
-
 AppRegistry.registerComponent('MyPage', () => SwiperComponent)
-
-
 export default MyPage;
