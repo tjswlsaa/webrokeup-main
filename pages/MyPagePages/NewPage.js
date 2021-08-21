@@ -1,5 +1,5 @@
 import React, { useState, useRef,useEffect } from 'react';
-import { SafeAreaView, View, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput } from 'react-native';
+import { SafeAreaView, View, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput,Dimensions,KeyboardAvoidingView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -78,7 +78,14 @@ console.log("Newpage countchapter",CountChapter)
   test6.user_uid=user_uid
  // console.log('findsuer',user_uid)
   // const chapterKey = Math.random().toString().replace(".", "");
-  const chapterKey = bookKey+(CountChapter+1)
+  //bookKey가 애초에 5자리+000으로끝나고 숫자로 바꿔서 CountChapter+1하면되네 
+  //만약 챕터가 0개라면 고정으로 bookKey+"001"
+  //1개 이상이면 bookKey
+
+  const numBookKey= Number(bookKey)
+  const numCountChapter= Number(CountChapter)
+  const chapterKey= (numBookKey+numCountChapter+1)
+  // const chapterKey = bookKey+(CountChapter+1)
   console.log("11bookKey Newpage", bookKey)
 
   console.log("22newpagechapterKey",chapterKey)

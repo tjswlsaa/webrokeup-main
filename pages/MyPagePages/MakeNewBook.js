@@ -62,7 +62,7 @@ const MakeNewBook = ({navigation,route}) => {
     return str
   }
 
-  const bookKey= generateRandomCode(6)
+  const bookKey= generateRandomCode(6)+"000"
   console.log("MNB",bookKey)
 
 //   const [CountBookKey,setCountBookKey]=useState("")

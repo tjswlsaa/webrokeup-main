@@ -16,6 +16,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Icon2 from 'react-native-vector-icons/Ionicons';
+import { CommonActions } from '@react-navigation/native';
 
 // import paper from '../../assets/paper.png';
 
@@ -38,10 +39,18 @@ const MyArticle2 = ({ navigation, route }) => {
   
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
-    console.log({chapterKey})
-    const nextChapterKey = (chapterKey+1)
-    console.log("why")
-    console.log("myarticle2nextchapterKey",nextChapterKey)
+    // console.log("myarticle(2)chapterkey현재페이지의챕터키",chapterKey) 
+    // const nextChapterKey = (chapterKey+1)
+    // console.log("myarticle(1)다음페이지의챕터키",nextChapterKey) 
+
+    console.log("myarticle(2)chapterkey현재페이지의챕터키",chapterKey) 
+    // console.log("typeofchapterKey",typeof chapterKey) 
+    const makechapterkeynumber= Number(chapterKey) 
+    // console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) 
+    // console.log("typeofmakechapterkeynumber",typeof makechapterkeynumber) 
+    const nextChapterKey = makechapterkeynumber+1 
+    console.log("myarticle(2)다음페이지의챕터키",nextChapterKey) 
+
 
     test1.bookKey = bookKey
 
@@ -127,23 +136,41 @@ const headerHeight = useHeaderHeight();
             })
     }, []) //[] 딱 한번만 실행된다 라는 뜼임 !!!! -> 클래스형 컴포넌트의 componentDidMount()를 대체함
 
-    // useEffect(()=>{
-    //     console.log('MyArticle()');
-        
-    //     console.log({likedUsers});
+    const [CountChapter,setCountChapter]=useState("")
 
-    //     let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-    //     if (meliked == '') {
-    //         // console.log("likedUsers: " + likedUsers)
-    //         console.log(`MyArticle()' meliked == ''`);
-    //         setCloverColor("#c1c1c1")
-    //     } else {
-    //         console.log(`MyArticle()' meliked != ''`);
-    //         // console.log("likedUsers: " + likedUsers)
-    //         setCloverColor("green")
-    //     }
-    // // }, []) // []: 최초에 실행된다-> likedUsers는 항상 비어있다! -> 의도대로 동작하지 않는다
-    // }, [likedUsers]); // [likedUsers]: 이게 아마 의도대로가 아니실까..?
+    useEffect (()=>{
+      let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+      .on('value', (snapshot) => {
+         var CountChapter = snapshot.numChildren();
+         setCountChapter(CountChapter)
+      })
+  }, [])
+
+  const numBookKey= Number(bookKey)
+  const numCountChapter= Number(CountChapter)
+
+  const endChapterKey= numBookKey+numCountChapter
+
+  console.log("myaricle마지막챕터",endChapterKey)
+
+    const navigatetonextpage=()=>{
+
+
+        const {navigation}=test3
+    
+    
+        navigation.dispatch(state => {
+            const routes = [...state.routes];
+            routes.pop();
+          
+            return CommonActions.reset({
+              ...state,
+              routes,
+              index: routes.length - 1,
+            });
+          });
+    
+          navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
 
     return (
         <View style={{ flex: 1 }}>
@@ -270,11 +297,20 @@ const headerHeight = useHeaderHeight();
                         : (<View style={{height: "4%"}}></View>)}
 
 
-                            <Icon2.Button name='md-chevron-back-sharp' size={25}
-                            backgroundColor= 'white' color="black" 
-                            onPress={() => { navigation.navigate('MyArticle', { navigation: navigation, bookKey: bookKey, chapterKey: nextChapterKey }) }}
-                            >
-                            </Icon2.Button>
+ 
+                            {endChapterKey==chapterKey? ( 
+                            <View>
+                              <Text>마지막 챕터입니다</Text>
+
+                            </View>
+                            ):(
+
+                                <Icon.Button name='right' size={25}
+                                backgroundColor= 'white' color="black" 
+                                // onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
+                                onPress={()=>{navigatetonextpage()}}
+                                >
+                                </Icon.Button>                            )}
 
                     
                     </View>     

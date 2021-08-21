@@ -25,6 +25,7 @@ import NewPage from "./pages/MyPagePages/NewPage";
 import IntroArticle from "./pages/MyPagePages/IntroArticle";
 import EditArticle from "./pages/MyPagePages/EditArticle";
 
+import readPopularArticle from './pages/MyPagePages/readPopularArticle';
 import readIntroArticle from "./pages/MyPagePages/readIntroArticle";
 import EditIntroArticle from "./pages/MyPagePages/EditIntroArticle";
 import EditProfile from "./pages/MyPagePages/EditProfile";
@@ -121,7 +122,14 @@ const App = ({ navigation }) => {
             ...defaultScreenOptions,
           }}
         />
-
+        <Stack.Screen
+          name="readPopularArticle"
+          component={readPopularArticle.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
         <Stack.Screen
           name="MyArticle2"
           component={MyArticle2.component}

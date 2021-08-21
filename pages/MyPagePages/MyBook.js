@@ -28,6 +28,9 @@ const MyBook = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
+
+    console.log("mybookuseruid",myitem.user_uid)
+
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
@@ -41,20 +44,39 @@ const MyBook = ({ navigation, route }) => {
 
 
     const [chapter, setChapter] = useState([]);
+
+    const useruid= myitem.user_uid
     const [userinfo, setUserinfo] = useState({
         iam: "익명의.지은이",
         selfLetter: "안녕하세요 익명의 지은이입니다."
-      });
-      useEffect(()=> {
+      });    // ({
+    //     iam: "익명의.지은이",
+    //     selfLetter: "안녕하세요 익명의 지은이입니다."
+    //   });
+    //   useEffect(()=> {
+    //       firebase_db.ref(`users/${myitem.user_uid}`)
+    //           .on('value', (snapshot) => {
+    //               let userinfo = snapshot.val();
+    //               console.log("mybookuser2222222222",userinfo)
+    //               if (userinfo>"") {
+    //                 setUserinfo(userinfo);
+    //           }})
+    //   }, [userinfo]);
+
+    useEffect(()=> {
         function getUserId() {
-          firebase_db.ref(`users/${myitem.user_uid}`)
+          firebase_db.ref(`users/${useruid}`)
               .on('value', (snapshot) => {
-                  let user = snapshot.val();
-                  if (user) {
+                  let userinfo = snapshot.val();
+                  if (userinfo>"") {
                     setUserinfo(userinfo);
               }})
-        }
-      }, []);
+        }}, []);
+        // const { iam, selfLetter } = userState;
+
+      console.log("mybookuserinfo",userinfo)
+    //   const iam = userinfo.iam
+    //   const selfLetter =userinfo.selfLetter
       const { iam, selfLetter } = useState;
       
     useEffect(getMyItem, []);
@@ -139,7 +161,9 @@ const MyBook = ({ navigation, route }) => {
                         (
                             <View style={{ backgroundColor: "#fafafa", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
                                 <View>
+                                    <TouchableOpacity onPress={()=> navigation.navigate('MyPage',{bookKey:bookKey})}>
                                     <Text style={{ color: "#21381c", fontSize: 17, fontWeight: "700", textAlign: "center" }}>{userinfo.iam}</Text>
+                                    </TouchableOpacity>
                                     <Text style={{ color: "#21381c", fontSize: 15, marginTop: "2%", textAlign: "center" }} numberOfLines={2}>{userinfo.selfLetter}</Text>
                                 </View>
                             </View>
