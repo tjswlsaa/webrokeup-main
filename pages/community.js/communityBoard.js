@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const communityBoard = ({ navigation, route }) => {
 
     const [posts, setPosts] =useState([])
-
+    
 
      
 

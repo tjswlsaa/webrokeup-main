@@ -31,12 +31,35 @@ const MyPage = ({ navigation }) => {
     const tabBarHeight = useBottomTabBarHeight();
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
+
+    const thirdColor = "green"
+
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
         user_uid = user.uid;
     }
     var userID = user_uid.substring(0, 6)
+
+    const [colorBookList, setColorBookList] = useState([]);
+
+    useEffect(()=>{
+        firebase_db.ref(`users/${user_uid}/myBook`)
+            .on('value',(snapshot)=>{
+                let colorBookList = snapshot.val();
+                if (colorBookList>""){
+                    setColorBookList(colorBookList)
+                }
+                })
+            },[])
+
+            console.log("mpage color book list", colorBookList)
+            const colorBookListValues= Object.values(colorBookList)
+            console.log("mpage colorBookListValues", colorBookListValues)
+            const FirstNumber = colorBookListValues.slice(0)
+            console.log("mpage FirstNumber", FirstNumber)
+
+
     useEffect(() => {
         firebase_db.ref(`users/${user_uid}`)
             .on('value', (snapshot) => {
@@ -105,7 +128,7 @@ const MyPage = ({ navigation }) => {
 
                                     </View>
 
-                                    <View style={{ backgroundColor: "#FF9F9F",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                    <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                         <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
                                             <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간 감정은</Text>
                                             <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
@@ -121,10 +144,10 @@ const MyPage = ({ navigation }) => {
                                     </View>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 , marginLeft:80}}>
-
-                                            <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                                           <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                                             </View>
+ 
 
                                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
@@ -145,17 +168,11 @@ const MyPage = ({ navigation }) => {
                     </View>
 
 
-                    {myBookFiltered.length == 0 ? (
-                                    <TouchableOpacity style={{zIndex:2, position: "absolute",backgroundColor:"gray", height:1, justifyContent:"center", width:100, alignItems:"center", alignSelf:"center", marginTop:"50%"}}>
-                                        <Text>도움말보기</Text>
-                                    </TouchableOpacity>) :(
-                                        <View></View>
-                                    )}
 
                     <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
+                        <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:thirdColor})} style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
 
-                            <View style={{ backgroundColor: 'red', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                            <View style={{ backgroundColor: 'green', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                             </View>
 
@@ -176,7 +193,7 @@ const MyPage = ({ navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
 
-                            <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                            <View style={{ backgroundColor: 'blue', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                             </View>
 
@@ -196,6 +213,12 @@ const MyPage = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>
 
+                        {myBookFiltered.length == 0 ? (
+                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#FF8E8E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
+                                        <Text>도움말보기</Text>
+                                    </TouchableOpacity>) :(
+                                        <View></View>
+                                    )}
                     </View>
 
 

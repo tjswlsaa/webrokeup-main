@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button, Text, View, Image, Alert, TouchableOpacity, TextInput, Touchable } from 'react-native';
+import { TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Dimensions, Button, Text, View, Image, Alert, TouchableOpacity, TextInput, Touchable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { firebase_db } from '../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
@@ -12,7 +12,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { CommonActions } from '@react-navigation/native';
 import * as ImageManipulator from 'expo-image-manipulator';
 import coverimage from '../../assets/coverimage.png';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
@@ -49,6 +51,26 @@ const test9={
 
 const MakeNewBook = ({navigation,route}) => {
 
+  const {color} = route.params;
+  console.log("mnb",color)
+
+  //if color green bookcover startwith 3
+  const startBookKeyColor = ()=>{
+
+    if(color=="red"){
+      return 1
+    }else if(color=="yellow"){
+      return 2
+    }else if(color=="green"){
+      return 3
+    }else if(color=="blue"){
+      return 4
+    }
+
+  }
+
+  console.log("mnb color key",startBookKeyColor)
+
   const [spinner, setSpinner] = useState(false);
 
   test7.spinner = spinner
@@ -61,9 +83,14 @@ const MakeNewBook = ({navigation,route}) => {
     }
     return str
   }
-
-  const bookKey= generateRandomCode(6)+"000"
-  console.log("MNB",bookKey)
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight - headerHeight - BottomSpace 
+  const bookKey= startBookKeyColor()+generateRandomCode(6)+"000"
+  console.log("MNB bookKey",bookKey)
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const headerHeight = useHeaderHeight();
+  const ScreenWidth = Dimensions.get('window').width
 
 //   const [CountBookKey,setCountBookKey]=useState("")
 
@@ -78,7 +105,7 @@ const MakeNewBook = ({navigation,route}) => {
 // console.log("CountBookKey",CountBookKey)
 
 // const bookKey=HeadBookKey+(CountBookKey+1)
-console.log("bookKey",bookKey)
+// console.log("bookKey",bookKey)
 
 test9.bookKey = bookKey;
 
@@ -149,6 +176,8 @@ test9.bookKey = bookKey;
     }
   }
 
+  console.log("mnb image",image)
+
 
   return (
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -182,13 +211,24 @@ test9.bookKey = bookKey;
               circleActiveColor={'#21381c'}
               circleInActiveColor={'#C4C4C4'}
             />
-          </View>
-          <View style={{ flex: 14, marginBottom: "30%"}}>
-            <ImageBackground style={{ height: "100%", width: "100%"}} resizeMode="contain" source={coverimage} >
-              <View style={{ height: "70%", marginRight: "6%", marginLeft: "10%", marginTop: "33%"}}>
-                <View style={{ marginLeft: "12%", width: "80%"}}>
 
-                  <TextInput style={{ fontSize: 20, flexShrink: 1, }}
+            
+          </View>
+
+
+          <View style={{ flex: 18,marginBottom: "25%"}}>
+
+              <View style={{ backgroundColor: color, opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
+
+              </View>
+
+              {image == undefined ? (
+
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+
+                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}>초록 감정은</Text>
+                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
@@ -197,7 +237,7 @@ test9.bookKey = bookKey;
                     placeholder="제목을 작성해주세요" />
 
 
-                  <TextInput style={{ fontSize: 17, marginTop: "3%"}}
+                  <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
                     value={smallBookTitle}
 
                     multiline={false}
@@ -206,36 +246,62 @@ test9.bookKey = bookKey;
                     onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
                     placeholder="소제를 작성해주세요" />
 
-                </View>
                 <View>
                   <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
+                <View style={{marginTop:"20%"}} >
+                <Button  color="color"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                </View>
+             </View>
 
-                {image == undefined ? (
-
-                  <TouchableOpacity style={{
-                    marginTop: "10%",
-                    height: "50%",
-                    width: "85%",
-                    marginLeft: "5%",
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}>
-                    {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
-                    <Button title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
-                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
-                  </TouchableOpacity>
-
-                ) : (
-                  <TouchableOpacity onPress={() => savePhoto()}>
-                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: "10%" , marginLeft: "3%", width: 250, height: 250 }} />
-                  </TouchableOpacity>
-
-                )
-                }
               </View>
-            </ImageBackground>
+              ):(
+                <View                 
+                style={{ 
+                  zIndex: 0, position: "absolute", 
+                  height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+                <TouchableOpacity 
+                 style={{
+                  zIndex: 0, position: "absolute", 
+                  height: "100%",width:"100%"
+                }}
+                onPress={() => savePhoto()}>
+
+                  <Image  source={{ uri: image }}
+                    style={{
+                      zIndex: 0, position: "absolute", 
+                      height: "100%",width:"100%"
+                    }}
+                  ></Image>
+                </TouchableOpacity>  
+
+                <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                <TextInput style={{ marginTop:"20%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                  value={bookTitle}
+                  multiline={false}
+                  maxLength={10}
+                  returnKeyType="done"
+                  onChangeText={bookTitle => setBookTitle(bookTitle)}
+                  placeholder="제목을 작성해주세요" />
+
+
+                <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+                  value={smallBookTitle}
+
+                  multiline={false}
+                  maxLength={14}
+                  returnKeyType="done"
+                  onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
+                  placeholder="소제를 작성해주세요" />
+
+              <View>
+                <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
+              </View>
+
+           </View>
+
+            </View>
+              )}
           </View>
         </View>
         {/* </ImageBackground> */}

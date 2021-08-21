@@ -135,7 +135,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         
         var userID = user_uid.substring(0, 6)
 
-        useEffect(getPopBook, []);
+        // useEffect(getPopBook, []);
         function getPopBook(){
                         firebase_db.ref(`book/${bookKey}`)
                         .on('value', (snapshot) =>{

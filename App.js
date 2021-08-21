@@ -34,6 +34,7 @@ import PopularArticle from "./pages/MainPages/PopularArticle";
 import policyone from "./pages/MyPagePages/policyone";
 import policytwo from "./pages/MyPagePages/policytwo";
 import Notification from "./pages/MyPagePages/Notification";
+import onboarding from './pages/MyPagePages/onboarding';
 
 
 import editorBoard from "./pages/editors.js/editorBoard";
@@ -142,6 +143,15 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="MyBook"
           component={MyBook.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+
+      <Stack.Screen
+          name="onboarding"
+          component={onboarding}
           options={{
             headerShown: true,
             ...defaultScreenOptions,
