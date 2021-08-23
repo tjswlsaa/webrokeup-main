@@ -305,7 +305,7 @@ const MyPage = ({ navigation }) => {
                                     ) : (
 
 
-                                        <TouchableOpacity onPress={()=> navigation.navigate('MyBook',{bookKey:firstBookKey})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
+                                        <TouchableOpacity onPress={()=> navigation.navigate('MyBook',{bookKey:firstBookKey, color:firstColor})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
 
                                         <View style={{ backgroundColor:firstColor, opacity: 0.8, height: realScreen * 0.3, width: ScreenWidth * 0.04, zIndex: 1 }}>
                                         </View>
@@ -383,7 +383,7 @@ const MyPage = ({ navigation }) => {
 
                             <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란색 감정은</Text>
                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
                                     {/* <View style={{ backgroundColor: secondColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
@@ -442,7 +442,7 @@ const MyPage = ({ navigation }) => {
                             </View>
                         </TouchableOpacity>):(
 
-                            <TouchableOpacity onPress={()=> navigation.navigate('MyBook',{bookKey:fourthBookKey})}  style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
+                            <TouchableOpacity onPress={()=> navigation.navigate('MyBook',{bookKey:fourthBookKey, color:fourthColor})}  style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
 
                             <View style={{ backgroundColor: fourthColor, opacity: 0.8, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 

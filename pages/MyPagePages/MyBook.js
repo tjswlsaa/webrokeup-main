@@ -17,8 +17,10 @@ const test3 = {
 const MyBook = ({ navigation, route }) => {
     test3.navigation = navigation
 
+
     // const { myitem, bookKey } = route.params;
     const { bookKey } = route.params;
+    console.log("bookKey",bookKey)
     const [myitem, setMyitem] = useState({
         bookKey: '',
         bookTitle: '',
@@ -28,57 +30,7 @@ const MyBook = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
-
-    console.log("mybookuseruid",myitem.user_uid)
-
-    const user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) { user_uid = user.uid }
-    const headerHeight = useHeaderHeight();
-    const ScreenWidth = Dimensions.get('window').width  //screen 너비
-    const ScreenHeight = Dimensions.get('window').height   //height
-    const BottomSpace = getBottomSpace()
-    const tabBarHeight = 0;
-    const statusBarHeight = getStatusBarHeight()
-    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
-
-
-    const [chapter, setChapter] = useState([]);
-
-    const useruid= myitem.user_uid
-    const [userinfo, setUserinfo] = useState({
-        iam: "익명의.지은이",
-        selfLetter: "안녕하세요 익명의 지은이입니다."
-      });    // ({
-    //     iam: "익명의.지은이",
-    //     selfLetter: "안녕하세요 익명의 지은이입니다."
-    //   });
-    //   useEffect(()=> {
-    //       firebase_db.ref(`users/${myitem.user_uid}`)
-    //           .on('value', (snapshot) => {
-    //               let userinfo = snapshot.val();
-    //               console.log("mybookuser2222222222",userinfo)
-    //               if (userinfo>"") {
-    //                 setUserinfo(userinfo);
-    //           }})
-    //   }, [userinfo]);
-
-    useEffect(()=> {
-        function getUserId() {
-          firebase_db.ref(`users/${useruid}`)
-              .on('value', (snapshot) => {
-                  let userinfo = snapshot.val();
-                  if (userinfo>"") {
-                    setUserinfo(userinfo);
-              }})
-        }}, []);
-        // const { iam, selfLetter } = userState;
-
-      console.log("mybookuserinfo",userinfo)
-    //   const iam = userinfo.iam
-    //   const selfLetter =userinfo.selfLetter
-      const { iam, selfLetter } = useState;
-      
+    
     useEffect(getMyItem, []);
     function getMyItem() {
         //console.log('getMyItem()');
@@ -98,8 +50,85 @@ const MyBook = ({ navigation, route }) => {
                 });
             });
     }
+    console.log("mybookuseruid",myitem.user_uid)
+
+    const firstColor= "#9E001C"
+    const secondColor="#F6AE2D"
+    const thirdColor = "#33658A"
+    const fourthColor= "#494949"
+
+    function getColor(bookKey) {
+        if (bookKey.indexOf('1') == 0){
+        return firstColor
+        }
+        else if (bookKey.indexOf('2') == 0){
+        return secondColor
+        }
+        else if (bookKey.indexOf('3') == 0){
+        return thirdColor
+        }
+        else if (bookKey.indexOf('4') == 0){
+        return fourthColor
+        }
+    }
+    const Color = getColor(bookKey);
+    console.log("mybook Color", Color)
+
+    function getBookNameStart(bookKey) {
+        if (bookKey.indexOf('1') == 0){
+        return "빨간색 감정은"
+        }
+        else if (bookKey.indexOf('2') == 0){
+        return "노란색 감정은"
+        }
+        else if (bookKey.indexOf('3') == 0){
+        return "파란색 감정은"
+        }
+        else if (bookKey.indexOf('4') == 0){
+        return "검은색 감정은"
+        }
+    }
+    const BookNameStart = getBookNameStart(bookKey);
+    console.log("mybook Color", BookNameStart)
+
+    const user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) { user_uid = user.uid }
+    const headerHeight = useHeaderHeight();
+    const ScreenWidth = Dimensions.get('window').width  //screen 너비
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = 0;
+    const statusBarHeight = getStatusBarHeight()
+    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
 
+
+    const useruid= myitem.user_uid
+    const [userinfo, setUserinfo] = useState({
+        iam: "익명의.지은이",
+        selfLetter: "안녕하세요 익명의 지은이입니다."
+      });   
+
+
+    useEffect(()=> {
+          firebase_db.ref(`users/${useruid}`)
+              .on('value', (snapshot) => {
+                  let userinfo = snapshot.val();
+                  if (userinfo>"") {
+                    setUserinfo(userinfo);
+              }})
+        }, []);
+        // const { iam, selfLetter } = userState;
+
+      console.log("mybookuserinfo",userinfo)
+    //   const iam = userinfo.iam
+    //   const selfLetter =userinfo.selfLetter
+      const { iam, selfLetter } = useState;
+      
+
+
+    const [chapter, setChapter] = useState([]);
 
     useEffect(getChapters, []);
     function getChapters() {
@@ -134,29 +163,42 @@ const MyBook = ({ navigation, route }) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
+                <View style={{backgroundColor:"#F5F4F4"}}>
                 {myitem.user_uid == user_uid ? (
                     <View style={{ height: realScreen * 0.06 }} >
                         <TouchableOpacity 
                             onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}
-                            style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%" }}>
-                            <Text style={{ alignSelf: "center", color: "#21381C", marginTop: "3%" }}> 수정하기 </Text>
+                            style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%", justifyContent:"center" }}>
+                            <Text style={{ alignSelf: "center", color: "#21381C",}}> 수정하기 </Text>
                         </TouchableOpacity>
                     </View>
                 ) : (<View style={{ height: realScreen * 0.06 }}></View>)}
                 <View style={{ height: realScreen * 0.4, width: realScreen * 0.33, alignSelf: "center" }}>
                     <View style={{ flex: 1 }}>
-                        <BookComponent
-                            item={myitem}
-                            navigation={navigation}
-                        />
+   
+                            <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,marginLeft:"10%", marginTop:"15%" }}>
+
+                            <View style={{ backgroundColor:Color, opacity: 0.8, height: realScreen * 0.30, width: ScreenWidth * 0.04, zIndex: 1 }}>
+                            </View>
+
+                            <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
+                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
+
+                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                </View>
+                            </View>
+                            </TouchableOpacity>
                     </View>
                     {/* <Image style={styles.bookCoverImage} source={{ uri: item.url ? item.url : null }}></Image> */}
                 </View>
                 <View style={{ height: realScreen * 0.15 }}>
                     {/* <Text style={{ fontSize: 17, fontWidth: "700", alignSelf: "center", marginVertical: "5%" }}>{myitem.bookTitle}</Text> */}
                     {myitem.user_uid == user_uid ? (
-                        <TouchableOpacity style={{ backgroundColor: "#21381c", width: "40%", height: "25%", marginTop: "7%", alignSelf: "center", borderRadius: 15 }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
-                            <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", marginTop: "3%" }}>새로운 챕터 만들기</Text>
+                        <TouchableOpacity style={{ backgroundColor: "#44705E", width: "40%", height: "25%", marginTop: "7%", alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
+                            <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>새로운 챕터 만들기</Text>
                         </TouchableOpacity>) :
                         (
                             <View style={{ backgroundColor: "#fafafa", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
@@ -168,6 +210,7 @@ const MyBook = ({ navigation, route }) => {
                                 </View>
                             </View>
                         )}
+                </View>
                 </View>
                 <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
                     <View style={{ marginHorizontal: "3%"}}>

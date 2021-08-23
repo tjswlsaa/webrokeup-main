@@ -42,17 +42,25 @@ const test7 = {
   spinner: '',
   setSpinner: undefined,
 }
-const test8 = {
-  smallBookTitle: '',
-}
+// const test8 = {
+//   smallBookTitle: '',
+// }
 const test9={
   bookKey:'',
+}
+
+const test10={
+  color:""
+}
+const test11={
+  startbooktitle:""
 }
 
 const MakeNewBook = ({navigation,route}) => {
 
   const {color} = route.params;
   console.log("mnb",color)
+  test10.color = color
 
 
   const firstColor= "#9E001C"
@@ -98,14 +106,18 @@ const MakeNewBook = ({navigation,route}) => {
     }else if(color=="secondColor"){
       return "노란색"
     }else if(color=="thirdColor"){
-      return "검은색"
-    }else if(color=="fourthColor"){
       return "파란색"
+    }else if(color=="fourthColor"){
+      return "검은색"
     }
 
   }
-  console.log("mnb color key",startBookKeyColor())
+  test11.startbooktitle = startbooktitle
+
   console.log("mnb bookTItle key",startbooktitle())
+
+
+  console.log("mnb color key",startBookKeyColor())
 
   const [spinner, setSpinner] = useState(false);
 
@@ -165,8 +177,8 @@ test9.bookKey = bookKey;
   test.user_uid = user_uid;
   const [bookTitle, setBookTitle] = useState('');
   test3.bookTitle = bookTitle
-  const [smallBookTitle, setSmallBookTitle] = useState('');
-  test8.smallBookTitle = smallBookTitle
+  // const [smallBookTitle, setSmallBookTitle] = useState('');
+  // test8.smallBookTitle = smallBookTitle
   // test3.bookTitle=bookTitle
   // console.log('두줄만들자',bookTitle.length)
   const [image, setImage] = useState(null);
@@ -252,38 +264,37 @@ test9.bookKey = bookKey;
           </View>
 
 
-          <View style={{ flex: 18,marginBottom: "25%"}}>
+          <View style={{ flex: 18,}}>
 
-              <View style={{backgroundColor:KeyColor(), opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
-
+              <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"80%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"15%" }}>
               </View>
 
               {image == undefined ? (
 
-              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
 
-                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
-                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
-                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%", }}>
+                  <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20,  }}
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
                     returnKeyType="done"
                     onChangeText={bookTitle => setBookTitle(bookTitle)}
-                    placeholder="제목을 작성해주세요" />
+                    placeholder="단어로 표현해주세요" />
 
 
-                  <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+                  {/* <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
                     value={smallBookTitle}
 
                     multiline={false}
                     maxLength={14}
                     returnKeyType="done"
                     onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
-                    placeholder="소제를 작성해주세요" />
+                    placeholder="소제를 작성해주세요" /> */}
 
                 <View>
-                  <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
+                  <Text style={{ alignSelf: "flex-end", marginRight: "4%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
                 <View style={{marginTop:"20%"}} >
                 <Button  color="#20543F"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
@@ -295,7 +306,7 @@ test9.bookKey = bookKey;
                 <View                 
                 style={{ 
                   zIndex: 0, position: "absolute", 
-                  height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+                  height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
                 <TouchableOpacity 
                  style={{
                   zIndex: 0, position: "absolute", 
@@ -305,13 +316,13 @@ test9.bookKey = bookKey;
 
                   <Image  source={{ uri: image }}
                     style={{
-                      zIndex: 0, position: "absolute", 
+                      // zIndex: 0, position: "absolute", 
                       height: "100%",width:"100%"
                     }}
                   ></Image>
                 </TouchableOpacity>  
                 <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
-                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+                <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
 
                 <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                   value={bookTitle}
@@ -320,16 +331,6 @@ test9.bookKey = bookKey;
                   returnKeyType="done"
                   onChangeText={bookTitle => setBookTitle(bookTitle)}
                   placeholder="제목을 작성해주세요" />
-
-
-                <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
-                  value={smallBookTitle}
-
-                  multiline={false}
-                  maxLength={14}
-                  returnKeyType="done"
-                  onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
-                  placeholder="소제를 작성해주세요" />
 
               <View>
                 <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
 async function handleChapter() {
   const { bookTitle } = test3;
   const { image } = test2;
-  const { smallBookTitle } = test8;
+  // const { smallBookTitle } = test8;
 
   // console.log('image!!!!!!!!!',image)
   if (bookTitle == "") {
@@ -464,9 +465,25 @@ async function handleChapter() {
     const {navigation}=test5;
     const {userinfo}=test6;
     const {spinner}=test7;
-    const {smallBookTitle}=test8;
+    // const {smallBookTitle}=test8;
     const {bookKey}=test9;
+    const {color}=test10;
 
+    const startbooktitle = ()=>{
+
+      if(color=="firstColor"){
+        return "빨간색"
+      }else if(color=="secondColor"){
+        return "노란색"
+      }else if(color=="thirdColor"){
+        return "파란색"
+      }else if(color=="fourthColor"){
+        return "검은색"
+      }
+  
+    }
+  
+    console.log("mnb22222 bookTItle key",startbooktitle())
 
     console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
@@ -485,8 +502,9 @@ async function handleChapter() {
   firebase_db
   .ref('book/'+bookKey)
   .set({
+    defaultTitle:startbooktitle()+" 감정은",
     bookTitle: bookTitle,
-    smallBookTitle:smallBookTitle,
+    // smallBookTitle:smallBookTitle,
     user_uid: user_uid,
     regdate: new Date().toString(),
     url:downloadURL,
@@ -497,10 +515,10 @@ async function handleChapter() {
     // selfLetter:userinfo.selfLetter
   });
 
-  let mybookKey= "myBookKey"
+  let mybookKey=startbooktitle()+" 책"
 
   firebase_db
-  .ref(`/users/${user_uid}/myBooks/`+bookKey)
+  .ref(`/users/${user_uid}/myBooks/`+mybookKey)
   .set(bookKey)
 
 
@@ -536,7 +554,7 @@ async function handleChapter() {
 function headerRight() {
   return (
     <TouchableOpacity onPress={handleChapter}>
-      <Text style={{fontSize: 15, fontWeight: "600"}}> 다음 </Text>
+      <Text style={{fontSize: 16, fontWeight: "600", marginRight:10}}> 다음 </Text>
     </TouchableOpacity>
     // <Icon.Button name='save' size={25}
     //   backgroundColor='white' color="black"

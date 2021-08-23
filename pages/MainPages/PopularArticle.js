@@ -32,8 +32,10 @@ useEffect(()=>{
              snapshot.forEach((child) => {
                      const book = child.val();
                      const {chapters} = book;
+                     console.log("useeffectbook",book)
+                     
                      if (chapters == undefined) {
-                            // console.log("PopularArticle() 챕터가 없습니다")
+                            console.log("PopularArticle() 챕터가 없습니다")
                          } else {
                              list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
                         }
@@ -43,9 +45,11 @@ useEffect(()=>{
                         setList(list);
                     })
                 })
-        }, [list])
+        }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
 
-                
+        console.log("populararticlelist",list)
+
+
         const viewHot = () => {
                // console.log("viewHot")
                 const hotlist = [...list];
@@ -116,6 +120,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
        console.log("popualr bookKey",bookKey)
         const [book,setBook] = useState([]);
+        console.log("popular article",book)
 
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
@@ -126,6 +131,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         const tabBarHeight = 0
         const statusBarHeight = getStatusBarHeight();
         const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
+        const ScreenWidth = Dimensions.get('window').width  //screen 너비
 
         var user = firebase.auth().currentUser;
         var user_uid
@@ -133,33 +139,62 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                 user_uid = user.uid;
         }
         
-        var userID = user_uid.substring(0, 6)
+        const firstColor= "#9E001C"
+        const secondColor="#F6AE2D"
+        const thirdColor = "#33658A"
+        const fourthColor= "#494949"
 
-        // useEffect(getPopBook, []);
-        function getPopBook(){
-                        firebase_db.ref(`book/${bookKey}`)
-                        .on('value', (snapshot) =>{
-                                let book = snapshot.val();
-                                setBook(book)
-                                // snapshot.forEach((child) => {
-                                //         const newItem = {};
-                                //         snapshot.forEach((child) => {
-                                //             const key = child.key;
-                                //             const value = child.val();
-                                //             newItem[key] = value; // 우리가 잘 아는 javascript object가 된다!
-                                //         });
-                                //         setItem({
-                                //             ...item, // 기본 바탕색
-                                //             ...newItem, // 덧칠
-                                //         });
-
-
-                        })
+        function getColor(bookKey) {
+                if (bookKey.indexOf('1') == 0){
+                return firstColor
                 }
+                else if (bookKey.indexOf('2') == 0){
+                return secondColor
+                }
+                else if (bookKey.indexOf('3') == 0){
+                return thirdColor
+                }
+                else if (bookKey.indexOf('4') == 0){
+                return fourthColor
+                }
+            }
+            const Color = getColor(bookKey);
+            console.log("populararticle Color", Color)
 
 
 
-        console.log("book popular article", book)
+        var userID = user_uid.substring(0, 6)
+        const [myitem, setMyitem] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+            });
+        useEffect(getMyItem, []);
+        function getMyItem() {
+            //console.log('getMyItem()');
+            // bookKey-> myitem
+            firebase_db
+                .ref(`/book/${bookKey}`)
+                .on('value', (snapshot) => {
+                    const newMyitem = {};
+                    snapshot.forEach((child) => {
+                        const key = child.key;
+                        const value = child.val();
+                        newMyitem[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                    });
+                    setMyitem({
+                        ...myitem, // 기본 바탕색
+                        ...newMyitem, // 덧칠
+                    });
+                });
+        }
+
+
+        console.log("book popular myitem", myitem)
 
 
         useEffect (()=>{
@@ -190,35 +225,57 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
 
 
         return (
-                <View style={{height: realScreen*0.35, backgroundColor: "white", marginBottom: "1%"}}>
-                        <TouchableOpacity style={{  flex:1, marginVertical: "1%", }} onPress={() => {
-                                       console.log('PopularArticle.js (2), chapters: ',chapters);
-                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
-                                }>
-                                <View style={{flex:1,  flexDirection: "row", borderWidth: 1}}>
-                                        <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%", borderWidth: 1}}>
-                                                <View style={{flex:5}}>
-                                                <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "3%"}} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} line>{chapters.mainText}</Text>
-                                                </View>
-                                                <View>
-                                                        <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
-                                                </View>
-                                                <View style={{ flex: 1, flexDirection: "row"}}>
-                                                        <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                        <Text style={styles.bookIndexText}>{likeCount}</Text>
-                                                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                        <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                <View style={{height: realScreen*0.35, flexDirection: "row", backgroundColor:"#F5F4F4"}}>
+
+                        <View style={{flex: 1,}}>
+                                <TouchableOpacity style={{  flex:1, padding:"5%" }} onPress={() => {
+                                                navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey }) }
+                                        }>
+                                        <View style={{flex:1,  flexDirection: "row"}}>
+                                                <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%", padding:"2%",backgroundColor:"white"}}>
+                                                        <View style={{flex:5}}>
+                                                        <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%"}} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                                                        <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} line>{chapters.mainText}</Text>
+                                                        </View>
+                                                        <View>
+                                                                <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
+                                                        </View>
+                                                        <View style={{ flex: 1, flexDirection: "row"}}>
+                                                                <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+                                                                <Text style={styles.bookIndexText}>{likeCount}</Text>
+                                                                <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+                                                                <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                                                        </View>
                                                 </View>
                                         </View>
-                                        <View style={{flex: 1}}>
-                                                <BookComponent
-                                                navigation={navigation}
-                                                item={book}
-                                                />
+                                </TouchableOpacity>
+                        </View>
+
+                        <View style={{flex: 1,}}>
+
+                                <TouchableOpacity
+                                onPress={() => {
+                                        navigation.navigate('MyBook', { bookKey: chapters.bookKey }) }
+                                }
+                                style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,padding:"5%"}}>
+                                        <View>
+                                        <View style={{ backgroundColor:Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                                         </View>
-                                </View>
-                        </TouchableOpacity>
+
+                                        <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
+                                        <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
+                                        <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
+                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem.defaultTitle}</Text>
+                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
+
+                                                {/* <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text> */}
+                                        </View>
+                                        </View>
+                                        </View>
+                                </TouchableOpacity>
+
+                        </View>
+
                 </View>
         )
 }

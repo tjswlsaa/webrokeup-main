@@ -65,6 +65,24 @@ const defaultScreenOptions = {
   }
 };
 
+const defaultScreenOptions2 = {
+  headerLeft: function () {
+    const navigation = useNavigation();
+
+    return (
+      // <Button
+      //   onPress={navigation.goBack}
+      //   title="<"
+      //   color="#000"
+      // />
+      <Icon.Button name='md-chevron-back-sharp' size={25}
+        backgroundColor='#F6F6F6' color="black" onPress={navigation.goBack}>
+      </Icon.Button>
+    );
+
+  }
+};
+
 const App = ({ navigation }) => {
   // console.log('App()');
   // console.log({navigation}); // undefined: 못 쓴다, 아직 준비가 안 됐다!
@@ -197,8 +215,11 @@ const App = ({ navigation }) => {
           component={MakeNewBook.component}
           options={{
             title: "책 만들기",
-            ...defaultScreenOptions,
-            ...MakeNewBook.options
+            ...defaultScreenOptions2,
+            ...MakeNewBook.options,
+            headerStyle: {
+              backgroundColor: "#F6F6F6",
+            },
           }} />
 
         <Stack.Screen
