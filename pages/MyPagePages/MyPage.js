@@ -16,35 +16,49 @@ const test2 = {
     item: ""
 }
 const MyPage = ({ navigation }) => {
-    const [myBook, setMyBook] = useState([]);
+
     const [userinfo, setUserinfo] = useState({
         iam: "익명의.지은이",
         selfLetter: "안녕하세요 익명의 지은이입니다."
     });
-    const [swiper, setSwiper] = useState(null);
-    const { width, height } = Dimensions.get('window');
-    const headerHeight = useHeaderHeight();
-    const ScreenHeight = Dimensions.get('window').height   //height
-    const ScreenWidth = Dimensions.get('window').width
-    console.log(ScreenWidth)
-    const BottomSpace = getBottomSpace()
-    const tabBarHeight = useBottomTabBarHeight();
-    const statusBarHeight = getStatusBarHeight();
-    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
-
-    const thirdColor = "green"
+    useEffect(() => {
+        firebase_db.ref(`users/${user_uid}`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
 
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
         user_uid = user.uid;
     }
-    var userID = user_uid.substring(0, 6)
+
+
+    const headerHeight = useHeaderHeight();
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width
+    console.log(ScreenWidth)
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = useBottomTabBarHeight();
+    // const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
+
+    const firstColor= "#9E001C"
+    const secondColor="#F6AE2D"
+    const thirdColor = "#33658A"
+    const fourthColor= "#494949"
+
+
+    console.log("startthispage")
 
     const [colorBookList, setColorBookList] = useState([]);
 
     useEffect(()=>{
-        firebase_db.ref(`users/${user_uid}/myBook`)
+        firebase_db.ref(`users/${user_uid}/myBooks`)
             .on('value',(snapshot)=>{
                 let colorBookList = snapshot.val();
                 if (colorBookList>""){
@@ -56,46 +70,188 @@ const MyPage = ({ navigation }) => {
             console.log("mpage color book list", colorBookList)
             const colorBookListValues= Object.values(colorBookList)
             console.log("mpage colorBookListValues", colorBookListValues)
-            const FirstNumber = colorBookListValues.slice(0)
-            console.log("mpage FirstNumber", FirstNumber)
 
 
-    useEffect(() => {
-        firebase_db.ref(`users/${user_uid}`)
-            .on('value', (snapshot) => {
-                let userinfo = snapshot.val();
-                if (userinfo > '') {
-                    setUserinfo(userinfo);
-                }
-            })
-    }, []);
-    useEffect(() => {
-        firebase_db.ref('book/')
-            .on('value', (snapshot) => {
-                let temp = [];
-                snapshot.forEach((child) => {
-                    const item = {
-                        ...child.val(),
-                        key: child.key,
-                    }
-                    temp.push(item)
-                })
-                temp.sort(function (a, b) {
-                    return new Date(a.regdate) - new Date(b.regdate);
-                })
-                setMyBook(temp);
-                //console.log('mypage data',data)
-            })
-    }, []) // 구 리엑트: componentDidMount에 해당함 -> 컴포넌트가 마운트 되었다면 -> 컴포넌트가 프로그래밍적으로, 변수틱하게, 생성되어서 처음으로 웹브라우저에 입성하는 순간 -> 처음으로 보일 때마다
-    // 그럴 때마다.. 이 부분이 최초 단 한 번 만 딱 한 번 만 실행됩니다.
-    // console.log('myBook',myBook)
-    console.log('mypage.bookKey', myBook.bookKey)
-    console.log('mypage.', myBook)
-    const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
-    // // console.log('myBookFiltered',myBookFiltered)
-    //// console.log('whatiswrong',myBookFiltered)
-    //// console.log('키값확인',myBookFiltered.length)
-    // const slideTo = (index) => swiper.slideTo(index);
+            //firstBookKey
+            function getFirstBookKey(colorBookListValues) {
+                const firstBookKey = colorBookListValues.find(bookKey => isStringStart1(bookKey));
+                return firstBookKey;
+            }
+
+            function isStringStart1(string) {
+                return (string.indexOf('1') == 0);
+            }
+            const firstBookKey = getFirstBookKey(colorBookListValues);
+            console.log("mypage firstBookKey", firstBookKey)
+
+            //secondBookKey
+            function getSecondBookKey(colorBookListValues) {
+                const secondBookKey = colorBookListValues.find(bookKey => isStringStart2(bookKey));
+                return secondBookKey
+            }
+
+            function isStringStart2(string) {
+                return (string.indexOf('2') == 0);
+            }
+            const secondBookKey = getSecondBookKey(colorBookListValues);
+            console.log("mypage secondBookKey", secondBookKey)
+
+            //thirdBookKey
+            function getThirdBookKey(colorBookListValues) {
+                const thirdBookKey = colorBookListValues.find(bookKey => isStringStart3(bookKey));
+                return thirdBookKey
+            }
+
+            function isStringStart3(string) {
+                return (string.indexOf('3') == 0);
+            }
+            
+            const thirdBookKey = getThirdBookKey(colorBookListValues);
+            console.log("mypage thirdBookKey", thirdBookKey)
+
+            //fourthBookKey
+            function getFourthBookKey(colorBookListValues) {
+                const fourthBookKey = colorBookListValues.find(bookKey => isStringStart4(bookKey));
+                return fourthBookKey      }
+
+            function isStringStart4(string) {
+                return (string.indexOf('4') == 0);
+            }
+            
+            const fourthBookKey = getFourthBookKey(colorBookListValues);
+            console.log("mypage fourthBookKey", fourthBookKey)
+
+
+            const [firstBook, setfirstBook] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+            });
+        
+            useEffect(getMyItem1, [firstBookKey]);
+            function getMyItem1() {
+                console.log("getMyItem1()")
+                firebase_db
+                    .ref(`/book/${firstBookKey}`)
+                    .on('value', (snapshot) => {
+                        const newfirstBook = {};
+                        snapshot.forEach((child) => {
+                            const key = child.key;
+                            const value = child.val();
+                            newfirstBook[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                        });
+                        if (firstBookKey > ''){
+                        setfirstBook({
+                            ...firstBook, // 기본 바탕색
+                            ...newfirstBook, // 덧칠
+                        });}
+                    });
+            }
+
+
+
+            const [secondBook, setsecondBook] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+            });
+        
+            useEffect(getMyItem2, [secondBookKey]);
+            function getMyItem2() {
+                console.log("getMyItem2()")
+                firebase_db
+                    .ref(`/book/${secondBookKey}`)
+                    .on('value', (snapshot) => {
+                        const newsecondBook = {};
+                        snapshot.forEach((child) => {
+                            const key = child.key;
+                            const value = child.val();
+                            newsecondBook[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                        });
+                        if (secondBookKey > ''){
+                        setsecondBook({
+                            ...secondBook, // 기본 바탕색
+                            ...newsecondBook, // 덧칠
+                        });}
+                    });
+            }
+
+
+
+            const [thirdBook, setthirdBook] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+            });
+        
+            useEffect(getMyItem3, [thirdBookKey]);
+            console.log("getMyItem3()")
+            function getMyItem3() {
+                firebase_db
+                    .ref(`/book/${thirdBookKey}`)
+                    .on('value', (snapshot) => {
+                        const newthirdBook = {};
+                        snapshot.forEach((child) => {
+                            const key = child.key;
+                            const value = child.val();
+                            newthirdBook[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                        });
+                        if (thirdBookKey > ''){
+                        setthirdBook({
+                            ...thirdBook, // 기본 바탕색
+                            ...newthirdBook, // 덧칠
+                        });}
+                    });
+            }
+
+            console.log("mypage thirdBook",thirdBook)
+
+            const [fourthBook, setfourthBook] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+            });
+        
+            useEffect(getMyItem4, [fourthBookKey]);
+            console.log("getMyItem4()")
+            function getMyItem4() {
+                firebase_db
+                    .ref(`/book/${fourthBookKey}`)
+                    .on('value', (snapshot) => {
+                        const newfourthBook = {};
+                        snapshot.forEach((child) => {
+                            const key = child.key;
+                            const value = child.val();
+                            newfourthBook[key] = value; // 우리가 잘 아는 javascript object가 된다!
+                        });
+                        if (fourthBookKey > ''){
+                        setfourthBook({
+                            ...fourthBook, // 기본 바탕색
+                            ...newfourthBook, // 덧칠
+                        });}
+                    });
+            }
+
+            console.log("mypage fourthBook",fourthBook)
+
+
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#FBFBFB" }}>
             <View style={{ flex: 1 }}>
@@ -105,7 +261,7 @@ const MyPage = ({ navigation }) => {
                 </View>
                 <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, alignSelf: "center", backgroundColor: "#F2F2F2" }}>
                     <View style={{ flex: 1, flexDirection: "row", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10 }}>
-                        <Text style={{ flex: 1, fontSize: 17, fontWeight: "600", fontColor: "#204040", marginTop: "7%", marginLeft: "3%" }}>{userinfo.iam}</Text>
+                        <Text style={{ flex: 1, fontSize: 17, fontWeight: "600", marginTop: "7%", marginLeft: "3%" }}>{userinfo.iam}</Text>
                         <TouchableOpacity style={{ alignSelf: "center", borderRadius: 50, height: 34, width: 34 }} onPress={() => { navigation.navigate('Account') }}>
                             <Icon name="settings-outline" size={27} color="#21381C" style={{ alignSelf: "center", marginTop: "10%", marginRight: "20%" }} />
                         </TouchableOpacity>
@@ -122,18 +278,21 @@ const MyPage = ({ navigation }) => {
                     </View>
 
                     <View style={{ flexDirection: "row", marginTop:"5%"}}>
-                                    <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
 
-                                    <View style={{ backgroundColor: '#FF4A4A', opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                                {firstBookKey == undefined ? (
+
+                                    <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"firstColor"})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
+
+                                    <View style={{ backgroundColor:firstColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                                     </View>
 
                                     <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                         <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                            <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간 감정은</Text>
+                                            <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간색 감정은</Text>
                                             <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
-                                            <View style={{ backgroundColor: "#FE5C5C", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                            <View style={{ backgroundColor: firstColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
                                             </View>
 
                                             <View style={{backgroundColor:"white", marginTop:"30%", alignSelf:"center", height:40, width:ScreenWidth * 0.35, opacity:0.5}}>
@@ -143,18 +302,43 @@ const MyPage = ({ navigation }) => {
                                         </View>
                                     </View>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 , marginLeft:80}}>
-                                           <View style={{ backgroundColor: 'yellow', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                                    ) : (
+
+
+                                        <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"firstColor"})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 }}>
+
+                                        <View style={{ backgroundColor:firstColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                                        </View>
+    
+                                        <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                            <Image source={{uri: firstBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간색 감정은</Text>
+                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{firstBook.bookTitle}</Text>
+                                                <View style={{ backgroundColor: firstColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                                </View>
+                                                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                            </View>
+                                        </View>
+                                        </TouchableOpacity>
+
+                                    )}
+
+
+                                {thirdBookKey == undefined ? (
+
+                                    <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"thirdColor"})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25 , marginLeft:80}}>
+                                           <View style={{ backgroundColor: thirdColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                                             </View>
  
 
                                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란 감정은</Text>
+                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>파란색 감정은</Text>
                                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
-                                                    <View style={{ backgroundColor: "yellow", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                                    <View style={{ backgroundColor: thirdColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
                                                     </View>
 
                                                     <View style={{backgroundColor:"white", marginTop:"30%", alignSelf:"center", height:40, width:ScreenWidth * 0.35, opacity:0.5}}>
@@ -164,24 +348,47 @@ const MyPage = ({ navigation }) => {
                                                 </View>
                                             </View>
                                     </TouchableOpacity>
+                                ):(
+                                    <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"thirdColor"})} style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,marginLeft:80 }}>
+
+                                    <View style={{ backgroundColor:thirdColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                                    </View>
+
+                                    <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                        <Image source={{uri: thirdBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+                                        <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                            <Text style={{ marginTop: "30%", marginLeft: "10%" }}>파란색 감정은</Text>
+                                            <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{thirdBook.bookTitle}</Text>
+                                            <View style={{ backgroundColor: thirdColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                            </View>
+                                            <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                        </View>
+                                    </View>
+                                    </TouchableOpacity>
+
+                                )}
  
                     </View>
 
 
 
                     <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:thirdColor})} style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
 
-                            <View style={{ backgroundColor: 'green', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                    {secondBookKey == undefined ? (
+
+                        <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"secondColor"})} style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
+
+                            <View style={{ backgroundColor: secondColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                             </View>
 
                             <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간 감정은</Text>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
-                                    <View style={{ backgroundColor: "#FE5C5C", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    <View style={{ backgroundColor: secondColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
                                     </View>
 
                                     <View style={{ backgroundColor: "white", marginTop: "30%", alignSelf: "center", height: 40, width: ScreenWidth * 0.35, opacity: 0.5 }}>
@@ -190,19 +397,46 @@ const MyPage = ({ navigation }) => {
 
                                 </View>
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
+                        </TouchableOpacity>)
+                        :(
+                            <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"secondColor"})} style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25 }}>
 
-                            <View style={{ backgroundColor: 'blue', opacity: 0.7, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                            <View style={{ backgroundColor: secondColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                            </View>
+
+                            <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                <Image source={{uri: secondBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
+                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{secondBook.bookTitle}</Text>
+
+                                    <View style={{ backgroundColor: secondColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    </View>
+
+                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        )}
+
+
+                        {fourthBookKey == undefined ? (
+
+                        <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"fourthColor"})}  style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
+
+                            <View style={{ backgroundColor: fourthColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
 
                             </View>
 
                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란 감정은</Text>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
-                                    <View style={{ backgroundColor: "yellow", opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    <View style={{ backgroundColor: fourthColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
                                     </View>
 
                                     <View style={{ backgroundColor: "white", marginTop: "30%", alignSelf: "center", height: 40, width: ScreenWidth * 0.35, opacity: 0.5 }}>
@@ -211,10 +445,35 @@ const MyPage = ({ navigation }) => {
 
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity>):(
 
-                        {myBookFiltered.length == 0 ? (
-                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#FF8E8E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
+                            <TouchableOpacity onPress={()=> navigation.navigate('MakeNewBook',{color:"fourthColor"})}  style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
+
+                            <View style={{ backgroundColor: fourthColor, opacity: 0.9, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+
+                            </View>
+
+                            <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                <Image source={{uri: fourthBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 15, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
+                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{fourthBook.bookTitle}</Text>
+
+                                    <View style={{ backgroundColor: fourthColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
+                                    </View>
+
+                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+
+
+                                </View>
+                            </View>
+                            </TouchableOpacity>
+
+
+                        )}
+
+                        {colorBookListValues.length == 0 ? (
+                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#44705E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
                                         <Text>도움말보기</Text>
                                     </TouchableOpacity>) :(
                                         <View></View>
@@ -223,16 +482,7 @@ const MyPage = ({ navigation }) => {
 
 
 
-                    {/* {myBookFiltered.length == 0 ? (
-                        <View style={{ height: realScreen * 0.6, resizeMode: "cover", backgroundColor:"yellow" }} >
 
-
-                        </View>
-                    ) : (
-                        <View style={{ height: realScreen * 0.6, width: realScreen * 0.5, marginTop: "5%" }}>
-                        </View>
-                    )
-                    } */}
                 </View>
             </View>
         </SafeAreaView>

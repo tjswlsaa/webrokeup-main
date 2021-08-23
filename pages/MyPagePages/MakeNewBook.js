@@ -54,22 +54,58 @@ const MakeNewBook = ({navigation,route}) => {
   const {color} = route.params;
   console.log("mnb",color)
 
+
+  const firstColor= "#9E001C"
+  const secondColor="#F6AE2D"
+  const thirdColor = "#33658A"
+  const fourthColor= "#494949"
   //if color green bookcover startwith 3
+
+  const KeyColor = ()=>{
+
+    if(color=="firstColor"){
+      return "#9E001C"
+    }else if(color=="secondColor"){
+      return "#F6AE2D"
+    }else if(color=="thirdColor"){
+      return "#33658A"
+    }else if(color=="fourthColor"){
+      return "#494949"
+    }
+
+  }
+
+  console.log("mnb keycolor",KeyColor())
+
   const startBookKeyColor = ()=>{
 
-    if(color=="red"){
+    if(color=="firstColor"){
       return 1
-    }else if(color=="yellow"){
+    }else if(color=="secondColor"){
       return 2
-    }else if(color=="green"){
+    }else if(color=="thirdColor"){
       return 3
-    }else if(color=="blue"){
+    }else if(color=="fourthColor"){
       return 4
     }
 
   }
 
-  console.log("mnb color key",startBookKeyColor)
+  const startbooktitle = ()=>{
+
+    if(color=="firstColor"){
+      return "빨간색"
+    }else if(color=="secondColor"){
+      return "노란색"
+    }else if(color=="thirdColor"){
+      return "검은색"
+    }else if(color=="fourthColor"){
+      return "파란색"
+    }
+
+  }
+  console.log("mnb color key",startBookKeyColor())
+  console.log("mnb bookTItle key",startbooktitle())
 
   const [spinner, setSpinner] = useState(false);
 
@@ -203,12 +239,12 @@ test9.bookKey = bookKey;
               inActiveText={'비공개'}
               onValueChange={(value) => setPublic(value)}
               backgroundActive={'#C4C4C4'}
-              backgroundInactive={'#21381c'}
+              backgroundInactive={'#20543F'}
               circleSize={30} //사이즈 조정이 안댐
               barHeight={30}
               barWidth={10}
 
-              circleActiveColor={'#21381c'}
+              circleActiveColor={KeyColor()}
               circleInActiveColor={'#C4C4C4'}
             />
 
@@ -218,7 +254,7 @@ test9.bookKey = bookKey;
 
           <View style={{ flex: 18,marginBottom: "25%"}}>
 
-              <View style={{ backgroundColor: color, opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
+              <View style={{backgroundColor:KeyColor(), opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
 
               </View>
 
@@ -227,7 +263,7 @@ test9.bookKey = bookKey;
               <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
 
                   <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
-                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}>초록 감정은</Text>
+                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
                   <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                     value={bookTitle}
                     multiline={false}
@@ -250,7 +286,7 @@ test9.bookKey = bookKey;
                   <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
                 <View style={{marginTop:"20%"}} >
-                <Button  color="color"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                <Button  color="#20543F"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
                 </View>
              </View>
 
@@ -274,9 +310,10 @@ test9.bookKey = bookKey;
                     }}
                   ></Image>
                 </TouchableOpacity>  
-
                 <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
-                <TextInput style={{ marginTop:"20%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+
+                <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                   value={bookTitle}
                   multiline={false}
                   maxLength={10}
@@ -460,11 +497,11 @@ async function handleChapter() {
     // selfLetter:userinfo.selfLetter
   });
 
+  let mybookKey= "myBookKey"
+
   firebase_db
-  .ref(`/users/${user_uid}/myBook`)
-  .set({
-    bookKey:bookKey
-  })
+  .ref(`/users/${user_uid}/myBooks/`+bookKey)
+  .set(bookKey)
 
 
 
