@@ -52,11 +52,11 @@ const communityBoard = ({ navigation, route }) => {
                         })}
                 </ScrollView>
                 
-                <View>
+                <View style={{}}>
 
                     <TouchableOpacity 
                     onPress={()=>navigation.navigate("communityMakeNewPost")}
-                    style={{height:50, backgroundColor:"blue", justifyContent:"center"}}>
+                    style={{height:50,width:"98%", alignSelf:"center", backgroundColor:"#44705E", justifyContent:"center", borderRadius:"40%",}}>
                         <Text style={{alignSelf:"center", fontSize:15}}>글쓰기</Text>
                     </TouchableOpacity>
 

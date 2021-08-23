@@ -407,7 +407,7 @@ const MyPage = ({ navigation }) => {
                                 <Image source={{uri: secondBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
 
                                 <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
-                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
+                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란색 감정은</Text>
                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{secondBook.bookTitle}</Text>
 
                                     <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>

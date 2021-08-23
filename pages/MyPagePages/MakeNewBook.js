@@ -482,6 +482,27 @@ async function handleChapter() {
       }
   
     }
+    const firstColor= "#9E001C"
+    const secondColor="#F6AE2D"
+    const thirdColor = "#33658A"
+    const fourthColor= "#494949"
+
+    function getColor(bookKey) {
+      if (bookKey.indexOf('1') == 0){
+      return firstColor
+      }
+      else if (bookKey.indexOf('2') == 0){
+      return secondColor
+      }
+      else if (bookKey.indexOf('3') == 0){
+      return thirdColor
+      }
+      else if (bookKey.indexOf('4') == 0){
+      return fourthColor
+      }
+  }
+  const Color = getColor(bookKey);
+  console.log("populararticle Color", Color)
   
     console.log("mnb22222 bookTItle key",startbooktitle())
 
@@ -510,7 +531,8 @@ async function handleChapter() {
     url:downloadURL,
     bookKey:bookKey,
     isPublic:isPublic,
-    CountChapter:0
+    CountChapter:0,
+    Color:Color
     // iam:userinfo.iam,
     // selfLetter:userinfo.selfLetter
   });

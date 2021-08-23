@@ -121,6 +121,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
        console.log("popualr bookKey",bookKey)
         const [book,setBook] = useState([]);
         console.log("popular article",book)
+        console.log("popular articlechapters",chapters)
 
         const [likeCount, setLikeCount] = useState(0);
         const [commentsNumber, setCommentsNumber] = useState(0);
@@ -133,37 +134,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight;
         const ScreenWidth = Dimensions.get('window').width  //screen 너비
 
-        var user = firebase.auth().currentUser;
-        var user_uid
-        if (user != null) {
-                user_uid = user.uid;
-        }
-        
-        const firstColor= "#9E001C"
-        const secondColor="#F6AE2D"
-        const thirdColor = "#33658A"
-        const fourthColor= "#494949"
 
-        function getColor(bookKey) {
-                if (bookKey.indexOf('1') == 0){
-                return firstColor
-                }
-                else if (bookKey.indexOf('2') == 0){
-                return secondColor
-                }
-                else if (bookKey.indexOf('3') == 0){
-                return thirdColor
-                }
-                else if (bookKey.indexOf('4') == 0){
-                return fourthColor
-                }
-            }
-            const Color = getColor(bookKey);
-            console.log("populararticle Color", Color)
-
-
-
-        var userID = user_uid.substring(0, 6)
         const [myitem, setMyitem] = useState({
                 bookKey: '',
                 bookTitle: '',
@@ -173,6 +144,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                 url: '',
                 user_uid: '',
             });
+
         useEffect(getMyItem, []);
         function getMyItem() {
             //console.log('getMyItem()');
@@ -195,6 +167,53 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
 
 
         console.log("book popular myitem", myitem)
+        console.log("book popular chapters.user_uid", chapters.creator)
+
+        const [userinfo, setuserinfo] = useState({
+            iam:"익명의.지은이",
+            selfLetter:"안녕하세요 익명의 지은이입니다."
+        });
+
+        useEffect(getuserinfo, []);
+
+         function getuserinfo(){
+                 
+          firebase_db.ref(`users/${chapters.creator}`)
+              .on('value', (snapshot) => {
+                  let userinfo = snapshot.val();
+                  if (userinfo > '') {
+                        setuserinfo(userinfo);
+                  }
+              })
+        }
+
+        let iam = userinfo.iam;
+        console.log({iam})
+        let selfLetter = userinfo.selfLetter;
+        console.log({selfLetter})
+
+        const firstColor= "#9E001C"
+        const secondColor="#F6AE2D"
+        const thirdColor = "#33658A"
+        const fourthColor= "#494949"
+
+        function getColor(bookKey) {
+                if (bookKey.indexOf('1') == 0){
+                return firstColor
+                }
+                else if (bookKey.indexOf('2') == 0){
+                return secondColor
+                }
+                else if (bookKey.indexOf('3') == 0){
+                return thirdColor
+                }
+                else if (bookKey.indexOf('4') == 0){
+                return fourthColor
+                }
+            }
+            const Color = getColor(bookKey);
+            console.log("populararticle Color", Color)
+
 
 
         useEffect (()=>{
@@ -235,7 +254,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                                 <View style={{flex:1, marginHorizontal: "5%", marginTop: "2%", padding:"2%",backgroundColor:"white"}}>
                                                         <View style={{flex:5}}>
                                                         <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%"}} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                                                        <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} line>{chapters.mainText}</Text>
+                                                        <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} >{chapters.mainText}</Text>
                                                         </View>
                                                         <View>
                                                                 <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
@@ -268,7 +287,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem.defaultTitle}</Text>
                                                 <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
 
-                                                {/* <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text> */}
+                                                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                         </View>
                                         </View>
                                         </View>
