@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Button, Text, View, Image, Alert, TouchableOpacity, TextInput, Touchable } from 'react-native';
+import { TouchableWithoutFeedback, ImageBackground, Keyboard, StyleSheet, Dimensions, Button, Text, View, Image, Alert, TouchableOpacity, TextInput, Touchable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { firebase_db } from '../../firebaseConfig';
 import * as ImagePicker from 'expo-image-picker';
@@ -12,7 +12,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { CommonActions } from '@react-navigation/native';
 import * as ImageManipulator from 'expo-image-manipulator';
 import coverimage from '../../assets/coverimage.png';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
 const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
@@ -43,12 +45,105 @@ const test7 = {
 const test8 = {
   smallBookTitle: '',
 }
-const MakeNewBook = ({ navigation, route }) => {
+const test9={
+  bookKey:'',
+}
+
+const MakeNewBook = ({navigation,route}) => {
+
+  const {color} = route.params;
+  console.log("mnb",color)
+
+
+  const firstColor= "#9E001C"
+  const secondColor="#F6AE2D"
+  const thirdColor = "#33658A"
+  const fourthColor= "#494949"
+  //if color green bookcover startwith 3
+
+  const KeyColor = ()=>{
+
+    if(color=="firstColor"){
+      return "#9E001C"
+    }else if(color=="secondColor"){
+      return "#F6AE2D"
+    }else if(color=="thirdColor"){
+      return "#33658A"
+    }else if(color=="fourthColor"){
+      return "#494949"
+    }
+
+  }
+
+  console.log("mnb keycolor",KeyColor())
+
+  const startBookKeyColor = ()=>{
+
+    if(color=="firstColor"){
+      return 1
+    }else if(color=="secondColor"){
+      return 2
+    }else if(color=="thirdColor"){
+      return 3
+    }else if(color=="fourthColor"){
+      return 4
+    }
+
+  }
+
+  const startbooktitle = ()=>{
+
+    if(color=="firstColor"){
+      return "빨간색"
+    }else if(color=="secondColor"){
+      return "노란색"
+    }else if(color=="thirdColor"){
+      return "검은색"
+    }else if(color=="fourthColor"){
+      return "파란색"
+    }
+
+  }
+  console.log("mnb color key",startBookKeyColor())
+  console.log("mnb bookTItle key",startbooktitle())
 
   const [spinner, setSpinner] = useState(false);
 
   test7.spinner = spinner
   test7.setSpinner = setSpinner;
+
+  function generateRandomCode(n) {
+    let str = ''
+    for (let i = 0; i < n; i++) {
+      str += Math.floor(Math.random() * 10)
+    }
+    return str
+  }
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight - headerHeight - BottomSpace 
+  const bookKey= startBookKeyColor()+generateRandomCode(6)+"000"
+  console.log("MNB bookKey",bookKey)
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const headerHeight = useHeaderHeight();
+  const ScreenWidth = Dimensions.get('window').width
+
+//   const [CountBookKey,setCountBookKey]=useState("")
+
+//   useEffect (()=>{
+//     let arr = firebase_db.ref(`book/${HeadBookKey}/`)
+//     .on('value', (snapshot) => {
+//        var CountBookKey = snapshot.numChildren();
+//        setCountBookKey(CountBookKey)
+//     })
+// }, [])
+  
+// console.log("CountBookKey",CountBookKey)
+
+// const bookKey=HeadBookKey+(CountBookKey+1)
+// console.log("bookKey",bookKey)
+
+test9.bookKey = bookKey;
 
 
   const user = firebase.auth().currentUser;
@@ -117,6 +212,8 @@ const MakeNewBook = ({ navigation, route }) => {
     }
   }
 
+  console.log("mnb image",image)
+
 
   return (
     // <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
@@ -142,21 +239,32 @@ const MakeNewBook = ({ navigation, route }) => {
               inActiveText={'비공개'}
               onValueChange={(value) => setPublic(value)}
               backgroundActive={'#C4C4C4'}
-              backgroundInactive={'#21381c'}
+              backgroundInactive={'#20543F'}
               circleSize={30} //사이즈 조정이 안댐
               barHeight={30}
               barWidth={10}
 
-              circleActiveColor={'#21381c'}
+              circleActiveColor={KeyColor()}
               circleInActiveColor={'#C4C4C4'}
             />
-          </View>
-          <View style={{ flex: 14, marginBottom: "30%"}}>
-            <ImageBackground style={{ height: "100%", width: "100%"}} resizeMode="contain" source={coverimage} >
-              <View style={{ height: "70%", marginRight: "6%", marginLeft: "10%", marginTop: "33%"}}>
-                <View style={{ marginLeft: "12%", width: "80%"}}>
 
-                  <TextInput style={{ fontSize: 20, flexShrink: 1, }}
+            
+          </View>
+
+
+          <View style={{ flex: 18,marginBottom: "25%"}}>
+
+              <View style={{backgroundColor:KeyColor(), opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
+
+              </View>
+
+              {image == undefined ? (
+
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+
+                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
@@ -165,7 +273,7 @@ const MakeNewBook = ({ navigation, route }) => {
                     placeholder="제목을 작성해주세요" />
 
 
-                  <TextInput style={{ fontSize: 17, marginTop: "3%"}}
+                  <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
                     value={smallBookTitle}
 
                     multiline={false}
@@ -174,36 +282,63 @@ const MakeNewBook = ({ navigation, route }) => {
                     onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
                     placeholder="소제를 작성해주세요" />
 
-                </View>
                 <View>
                   <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
+                <View style={{marginTop:"20%"}} >
+                <Button  color="#20543F"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                </View>
+             </View>
 
-                {image == undefined ? (
-
-                  <TouchableOpacity style={{
-                    marginTop: "10%",
-                    height: "50%",
-                    width: "85%",
-                    marginLeft: "5%",
-                    alignSelf: "center",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}>
-                    {/* <Icon name="add" size={30} color="black" style={styles.addIcon}/> */}
-                    <Button title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
-                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
-                  </TouchableOpacity>
-
-                ) : (
-                  <TouchableOpacity onPress={() => savePhoto()}>
-                    <Image source={{ uri: image }} style={{ alignSelf: "center", marginTop: "10%" , marginLeft: "3%", width: 250, height: 250 }} />
-                  </TouchableOpacity>
-
-                )
-                }
               </View>
-            </ImageBackground>
+              ):(
+                <View                 
+                style={{ 
+                  zIndex: 0, position: "absolute", 
+                  height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+                <TouchableOpacity 
+                 style={{
+                  zIndex: 0, position: "absolute", 
+                  height: "100%",width:"100%"
+                }}
+                onPress={() => savePhoto()}>
+
+                  <Image  source={{ uri: image }}
+                    style={{
+                      zIndex: 0, position: "absolute", 
+                      height: "100%",width:"100%"
+                    }}
+                  ></Image>
+                </TouchableOpacity>  
+                <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+
+                <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                  value={bookTitle}
+                  multiline={false}
+                  maxLength={10}
+                  returnKeyType="done"
+                  onChangeText={bookTitle => setBookTitle(bookTitle)}
+                  placeholder="제목을 작성해주세요" />
+
+
+                <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+                  value={smallBookTitle}
+
+                  multiline={false}
+                  maxLength={14}
+                  returnKeyType="done"
+                  onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
+                  placeholder="소제를 작성해주세요" />
+
+              <View>
+                <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
+              </View>
+
+           </View>
+
+            </View>
+              )}
           </View>
         </View>
         {/* </ImageBackground> */}
@@ -313,96 +448,65 @@ async function handleChapter() {
   saveChapter()
 }
 
-async function saveChapter() {
-  // const reduce = require('image-blob-reduce')();
+  async function saveChapter() {
+    // const reduce = require('image-blob-reduce')();
 
-  const { setSpinner } = test7;
-  setSpinner(true);
-  // 저장중일때 함수의 실행을 막아야한다. 두번 저장되면 안됨!
-  // 그런데, react-native-loading-spinner-overlay 얘가 화면 전체 터치 disable 덕분에 프로그래밍적으로 처리안해도댐
-  // 즉, 현재 방심중임
+    const {setSpinner}=test7;
+    setSpinner(true);
+    // 저장중일때 함수의 실행을 막아야한다. 두번 저장되면 안됨!
+    // 그런데, react-native-loading-spinner-overlay 얘가 화면 전체 터치 disable 덕분에 프로그래밍적으로 처리안해도댐
+    // 즉, 현재 방심중임
 
-  const { user_uid } = test;
-  const { image } = test2;
-  const { bookTitle } = test3;
-  const { isPublic } = test4;
-  const { navigation } = test5;
-  const { userinfo } = test6;
-  const { spinner } = test7;
-  const { smallBookTitle } = test8;
-  // console.log({ user_uid });
-  // console.log('이거확인',user_uid)
-  const bookKey = Math.random().toString().replace(".", "");
-  // console.log('진행상황2')
-  // console.log('props 확인', image)
-  // console.log('진행상황3')
-  // const [compressedFile,setCompressedFile]=useState("")
+    const { user_uid } = test;
+    const { image }=test2;
+    const {bookTitle}=test3;
+    const {isPublic}=test4;
+    const {navigation}=test5;
+    const {userinfo}=test6;
+    const {spinner}=test7;
+    const {smallBookTitle}=test8;
+    const {bookKey}=test9;
 
 
-  console.log('saveChapter() .', new Date());
-  const storage = firebase.storage();
-  const storageRef = storage.ref();
-  const SAVE_PATH = storageRef.child('bookCover/' + bookKey)
-  console.log('saveChapter() ..', new Date());
-  const response = await fetch(image); //get in the data?
-  console.log('saveChapter() ...', new Date());
-  const blob = await response.blob();//uploading the image blob of the uri which will pass along fire store
-  console.log('saveChapter() ....', new Date());
-  await SAVE_PATH.put(blob);
-  console.log('saveChapter() .....', new Date());
-  const downloadURL = await SAVE_PATH.getDownloadURL()
-  console.log('saveChapter() ..... .', new Date());
-
-
-  // const response = await fetch(image); //get in the data?
-  // console.log('saveChapter() ...', new Date());
-
-  //   const options = {
-  //     // As the key specify the maximum size
-  //     // Leave blank for infinity
-  //     maxSizeMB: 1.5,
-  //     // Use webworker for faster compression with
-  //     // the help of threads
-  //     useWebWorker: true
-  // }
-
-  // console.log('saveChapter(compressed) ...', new Date());
-
-  // const compressed = await imageCompression(response, options)
-  //   .then(function (compressedFile) {
-  //       // Compressed file is of Blob type
-  //       // You can drop off here if you want to work with a Blob file
-  //       console.log({compressedFile})
-  //       return compressedFile
-  //   })
-  //   .catch(function(error){
-  //     console.log(error.message)
-  //   })
-  //       // Show the user a toast message or notification that something went wrong while compressing file
-  //   console.log({compressed})
-  //   console.log ('typeof',typeof compressed)
-
-  // const blob = await compressed.blob();//uploading the image blob of the uri which will pass along fire store
-  // console.log('saveChapter() ....', new Date());
-  // await SAVE_PATH.put(blob);
-  // console.log('saveChapter() .....', new Date());
-  // const downloadURL= await SAVE_PATH.getDownloadURL()
-  // console.log('saveChapter() ..... .', new Date());
+    console.log('saveChapter() .', new Date());
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+    const SAVE_PATH = storageRef.child('bookCover/' + bookKey)
+    console.log('saveChapter() ..', new Date());
+    const response = await fetch(image); //get in the data?
+    console.log('saveChapter() ...', new Date());
+    const blob = await response.blob();//uploading the image blob of the uri which will pass along fire store
+    console.log('saveChapter() ....', new Date());
+    await SAVE_PATH.put(blob);
+    console.log('saveChapter() .....', new Date());
+    const downloadURL= await SAVE_PATH.getDownloadURL()
+    console.log('saveChapter() ..... .', new Date());
 
   firebase_db
-    .ref('book/' + bookKey)
-    .set({
-      bookTitle: bookTitle,
-      smallBookTitle: smallBookTitle,
-      user_uid: user_uid,
-      regdate: new Date().toString(),
-      url: downloadURL,
-      bookKey: bookKey,
-      isPublic: isPublic,
-      // iam:userinfo.iam,
-      // selfLetter:userinfo.selfLetter
-    });
+  .ref('book/'+bookKey)
+  .set({
+    bookTitle: bookTitle,
+    smallBookTitle:smallBookTitle,
+    user_uid: user_uid,
+    regdate: new Date().toString(),
+    url:downloadURL,
+    bookKey:bookKey,
+    isPublic:isPublic,
+    CountChapter:0
+    // iam:userinfo.iam,
+    // selfLetter:userinfo.selfLetter
+  });
+
+  let mybookKey= "myBookKey"
+
+  firebase_db
+  .ref(`/users/${user_uid}/myBooks/`+bookKey)
+  .set(bookKey)
+
+
+
   Alert.alert("생성 완료")
+  
 
   navigation.dispatch(state => {
     const routes = [...state.routes];
