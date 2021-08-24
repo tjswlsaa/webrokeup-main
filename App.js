@@ -35,8 +35,8 @@ import policyone from "./pages/MyPagePages/policyone";
 import policytwo from "./pages/MyPagePages/policytwo";
 import Notification from "./pages/MyPagePages/Notification";
 import onboarding from './pages/MyPagePages/onboarding';
-
-
+import QuestionList from './pages/MyPagePages/QuestionList';
+import QuestionWrite from './pages/MyPagePages/QuestionWrite';
 import editorBoard from "./pages/editors.js/editorBoard";
 import editWriting from "./pages/editors.js/editWriting";
 import editorMakeNewWriting from "./pages/editors.js/editorMakeNewWriting";
@@ -159,6 +159,15 @@ const App = ({ navigation }) => {
         />
 
         <Stack.Screen
+          name="QuestionList"
+          component={QuestionList}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+
+        <Stack.Screen
           name="MyBook"
           component={MyBook.component}
           options={{
@@ -240,6 +249,14 @@ const App = ({ navigation }) => {
 
           }}
         />
+        <Stack.Screen name="QuestionWrite" component={QuestionWrite.component}
+          options={{
+            title: "새챕터 만들기",
+            ...defaultScreenOptions,
+            ...QuestionWrite.options
+
+          }}
+        />        
         <Stack.Screen name="EditArticle" component={EditArticle.component}
           options={{
             title: "챕터 수정하기",

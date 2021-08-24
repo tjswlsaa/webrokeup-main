@@ -537,7 +537,7 @@ async function handleChapter() {
     // selfLetter:userinfo.selfLetter
   });
 
-  let mybookKey=startbooktitle()+" 책"
+  let mybookKey=color
 
   firebase_db
   .ref(`/users/${user_uid}/myBooks/`+mybookKey)

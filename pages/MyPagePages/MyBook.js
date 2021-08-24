@@ -197,9 +197,16 @@ const MyBook = ({ navigation, route }) => {
                 <View style={{ height: realScreen * 0.15 }}>
                     {/* <Text style={{ fontSize: 17, fontWidth: "700", alignSelf: "center", marginVertical: "5%" }}>{myitem.bookTitle}</Text> */}
                     {myitem.user_uid == user_uid ? (
-                        <TouchableOpacity style={{ backgroundColor: "#44705E", width: "40%", height: "25%", marginTop: "7%", alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
-                            <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>새로운 챕터 만들기</Text>
-                        </TouchableOpacity>) :
+                        <View style={{flexDirection:"row", justifyContent:"center"}}>
+                        <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%",  alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} 
+                        onPress={() => navigation.navigate("QuestionList", {navigation:navigation, bookKey:bookKey, Color: Color})}>
+                            <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 질문지</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
+                            <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 일기</Text>
+                        </TouchableOpacity>
+                        </View>
+                        ) :
                         (
                             <View style={{ backgroundColor: "#fafafa", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
                                 <View>
