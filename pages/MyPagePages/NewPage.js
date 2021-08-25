@@ -11,9 +11,6 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-
 
 
 const test1 = {
@@ -39,6 +36,10 @@ const test6 ={
   user_uid:""
 }
 
+const test7 ={
+  chColor: ""
+}
+
 
 const NewPage = ({ navigation, route }) => {
 
@@ -54,13 +55,11 @@ const NewPage = ({ navigation, route }) => {
     })
 }, [])
 
-
-console.log("Newpage countchapter",CountChapter)
-
   const title_a = useRef(null);
   const maintext_a = useRef(null);
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
+  const [chapterColor, setChapterColor] = useState("#F6AE2D")
   const { bookKey } = route.params;
   test2.bookKey=bookKey;
 
@@ -86,19 +85,19 @@ console.log("Newpage countchapter",CountChapter)
   const numCountChapter= Number(CountChapter)
   const chapterKey= (numBookKey+numCountChapter+1)
   // const chapterKey = bookKey+(CountChapter+1)
-  console.log("11bookKey Newpage", bookKey)
-
-  console.log("22newpagechapterKey",chapterKey)
-
+  // console.log("11bookKey Newpage", bookKey)
+  // console.log("22newpagechapterKey",chapterKey)
 
   test3.chapterKey=chapterKey
 
   const chapterTitle = text1;
   test4.chapterTitle=chapterTitle
 
-
   const mainText = text2;
   test5.mainText=mainText
+
+  const chColor = chapterColor;
+  test7.chColor = chColor
 
  // console.log('이거썌거',chapterKey)
 
@@ -109,23 +108,35 @@ console.log("Newpage countchapter",CountChapter)
       <KeyboardAvoidingView behavior ="padding" style={{flex:1}}>
       <StatusBar style="white" />
         {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
-          <View style={{height: "96%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
+          <View style={{height: "80%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
             {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
               <ScrollView scrollEnabled={false}>
-                <View style={{ height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
-                  <TextInput style={{ fontSize: 20, fontWeight: "600" }}
-                    multiline={true} placeholder="제목을 입력하세요"
+                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "20%"}}>
+                  <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
+                  <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600" }}
+                    multiline={true} placeholder="감정을 한 단어로 적어주세요"
                     returnKeyType="done"
                     onChangeText={text1 => setText1(text1)}
                     ref={title_a} />
                 </View>
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15 }}
-                  multiline={true} placeholder="본문을 입력하세요"
+                  multiline={true} placeholder="어떤 일이 있었는지 적어주세요"
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}
                   ref={maintext_a} />
               </ScrollView>
             {/* </ImageBackground> */}
+          </View>
+          <View style={{backgroundColor: "#fff", height: "15%", marginHorizontal: "5%", marginTop: "3%" }}>
+            <Text style={{marginTop: "5%", marginLeft: "5%"}}> 오늘의 감정 빛깔은 </Text>
+            <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
+              <TouchableOpacity style={{flex: 1, backgroundColor:"#FFF848"}} onPress={()=>setChapterColor("#FFF848")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: "#E8D60C"}} onPress={()=>setChapterColor("#E8D60C")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: "#FFDD00"}} onPress={()=>setChapterColor("#FFDD00")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: "#F6AE2D"}} onPress={()=>setChapterColor("#F6AE2D")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: "#FFC60D"}} onPress={()=>setChapterColor("#FFC60D")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: "#F2EDC0"}} onPress={()=>setChapterColor("#F2EDC0")}/>
+            </View>
           </View>
         {/* </ImageBackground> */}
         </KeyboardAvoidingView>
@@ -171,6 +182,8 @@ async function savePage() {
   const {chapterTitle}=test4
   const {mainText}=test5
   const {user_uid}=test6
+  const {chColor}=test7
+
   firebase_db
   .ref(`/book/${bookKey}/chapters/` + chapterKey)
   .set({
@@ -182,6 +195,7 @@ async function savePage() {
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
     bookKey:bookKey,
+    chColor: chColor,
   });
 Alert.alert("집필 완료")
 
@@ -203,7 +217,6 @@ navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
 
 function headerRight() {
   return (
-
     <TouchableOpacity onPress={savePage}>
       <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
     </TouchableOpacity>

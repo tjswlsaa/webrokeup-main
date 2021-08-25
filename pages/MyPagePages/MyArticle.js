@@ -27,7 +27,6 @@ const test1 = {
     bookKey: ''
 };
 
-
 const test3 = {
     navigation: ''
 }
@@ -60,8 +59,8 @@ const MyArticle = ({ navigation, route }) => {
     var user_uid
     if (user != null) { user_uid = user.uid }
 
-
-const headerHeight = useHeaderHeight();
+    
+    const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
@@ -69,24 +68,22 @@ const headerHeight = useHeaderHeight();
 
 
     useEffect(getChapters, [chapterKey]);
+        function getChapters() {
+            firebase_db
+                .ref(`book/${bookKey}/chapters/` + chapterKey)
+                .on('value', (snapshot) => {
+                    // console.log('getChapters() firebase_db.on()');
+                    let temp = [];
+                    const chapters = snapshot.val()
 
-    function getChapters() {
-
-        firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapterKey)
-            .on('value', (snapshot) => {
-                // console.log('getChapters() firebase_db.on()');
-                let temp = [];
-                const chapters = snapshot.val()
-
-                if (chapters > '') { // truthy check
-                    setChapters(chapters);
-                }
-            });
-    } // function getChapters()
-
-
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
+                    if (chapters > '') { // truthy check
+                        setChapters(chapters);
+                    }
+                });
+        } // function getChapters()
+    
+        const chapterColor = chapters.chColor;
+        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
 
     useEffect(() => {
         // let temp = [];
@@ -150,9 +147,7 @@ const headerHeight = useHeaderHeight();
 
   const navigatetonextpage=()=>{
 
-
     const {navigation}=test3
-
 
     navigation.dispatch(state => {
         const routes = [...state.routes];
@@ -181,8 +176,9 @@ const headerHeight = useHeaderHeight();
                         {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={paper} > */}
                         <View style={{ marginTop: "2%", backgroundColor: "#fff", height: realScreen*0.9, width: "94%", alignSelf: "center" }}>
                             <View style={{ height: "92%"}}>
-                                <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
-                                        <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
+                                <View style={{height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "20%"}}>
+                                          <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
+                                        <Text style={{flex: 15, fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                 </View>
                                 <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
                                     <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
