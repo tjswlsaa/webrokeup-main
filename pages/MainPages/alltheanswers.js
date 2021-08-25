@@ -5,36 +5,48 @@ import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 
+const test1 = {
+    questions:""
+  }
+const alltheanswers = ({ navigation, route }) => {
 
-const QuestionList = ({ navigation, route }) => {
+    const { questionsKey } = route.params;
+    console.log("bookkey color",questionsKey)
 
-    const { bookKey, Color } = route.params;
-    console.log("bookkey color",Color)
-    console.log("bookKey",bookKey)
-
-    function getquestionbox(Color) {
-        if (Color == "#9E001C"){
+    function getColor(questionsKey) {
+        if (questionsKey.indexOf('r') == 0){
         return "firstColor"
         }
-        else if (Color == "#F6AE2D"){
+        else if (bookKey.indexOf('y') == 0){
         return "secondColor"
         }
-        else if (Color == "#33658A"){
+        else if (bookKey.indexOf('B') == 0){
         return "thirdColor"
         }
-        else if (Color ==  "#494949"){
+        else if (bookKey.indexOf('b') == 0){
         return "fourthColor"
         }
     }
-    const numberColor = getquestionbox(Color);
-    console.log("getquestionbox",numberColor)
+    const Color = getColor(questionsKey);
+    const colorQuestion = Color+"Questions"
+    const colorAnswers = Color+"Answers"
 
-    const colorQuestion = numberColor+"Questions"
-    console.log("colorQuestion",colorQuestion)
 
     const [questions, setQuestion] = useState([]);
     useEffect(()=>{
-        firebase_db.ref(`questions/${colorQuestion}/`)
+      firebase_db.ref(`questions/${colorQuestion}/`+questionsKey)
+      .on('value', (snapshot)=>{
+            const questions = snapshot. val()
+    
+            setQuestion(questions)
+        })
+    },[])
+    console.log("allthequestions question",questions)
+    test1.questions=questions
+
+    const [answers, setAnswers] = useState([]);
+    useEffect(()=>{
+        firebase_db.ref(`questions/${colorAnswers}/${questionsKey}/`)
         .on('value', (snapshot)=>{
             let temp = [];
             snapshot.forEach((child)=>{
@@ -48,23 +60,25 @@ const QuestionList = ({ navigation, route }) => {
             temp.sort(function (a,b){
                 return new Date(b.regdate) - new Date(a.regdate);
             })
-            setQuestion(temp)
+            setAnswers(temp)
         })
     },[])
 
-    console.log("questions",questions)
-
+    console.log("answers",answers)
+    
     return (
         <SafeAreaView style={{flex:1}}>
+                <Text style={{alignSelf:"center", fontSize:"20", marginTop:"2%"}}>{questions.title}</Text>
+                <Text style={{alignSelf:"center", fontSize:"15", marginTop:"2%", marginHorizontal:"10%"}}>{questions.intro}</Text>
 
                 <ScrollView style={{height:500}}>
 
-                        {questions.map(item => {
+                        {answers.map(item => {
                             return (
                                 <PostItem
                                     navigation={navigation}
                                     key = {item.key}
-                                    questions={item}
+                                    answers={item}
                                 />
                             )
                         })}
@@ -79,27 +93,45 @@ const QuestionList = ({ navigation, route }) => {
 
 const PostItem=(props)=> {
 
-    const {questions, navigation, numberColor}=props;
-    console.log("questions222",questions)
-    const questionsKey=questions.questionsKey
-    console.log("questionsKey",questionsKey)
+    const {answers, navigation}=props;
+    const {questions} =test1
+    console.log("answers.chapterKey",answers.chapterKey)
+    console.log("answers.chapterKey",questions)
 
+
+    const [userinfo, setUserinfo] = useState({
+        iam: "익명의.지은이",
+        selfLetter: "안녕하세요 익명의 지은이입니다."
+    });
+    useEffect(() => {
+        firebase_db.ref(`users/${answers.creator}`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
 
 
 
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation}) }}>
                 <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{questions.title}</Text>
+                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{answers.chapterTitle}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText}>{questions.creator}</Text>      
+                <Text style={styles.bookIndexText} numberOfLines={3}>{answers.mainText}</Text>      
+                </View>
+                <View style={{flexDirection:"row",alignSelf:"flex-end",marginTop:10, padding:"2%"}}>
+                <Text style={{fontSize:10}}>{userinfo.iam}</Text>      
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation})}} style={{backgroundColor:"pink"}}>
-                <Text style={{marginLeft:"10%"}}>모두의 답변보기</Text>
-            </TouchableOpacity>
+            {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
+            <View style={{flexDirection:"row"}}>
+
+            </View>
 
         </View>
     )
@@ -205,4 +237,4 @@ const styles = StyleSheet.create({
     editButtonText: {
     }
 })
-export default QuestionList;
+export default alltheanswers;

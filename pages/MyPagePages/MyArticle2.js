@@ -139,7 +139,7 @@ const headerHeight = useHeaderHeight();
     const [CountChapter,setCountChapter]=useState("")
 
     useEffect (()=>{
-      let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+      let arr = firebase_db.ref(`book/${bookKey}/` + '/both/')
       .on('value', (snapshot) => {
          var CountChapter = snapshot.numChildren();
          setCountChapter(CountChapter)

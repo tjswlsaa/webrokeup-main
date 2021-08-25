@@ -41,7 +41,7 @@ import editorBoard from "./pages/editors.js/editorBoard";
 import editWriting from "./pages/editors.js/editWriting";
 import editorMakeNewWriting from "./pages/editors.js/editorMakeNewWriting";
 import readEditorWriting from "./pages/editors.js/readEditorWriting";
-
+import alltheanswers from './pages/MainPages/alltheanswers';
 import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
@@ -327,6 +327,14 @@ const App = ({ navigation }) => {
             title: "게시판 글쓰기",
             ...defaultScreenOptions,
             ...communityMakeNewPost.options
+
+          }} />
+                  <Stack.Screen
+          name="alltheanswers"
+          component={alltheanswers}
+          options={{
+            title: "모든 답변보기",
+            ...defaultScreenOptions,
 
           }} />
         <Stack.Screen

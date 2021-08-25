@@ -131,7 +131,7 @@ console.log("titleColor",titleColor)
       })
   }, [])
   
-
+console.log("CountChapter",CountChapter)
   test1.navigation=navigation
 
 
@@ -370,11 +370,12 @@ async function savePage() {
     Q2:question.Q2,
     Q3:question.Q3,
     intro:question.intro,
-    type:"감정 질문지"
+    type:"감정 질문지",
+    color:Color
 
   });
 
-  firebase_db.ref(`questions/${colorAnswers}/`+chapterKey)
+  firebase_db.ref(`questions/${colorAnswers}/${questionsKey}/`+chapterKey)
   .set({
     chapterKey: chapterKey,
     regdate: new Date().toString(),
@@ -387,7 +388,9 @@ async function savePage() {
     text3:text3,
     text4:text4,
     intro:question.intro,
-    type:"감정 질문지"
+    type:"감정 질문지",
+    color:Color
+
   })
 
 Alert.alert("집필 완료")
