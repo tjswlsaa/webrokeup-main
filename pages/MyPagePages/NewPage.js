@@ -47,7 +47,7 @@ const NewPage = ({ navigation, route }) => {
   const [CountChapter,setCountChapter]=useState("")
 
   useEffect (()=>{
-    let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+    let arr = firebase_db.ref(`book/${bookKey}/` + '/both/')
     .on('value', (snapshot) => {
        var CountChapter = snapshot.numChildren();
        setCountChapter(CountChapter)
@@ -182,6 +182,22 @@ async function savePage() {
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
     bookKey:bookKey,
+    type:"감정 일기"
+  });
+
+  firebase_db
+  .ref(`/book/${bookKey}/both/` + chapterKey)
+  .set({
+    chapterKey: chapterKey,
+    chapterTitle: chapterTitle,
+    mainText: mainText,
+    regdate: new Date().toString(),
+    likeCount: 0,
+    Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
+    creator: user_uid,
+    bookKey:bookKey,
+    type:"감정 일기"
+
   });
 Alert.alert("집필 완료")
 

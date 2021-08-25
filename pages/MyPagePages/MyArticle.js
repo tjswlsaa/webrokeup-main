@@ -63,6 +63,8 @@ const MyArticle = ({ navigation, route }) => {
 
 const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width   //height
+
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
@@ -73,7 +75,7 @@ const headerHeight = useHeaderHeight();
     function getChapters() {
 
         firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapterKey)
+            .ref(`book/${bookKey}/both/` + chapterKey)
             .on('value', (snapshot) => {
                 // console.log('getChapters() firebase_db.on()');
                 let temp = [];
@@ -84,6 +86,7 @@ const headerHeight = useHeaderHeight();
                 }
             });
     } // function getChapters()
+    console.log("chapters55",chapters)
 
 
     const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
@@ -173,144 +176,173 @@ const headerHeight = useHeaderHeight();
         <View style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar style="white"/>
-                <View style={{}}> 
+                <View style={{marginHorizontal:"5%", }}> 
                 {/* <View style={{ backgroundColor: "#e6ede8" }}> */}
                     {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} > */}
 
-                    <View>
-                        {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={paper} > */}
-                        <View style={{ marginTop: "2%", backgroundColor: "#fff", height: realScreen*0.9, width: "94%", alignSelf: "center" }}>
-                            <View style={{ height: "92%"}}>
-                                <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
-                                        <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
-                                </View>
-                                <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
-                                    <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
-                                </ScrollView>
+                    <View style={{ marginTop: "5%",  height: realScreen*0.85, marginHorizontal:"10%",alignSelf: "center", backgroundColor:"white" }}>
+
+                                <View>
+                                    {chapters.type== "감정 질문지"? (
+
+                                                                        
+
+                                        <View style={{backgroundColor:"white", height: realScreen*0.8}}>
+                                        <View style={{ marginHorizontal: "10%",height: realScreen*0.1, justifyContent:"center", width:"100%", marginTop:"5%"}}>
+                                                <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
+                                        </View>
+                                        <ScrollView style={{marginHorizontal: "10%", marginTop: "2%"}}>
+
+
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 18}}>{chapters.Q1}</Text>
+                                                <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
+                                                </View>
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 18}}>{chapters.Q2}</Text>
+                                                <Text style={{fontSize: 15}}>{chapters.text3}</Text>
+                                                </View>
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 18}}>{chapters.Q3}</Text>
+                                                <Text style={{fontSize: 15}}>{chapters.text4}</Text>
+                                                </View>
+
+
+                                        </ScrollView>
+                                        </View>
+                                        
+
+                                    ):
+
+                                    (  
+
+                                    
+                                    <View style={{ height: realScreen*0.8,}}>
+                                            
+                                            <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
+                                                    <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
+                                            </View>
+                                            <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
+                                                <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
+                                            </ScrollView>
+                                        </View>
+                                        )}
+                                        
+                                            <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" ,  }}>
+                                                <TouchableOpacity style={{marginTop:"4%", marginLeft:"10%"}} onPress={async () => {
+                                                    // console.log('MyArticle.likeButton.onPress()');
+                                                    // console.log({likedUsers});
+                                                    // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
+                                                    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+                                                    const isMeliked = (meliked > '');
+                                                    const isMeliked2 = ((meliked == '') == false);
+                                                    // console.log("likedUsers: " +likedUsers)
+                                                    // console.log("meliked: " + meliked)
+                                                    // console.log({isMeliked,isMeliked2});
+                                                    let likeCount = 0;
+                                                    // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
+                                                    // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
+                                                    if (meliked == '') {
+                                                        await likeRef.child(user_uid).set({
+                                                            user_uid: user_uid,
+                                                            regdate: new Date().toString(),
+                                                        });
+                                                        // likeReload();
+                                                        likeRef.on('value', (snapshot) => {
+                                                            //  var likeCount = snapshot.numChildren();
+                                                            likeCount = snapshot.numChildren();
+                                                            setLikeCount(likeCount)
+                                                        })
+                                                        await setCloverColor("green")
+                                                    } else {
+                                                        // console.log ("좋아요 취소")
+                                                        // likeRef.child(user_uid).set(null)
+                                                        await likeRef.child(user_uid).remove();
+                                                        // likeReload();
+                                                        likeRef.on('value', (snapshot) => {
+                                                            //  var likeCount = snapshot.numChildren();
+                                                            likeCount = snapshot.numChildren();
+                                                            setLikeCount(likeCount)
+                                                        })
+                                                        await setCloverColor("#c1c1c1")
+
+                                                    }
+                                                   
+                                                    firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey).child("likeCount").set(likeCount)
+
+                                                }}>
+                                                    <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
+
+                                                </TouchableOpacity>
+                                                <Text style={{ marginLeft: "3%",marginTop:"4%", }}> {likeCount} </Text>
+
+                                                <TouchableOpacity
+                                                    onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
+                                                    style={{marginTop:"4%", marginLeft:"5%" }}
+                                                >
+                                                    <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
+
+                                                </TouchableOpacity>
+
+                                                <Text style={{ marginLeft: "3%",marginTop:"4%",  }}> {commentsNumber} </Text>
+
+                                                <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"20%" }}>
+                                                    <Text style={{ fontSize: 13,}}>{chapters.Kregdate}</Text>
+                                                </View>
+                                            </View>
                             </View>
 
-                            <View style={{ flexDirection: "row", height: "20%", }}>
-                                <TouchableOpacity style={styles.likeButton} onPress={async () => {
-                                    // console.log('MyArticle.likeButton.onPress()');
-                                    // console.log({likedUsers});
-                                    // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
-                                    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-                                    const isMeliked = (meliked > '');
-                                    const isMeliked2 = ((meliked == '') == false);
-                                    // console.log("likedUsers: " +likedUsers)
-                                    // console.log("meliked: " + meliked)
-                                    // console.log({isMeliked,isMeliked2});
-                                    let likeCount = 0;
-                                    // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
-                                    // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
-                                    if (meliked == '') {
-                                        await likeRef.child(user_uid).set({
-                                            user_uid: user_uid,
-                                            regdate: new Date().toString(),
-                                        });
-                                        // likeReload();
-                                        likeRef.on('value', (snapshot) => {
-                                            //  var likeCount = snapshot.numChildren();
-                                            likeCount = snapshot.numChildren();
-                                            setLikeCount(likeCount)
-                                        })
-                                        await setCloverColor("green")
-                                    } else {
-                                        // console.log ("좋아요 취소")
-                                        // likeRef.child(user_uid).set(null)
-                                        await likeRef.child(user_uid).remove();
-                                        // likeReload();
-                                        likeRef.on('value', (snapshot) => {
-                                            //  var likeCount = snapshot.numChildren();
-                                            likeCount = snapshot.numChildren();
-                                            setLikeCount(likeCount)
-                                        })
-                                        await setCloverColor("#c1c1c1")
+                            <View style={{ }}>
+                            <View style={{ height:realScreen*0.1, flexDirection: "row", }}>
+                                    
+                                    <View style={{width:ScreenWidth*0.5, justifyContent:"center"}}> 
+                                    {chapters.creator == user_uid ? (
+                                    <View style={{height: realScreen*0.05, width: "90%", flexDirection: "row", alignSelf: "center", alignContent:"center", }}>
 
-                                    }
-                                    // console.log({likeCount});
-                                    // console.log("여기여기: " + likeCount) 
-                                    // 이전: const [likeCount, setLikeCount] = useState(0);
-                                    // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
-                                    // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.
-                                    // 이후: let likeCount = 0;
-                                    // likeCount는 변수다
-                                    // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-                                    //// console.log('MyArticle.js (4), chapters: ',chapters);
-                                    firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey).child("likeCount").set(likeCount)
-                                    // likeRef.child(user_uid).set({
-                                    //     user_uid: user_uid,
-                                    //     regdate: new Date().toString(),
-                                    // })
-                                    // likeReload();
-                                    // Alert.alert('MyArticle.likeButton.onPress() end');
-                                }}>
-                                    <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
+                                        <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
+                                            <Text style={{alignSelf: "center", color: "#21381c",}} 
+                                                onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={{backgroundColor: "#21381c",width: ScreenWidth*0.15,  borderRadius: 15, justifyContent:"center"}} >
+                                            <Text style={{alignSelf: "center", color: "#fff", }} 
+                                                onPress={() => {
+                                                    // console.log('MyArticle.js (3), chapters: ',chapters);
 
-                                </TouchableOpacity>
-                                <Text style={{ marginLeft: "3%"}}> {likeCount} </Text>
+                                                    firebase_db
+                                                        .ref(`book/${bookKey}/chapters/` + chapterKey)
+                                                        .set(null)
+                                                        .then(function () {
+                                                            Alert.alert("삭제 완료")
+                                                            navigation.navigate("MyBook", { bookKey: bookKey })
+                                                        })
+                                                }}>삭제</Text>
+                                        </TouchableOpacity>
+                                    </View>)
+                                    : (<View style={{height: "4%"}}></View>)}
+                                    </View>
 
-                                <TouchableOpacity
-                                    onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
-                                    style={styles.commentButton}
-                                >
-                                    <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
+                                    <View style={{width:ScreenWidth*0.4, justifyContent:"center",alignContent:"flex-end"}}> 
 
-                                </TouchableOpacity>
-                                {/* <Button 
-                        style={styles.commentButton}
-                        title="댓글"
-                        onPress={()=>{navigation.navigate('Comment',{chapters:chapters, navigation:navigation,bookKey:bookKey, chapterKey:chapterKey})}}/>
-                    */}
-                                <Text style={{ marginLeft: "3%" }}> {commentsNumber} </Text>
-                                <Text style={{ marginLeft: "25%", fontSize: 13, marginTop: "1%" }}>{chapters.Kregdate}</Text>
+                                    {endChapterKey==chapterKey? ( 
+                                        <View style={{alignSelf:"flex-end", padding:"7%"}}>
+
+                                            <Text>마지막 챕터입니다</Text>
+                                        </View>
+                                        ):(
+
+                                            <Icon.Button name='right' size={25}
+                                            backgroundColor= 'white' color="black" 
+                                            // onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
+                                            onPress={()=>{navigatetonextpage()}}
+                                            >
+                                            </Icon.Button>                            )}
+
+                                    </View>
+
+                            </View>     
                             </View>
-                        </View>
-
-                    <View style={{backgroundColor:"yellow", height:realScreen*0.1, flexDirection: "row"}}>
-
-                        {chapters.creator == user_uid ? (
-                        <View style={{height: realScreen*0.05, marginTop: "2%", width: "90%", flexDirection: "row", alignSelf: "center"}}>
-                       
-                            <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: "15%", borderRadius: 15}}>
-                                <Text style={{alignSelf: "center", color: "#21381c", marginTop: "10%"}} 
-                                    onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{backgroundColor: "#21381c", width: "15%", borderRadius: 15}} >
-                                <Text style={{alignSelf: "center", color: "#fff", marginTop: "13%"}} 
-                                    onPress={() => {
-                                        // console.log('MyArticle.js (3), chapters: ',chapters);
-
-                                        firebase_db
-                                            .ref(`book/${bookKey}/chapters/` + chapterKey)
-                                            .set(null)
-                                            .then(function () {
-                                                Alert.alert("삭제 완료")
-                                                navigation.navigate("MyBook", { bookKey: bookKey })
-                                            })
-                                    }}>삭제</Text>
-                            </TouchableOpacity>
-                        </View>)
-                        : (<View style={{height: "4%"}}></View>)}
 
 
-                        {endChapterKey==chapterKey? ( 
-                            <View>
-
-                                <Text>마지막 챕터입니다</Text>
-                            </View>
-                            ):(
-
-                                <Icon.Button name='right' size={25}
-                                backgroundColor= 'white' color="black" 
-                                // onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
-                                onPress={()=>{navigatetonextpage()}}
-                                >
-                                </Icon.Button>                            )}
-         
-
-                    
-                    </View>     
 
                         {/* </ImageBackground> */}
                     </View>
@@ -378,7 +410,6 @@ const styles = StyleSheet.create({
         marginLeft: "7%"
     },
     likeButton: {
-        marginLeft: "10%",
     }
 });
 

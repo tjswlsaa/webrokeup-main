@@ -133,7 +133,7 @@ const MyBook = ({ navigation, route }) => {
     useEffect(getChapters, []);
     function getChapters() {
         firebase_db
-            .ref(`book/${bookKey}/chapters/`)
+            .ref(`book/${bookKey}/both/`)
             .on('value', (snapshot) => {
                 let temp = [];
                 //console.log({'temp.length (.)':temp.length});
@@ -158,6 +158,8 @@ const MyBook = ({ navigation, route }) => {
                 //console.log({ temp })
             })
     }
+
+    console.log("getChapters",chapter)
 
 
     return (
@@ -267,7 +269,7 @@ function MyChapterItem(props) {
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
-
+    console.log("chapters2222222",chapters)
 
     useEffect(() => {
         // let temp = [];

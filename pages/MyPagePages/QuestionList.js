@@ -26,12 +26,15 @@ const QuestionList = ({ navigation, route }) => {
         return "fourthColor"
         }
     }
-    const box = getquestionbox(Color);
-    console.log("getquestionbox",box)
+    const numberColor = getquestionbox(Color);
+    console.log("getquestionbox",numberColor)
+
+    const colorQuestion = numberColor+"Questions"
+    console.log("colorQuestion",colorQuestion)
 
     const [questions, setQuestion] = useState([]);
     useEffect(()=>{
-        firebase_db.ref(`${box}/`)
+        firebase_db.ref(`questions/${colorQuestion}/`)
         .on('value', (snapshot)=>{
             let temp = [];
             snapshot.forEach((child)=>{
@@ -48,6 +51,8 @@ const QuestionList = ({ navigation, route }) => {
             setQuestion(temp)
         })
     },[])
+
+    console.log("questions",questions)
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -75,52 +80,10 @@ const QuestionList = ({ navigation, route }) => {
 const PostItem=(props)=> {
 
     const {questions, navigation}=props;
-    const questionsKey=questions.key
-  
-    const [PostItemUserinfo, setPostItemUserinfo]=useState({});
+    console.log("questions222",questions)
+    const questionsKey=questions.questionsKey
+    console.log("questionsKey",questionsKey)
 
-    useEffect(()=>{
-        firebase_db.ref(`users/${questions.creator}`)
-            .on('value', (snapshot) => {
-                let PostItemUserinfo = snapshot.val();
-                if (PostItemUserinfo > '') {
-                    setPostItemUserinfo(PostItemUserinfo);
-                }
-            })
-    }, []);
-  
-
-
-    const likeRef = firebase_db.ref(`post/${questionsKey}/` + '/likes/');
-
-    const [likeCount, setLikeCount] = useState(0);
-    const [likedUsers, setLikedUsers] = useState([]);
-
-    useEffect (()=>{
-        // let temp = [];
-        let arr = likeRef
-        .on('value', (snapshot) => {
-            let temp = [];
-            var likeCount = snapshot.numChildren();
-           // console.log('useEffect()');
-           // console.log({likeCount});
-            setLikeCount(likeCount)
-            //// console.log(likeCount)
-            snapshot.forEach((child) => {
-                temp.push(child.val());
-            })
-           // console.log({temp});
-            setLikedUsers(temp);
-        })
-    }, [])
-    const [commentsNumber, setCommentsNumber] = useState(0);
-    useEffect (()=>{
-        let arr = firebase_db.ref(`post/${questionsKey}/` + '/comments/')
-        .on('value', (snapshot) => {
-           var commentsNumber = snapshot.numChildren();
-           setCommentsNumber(commentsNumber)
-        })
-    }, [])
 
 
 
@@ -131,12 +94,7 @@ const PostItem=(props)=> {
                 <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{questions.title}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText}>{PostItemUserinfo.iam}</Text>
-                <Icon name="like2" size={18} color="black" style={{marginLeft:20,marginTop:3}}/>
-                <Text style={styles.bookIndexText}>{likeCount}</Text>
-                <Icon name="message1" size={20} color="black" style={{marginLeft:20,marginTop:3}}/>
-
-                <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                <Text style={styles.bookIndexText}>{questions.creator}</Text>      
                 </View>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}

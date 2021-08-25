@@ -42,9 +42,18 @@ const test7 = {
   const test8 ={
     text4:""
   }
-
+  const test9 ={
+    Color:""
+  }
+  const test10 ={
+    questionsKey:""
+  }
+  const test11 ={
+    question:""
+  }
 const QuestionWrite = ({ navigation, route }) => {
     const { questionsKey } = route.params;
+    test10.questionsKey=questionsKey
 // questionkey로 색깔 구하기
 function getColor(questionsKey) {
     if (questionsKey.indexOf('r') == 0){
@@ -61,7 +70,10 @@ function getColor(questionsKey) {
     }
 }
 const Color = getColor(questionsKey);
+const colorQuestion = Color+"Questions"
+
 console.log("mybook Color", Color)
+test9.Color=Color
 // const firstColor= "#9E001C"
 // const secondColor="#F6AE2D"
 // const thirdColor = "#33658A"
@@ -129,19 +141,21 @@ console.log("titleColor",titleColor)
 
 const [question, setQuestion] = useState([]);
 useEffect(()=>{
-    firebase_db.ref(`${Color}/${questionsKey}`)
-    .on('value', (snapshot)=>{
+  firebase_db.ref(`questions/${colorQuestion}/`+questionsKey)
+  .on('value', (snapshot)=>{
         const question = snapshot. val()
 
         setQuestion(question)
     })
 },[])
 console.log("Newpage question",question)
+test11.question=question
 
   const title_a = useRef(null);
   const maintext_a = useRef(null);
   const [text1, setText1] = useState('');
-  test4.text1=test1
+  test4.text1=text1
+  console.log("text1111",text1)
   const [text2, setText2] = useState('');
   test5.text2=text2
   const [text3, setText3] = useState('');
@@ -325,8 +339,22 @@ async function savePage() {
   const {user_uid}=test6
   const {text3}=test7
   const {text4}=test8
+  const {Color}=test9
+  const {questionsKey}=test10
+  const {question}=test11
+
+  console.log("text1",text1)
+  console.log("text12",text2)
+  console.log("text13",text3)
+  console.log("text14",text4)
+  console.log("chapterKey",chapterKey)
+  console.log("bookKey",bookKey)
+  console.log("user_uid",user_uid)
+  console.log("Color",Color)
+  const colorAnswers = Color+"Answers"
+
   firebase_db
-  .ref(`/book/${bookKey}/questions/` + chapterKey)
+  .ref(`/book/${bookKey}/both/` + chapterKey)
   .set({
     chapterKey: chapterKey,
     regdate: new Date().toString(),
@@ -334,26 +362,34 @@ async function savePage() {
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
     bookKey:bookKey,
-    text1:text1,
-    text2:text2,
+    chapterTitle:text1,
+    mainText:text2,
     text3:text3,
-    text4:text4
+    text4:text4,
+    Q1:question.Q1,
+    Q2:question.Q2,
+    Q3:question.Q3,
+    intro:question.intro,
+    type:"감정 질문지"
+
   });
 
-//   firebase_db
-//   .ref(`/book/${bookKey}/both/` + chapterKey)
-//   .set({
-//     chapterKey: chapterKey,
-//     regdate: new Date().toString(),
-//     likeCount: 0,
-//     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
-//     creator: user_uid,
-//     bookKey:bookKey,
-//     text1:text1,
-//     text2:text2,
-//     text3:text3,
-//     text4:text4
-//   });
+  firebase_db.ref(`questions/${colorAnswers}/`+chapterKey)
+  .set({
+    chapterKey: chapterKey,
+    regdate: new Date().toString(),
+    likeCount: 0,
+    Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
+    creator: user_uid,
+    bookKey:bookKey,
+    chapterTitle:text1,
+    mainText:text2,
+    text3:text3,
+    text4:text4,
+    intro:question.intro,
+    type:"감정 질문지"
+  })
+
 Alert.alert("집필 완료")
 
 navigation.dispatch(state => {
