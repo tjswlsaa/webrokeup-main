@@ -72,7 +72,7 @@ const MyArticle = ({ navigation, route }) => {
     useEffect(getChapters, [chapterKey]);
         function getChapters() {
             firebase_db
-                .ref(`book/${bookKey}/chapters/` + chapterKey)
+                .ref(`book/${bookKey}/both/` + chapterKey)
                 .on('value', (snapshot) => {
                     // console.log('getChapters() firebase_db.on()');
                     let temp = [];
@@ -86,6 +86,7 @@ const MyArticle = ({ navigation, route }) => {
     
         const chapterColor = chapters.chColor;
         const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
+        console.log("chapters",chapters)
 
     useEffect(() => {
         // let temp = [];
@@ -129,7 +130,7 @@ const MyArticle = ({ navigation, route }) => {
     const [CountChapter,setCountChapter]=useState("")
 
     useEffect (()=>{
-      let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+      let arr = firebase_db.ref(`book/${bookKey}/` + '/both/')
       .on('value', (snapshot) => {
          var CountChapter = snapshot.numChildren();
          setCountChapter(CountChapter)
