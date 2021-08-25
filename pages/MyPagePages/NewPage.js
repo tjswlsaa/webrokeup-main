@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Dimensions, SafeAreaView, View, KeyboardAvoidingView, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState, useRef,useEffect } from 'react';
+import { SafeAreaView, View, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput,Dimensions,KeyboardAvoidingView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -38,9 +38,24 @@ const test5 ={
 const test6 ={
   user_uid:""
 }
+
+
 const NewPage = ({ navigation, route }) => {
 
   test1.navigation=navigation
+
+  const [CountChapter,setCountChapter]=useState("")
+
+  useEffect (()=>{
+    let arr = firebase_db.ref(`book/${bookKey}/` + '/chapters/')
+    .on('value', (snapshot) => {
+       var CountChapter = snapshot.numChildren();
+       setCountChapter(CountChapter)
+    })
+}, [])
+
+
+console.log("Newpage countchapter",CountChapter)
 
   const title_a = useRef(null);
   const maintext_a = useRef(null);
@@ -62,7 +77,20 @@ const NewPage = ({ navigation, route }) => {
   }
   test6.user_uid=user_uid
  // console.log('findsuer',user_uid)
-  const chapterKey = Math.random().toString().replace(".", "");
+  // const chapterKey = Math.random().toString().replace(".", "");
+  //bookKey가 애초에 5자리+000으로끝나고 숫자로 바꿔서 CountChapter+1하면되네 
+  //만약 챕터가 0개라면 고정으로 bookKey+"001"
+  //1개 이상이면 bookKey
+
+  const numBookKey= Number(bookKey)
+  const numCountChapter= Number(CountChapter)
+  const chapterKey= (numBookKey+numCountChapter+1)
+  // const chapterKey = bookKey+(CountChapter+1)
+  console.log("11bookKey Newpage", bookKey)
+
+  console.log("22newpagechapterKey",chapterKey)
+
+
   test3.chapterKey=chapterKey
 
   const chapterTitle = text1;
@@ -73,7 +101,6 @@ const NewPage = ({ navigation, route }) => {
   test5.mainText=mainText
 
  // console.log('이거썌거',chapterKey)
-  console.log("bookKey Newpage", bookKey)
 
 
 
@@ -154,7 +181,7 @@ async function savePage() {
     likeCount: 0,
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
-    bookKey:bookKey
+    bookKey:bookKey,
   });
 Alert.alert("집필 완료")
 

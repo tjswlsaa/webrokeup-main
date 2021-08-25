@@ -17,6 +17,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import { CommonActions } from '@react-navigation/native';
+import Feather from 'react-native-vector-icons/Feather';
 
 // import paper from '../../assets/paper.png';
 
@@ -32,7 +33,7 @@ const test3 = {
     navigation: ''
 }
 
-const MyArticle = ({ navigation, route }) => {
+const readPopularArticle = ({ navigation, route }) => {
 
     test3.navigation = navigation
 
@@ -154,18 +155,18 @@ const headerHeight = useHeaderHeight();
     const {navigation}=test3
 
 
-    navigation.dispatch(state => {
-        const routes = [...state.routes];
-        routes.pop();
+    // navigation.dispatch(state => {
+    //     const routes = [...state.routes];
+    //     routes.pop();
       
-        return CommonActions.reset({
-          ...state,
-          routes,
-          index: routes.length - 1,
-        });
-      });
+    //     return CommonActions.reset({
+    //       ...state,
+    //       routes,
+    //       index: routes.length - 1,
+    //     });
+    //   });
 
-      navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
+      navigation.navigate('MyBook', { navigation: navigation, bookKey: bookKey }) }
   
 
 
@@ -301,12 +302,12 @@ const headerHeight = useHeaderHeight();
                             </View>
                             ):(
 
-                                <Icon.Button name='right' size={25}
+                                <Feather.Button name='book' size={25}
                                 backgroundColor= 'white' color="black" 
                                 // onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
                                 onPress={()=>{navigatetonextpage()}}
                                 >
-                                </Icon.Button>                            )}
+                                </Feather.Button>                            )}
          
 
                     
@@ -405,6 +406,6 @@ const options = {
 };
 
 export default {
-    component: MyArticle,
+    component: readPopularArticle,
     options,
 };

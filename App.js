@@ -25,6 +25,7 @@ import NewPage from "./pages/MyPagePages/NewPage";
 import IntroArticle from "./pages/MyPagePages/IntroArticle";
 import EditArticle from "./pages/MyPagePages/EditArticle";
 
+import readPopularArticle from './pages/MyPagePages/readPopularArticle';
 import readIntroArticle from "./pages/MyPagePages/readIntroArticle";
 import EditIntroArticle from "./pages/MyPagePages/EditIntroArticle";
 import EditProfile from "./pages/MyPagePages/EditProfile";
@@ -33,8 +34,9 @@ import PopularArticle from "./pages/MainPages/PopularArticle";
 import policyone from "./pages/MyPagePages/policyone";
 import policytwo from "./pages/MyPagePages/policytwo";
 import Notification from "./pages/MyPagePages/Notification";
-
-
+import onboarding from './pages/MyPagePages/onboarding';
+import QuestionList from './pages/MyPagePages/QuestionList';
+import QuestionWrite from './pages/MyPagePages/QuestionWrite';
 import editorBoard from "./pages/editors.js/editorBoard";
 import editWriting from "./pages/editors.js/editWriting";
 import editorMakeNewWriting from "./pages/editors.js/editorMakeNewWriting";
@@ -44,6 +46,7 @@ import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 
+import MyArticle2 from './pages/MyPagePages/MyArticle2';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -56,6 +59,24 @@ const defaultScreenOptions = {
       // />
       <Icon.Button name='md-chevron-back-sharp' size={25}
         backgroundColor='white' color="black" onPress={navigation.goBack}>
+      </Icon.Button>
+    );
+
+  }
+};
+
+const defaultScreenOptions2 = {
+  headerLeft: function () {
+    const navigation = useNavigation();
+
+    return (
+      // <Button
+      //   onPress={navigation.goBack}
+      //   title="<"
+      //   color="#000"
+      // />
+      <Icon.Button name='md-chevron-back-sharp' size={25}
+        backgroundColor='#F6F6F6' color="black" onPress={navigation.goBack}>
       </Icon.Button>
     );
 
@@ -120,10 +141,44 @@ const App = ({ navigation }) => {
             ...defaultScreenOptions,
           }}
         />
+        <Stack.Screen
+          name="readPopularArticle"
+          component={readPopularArticle.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+        <Stack.Screen
+          name="MyArticle2"
+          component={MyArticle2.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+
+        <Stack.Screen
+          name="QuestionList"
+          component={QuestionList}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
 
         <Stack.Screen
           name="MyBook"
           component={MyBook.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
+
+      <Stack.Screen
+          name="onboarding"
+          component={onboarding}
           options={{
             headerShown: true,
             ...defaultScreenOptions,
@@ -169,8 +224,11 @@ const App = ({ navigation }) => {
           component={MakeNewBook.component}
           options={{
             title: "책 만들기",
-            ...defaultScreenOptions,
-            ...MakeNewBook.options
+            ...defaultScreenOptions2,
+            ...MakeNewBook.options,
+            headerStyle: {
+              backgroundColor: "#F6F6F6",
+            },
           }} />
 
         <Stack.Screen
@@ -191,6 +249,14 @@ const App = ({ navigation }) => {
 
           }}
         />
+        <Stack.Screen name="QuestionWrite" component={QuestionWrite.component}
+          options={{
+            title: "새챕터 만들기",
+            ...defaultScreenOptions,
+            ...QuestionWrite.options
+
+          }}
+        />        
         <Stack.Screen name="EditArticle" component={EditArticle.component}
           options={{
             title: "챕터 수정하기",

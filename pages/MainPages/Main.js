@@ -157,19 +157,21 @@ if (user != null) {
 
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: "#fbfbfb"}}>
+        <View>
             <StatusBar style= "white" />
+            <ScrollView>
             <View style={{height: realScreen*0.06, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
-                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>이별록</Text>
+                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>Feel Me Fill Me</Text>
             </View>
             <View style={{ height: realScreen*0.42}}>
-                <View style={{flex: 1, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%"}}>
-                    <View style={{ flex:4, }} >
-                        <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘의 이별집 </Text>
-                    </View>
-                    <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
-                    onPress={() => { navigation.navigate('PopularArticle')}}>
-                        <Text style={{alignSelf: "center", marginTop: "10%", color: "white"}}>더보기</Text>
-                    </TouchableOpacity>
+                    <View style={{height: realScreen*0.05, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%",justifyContent:"center"}}>
+                        <View style={{ flex: 4 }} >
+                            <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘의 감정책 </Text>
+                        </View>
+                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F",justifyContent:"center" }}
+                        onPress={() => { navigation.navigate('PopularArticle')}}>
+                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
+                        </TouchableOpacity>
                     </View>
                 <View style= {{flex: 9}}> 
 
@@ -194,17 +196,17 @@ if (user != null) {
                     </Swiper>
                 </View>
             </View>
-            <View style={{ height: realScreen*0.23, backgroundColor: "#FAFAFA" }}>
+            <View style={{ height: realScreen*0.4, backgroundColor: "#FAFAFA" }}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
-                <View style={{ flex: 4}}> 
-                    <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
+                        <View style={{ flex: 4}}> 
+                            <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
+                        </View>
+                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F",justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('PopularArticle')}}>
+                                <Text style={{alignSelf: "center",color: "white"}} >더보기</Text>
+                        </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: "100%", backgroundColor: "#21381c", }}
-                    onPress={() => { navigation.navigate('PopularArticle')}}>
-                        <Text style={{alignSelf: "center", marginTop: "10%", color: "white"}} >더보기</Text>
-                    </TouchableOpacity>
-                    </View>
-                <View style={{flex: 4.5, marginHorizontal: "2%"}} horizontal={true}>
+                <View style={{flex: 8,marginHorizontal:"2%"}} horizontal={true}>
                     <Swiper
                         index={hotChapter.chapterKey}
                         loop={true}
@@ -231,18 +233,18 @@ if (user != null) {
                 </View>
                 
             </View>
-            <View style={{ height: realScreen*0.24, backgroundColor: "#fafafa"}}>
+            <View style={{ height: realScreen*0.4, backgroundColor: "#fafafa"}}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
                     <View style={{flex: 4}}>
                         <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
                     </View>
-                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: "100%", backgroundColor: "#21381c"}}
+                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F", justifyContent:"center"}}
                         onPress={() => { navigation.navigate('editorBoard')}}>
-                            <Text style={{alignSelf: "center", marginTop: "10%", color: "white"}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
                     </TouchableOpacity>
                 </View>
                 <View style= {{flex:5}}>  
-                    <ScrollView style={{flex: 1, marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
+                    <ScrollView style={{ marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
                             {writings.map(item => {
                                         return (
                                             <WritingItem
@@ -256,22 +258,54 @@ if (user != null) {
                     </ScrollView>
                 </View>
             </View>
-        </SafeAreaView>
+
+            <View style={{ height: realScreen*0.4, backgroundColor: "#fafafa"}}>
+                <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
+                    <View style={{flex: 4}}>
+                        <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
+                    </View>
+                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F", justifyContent:"center"}}
+                        onPress={() => { navigation.navigate('editorBoard')}}>
+                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style= {{flex:5}}>  
+                    <ScrollView style={{ marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
+                            {writings.map(item => {
+                                        return (
+                                            <WritingItem
+                                                navigation={navigation}
+                                                key={item.writingKey}
+                                                writing={item}
+
+                                            />
+                                        )
+                                    })}
+                    </ScrollView>
+                </View>
+            </View>
+            </ScrollView>
+            </View>
+            </SafeAreaView>
     )
 }
-// sub components
-const BookItem = ({ navigation, item, bookKey }) => {
+
+const BookItem = ({ navigation, item, }) => {
+
+    console.log("BookItem", item)
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
     const tabBarHeight = useBottomTabBarHeight();
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+    const ScreenWidth = Dimensions.get('window').width
+
+    console.log("bookitem item.Color",item.Color)
     const [BookItemUserinfo, setBookItemUserinfo] = useState({
         iam:"익명의.지은이",
         selfLetter:"안녕하세요 익명의 지은이입니다."
     });
-    
     useEffect(()=>{
       firebase_db.ref(`users/${item.user_uid}`)
           .on('value', (snapshot) => {
@@ -283,45 +317,52 @@ const BookItem = ({ navigation, item, bookKey }) => {
   }, []);
 
     return (
-        // <View style = {{flex: 1}}>
-        //     <View style={{alignSelf: "center"}}>
-        //     <TouchableOpacity style= {{flex: 1, flexDirection: "row", marginHorizontal: "3%", alignSelf: "center"}}
-        //     onPress={() => { navigation.navigate('MyBook', {bookKey: bookKey, }) }}>
-        //         <View style={{flex: 3, height: "100%", }}> 
-        //             <BookComponent
-        //                 navigation={navigation}
-        //                 item={item}
-        //             />
-        //         </View>
-        //         <View style={{flex: 2, backgroundColor: "#e9e9e9", height: "95%", marginTop: "1%",alignItems: "center", justifyContent:"center"}}>
-        //             <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
-        //             <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{BookItemUserinfo.iam}-</Text>
-        //         </View>
-        //     </TouchableOpacity>
-        //     </View>
-        // </View>
+        <View style={{height: realScreen*0.4, width:"90%",  backgroundColor:"#F5F4F4",}}>
+                    {/* <View style={{alignContent:"center"}}> */}
+                    <TouchableOpacity style={{  flex:1, padding:"5%", justifyContent:"center",  }} onPress={() => {navigation.navigate('MyBook', { bookKey: item.bookKey }) }}>
+                        <View style={{flexDirection: "row",flex:1 }}>
+                                <View style={{flex: 1,}}>
+                                                <View style={{flex:1, }}>
+                                                        <View style={{flex:1, marginHorizontal: "3%", padding:"5%",backgroundColor:"white"}}>
+                                                                <View style={{flex:5}}>
+                                                                <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%"}}>말머리에서</Text>
+                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} >{item.intro}</Text>
+                                                                </View>
+                                                                <View>
+                                                                        {/* <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text> */}
+                                                                </View>
 
-    <View style = {{flex: 1}}>
-        <TouchableOpacity style= {{width: "90%", height: "95%", marginLeft: "3%", marginRight: "10%", alignSelf: "center"}}
-            onPress={() => { navigation.navigate('MyBook', {bookKey: bookKey, }) }}>
-                <ImageBackground style={{flex: 1, flexDirection: "row", marginTop: "1%"}} source={covernpaper}>
-                        <View style={{flex: 1}}> 
-                            <View style={{flex:1, flexDirection: 'column'}}>
-                                    <View style= {{flex:1, flexDirection: 'column'}}>
-                                    <Text style={{flex:1, fontSize : 15, marginTop: "23%", marginLeft: "22%", marginRight: "5%"}}>{item.bookTitle}</Text>
-                                    <Text style={{flex:1, fontSize : 11, marginLeft: "22%", marginRight: "5%"}}>{item.smallBookTitle}</Text>
-                                    <Text style={{flex: 1, fontSize: 11, alignSelf: "flex-end", marginTop: "2%", marginHorizontal: "12%"}}>{BookItemUserinfo.iam}</Text>
-                                    <Image style={{flex: 5, width: "60%", top: 0, justifyContent: "flex-star", marginLeft: "26%", marginBottom: "15%"}} source={{ uri: item.url }} resizeMode={"contain"} />
-                                    </View>
-                            </View>
+                                                                {/* <View style={{ flex: 1, flexDirection: "row"}}>
+                                                                        <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+                                                                        <Text style={styles.bookIndexText}>{likeCount}</Text>
+                                                                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+                                                                        <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                                                                </View> */}
+                                                        </View>
+                                                </View>
+                                </View>
+
+                                <View style={{flex: 1, marginLeft:"3%"}}>
+                                                <View>
+                                                <View style={{ backgroundColor:item.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
+                                                </View>
+
+                                                <View style={{ backgroundColor:item.Color,zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
+                                                <Image source={{uri: item.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
+                                                <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
+                                                        <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{item.defaultTitle}</Text>
+                                                        <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{item.bookTitle}</Text>
+
+                                                        <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo.iam}</Text>
+                                                </View>
+                                                </View>
+                                                </View>
+
+                                </View>
                         </View>
-                        <View style={{flex: 1,marginTop: "1%",alignItems: "center", justifyContent:"center"}}>
-                            <Text style = {{marginHorizontal: "12%", marginTop: "20%", textAlign: "center", lineHeight: 20, fontSize: 13}} numberOfLines={7}>{item.intro}</Text>
-                            <Text style = {{marginHorizontal: "10%", marginVertical: "15%", textAlign: "center", fontSize: 13}}>-{BookItemUserinfo.iam}-</Text>
-                        </View>
-                </ImageBackground>
-        </TouchableOpacity>
-    </View>
+                    </TouchableOpacity>
+                    {/* </View> */}
+        </View>
 )
 }
 
@@ -348,7 +389,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey }) => {
 
     return (
             <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "80%", backgroundColor: "#fff", borderColor: "#A2A2A2", shadowColor: "#e9e9e9", shadowRadius: 2, shadowOpacity: 3, shadowOffset:{width: 0, height: 0}}} 
-            onPress={() => { navigation.navigate('MyArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
+            onPress={() => { navigation.navigate('readPopularArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
                 <View style={{height: "75%"}}>
                 <Text style={{ fontSize: 15, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                 <Text style={{ fontSize: 13, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
@@ -365,13 +406,6 @@ const WritingItem=(props)=> {
         iam:"익명의.지은이",
         selfLetter:"안녕하세요 익명의 지은이입니다."
     });
-    
-    const [userinfo, setUserinfo] = useState({});
-    var user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) {
-      user_uid = user.uid;
-    }
 
     useEffect(()=>{
       firebase_db.ref(`users/${writing.creator}`)
@@ -382,21 +416,24 @@ const WritingItem=(props)=> {
               }
           })
   }, []);
+
     return (
         <View style={{marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
-                <View style={{backgroundColor:"#A2AD9C", width: 170, height: 100, borderRadius: 10}}>
+                <View style={{backgroundColor:"#A2AD9C", width: 170, height: 130, borderRadius: 10}}>
                     <View style={{margin: "10%"}}>
                         <Text style={{fontSize: 15, color: "white", fontWeight: "600"}} numberofLines={3}>{writing.title}</Text>
                         <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.text}</Text>
                     </View>
-                </View>
-                <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
+                    <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
 
+                </View>
+
+                <View style={{backgroundColor:"pink"}}>
+                <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
+                </View>
             </TouchableOpacity>
-            {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
-            <View style={{flexDirection:"row"}}>
-            </View>
+
         </View>
     )
 }

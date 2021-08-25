@@ -22,7 +22,7 @@ import { CommonActions } from '@react-navigation/native';
 
 // const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
-console.log("myarticle")
+console.log("myarticle2")
 const test1 = {
     bookKey: ''
 };
@@ -32,27 +32,32 @@ const test3 = {
     navigation: ''
 }
 
-const MyArticle = ({ navigation, route }) => {
-
+const MyArticle2 = ({ navigation, route }) => {
     test3.navigation = navigation
 
+
+  
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
+    // console.log("myarticle(2)chapterkey현재페이지의챕터키",chapterKey) 
+    // const nextChapterKey = (chapterKey+1)
+    // console.log("myarticle(1)다음페이지의챕터키",nextChapterKey) 
 
-    console.log("myarticle(1)chapterkey현재페이지의챕터키",chapterKey) 
+    console.log("myarticle(2)chapterkey현재페이지의챕터키",chapterKey) 
     // console.log("typeofchapterKey",typeof chapterKey) 
     const makechapterkeynumber= Number(chapterKey) 
     // console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) 
     // console.log("typeofmakechapterkeynumber",typeof makechapterkeynumber) 
     const nextChapterKey = makechapterkeynumber+1 
-    console.log("myarticle(1)다음페이지의챕터키",nextChapterKey) 
+    console.log("myarticle(2)다음페이지의챕터키",nextChapterKey) 
+
 
     test1.bookKey = bookKey
 
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-    const [cloverColor, setCloverColor] = useState("#c1c1c1")
+    const [cloverColor, setCloverColor] = useState("#c1c1c1");
     const [chapters, setChapters] = useState({});
         // console.log("myarticle author", chapters.creator)
 
@@ -64,11 +69,12 @@ const MyArticle = ({ navigation, route }) => {
 const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const BottomSpace = getBottomSpace()
+    const tabBarHeight = 0;
     const statusBarHeight = getStatusBarHeight();
-    const realScreen = ScreenHeight-headerHeight-BottomSpace
+    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
 
 
-    useEffect(getChapters, [chapterKey]);
+    useEffect(getChapters, []);
 
     function getChapters() {
 
@@ -90,7 +96,10 @@ const headerHeight = useHeaderHeight();
 
     useEffect(() => {
         // let temp = [];
-        let arr = likeRef.on('value', (snapshot) => {
+        let arr = likeRef.on('value', (snapshot) => { // ref.on(): (*) realtime db의 값이 달라지면 이 부분이 또! 실행될 것이다.
+            // (X) 다음 내용을 지금 바로! 실행해주세요
+            // (O) on(): 'value'가 발생할 때마다, 다음 내용을 실행해주세요... 라는 부탁을 지금 해주세요!
+
             let temp = [];
             var likeCount = snapshot.numChildren();
             // console.log('useEffect()');
@@ -101,10 +110,21 @@ const headerHeight = useHeaderHeight();
                 temp.push(child.val());
             })
             // console.log({temp});
-            setLikedUsers(temp);
+            setLikedUsers(temp); // setLikedUsers(): 비로소 likedUsers의 값이 변경된다
+
+            let meliked = temp.filter(likedppl => likedppl.user_uid == user_uid)
+            if (meliked == '') {
+                // console.log("likedUsers: " + likedUsers)
+                console.log(`MyArticle()' meliked == ''`);
+                setCloverColor("#c1c1c1")
+            } else {
+                console.log(`MyArticle()' meliked != ''`);
+                // console.log("likedUsers: " + likedUsers)
+                setCloverColor("green")
+            }
         })
 
-    }, [])
+    }, []) // []: useEffect의 (콜백)함수는, 딱 한번만 실행된다. 그러나... -> (*)
 
     useEffect(() => {
         //// console.log('MyArticle.js (2), chapters: ',chapters);
@@ -114,18 +134,7 @@ const headerHeight = useHeaderHeight();
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)
             })
-    }, [])
-
-    useEffect(()=>{
-        let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-        if (meliked == '') {
-            // console.log("likedUsers: " + likedUsers)
-            setCloverColor("#c1c1c1")
-        } else {
-            // console.log("likedUsers: " + likedUsers)
-            setCloverColor("green")
-        }
-    }, [])
+    }, []) //[] 딱 한번만 실행된다 라는 뜼임 !!!! -> 클래스형 컴포넌트의 componentDidMount()를 대체함
 
     const [CountChapter,setCountChapter]=useState("")
 
@@ -144,30 +153,24 @@ const headerHeight = useHeaderHeight();
 
   console.log("myaricle마지막챕터",endChapterKey)
 
-  //만약 nextChpater가 NUM(bookKey) + NUM(CountChapter) 랑 같다면 next button을 보이지마 
-  // bookKey+CountChapter
-  
-
-  const navigatetonextpage=()=>{
+    const navigatetonextpage=()=>{
 
 
-    const {navigation}=test3
-
-
-    navigation.dispatch(state => {
-        const routes = [...state.routes];
-        routes.pop();
-      
-        return CommonActions.reset({
-          ...state,
-          routes,
-          index: routes.length - 1,
-        });
-      });
-
-      navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
-  
-
+        const {navigation}=test3
+    
+    
+        navigation.dispatch(state => {
+            const routes = [...state.routes];
+            routes.pop();
+          
+            return CommonActions.reset({
+              ...state,
+              routes,
+              index: routes.length - 1,
+            });
+          });
+    
+          navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
 
     return (
         <View style={{ flex: 1 }}>
@@ -185,7 +188,7 @@ const headerHeight = useHeaderHeight();
                                         <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                 </View>
                                 <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
-                                    <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
+                                    <Text style={{fontSize: 17}}>{chapters.mainText}</Text>
                                 </ScrollView>
                             </View>
 
@@ -294,10 +297,11 @@ const headerHeight = useHeaderHeight();
                         : (<View style={{height: "4%"}}></View>)}
 
 
-                        {endChapterKey==chapterKey? ( 
+ 
+                            {endChapterKey==chapterKey? ( 
                             <View>
+                              <Text>마지막 챕터입니다</Text>
 
-                                <Text>마지막 챕터입니다</Text>
                             </View>
                             ):(
 
@@ -307,7 +311,6 @@ const headerHeight = useHeaderHeight();
                                 onPress={()=>{navigatetonextpage()}}
                                 >
                                 </Icon.Button>                            )}
-         
 
                     
                     </View>     
@@ -405,6 +408,6 @@ const options = {
 };
 
 export default {
-    component: MyArticle,
+    component: MyArticle2,
     options,
 };

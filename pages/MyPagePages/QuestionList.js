@@ -6,61 +6,65 @@ import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-const communityBoard = ({ navigation, route }) => {
+const QuestionList = ({ navigation, route }) => {
 
-    const [posts, setPosts] =useState([])
-    
+    const { bookKey, Color } = route.params;
+    console.log("bookkey color",Color)
+    console.log("bookKey",bookKey)
 
-     
+    function getquestionbox(Color) {
+        if (Color == "#9E001C"){
+        return "firstColor"
+        }
+        else if (Color == "#F6AE2D"){
+        return "secondColor"
+        }
+        else if (Color == "#33658A"){
+        return "thirdColor"
+        }
+        else if (Color ==  "#494949"){
+        return "fourthColor"
+        }
+    }
+    const box = getquestionbox(Color);
+    console.log("getquestionbox",box)
 
-      useEffect(() => {
-        firebase_db
-            .ref('post/')
-            .on('value', (snapshot) => {
-                let temp = [];
-                snapshot.forEach((child) => {
-                    const myitem={
-                    ...child.val(), 
-                    key: child.key, 
+    const [questions, setQuestion] = useState([]);
+    useEffect(()=>{
+        firebase_db.ref(`${box}/`)
+        .on('value', (snapshot)=>{
+            let temp = [];
+            snapshot.forEach((child)=>{
+                const item={
+                    ...child.val(),
+                    key: child.key
                 }
-                temp.push(myitem)
+                temp.push(item)
+                console.log("item: " + item)
             })
-            temp.sort(function (a, b) {
+            temp.sort(function (a,b){
                 return new Date(b.regdate) - new Date(a.regdate);
             })
-                setPosts(temp);
-                //console.log('mypage data',data)
-            })
-    }, []) 
-
+            setQuestion(temp)
+        })
+    },[])
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <View style={{height:40, justifyContent:"center"}}>
-                <Text  style={{alignSelf:"center", fontSize:15, fontWeight:"500"}}>게시판</Text>
-            </View>
+
                 <ScrollView style={{height:500}}>
 
-                        {posts.map(item => {
+                        {questions.map(item => {
                             return (
                                 <PostItem
                                     navigation={navigation}
                                     key = {item.key}
-                                    post={item}
+                                    questions={item}
                                 />
                             )
                         })}
                 </ScrollView>
                 
-                <View style={{}}>
-
-                    <TouchableOpacity 
-                    onPress={()=>navigation.navigate("communityMakeNewPost")}
-                    style={{height:50,width:"98%", alignSelf:"center", backgroundColor:"#44705E", justifyContent:"center", borderRadius:"40%",}}>
-                        <Text style={{alignSelf:"center", fontSize:15}}>글쓰기</Text>
-                    </TouchableOpacity>
-
-                </View>
 
 
         </SafeAreaView>
@@ -70,13 +74,13 @@ const communityBoard = ({ navigation, route }) => {
 
 const PostItem=(props)=> {
 
-    const {post, navigation}=props;
-    const postKey=post.key
+    const {questions, navigation}=props;
+    const questionsKey=questions.key
   
     const [PostItemUserinfo, setPostItemUserinfo]=useState({});
 
     useEffect(()=>{
-        firebase_db.ref(`users/${post.creator}`)
+        firebase_db.ref(`users/${questions.creator}`)
             .on('value', (snapshot) => {
                 let PostItemUserinfo = snapshot.val();
                 if (PostItemUserinfo > '') {
@@ -87,7 +91,7 @@ const PostItem=(props)=> {
   
 
 
-    const likeRef = firebase_db.ref(`post/${postKey}/` + '/likes/');
+    const likeRef = firebase_db.ref(`post/${questionsKey}/` + '/likes/');
 
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
@@ -111,7 +115,7 @@ const PostItem=(props)=> {
     }, [])
     const [commentsNumber, setCommentsNumber] = useState(0);
     useEffect (()=>{
-        let arr = firebase_db.ref(`post/${postKey}/` + '/comments/')
+        let arr = firebase_db.ref(`post/${questionsKey}/` + '/comments/')
         .on('value', (snapshot) => {
            var commentsNumber = snapshot.numChildren();
            setCommentsNumber(commentsNumber)
@@ -120,36 +124,11 @@ const PostItem=(props)=> {
 
 
 
-
-    const createdAt= new Date(post.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
-    ////console.log('comment.regdate',comment.regdate)
-    ////console.log('createdAt',createdAt)
-  
-    const displayedAt=(createdAt)=>{
-     
-        const milliSeconds = new Date()- createdAt
-        ////console.log('milliSeconds',milliSeconds)
-        ////console.log('new Date()',new Date()) //new Date() 2021-07-05T11:15:46.130Z
-        const seconds = milliSeconds / 1000
-        if (seconds < 60) return `방금 전`
-        const minutes = seconds / 60
-        if (minutes < 60) return `${Math.floor(minutes)}분 전`
-        const hours = minutes / 60
-        if (hours < 24) return `${Math.floor(hours)}시간 전`
-        const days = hours / 24
-        if (days < 7) return `${Math.floor(days)}일 전`
-        const weeks = days / 7
-        if (weeks < 5) return `${Math.floor(weeks)}주 전`
-        const months = days / 30
-        if (months < 12) return `${Math.floor(months)}개월 전`
-        const years = days / 365
-        return `${Math.floor(years)}년 전`
-      }
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readPost', { postKey:post.key, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
                 <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{post.text}</Text>
+                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{questions.title}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
                 <Text style={styles.bookIndexText}>{PostItemUserinfo.iam}</Text>
@@ -158,9 +137,6 @@ const PostItem=(props)=> {
                 <Icon name="message1" size={20} color="black" style={{marginLeft:20,marginTop:3}}/>
 
                 <Text style={styles.bookIndexText}>{commentsNumber}</Text>
-
-                
-                <Text style={styles.bookIndexText}>{displayedAt(createdAt)}</Text>
                 </View>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
@@ -272,4 +248,4 @@ const styles = StyleSheet.create({
     editButtonText: {
     }
 })
-export default communityBoard;
+export default QuestionList;
