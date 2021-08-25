@@ -55,12 +55,21 @@ const test10={
 const test11={
   startbooktitle:""
 }
+<<<<<<< HEAD
+const test9={
+  bookKey:'',
+}
+=======
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
 
 const MakeNewBook = ({navigation,route}) => {
 
   const {color} = route.params;
   console.log("mnb",color)
+<<<<<<< HEAD
+=======
   test10.color = color
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
 
 
   const firstColor= "#9E001C"
@@ -106,6 +115,16 @@ const MakeNewBook = ({navigation,route}) => {
     }else if(color=="secondColor"){
       return "노란색"
     }else if(color=="thirdColor"){
+<<<<<<< HEAD
+      return "검은색"
+    }else if(color=="fourthColor"){
+      return "파란색"
+    }
+
+  }
+  console.log("mnb color key",startBookKeyColor())
+  console.log("mnb bookTItle key",startbooktitle())
+=======
       return "파란색"
     }else if(color=="fourthColor"){
       return "검은색"
@@ -118,6 +137,7 @@ const MakeNewBook = ({navigation,route}) => {
 
 
   console.log("mnb color key",startBookKeyColor())
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
 
   const [spinner, setSpinner] = useState(false);
 
@@ -264,18 +284,33 @@ test9.bookKey = bookKey;
           </View>
 
 
+<<<<<<< HEAD
+          <View style={{ flex: 18,marginBottom: "25%"}}>
+
+              <View style={{backgroundColor:KeyColor(), opacity: 0.9, height:"100%", width:"13%", marginLeft:"5%",zIndex:1, marginTop:"15%" }}>
+
+=======
           <View style={{ flex: 18,}}>
 
               <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"80%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"15%" }}>
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
               </View>
 
               {image == undefined ? (
 
+<<<<<<< HEAD
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+
+                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                  <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+=======
               <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
 
                   <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%", }}>
                   <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
                   <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20,  }}
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
@@ -284,7 +319,11 @@ test9.bookKey = bookKey;
                     placeholder="단어로 표현해주세요" />
 
 
+<<<<<<< HEAD
+                  <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+=======
                   {/* <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
                     value={smallBookTitle}
 
                     multiline={false}
@@ -306,7 +345,11 @@ test9.bookKey = bookKey;
                 <View                 
                 style={{ 
                   zIndex: 0, position: "absolute", 
+<<<<<<< HEAD
+                  height: "100%",width:"80%", marginRight: "6%", marginLeft: "15%", marginTop: "15%"}}>
+=======
                   height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
                 <TouchableOpacity 
                  style={{
                   zIndex: 0, position: "absolute", 
@@ -316,13 +359,21 @@ test9.bookKey = bookKey;
 
                   <Image  source={{ uri: image }}
                     style={{
+<<<<<<< HEAD
+                      zIndex: 0, position: "absolute", 
+=======
                       // zIndex: 0, position: "absolute", 
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
                       height: "100%",width:"100%"
                     }}
                   ></Image>
                 </TouchableOpacity>  
                 <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+<<<<<<< HEAD
+                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+=======
                 <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
 
                 <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
                   value={bookTitle}
@@ -332,6 +383,19 @@ test9.bookKey = bookKey;
                   onChangeText={bookTitle => setBookTitle(bookTitle)}
                   placeholder="제목을 작성해주세요" />
 
+<<<<<<< HEAD
+
+                <TextInput style={{ marginLeft:"10%", fontSize: 17, marginTop: "3%"}}
+                  value={smallBookTitle}
+
+                  multiline={false}
+                  maxLength={14}
+                  returnKeyType="done"
+                  onChangeText={smallBookTitle => setSmallBookTitle(smallBookTitle)}
+                  placeholder="소제를 작성해주세요" />
+
+=======
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
               <View>
                 <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
               </View>
@@ -465,6 +529,11 @@ async function handleChapter() {
     const {navigation}=test5;
     const {userinfo}=test6;
     const {spinner}=test7;
+<<<<<<< HEAD
+    const {smallBookTitle}=test8;
+    const {bookKey}=test9;
+
+=======
     // const {smallBookTitle}=test8;
     const {bookKey}=test9;
     const {color}=test10;
@@ -505,6 +574,7 @@ async function handleChapter() {
   console.log("populararticle Color", Color)
   
     console.log("mnb22222 bookTItle key",startbooktitle())
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
 
     console.log('saveChapter() .', new Date());
     const storage = firebase.storage();
@@ -523,24 +593,40 @@ async function handleChapter() {
   firebase_db
   .ref('book/'+bookKey)
   .set({
+<<<<<<< HEAD
+    bookTitle: bookTitle,
+    smallBookTitle:smallBookTitle,
+=======
     defaultTitle:startbooktitle()+" 감정은",
     bookTitle: bookTitle,
     // smallBookTitle:smallBookTitle,
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
     user_uid: user_uid,
     regdate: new Date().toString(),
     url:downloadURL,
     bookKey:bookKey,
     isPublic:isPublic,
+<<<<<<< HEAD
+    CountChapter:0
+=======
     CountChapter:0,
     Color:Color
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
     // iam:userinfo.iam,
     // selfLetter:userinfo.selfLetter
   });
 
+<<<<<<< HEAD
+  let mybookKey= "myBookKey"
+
+  firebase_db
+  .ref(`/users/${user_uid}/myBooks/`+bookKey)
+=======
   let mybookKey=color
 
   firebase_db
   .ref(`/users/${user_uid}/myBooks/`+mybookKey)
+>>>>>>> 99480c27a23936936f3582dcda13aeb7fc745482
   .set(bookKey)
 
 
