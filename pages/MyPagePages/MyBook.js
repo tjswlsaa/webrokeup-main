@@ -9,6 +9,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BookComponent from '../../components/BookComponent';
+import { fetchUserInfoAsync } from 'expo-auth-session';
 
 const test3 = {
     navigation: ''
@@ -103,27 +104,27 @@ const MyBook = ({ navigation, route }) => {
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
 
+    // const useruid= myitem.user_uid
+    // const [userinfo, setuserinfo] = useState({
+    //     iam:"익명의.지은이",
+    //     selfLetter:"안녕하세요 익명의 지은이입니다."
+    // });
 
-    const useruid= myitem.user_uid
-    const [userinfo, setuserinfo] = useState({
-        iam:"익명의.지은이",
-        selfLetter:"안녕하세요 익명의 지은이입니다."
-    });
 
-
-      useEffect(()=> {
-        function getUserId() {
-          firebase_db.ref(`users/${myitem.user_uid}`)
-              .on('value', (snapshot) => {
-                  let user = snapshot.val();
-                  if (user) {
-                    setUserinfo(userinfo);
-              }})
-        }
-      }, []);
-      const { iam, selfLetter } = useState;
-      console.log("iam" + iam);
-      console.log(selfLetter);     
+    //   useEffect(()=> {
+    //     function getUserId() {
+    //       firebase_db.ref(`users/${myitem.user_uid}`)
+    //           .on('value', (snapshot) => {
+    //               let user = snapshot.val();
+    //               if (user) {
+    //                 setUserinfo(userinfo);
+    //           }})
+    //     }
+    //   }, []);
+    //   const { iam, selfLetter } = useState;
+    //   console.log("iam" + iam);
+    //   console.log(selfLetter);     
+    //   console.log("myitem: " + myitem)
 
 
     const [chapter, setChapter] = useState([]);
@@ -157,7 +158,25 @@ const MyBook = ({ navigation, route }) => {
             })
     }
 
-    console.log("getChapters",chapter)
+    const [userinfo, setUserinfo] = useState([]);
+    const author = myitem.user_uid
+    console.log("author" + author)
+    useEffect(()=>{
+        firebase_db.ref(`users/${author}`)
+        .on('value', (snapshot)=>{
+            const newUserinfo = {};
+            snapshot.forEach((child)=>{
+                    const key = child.key;
+                    const value = child.val();
+                    newUserinfo[key] = value;
+            })
+            setUserinfo({
+                ...userinfo, // 기본 바탕색
+                ...newUserinfo, // 덧칠
+            });
+            
+        })
+    }, [])
 
   
 
