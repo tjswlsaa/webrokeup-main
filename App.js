@@ -139,6 +139,7 @@ const App = ({ navigation }) => {
           options={{
             headerShown: true,
             ...defaultScreenOptions,
+            ...MyArticle.options
           }}
         />
         <Stack.Screen

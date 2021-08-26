@@ -7,8 +7,9 @@ import { Switch } from 'react-native-switch';
 import "firebase/firestore"
 import "firebase/firebase-storage"
 import firebase from 'firebase';
-const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
+import Spinner from 'react-native-loading-spinner-overlay';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { CommonActions } from '@react-navigation/native';
 
 const test2 ={
   image2:''
@@ -17,9 +18,7 @@ const test2 ={
 const test3 ={
   bookTitle2:''
 }
-const test4 ={
-  isPublic:''
-}
+
 
 const test5 ={
   bookKey:""
@@ -28,7 +27,14 @@ const test5 ={
 const test6 ={
   navigation:""
 }
+const test7 = {
+  spinner: '',
+  setSpinner: undefined,
+}
 
+const test8 = {
+  userinfo: '',
+}
 const EditBook = ({ navigation, route }) => {
   test6.navigation=navigation
 
@@ -42,13 +48,26 @@ const EditBook = ({ navigation, route }) => {
   const [image2, setImage2] = useState(myitem.url) // 새로 생성한 책 이미지 
   test2.image2=image2;
 
-  const [isPublic, setPublic] = useState(true);
-  test4.isPublic=isPublic
 
+  const [spinner, setSpinner] = useState(false);
+
+  test7.spinner = spinner
+  test7.setSpinner = setSpinner;
   var user = firebase.auth().currentUser
   var user_uid
   if (user != null) { user_uid = user.uid }
-  var userID = user_uid.substring(0, 6)
+
+  const [userinfo, setUserinfo] = useState([]);
+  test8.userinfo = userinfo
+  useEffect(() => {
+    firebase_db.ref(`users/${user_uid}`)
+      .on('value', (snapshot) => {
+        let userinfo = snapshot.val();
+        setUserinfo(userinfo);
+      })
+  }, []);
+
+
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -60,117 +79,112 @@ const EditBook = ({ navigation, route }) => {
     })()
   }, []);
 
-  const deleteBook = async()=> {
 
-    const deletefunction =()=>{
-    const storage = firebase.storage();
-    const storageRef = storage.ref();
-    const DELETE_PATH = storageRef.child('bookCover/' + bookKey)
+const editPhoto =async()=>{
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1, //이게 없었던게 문제일수있을까
 
-   DELETE_PATH .delete()
+  });
 
-    firebase_db
-      .ref(`book/${bookKey}`)
-      .set(null)
-      .then(function () {
-        Alert.alert("삭제되었습니다")
-        navigation.navigate("MyPage", { myitem: myitem })
-      })
-    }
-    
-    // await  Alert.alert("정말로 삭제하시겠습니까?")
+  if (!result.cancelled) {
+    const image2 = result;
 
-    Alert.alert(
-      'Alert Title',
-      '책, 챕터가 모두 삭제됩니다. 그래도 진행하시겠습니까?',
+    const manipResult = await ImageManipulator.manipulateAsync(
+      image2.localUri || image2.uri,
       [
-
-        {
-          text: '취소할래요',
-          // onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: '넵', onPress: () => deletefunction()},
-
+        { resize: { width: 600 } } // width: 600px에 맞춰서 자동 resize
       ],
-      {cancelable: false},
+      { format: ImageManipulator.SaveFormat.JPEG }
     );
 
-    
-   
- }
+    setImage2(manipResult.uri);
+  }
+}
+
+const myitemcolor = myitem.Color
+const ColorNameis = ()=>{
+
+  if(myitemcolor=="#9E001C"){
+    return "firstColor"
+  }else if(myitemcolor=="#F6AE2D"){
+    return "secondColor"
+  }else if(myitemcolor=="#33658A"){
+    return "thirdColor"
+  }else if(myitemcolor=="#494949"){
+    return "fourthColor"
+  }
+
+}
+
+const ColorName = ColorNameis(myitemcolor)
+console.log("mnb keycolor",ColorNameis())
 
 
+const startbooktitle = ()=>{
+
+  if(ColorName=="firstColor"){
+    return "빨간색"
+  }else if(ColorName=="secondColor"){
+    return "노란색"
+  }else if(ColorName=="thirdColor"){
+    return "파란색"
+  }else if(ColorName=="fourthColor"){
+    return "검은색"
+  }
+
+}
   
   return (
 
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
     <View style={styles.container}>
-      <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-
+      {spinner && (
+          <Spinner
+            visible={true}
+            textContent={'Loading...'}
+            textStyle={{ color: '#FFF' }}
+          />
+        )}
         <View style={styles.bookContainer}>
-
-        <View style={styles.openButtonContainer}>
-                  <Switch 
-                            style={styles.button}
-                            value={isPublic}
-                            // useNativeDriver={true}
-                            activeText={'공개'}
-                            inActiveText={'비공개'}
-                            onValueChange={(value)=>setPublic(value)}
-                            backgroundActive={'#C4C4C4'}
-                            backgroundInactive={'#4D6DAA'}
-                            circleSize={30} //사이즈 조정이 안댐
-                            barHeight={30}
-                            barWidth={100}
-
-                            circleActiveColor={'#4D6DAA'}
-                            circleInActiveColor={'#C4C4C4'}
-                        />
-
-  
-
-        </View>
-          <ImageBackground style={styles.bookImage} source={{ uri: book }} >
-            <View style={styles.bookContainer}>
-              <View style={styles.titleInput}>
-                <TextInput
-                style={styles.titleInputText} 
-                  multiline={true} defaultValue={myitem.bookTitle} returnKeyType="done"
-                  onChangeText={(bookTitle2)=>{setBookTitle2(bookTitle2)}
-                }
-                />
-                <View style={{ borderBottomColor: "#D3D3D3", borderBottomWidth: "1%", width: "100%", marginLeft: "20%", marginBottom: "3%" }} />
+        <View style={{backgroundColor:myitemcolor, opacity: 0.8, height:"70%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"25%" }}>
               </View>
-              <View>
-                <Text style={styles.writer}> {userID}.이별록작가 </Text>
-              </View>
-              <TouchableOpacity style={styles.photoInputContainer} onPress={async () => {
-                  let result = await ImagePicker.launchImageLibraryAsync({
-                    mediaTypes: ImagePicker.MediaTypeOptions.All,
-                    allowsEditing: true,
-                    aspect: [4, 3],
-                    quality: 1,
-                  })
-                 // console.log(result)
-                  if (!result.cancelled) {
-                    setImage2(result.uri)
-                  }
-                }}>
-                <Image source={{ uri: image2 }} style={{ alignSelf:"center", marginTop:25, marginLeft:15, width: 250, height: 250 }} />
+        <View                 
+                style={{ 
+                  zIndex: 0, position: "absolute", 
+                  height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
+
+
+                <TouchableOpacity style={{zIndex: 0, position: "absolute", 
+                  height: "100%",width:"100%"}} onPress={()=>editPhoto()}>
+                <Image source={{ uri: image2 }} style={{ height: "100%",width:"100%"}} />
               </TouchableOpacity>
+                <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
+                <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
 
-              <TouchableOpacity style={styles.openButton} onPress={() => deleteBook()}>
+                <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                  value={bookTitle2}
+                  multiline={false}
+                  maxLength={10}
+                  returnKeyType="done"
+                  onChangeText={bookTitle2 => setBookTitle2(bookTitle2)}
+                  placeholder="제목을 작성해주세요" />
 
-            <Text style={styles.openButtonText}> 삭제하기 </Text>
-          </TouchableOpacity>
+              <View>
+                <Text style={{ alignSelf: "flex-end", marginRight: "10%", marginTop: "10%"}}> {userinfo.iam} </Text>
+              </View>
 
+           </View>
 
             </View>
-          </ImageBackground>
+
+
+
+
         </View>
-      </ImageBackground>
     </View>
     </TouchableWithoutFeedback>
 
@@ -252,10 +266,12 @@ async function EditChapter() {
 //myitem. url 불러와서 삭제 
 
 
+const {setSpinner}=test7;
+setSpinner(true);
+const {spinner}=test7;
 
   const {bookTitle2}=test3;
   const { image2 }=test2;
-  const {isPublic}=test4;
   const {bookKey}=test5;
   const {navigation}=test6;
 
@@ -275,12 +291,30 @@ async function EditChapter() {
     .ref(`book/${bookKey}`)
     .update({
       bookTitle: bookTitle2,
-      isPublic:isPublic,
       editdate: new Date().toString(),
       url: downloadNewURL,
     })
   Alert.alert("생성 완료")
+  navigation.dispatch(state => {
+    const routes = [...state.routes];
+    routes.pop();
+
+    return CommonActions.reset({
+      ...state,
+      routes,
+      index: routes.length - 1,
+    });
+  });
   navigation.navigate("MyBook", { bookKey: bookKey })
+  return (
+    <View style={styles.container}>
+      <Spinner
+        visible={spinner}
+        textContent={'Loading...'}
+      // textStyle={styles.spinnerTextStyle}
+      />
+    </View>
+  );
 
 }
 

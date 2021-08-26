@@ -17,7 +17,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import { CommonActions } from '@react-navigation/native';
-
+import Swiper from 'react-native-swiper'
 // import paper from '../../assets/paper.png';
 
 // const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
@@ -31,6 +31,10 @@ const test3 = {
     navigation: ''
 }
 
+const test4 = {
+    chapters: ''
+}
+
 const MyArticle = ({ navigation, route }) => {
 
     test3.navigation = navigation
@@ -38,7 +42,7 @@ const MyArticle = ({ navigation, route }) => {
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
 
-    console.log("myarticle(1)chapterkey현재페이지의챕터키",chapterKey) 
+    console.log("myarticle(1)chapterkey현재페이지의챕터키",) 
     // console.log("typeofchapterKey",typeof chapterKey) 
     const makechapterkeynumber= Number(chapterKey) 
     // console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) 
@@ -54,22 +58,24 @@ const MyArticle = ({ navigation, route }) => {
     const [cloverColor, setCloverColor] = useState("#c1c1c1")
     const [chapters, setChapters] = useState({});
         // console.log("myarticle author", chapters.creator)
+        console.log("myarticlechapters22",chapters)
 
+    test4.chapters=chapters
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
 
     
-    const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
 
+    const headerHeight = useHeaderHeight();
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
 
 
-    useEffect(getChapters, [chapterKey]);
+    useEffect(getChapters, []);
         function getChapters() {
             firebase_db
                 .ref(`book/${bookKey}/both/` + chapterKey)
@@ -83,10 +89,49 @@ const MyArticle = ({ navigation, route }) => {
                     }
                 });
         } // function getChapters()
-    
+        console.log("myarticlechapters22",chapters)
+
         const chapterColor = chapters.chColor;
-        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
+        const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapterKey + '/likes/');
         console.log("chapters",chapters)
+
+
+
+        const [chapter, setChapter] = useState([]);
+
+        useEffect(getChapters, []);
+        function getChapters() {
+            firebase_db
+                .ref(`book/${bookKey}/both/`)
+                .on('value', (snapshot) => {
+                    let temp = [];
+                    //console.log({'temp.length (.)':temp.length});
+                    //console.log({'comments.length (.)':comments.length});
+    
+    
+                    snapshot.forEach((child) => {
+                        const item = {
+                            ...child.val(), // 구조 분해 할당: 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%EA%B5%AC%EB%AC%B8
+                            key: child.key,
+    
+                        };
+    
+                        temp.push(item);
+    
+                    });
+    
+                    temp.sort(function (a, b) {
+                        return new Date(a.regdate) - new Date(b.regdate);
+                    });
+                    setChapter(temp);
+                    //console.log({ temp })
+                })
+        }
+    
+        console.log("getChapters",chapter)
+    
+
+
 
     useEffect(() => {
         // let temp = [];
@@ -166,7 +211,9 @@ const MyArticle = ({ navigation, route }) => {
       });
 
       navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
-  
+
+      const [swiper, setSwiper] = useState(null);
+
 
 
     return (
@@ -220,9 +267,49 @@ const MyArticle = ({ navigation, route }) => {
                                                     <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
                                                     <Text style={{flex: 15, fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                             </View>
-                                            <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
-                                                <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
-                                            </ScrollView>
+                                                                    <Swiper
+                                                        // index={myBook.bookKey}
+                                                        loop={false}
+                                                        showsPagination={true}
+                                                        onSwiper={setSwiper}
+                                                        showsButtons={false}
+                                                        dot={
+                                                            <View style={{           // unchecked dot style
+                                                                backgroundColor: 'rgba(0,0,0,0.2)',
+                                                                width: 10,
+                                                                height: 10,
+                                                                borderRadius: 4,
+                                                                marginLeft: 10,
+                                                                marginRight: 9,
+                                                            }}
+                                                            />}
+                                                        activeDot={<View style={{    // selected dots style
+                                                            backgroundColor: "#21381C",
+                                                            width: 10,
+                                                            height: 10,
+                                                            borderRadius: 4,
+                                                            marginLeft: 10,
+                                                            marginRight: 9,
+                                                        }} />}
+                                                    >
+                                                        {chapter.map(item => {
+                                                            return (
+                                                                <TouchableOpacity style={{ height: "90%", width: "80%", alignSelf: "center" }} onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}>
+                                                                    {/* <BookComponent
+                                                                        key={item.key}
+                                                                        item={item}
+                                                                        url={item.url}
+                                                                        bookTitle={item.bookTitle}
+                                                                        navigation={navigation}
+                                                                        userID={userID}
+                                                                        resizeMode="contain"
+                                                                    /> */}
+                                                                        <Text style={{fontSize: 18}}>{item.chapterTitle}</Text>
+                                                                        <Text style={{fontSize: 15}}>{item.mainText}</Text>
+                                                                </TouchableOpacity>
+                                                            )
+                                                        })}
+                                                    </Swiper>
                                         </View>
                                         )}
                                         
@@ -297,7 +384,7 @@ const MyArticle = ({ navigation, route }) => {
                                     {chapters.creator == user_uid ? (
                                     <View style={{height: realScreen*0.05, width: "90%", flexDirection: "row", alignSelf: "center", alignContent:"center", }}>
 
-                                        <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
+                                        {/* <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
                                             <Text style={{alignSelf: "center", color: "#21381c",}} 
                                                 onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
                                         </TouchableOpacity>
@@ -314,7 +401,7 @@ const MyArticle = ({ navigation, route }) => {
                                                             navigation.navigate("MyBook", { bookKey: bookKey })
                                                         })
                                                 }}>삭제</Text>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                     </View>)
                                     : (<View style={{height: "4%"}}></View>)}
                                     </View>
@@ -416,13 +503,15 @@ const styles = StyleSheet.create({
 console.log("myarticletheend")
 
 
-function headerLeft() {
+function headerRight() {
     const navigation = useNavigation();
-
+    const {bookKey}=test1
+    const {chapters}=test4
+console.log("myarticlechapters",chapters)
     return (
         <Button
-            onPress={() => navigation.goBack()}
-            title="뒤로가기?"
+            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters})}
+            title="수정"
             color="#000"
         />
 
@@ -430,7 +519,7 @@ function headerLeft() {
 }
 
 const options = {
-    headerLeft,
+    headerRight,
 };
 
 export default {
