@@ -17,13 +17,13 @@ const alltheanswers = ({ navigation, route }) => {
         if (questionsKey.indexOf('r') == 0){
         return "firstColor"
         }
-        else if (bookKey.indexOf('y') == 0){
+        else if (questionsKey.indexOf('y') == 0){
         return "secondColor"
         }
-        else if (bookKey.indexOf('B') == 0){
+        else if (questionsKey.indexOf('B') == 0){
         return "thirdColor"
         }
-        else if (bookKey.indexOf('b') == 0){
+        else if (questionsKey.indexOf('b') == 0){
         return "fourthColor"
         }
     }
