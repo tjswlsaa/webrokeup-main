@@ -159,6 +159,7 @@ const MyBook = ({ navigation, route }) => {
 
     console.log("getChapters",chapter)
 
+  
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -187,7 +188,6 @@ const MyBook = ({ navigation, route }) => {
                                             <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
                                                 <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
-
                                                 <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                             </View>
                                         </View>
@@ -269,6 +269,7 @@ function MyChapterItem(props) {
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
     console.log("chapters2222222",chapters)
+    console.log("isPublic: " + chapters.isPublic)
 
     useEffect(() => {
         // let temp = [];
@@ -295,6 +296,8 @@ function MyChapterItem(props) {
                 setCommentsNumber(commentsNumber)
             })
     }, [])
+
+
     return (
         <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
             <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
@@ -306,9 +309,24 @@ function MyChapterItem(props) {
                     <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
                     </View>
                 </View>
-                <View style={{ flexDirection: "row", marginTop: "1%"}}>
+                <View style={{ flexDirection: "row", marginTop: "1%", }}>
                     <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
-                        <Clover name="clover" size={16} color="grey" style={{marginLeft: "3%"}}/>
+                        {chapters.isPublic == true ? 
+                            (
+                            <View style={{flexDirection: "row"}}>
+                                <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
+                                <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
+                            </View>
+                            )
+                       : 
+                            (
+                             <View style={{flexDirection: "row"}}>
+                                <Icon name="lock" size={15} color="black" style={{ marginLeft: 20}}/>
+                                <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
+                            </View>   
+                            )
+                        }
+                        <Clover name="clover" size={16} color="grey" style={{marginLeft: 5}}/>
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>{likeCount}</Text>
                         <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%"}}>{commentsNumber}</Text>
