@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
-import paper from '../../assets/paper.png';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { CommonActions } from '@react-navigation/native';
 
 const test1 = {
     navigation:""
@@ -41,18 +43,23 @@ const EditArticle = ({ navigation, route }) => {
 
     const title_a = useRef(null);
     const maintext_a = useRef(null);
-    const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
     var user = firebase.auth().currentUser;
     var user_uid
     if (user != null) {
         user_uid = user.uid
     }
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width   //height
+
+    const headerHeight = useHeaderHeight();
+    const BottomSpace = getBottomSpace()
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace
+    
     return (
             <SafeAreaView style={{ flex: 1 }}>
-                <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
 
                     <View style={styles.bookContainer}>
-                        <ImageBackground style={styles.bookImage} source={paper} >
                             <View>
                                 <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
                                     <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
@@ -66,7 +73,6 @@ const EditArticle = ({ navigation, route }) => {
                                     ref={maintext_a} />
                                 {/* <Text style={styles.regdate}>{chapters.regdate}</Text> */}
                             </View>
-                        </ImageBackground>
                     </View>
                     <View style={styles.bottomButtonContainer}>
                         <TouchableOpacity style={styles.likeButton}>
@@ -76,8 +82,21 @@ const EditArticle = ({ navigation, route }) => {
                         <TouchableOpacity style={styles.commentButton}>
                             <Text style={styles.commentButtonText}></Text>
                         </TouchableOpacity>
+                        <TouchableOpacity style={{backgroundColor: "#21381c",width: ScreenWidth*0.15,  borderRadius: 15, justifyContent:"center"}} >
+                                            <Text style={{alignSelf: "center", color: "#fff", }} 
+                                                onPress={() => {
+                                                    // console.log('MyArticle.js (3), chapters: ',chapters);
+
+                                                    firebase_db
+                                                        .ref(`book/${bookKey}/chapters/` + chapterKey)
+                                                        .set(null)
+                                                        .then(function () {
+                                                            Alert.alert("삭제 완료")
+                                                            navigation.navigate("MyBook", { bookKey: bookKey })
+                                                        })
+                                                }}>삭제</Text>
+                                        </TouchableOpacity>
                     </View>
-                </ImageBackground>
             </SafeAreaView>
     )
 }

@@ -31,6 +31,10 @@ const test3 = {
     navigation: ''
 }
 
+const test4 = {
+    chapters: ''
+}
+
 const MyArticle = ({ navigation, route }) => {
 
     test3.navigation = navigation
@@ -38,7 +42,7 @@ const MyArticle = ({ navigation, route }) => {
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
 
-    console.log("myarticle(1)chapterkey현재페이지의챕터키",chapterKey) 
+    console.log("myarticle(1)chapterkey현재페이지의챕터키",) 
     // console.log("typeofchapterKey",typeof chapterKey) 
     const makechapterkeynumber= Number(chapterKey) 
     // console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) 
@@ -54,22 +58,24 @@ const MyArticle = ({ navigation, route }) => {
     const [cloverColor, setCloverColor] = useState("#c1c1c1")
     const [chapters, setChapters] = useState({});
         // console.log("myarticle author", chapters.creator)
+        console.log("myarticlechapters22",chapters)
 
+    test4.chapters=chapters
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
 
     
-    const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
 
+    const headerHeight = useHeaderHeight();
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
 
 
-    useEffect(getChapters, [chapterKey]);
+    useEffect(getChapters, []);
         function getChapters() {
             firebase_db
                 .ref(`book/${bookKey}/both/` + chapterKey)
@@ -83,9 +89,10 @@ const MyArticle = ({ navigation, route }) => {
                     }
                 });
         } // function getChapters()
-    
+        console.log("myarticlechapters22",chapters)
+
         const chapterColor = chapters.chColor;
-        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/likes/');
+        const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapterKey + '/likes/');
         console.log("chapters",chapters)
 
 
@@ -376,7 +383,7 @@ const MyArticle = ({ navigation, route }) => {
                                     {chapters.creator == user_uid ? (
                                     <View style={{height: realScreen*0.05, width: "90%", flexDirection: "row", alignSelf: "center", alignContent:"center", }}>
 
-                                        <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
+                                        {/* <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
                                             <Text style={{alignSelf: "center", color: "#21381c",}} 
                                                 onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
                                         </TouchableOpacity>
@@ -393,7 +400,7 @@ const MyArticle = ({ navigation, route }) => {
                                                             navigation.navigate("MyBook", { bookKey: bookKey })
                                                         })
                                                 }}>삭제</Text>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                     </View>)
                                     : (<View style={{height: "4%"}}></View>)}
                                     </View>
@@ -495,13 +502,15 @@ const styles = StyleSheet.create({
 console.log("myarticletheend")
 
 
-function headerLeft() {
+function headerRight() {
     const navigation = useNavigation();
-
+    const {bookKey}=test1
+    const {chapters}=test4
+console.log("myarticlechapters",chapters)
     return (
         <Button
-            onPress={() => navigation.goBack()}
-            title="뒤로가기?"
+            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters})}
+            title="수정"
             color="#000"
         />
 
@@ -509,7 +518,7 @@ function headerLeft() {
 }
 
 const options = {
-    headerLeft,
+    headerRight,
 };
 
 export default {
