@@ -9,11 +9,17 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BookComponent from '../../components/BookComponent';
+import { useNavigation } from '@react-navigation/native';
 
 const test3 = {
     navigation: ''
 }
-
+const test1 = {
+    bookKey: ''
+}
+const test4 = {
+    myitem: ''
+}
 const MyBook = ({ navigation, route }) => {
     test3.navigation = navigation
 
@@ -21,6 +27,7 @@ const MyBook = ({ navigation, route }) => {
     // const { myitem, bookKey } = route.params;
     const { bookKey } = route.params;
     console.log("bookKey",bookKey)
+    test1.bookKey=bookKey
     const [myitem, setMyitem] = useState({
         bookKey: '',
         bookTitle: '',
@@ -30,6 +37,7 @@ const MyBook = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
+    test4.myitem=myitem
     
     useEffect(getMyItem, []);
     function getMyItem() {
@@ -165,7 +173,7 @@ const MyBook = ({ navigation, route }) => {
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
                 <View style={{backgroundColor:"#F5F4F4"}}>
-                            {myitem.user_uid == user_uid ? (
+                            {/* {myitem.user_uid == user_uid ? (
                                 <View style={{ height: realScreen * 0.06 }} >
                                     <TouchableOpacity 
                                         onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}
@@ -173,7 +181,7 @@ const MyBook = ({ navigation, route }) => {
                                         <Text style={{ alignSelf: "center", color: "#21381C",}}> 수정하기 </Text>
                                     </TouchableOpacity>
                                 </View>
-                            ) : (<View style={{ height: realScreen * 0.06 }}></View>)}
+                            ) : (<View style={{ height: realScreen * 0.06 }}></View>)} */}
 
                             <View style={{ height: realScreen * 0.35, width: realScreen * 0.33, alignSelf: "center", }}>
                                 <View style={{ flex: 1 }}>
@@ -437,20 +445,31 @@ const styles = StyleSheet.create({
     editButtonText: {
     }
 })
-function headerLeft() {
-    const { navigation } = test3;
-    return (
-        <Button
-            onPress={() => { navigation.navigate('MyPage', { navigation: navigation }) }}
-            title="나의 이별록"
-            color="#000"
-        />
 
+
+function headerRight() {
+    const navigation = useNavigation();
+    const {bookKey}=test1
+    const {myitem}=test4
+    console.log("headerRightmyitem",myitem)
+    const user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) { user_uid = user.uid }
+    return (
+        <View>
+        {myitem.user_uid == user_uid ? 
+        (<Button
+            onPress={() => navigation.navigate("EditBook", {bookKey: bookKey, myitem: myitem})}
+            title="수정"
+            color="#000"
+        />):(<View></View>)}
+        </View>
     );
 }
 
 const options = {
-    headerLeft,
+    headerRight,
+
 };
 
 export default {
