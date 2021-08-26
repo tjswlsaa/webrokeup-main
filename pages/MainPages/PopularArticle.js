@@ -46,13 +46,14 @@ useEffect(()=>{
                     })
                 })
         }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
+        // console.log("populararticlelist",list)
 
-        console.log("populararticlelist",list)
-
+        const arraylist = Object.values(list)
+        const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
 
         const viewHot = () => {
                // console.log("viewHot")
-                const hotlist = [...list];
+                const hotlist = [...listFiltered];
                 hotlist.sort(function(a, b) {
                         return (b.likeCount) - (a.likeCount)
                         })
@@ -66,13 +67,13 @@ useEffect(()=>{
 
         const viewNew = () => {
                // console.log("viewNew")
-                const newlist = [...list]
+                const newlist = [...listFiltered]
                 newlist.sort(function(a, b) {
                         return new Date(b.regdate) - new Date(a.regdate);
                                 })
                 setList(newlist);
-                console.log("viewNew done")
-                console.log("list 3 (new): " + {list});
+                // console.log("viewNew done")
+                // console.log("list 3 (new): " + {list});
 
                 setHotColor("#E9E9E9")
                 setNewColor("#21381C")
