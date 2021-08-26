@@ -150,7 +150,7 @@ const MyBookPublic = ({ navigation, route }) => {
     // console.log("getChapters22",arraychapter)
     // console.log("getChapters",chapter.isPublic)
     // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)   
-    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic==true)
+    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic == true)
     // console.log("myChapterFiltered",myChapterFiltered)
     
 
@@ -277,7 +277,7 @@ function MyChapterItem(props) {
                 </View>
                 <View style={{ flexDirection: "row", marginTop: "2%"}}>
                     <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
-                        <Clover name="clover" size={16} color="green" style={{marginLeft: "3%"}}/>
+                        <Clover name="clover" size={16} color="grey" style={{marginLeft: "3%"}}/>
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>{likeCount}</Text>
                         <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%"}}>{commentsNumber}</Text>
