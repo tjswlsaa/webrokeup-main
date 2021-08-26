@@ -110,25 +110,20 @@ const MyBook = ({ navigation, route }) => {
         selfLetter:"안녕하세요 익명의 지은이입니다."
     });
 
-    useEffect(getuserinfo, [myitem]);
 
-     function getuserinfo(){
-             
-      firebase_db.ref(`users/${useruid}`)
-          .on('value', (snapshot) => {
-              let userinfo = snapshot.val();
-              if (userinfo > '') {
-                    setuserinfo(userinfo);
-              }
-          })
-    }
-      console.log("mybookuserinfo",userinfo)
-    //   const iam = userinfo.iam
-    //   const selfLetter =userinfo.selfLetter
-    let iam = userinfo.iam;
-    console.log({iam})
-    let selfLetter = userinfo.selfLetter;
-    console.log({selfLetter})      
+      useEffect(()=> {
+        function getUserId() {
+          firebase_db.ref(`users/${myitem.user_uid}`)
+              .on('value', (snapshot) => {
+                  let user = snapshot.val();
+                  if (user) {
+                    setUserinfo(userinfo);
+              }})
+        }
+      }, []);
+      const { iam, selfLetter } = useState;
+      console.log("iam" + iam);
+      console.log(selfLetter);     
 
 
     const [chapter, setChapter] = useState([]);
@@ -303,13 +298,17 @@ function MyChapterItem(props) {
     return (
         <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
             <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
-                <View style={{height: realScreen*0.12}}>
-                    <Text style={{fontSize: 15, fontWeight: "600", marginHorizontal: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                    <Text style={{fontSize: 14, marginTop: "3%", marginHorizontal: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
+                <View style={{height: realScreen*0.12, flexDirection: "row"}}>
+                    
+                    <View style={{flex: 1, backgroundColor: chapters.chColor, marginRight: "5%", marginBottom: "5%"}} /> 
+                    <View style={{flex: 40}}>
+                    <Text style={{fontSize: 15, fontWeight: "600", marginRight: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                    <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
+                    </View>
                 </View>
-                <View style={{ flexDirection: "row", marginTop: "2%"}}>
+                <View style={{ flexDirection: "row", marginTop: "1%"}}>
                     <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
-                        <Clover name="clover" size={16} color="green" style={{marginLeft: "3%"}}/>
+                        <Clover name="clover" size={16} color="grey" style={{marginLeft: "3%"}}/>
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>{likeCount}</Text>
                         <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
                         <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%"}}>{commentsNumber}</Text>

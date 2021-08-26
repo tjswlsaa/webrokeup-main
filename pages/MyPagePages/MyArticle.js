@@ -216,8 +216,9 @@ const MyArticle = ({ navigation, route }) => {
                                     
                                     <View style={{ height: realScreen*0.8,}}>
                                             
-                                            <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
-                                                    <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
+                                            <View style={{height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "20%"}}>
+                                                    <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
+                                                    <Text style={{flex: 15, fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                             </View>
                                             <ScrollView style={{marginHorizontal: "10%", marginTop: "5%"}}>
                                                 <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
