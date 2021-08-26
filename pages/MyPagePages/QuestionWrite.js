@@ -202,9 +202,25 @@ test11.question=question
     console.log("index1111",index)
 
  // console.log('이거썌거',chapterKey)
- function colorAis(bookKey) {
+  function colordefaultis(bookKey) {
+    if (bookKey.indexOf('1') == 0){
+    return "#9E001C"
+    }
+    else if (bookKey.indexOf('2') == 0){
+    return "#F6AE2D"
+    }
+    else if (bookKey.indexOf('3') == 0){
+    return "#33658A"
+    }
+    else if (bookKey.indexOf('4') == 0){
+    return "#494949"
+    }
+  }
+  const colordefault = colordefaultis(bookKey);
+
+function colorAis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#9E001C"
+  return "#FFD2CF"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#F6AE2D"
@@ -220,7 +236,7 @@ const colorA = colorAis(bookKey);
 
 function colorBis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#E73F34"
+  return "#FB8A8A"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#DFB82C"
@@ -236,7 +252,7 @@ const colorB = colorBis(bookKey);
 
 function colorCis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#F01D0F"
+  return "#FF3225"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#E8D60C"
@@ -252,7 +268,7 @@ const colorC = colorCis(bookKey);
 
 function colorDis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#623734"
+  return "#D40D12"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#FFDD00"
@@ -268,7 +284,7 @@ const colorD = colorDis(bookKey);
 
 function colorEis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#4A130E"
+  return "#9E001C"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#FFF848"
@@ -284,7 +300,7 @@ const colorE = colorEis(bookKey);
 
 function colorFis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#EE8D8D"
+  return "#4A130E"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#F2EDC0"

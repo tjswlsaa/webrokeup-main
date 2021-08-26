@@ -27,15 +27,7 @@ const test2 = {
     url: '',
     user_uid: ''
 }
-const test3 = {
-    chapterKey: '',
-    chapterTitle: '',
-    likeCount: '',
-    likes: {},
-    mainText: '',
-    Kregdate: '',
-    regdate: ''
-}
+
 
 const test4 = {
     chapteritem:""
@@ -67,8 +59,7 @@ if (user != null) {
 
     const [book, setBook] = useState([]);
     test2.book = book;
-    const [hotChapter, setHotChapter] = useState([]);
-    test3.hotChapter = hotChapter;
+
     const [swiper, setSwiper] = useState(null);
     const [autoSwiper, setAutoSwiper] = useState(null);
     const [writings, setWritings] =useState([])
@@ -78,8 +69,9 @@ if (user != null) {
     const tabBarHeight = useBottomTabBarHeight();
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+    const ScreenWidth = Dimensions.get('window').width
 
-      
+
     
     useEffect(() => {
         firebase_db
@@ -114,101 +106,298 @@ if (user != null) {
             })
     }, [])
 
-    useEffect(() => {
-        
-        firebase_db
-            .ref(`book`)
-            .on('value', (snapshot) => {
-                let hotlist = [];
-               // console.log({ snapshot });
-                //// console.log({'typeof snapshot': typeof snapshot});
-                //// console.log({'snapshot.length': snapshot.length});
-                snapshot.forEach((child) => {
-                    const book = child.val();
-                    const { chapters } = book;
 
-                    if (chapters == undefined){
-                       // console.log("Main() 챕터가 없습니다")
-                    }else{
-                        hotlist = [...hotlist, ...Object.values(chapters)];
-                    }
-                   // console.log({ chapters })
-                     // spread를 통한 리스트 병합
-                });
-                hotlist.sort(function (a, b) {
-                    return (b.likeCount) - (a.likeCount)
-                });
-                // 전체 snapshot 중에서, 앞에거 두 개만 갖고 오고 싶을 경우!
-                const hotChapter = [];
-                if (hotlist.length >= 1) {
-                    hotChapter.push(hotlist[0]);
-                }
-                if (hotlist.length >= 2) {
-                    hotChapter.push(hotlist[1]);
-                }
-                if (hotlist.length >= 3) {
-                    hotChapter.push(hotlist[2]);
-                }
-                setHotChapter(hotChapter);
-               // console.log({ hotChapter })
-               // console.log("hotChapter.chapterkey: ~~~" + hotChapter.chapterKey)
-            })
-    }, [])
+// mybook큐레이팅
 
+const qurationBookKey1 = "1069092000"
+const qurationBookKey2 = "3560282000"
+// const qurationBookKey3 = "Blue1"
+// const qurationBookKey4 = "black1"
+// const qurationBookKey5 = "red2"
+
+const qurationChapterKey1 = "1069092001"
+const qurationChapterKey2 = "3560282002"
+// const qurationChapterKey3 = "Blue1"
+// const qurationChapterKey4 = "black1"
+// const qurationChapterKey5 = "red2"
+
+const [myitem1, setMyitem1] = useState([]);
+
+useEffect(getMyItem1, [qurationBookKey1]);
+function getMyItem1() {
+    //console.log('getMyItem()');
+    // bookKey-> myitem
+    firebase_db
+        .ref(`/book/${qurationBookKey1}`)
+        .on('value', (snapshot) => {
+            const myitem1 = snapshot. val()
+    
+            setMyitem1(myitem1)
+        });
+}
+
+console.log("myitem1",myitem1)
+
+
+const [chapter1, setChapter1] = useState([]);
+
+useEffect(getChapters1, [qurationChapterKey1]);
+function getChapters1() {
+    firebase_db
+        .ref(`book/${qurationBookKey1}/both/`+qurationChapterKey1)
+        .on('value', (snapshot) => {
+            const chapter1 = snapshot.val()
+            setChapter1(chapter1);
+        })
+}
+
+const [myitem2, setMyitem2] = useState([]);
+
+useEffect(getMyItem2, [qurationBookKey2]);
+function getMyItem2() {
+    //console.log('getMyItem()');
+    // bookKey-> myitem
+    firebase_db
+        .ref(`/book/${qurationBookKey2}`)
+        .on('value', (snapshot) => {
+            const myitem2 = snapshot. val()
+    
+            setMyitem2(myitem2)
+        });
+}
+
+const [chapter2, setChapter2] = useState([]);
+
+useEffect(getChapters2, [qurationChapterKey2]);
+function getChapters2() {
+    firebase_db
+        .ref(`book/${qurationBookKey2}/both/`+qurationChapterKey2)
+        .on('value', (snapshot) => {
+            const chapter2 = snapshot.val()
+            setChapter2(chapter2);
+        })
+}
+
+const [BookItemUserinfo1, setBookItemUserinfo1] = useState({
+    iam:"익명의.지은이",
+    selfLetter:"안녕하세요 익명의 지은이입니다."
+});
+useEffect(()=>{
+  firebase_db.ref(`users/${myitem1.user_uid}`)
+      .on('value', (snapshot) => {
+          let BookItemUserinfo1 = snapshot.val();
+          if (BookItemUserinfo1 > '') {
+            setBookItemUserinfo1(BookItemUserinfo1);
+          }
+      })
+}, [myitem1]);
+
+
+const [BookItemUserinfo2, setBookItemUserinfo2] = useState({
+iam:"익명의.지은이",
+selfLetter:"안녕하세요 익명의 지은이입니다."
+});
+useEffect(()=>{
+firebase_db.ref(`users/${myitem2.user_uid}`)
+  .on('value', (snapshot) => {
+      let BookItemUserinfo2 = snapshot.val();
+      if (BookItemUserinfo2 > '') {
+        setBookItemUserinfo2(BookItemUserinfo2);
+      }
+  })
+}, [myitem2]);
+// 책 큐레이팅 끝
+
+//큐레이팅 설문지
+    const qurationQuestionKey1 = "red1"
+    const qurationQuestionKey2 = "yellow1"
+    const qurationQuestionKey3 = "Blue1"
+    const qurationQuestionKey4 = "black1"
+    const qurationQuestionKey5 = "red2"
+
+
+    const [question1, setQuestion1] = useState([]);
+    useEffect(()=>{
+      firebase_db.ref(`questions/firstColorQuestions/`+qurationQuestionKey1)
+      .on('value', (snapshot)=>{
+            const question1 = snapshot. val()
+    
+            setQuestion1(question1)
+        })
+    },[])
+    console.log("Newpage question",question1)
+
+    const [question2, setQuestion2] = useState([]);
+    useEffect(()=>{
+      firebase_db.ref(`questions/secondColorQuestions/`+qurationQuestionKey2)
+      .on('value', (snapshot)=>{
+            const question2 = snapshot. val()
+    
+            setQuestion2(question2)
+        })
+    },[])
+    console.log("Newpage question",question2)
+    
+    const [question3, setQuestion3] = useState([]);
+    useEffect(()=>{
+      firebase_db.ref(`questions/thirdColorQuestions/`+qurationQuestionKey3)
+      .on('value', (snapshot)=>{
+            const question3 = snapshot. val()
+    
+            setQuestion3(question3)
+        })
+    },[])
+    console.log("Newpage question",question3)
+
+    const [question4, setQuestion4] = useState([]);
+    useEffect(()=>{
+      firebase_db.ref(`questions/fourthColorQuestions/`+qurationQuestionKey4)
+      .on('value', (snapshot)=>{
+            const question4 = snapshot. val()
+    
+            setQuestion4(question4)
+        })
+    },[])
+    console.log("Newpage question",question4)
+
+    const [question5, setQuestion5] = useState([]);
+    useEffect(()=>{
+      firebase_db.ref(`questions/firstColorQuestions/`+qurationQuestionKey5)
+      .on('value', (snapshot)=>{
+            const question5 = snapshot. val()
+    
+            setQuestion5(question5)
+        })
+    },[])
+    console.log("Newpage question",question5)
+
+//큐레이팅 설문지 끝
+
+const firstColor= "#9E001C"
+const secondColor="#F6AE2D"
+const thirdColor = "#33658A"
+const fourthColor= "#494949"
+console.log("question1.Color",question1.Color)
+const ColorOne=question1.Color
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: "#fbfbfb"}}>
         <View>
             <StatusBar style= "white" />
             <ScrollView>
-            <View style={{height: realScreen*0.06, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
+            <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>Feel Me Fill Me</Text>
             </View>
-            <View style={{ height: realScreen*0.42}}>
+            <View style={{ height: realScreen*0.5, }}>
                     <View style={{height: realScreen*0.05, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%",justifyContent:"center"}}>
                         <View style={{ flex: 4 }} >
-                            <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘의 감정책 </Text>
+                            <Text style={{ fontSize: 18, fontWeight: "700", }}> 오늘의 감정책 </Text>
                         </View>
-                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F",justifyContent:"center" }}
+                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center" }}
                         onPress={() => { navigation.navigate('PopularArticle')}}>
-                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
-                <View style= {{flex: 9}}> 
+                <View style={{height:realScreen*0.45, width:"100%",}}> 
 
                     <Swiper
-                        index={book.bookKey}
+                        // index={book.bookKey}
                         loop={false}
                         showsPagination={false}
                         onSwiper={setSwiper}
                         showsButtons={true}
-                        style={{backgroundColor: "#fff", marginHorizontal: "4%",}}
+                        style={{backgroundColor: "#FBFBFB", marginHorizontal: "4%",}}
                         nextButton={<Text style={styles.nextButtonText}>›</Text>}
                         prevButton={<Text style={styles.prevButtonText}>›</Text>}
                     >
-                        {book.map(item => (
-                            <BookItem
-                                key={item.bookKey}
-                                navigation={navigation}
-                                item={item}
-                                bookKey={item.bookKey}
-                            />
-                        ))}
+                                    <View style={{flexDirection:"row", height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" }}>
+                                                {/* <View style={{alignContent:"center"}}> */}
+                                                <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticle', { chapterKey: qurationChapterKey1 }) }}>
+                                                                                    <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginHorizontal:"5%"}}>
+                                                                                            <View style={{flexDirection:"row", flex:1, }}>
+                                                                                                    <View style={{backgroundColor:chapter1.chColor, flex:1, height:"50%", marginTop:"15%"}}> 
+                                                                                                    </View>
+                                                                                                    <Text style={{flex:12,fontSize: 16, fontWeight: "700",  marginTop: "15%",marginHorizontal: "5%",}}>{chapter1.chapterTitle}</Text>
+                                                                                            </View>
+
+                                                                                                    <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "5%", marginBottom:"5%"}} numberOfLines={6} >{chapter1.mainText}</Text>
+                                                                                    </View>
+
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={{  justifyContent:"center",marginLeft:ScreenWidth*0.05}} onPress={() => {navigation.navigate('MyBook', { bookKey: qurationBookKey1 }) }}>
+                                                                            <View>
+                                                                            <View style={{ backgroundColor:myitem1.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
+                                                                            </View>
+
+                                                                            <View style={{ backgroundColor:myitem1.Color,zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
+                                                                            <Image source={{uri: myitem1.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
+                                                                            <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
+                                                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem1.defaultTitle}</Text>
+                                                                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem1.bookTitle}</Text>
+
+                                                                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo1.iam}</Text>
+                                                                            </View>
+                                                                            </View>
+                                                                            </View>
+                                                </TouchableOpacity>
+                                                {/* </View> */}
+                                    </View>           
+
+                                    
+                                    <View style={{flexDirection:"row", height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" }}>
+                                                {/* <View style={{alignContent:"center"}}> */}
+                                                <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticle', { chapterKey: qurationChapterKey2 }) }}>
+                                                                                    <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginHorizontal:"5%"}}>
+                                                                                            <View style={{flexDirection:"row", flex:1, }}>
+                                                                                                    <View style={{backgroundColor:chapter2.chColor, flex:1, height:"50%", marginTop:"15%"}}> 
+                                                                                                    </View>
+                                                                                                    <Text style={{flex:12,fontSize: 16, fontWeight: "700",  marginTop: "15%",marginHorizontal: "5%",}}>{chapter2.chapterTitle}</Text>
+                                                                                            </View>
+
+                                                                                                    <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "10%" ,marginBottom:"5%"}} numberOfLines={6} >{chapter2.mainText}</Text>
+                                                                                    </View>
+
+                                                </TouchableOpacity>
+
+                                                <TouchableOpacity style={{  justifyContent:"center",marginLeft:ScreenWidth*0.05}} onPress={() => {navigation.navigate('MyBook', { bookKey: qurationBookKey2 }) }}>
+                                                                            <View>
+                                                                            <View style={{ backgroundColor:myitem2.chColor, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
+                                                                            </View>
+
+                                                                            <View style={{ backgroundColor:myitem2.Color,zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
+                                                                            <Image source={{uri: myitem2.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
+                                                                            <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
+                                                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem2.defaultTitle}</Text>
+                                                                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem2.bookTitle}</Text>
+
+                                                                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo2.iam}</Text>
+                                                                            </View>
+                                                                            </View>
+                                                                            </View>
+                                                </TouchableOpacity>
+                                                {/* </View> */}
+                                    </View>             
+
+
+
                     </Swiper>
                 </View>
             </View>
             <View style={{ height: realScreen*0.4, backgroundColor: "#FAFAFA" }}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
                         <View style={{ flex: 4}}> 
-                            <Text style={{ fontSize: 18, fontWeight: "700" }}> 오늘은 어떤가요 </Text>
+                            <Text style={{ fontSize: 18, fontWeight: "700" }}> 감정 질문지 </Text>
                         </View>
-                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('PopularArticle')}}>
-                                <Text style={{alignSelf: "center",color: "white"}} >더보기</Text>
+                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('QuestionPallete')}}>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
                         </TouchableOpacity>
+
                 </View>
-                <View style={{flex: 8,marginHorizontal:"2%"}} horizontal={true}>
+
+                <View style={{flex: 8,marginHorizontal:"2%", }} horizontal={true}>
                     <Swiper
-                        index={hotChapter.chapterKey}
+                        // index={hotChapter.chapterKey}
                         loop={true}
                         showsPagination={false}
                         onSwiper={setAutoSwiper}
@@ -218,32 +407,85 @@ if (user != null) {
                         autoplayTimeout={3}
                         resizeMode="contain"
                     >
-                        {hotChapter.map(chapters => (
-                            test4.chapters=chapters,
-                           // console.log("hotChapter 맵 운영 중"),
-                            <ChapterItem
-                                key={chapters.chapterKey}
-                                navigation={navigation}
-                                chapters={chapters}
-                                chapterKey={chapters.chapterKey}
-                                bookKey={chapters.bookKey}
-                            />)
-                        )}
+
+                                <TouchableOpacity style={{ height: "85%", backgroundColor: "white", marginHorizontal: "5%", padding: "10%", borderRadius: "10%", }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: qurationQuestionKey1 })}>
+                                    <View style={{ flexDirection: "row", height: realScreen * 0.05, justifyContent: "center", }}>
+                                        <View style={{ backgroundColor: question1.Color, flex: 1 }}></View>
+                                        <Text style={{ fontSize: 16, flex: 25, marginTop: "2%", marginLeft:"2%" }}>{question1.title}</Text>
+                                    </View>
+                                    <View style={{ marginTop: "5%" }}>
+                                        <Text numberOfLines={5}>{question1.summary}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ height: "85%", backgroundColor: "white", marginHorizontal: "5%", padding: "10%", borderRadius: "10%", }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: qurationQuestionKey2 })}>
+                                    <View style={{ flexDirection: "row", height: realScreen * 0.05, justifyContent: "center", }}>
+                                        <View style={{ backgroundColor: question2.Color, flex: 1 }}></View>
+                                        <Text style={{ fontSize: 16, flex: 25, marginTop: "2%", marginLeft:"2%"  }}>{question2.title}</Text>
+                                    </View>
+                                    <View style={{ marginTop: "5%" }}>
+                                        <Text numberOfLines={5}>{question2.summary}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ height: "85%", backgroundColor: "white", marginHorizontal: "5%", padding: "10%", borderRadius: "10%", }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: qurationQuestionKey3 })}>
+                                    <View style={{ flexDirection: "row", height: realScreen * 0.05, justifyContent: "center", }}>
+                                        <View style={{ backgroundColor: question3.Color, flex: 1 }}></View>
+                                        <Text style={{ fontSize: 16, flex: 25, marginTop: "2%" , marginLeft:"2%" }}>{question3.title}</Text>
+                                    </View>
+                                    <View style={{ marginTop: "5%" }}>
+                                        <Text numberOfLines={5}>{question3.summary}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ height: "85%", backgroundColor: "white", marginHorizontal: "5%", padding: "10%", borderRadius: "10%", }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: qurationQuestionKey4 })}>
+                                    <View style={{ flexDirection: "row", height: realScreen * 0.05, justifyContent: "center", }}>
+                                        <View style={{ backgroundColor: question4.Color, flex: 1 }}></View>
+                                        <Text style={{ fontSize: 16, flex: 25, marginTop: "2%" , marginLeft:"2%" }}>{question4.title}</Text>
+                                    </View>
+                                    <View style={{ marginTop: "5%" }}>
+                                        <Text numberOfLines={5}>{question4.summary}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ height: "85%", backgroundColor: "white", marginHorizontal: "5%", padding: "10%", borderRadius: "10%", }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: qurationQuestionKey5 })}>
+                                    <View style={{ flexDirection: "row", height: realScreen * 0.05, justifyContent: "center", }}>
+                                        <View style={{ backgroundColor: question5.Color, flex: 1 }}></View>
+                                        <Text style={{ fontSize: 16, flex: 25, marginTop: "2%", marginLeft:"2%"  }}>{question5.title}</Text>
+                                    </View>
+                                    <View style={{ marginTop: "5%" }}>
+                                        <Text numberOfLines={5}>{question5.summary}</Text>
+                                    </View>
+                                </TouchableOpacity>
                     </Swiper>
                 </View>
-                
+
+                {/* <View style={{flexDirection:"row", marginHorizontal:"5%", flex:1}}>
+                        <TouchableOpacity style={{  height: realScreen*0.045,  flex:1,backgroundColor: "#9E001C",justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('QuestionList',{Color:"#9E001C"})}}>
+                         </TouchableOpacity>
+                         <TouchableOpacity style={{height: realScreen*0.045,flex:1,backgroundColor: "#F6AE2D",justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
+                         </TouchableOpacity>
+                </View>
+                <View style={{flexDirection:"row", marginHorizontal:"5%", flex:1}}>
+
+                         <TouchableOpacity style={{  height: realScreen*0.045,flex:1,backgroundColor: "#33658A",justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('QuestionList',{Color:"#33658A"})}}>
+                         </TouchableOpacity>
+                         <TouchableOpacity style={{ height: realScreen*0.045, flex:1,backgroundColor: "#494949",justifyContent:'center' }}
+                            onPress={() => { navigation.navigate('QuestionList',{Color:"#494949"})}}>
+                         </TouchableOpacity>
+                </View> */}
+
             </View>
-            <View style={{ height: realScreen*0.4, backgroundColor: "#fafafa"}}>
+            <View style={{ height: realScreen*0.5, backgroundColor: "#fafafa"}}>
                 <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
                     <View style={{flex: 4}}>
                         <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
                     </View>
-                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F", justifyContent:"center"}}
+                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center"}}
                         onPress={() => { navigation.navigate('editorBoard')}}>
-                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
                     </TouchableOpacity>
                 </View>
-                <View style= {{flex:5}}>  
+                <View style= {{flex:8}}>  
                     <ScrollView style={{ marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
                             {writings.map(item => {
                                         return (
@@ -259,179 +501,104 @@ if (user != null) {
                 </View>
             </View>
 
-            <View style={{ height: realScreen*0.4, backgroundColor: "#fafafa"}}>
-                <View style={{flex:1, flexDirection: "row", marginTop: "2%", marginHorizontal: "3%"}}>
-                    <View style={{flex: 4}}>
-                        <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
-                    </View>
-                    <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045, backgroundColor: "#20543F", justifyContent:"center"}}
-                        onPress={() => { navigation.navigate('editorBoard')}}>
-                            <Text style={{alignSelf: "center", color: "white"}}>더보기</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style= {{flex:5}}>  
-                    <ScrollView style={{ marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
-                            {writings.map(item => {
-                                        return (
-                                            <WritingItem
-                                                navigation={navigation}
-                                                key={item.writingKey}
-                                                writing={item}
 
-                                            />
-                                        )
-                                    })}
-                    </ScrollView>
-                </View>
-            </View>
             </ScrollView>
             </View>
             </SafeAreaView>
     )
 }
 
-const BookItem = ({ navigation, item, }) => {
+// const BookItem = ({ navigation, item, }) => {
 
-    console.log("BookItem", item)
-    const headerHeight = useHeaderHeight();
-    const ScreenHeight = Dimensions.get('window').height   //height
-    const BottomSpace = getBottomSpace()
-    const tabBarHeight = useBottomTabBarHeight();
-    const statusBarHeight = getStatusBarHeight();
-    const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
-    const ScreenWidth = Dimensions.get('window').width
+//     console.log("BookItem", item)
+//     const headerHeight = useHeaderHeight();
+//     const ScreenHeight = Dimensions.get('window').height   //height
+//     const BottomSpace = getBottomSpace()
+//     const tabBarHeight = useBottomTabBarHeight();
+//     const statusBarHeight = getStatusBarHeight();
+//     const realScreen = ScreenHeight-headerHeight-BottomSpace-tabBarHeight
+//     const ScreenWidth = Dimensions.get('window').width
 
-    console.log("bookitem item.Color",item.Color)
-    const [BookItemUserinfo, setBookItemUserinfo] = useState({
-        iam:"익명의.지은이",
-        selfLetter:"안녕하세요 익명의 지은이입니다."
-    });
-    useEffect(()=>{
-      firebase_db.ref(`users/${item.user_uid}`)
-          .on('value', (snapshot) => {
-              let BookItemUserinfo = snapshot.val();
-              if (BookItemUserinfo > '') {
-                setBookItemUserinfo(BookItemUserinfo);
-              }
-          })
-  }, []);
+//     console.log("bookitem item.Color",item.Color)
+//     const [BookItemUserinfo, setBookItemUserinfo] = useState({
+//         iam:"익명의.지은이",
+//         selfLetter:"안녕하세요 익명의 지은이입니다."
+//     });
+//     useEffect(()=>{
+//       firebase_db.ref(`users/${item.user_uid}`)
+//           .on('value', (snapshot) => {
+//               let BookItemUserinfo = snapshot.val();
+//               if (BookItemUserinfo > '') {
+//                 setBookItemUserinfo(BookItemUserinfo);
+//               }
+//           })
+//   }, []);
 
-    return (
-        <View style={{height: realScreen*0.4, width:"90%",  backgroundColor:"#F5F4F4",}}>
-                    {/* <View style={{alignContent:"center"}}> */}
-                    <TouchableOpacity style={{  flex:1, padding:"5%", justifyContent:"center",  }} onPress={() => {navigation.navigate('MyBook', { bookKey: item.bookKey }) }}>
-                        <View style={{flexDirection: "row",flex:1 }}>
-                                <View style={{flex: 1,}}>
-                                                <View style={{flex:1, }}>
-                                                        <View style={{flex:1, marginHorizontal: "3%", padding:"5%",backgroundColor:"white"}}>
-                                                                <View style={{flex:5}}>
-                                                                <Text style={{fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%"}}>말머리에서</Text>
-                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} >{item.intro}</Text>
-                                                                </View>
-                                                                <View>
-                                                                        {/* <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text> */}
-                                                                </View>
+//     return (
+//         <View style={{height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" }}>
+//                     {/* <View style={{alignContent:"center"}}> */}
+//                     <TouchableOpacity style={{  flex:1, padding:"5%", justifyContent:"center",}} onPress={() => {navigation.navigate('MyBook', { bookKey: item.bookKey }) }}>
+//                         <View style={{flexDirection: "row",width:ScreenWidth*0.4,}}>
+//                                                         <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginRight:ScreenWidth*0.01}}>
+//                                                                 <View style={{flex:5}}>
+//                                                                 <Text style={{fontSize: 16, fontWeight: "700",  marginTop: "15%"}}>말머리에서</Text>
+//                                                                 <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%"}} numberOfLines={6} >{item.intro}</Text>
+//                                                                 </View>
+//                                                                 <View>
+//                                                                         {/* <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text> */}
+//                                                                 </View>
 
-                                                                {/* <View style={{ flex: 1, flexDirection: "row"}}>
-                                                                        <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                                        <Text style={styles.bookIndexText}>{likeCount}</Text>
-                                                                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                                        <Text style={styles.bookIndexText}>{commentsNumber}</Text>
-                                                                </View> */}
-                                                        </View>
-                                                </View>
-                                </View>
-
-                                <View style={{flex: 1, marginLeft:"3%"}}>
-                                                <View>
-                                                <View style={{ backgroundColor:item.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
-                                                </View>
-
-                                                <View style={{ backgroundColor:item.Color,zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
-                                                <Image source={{uri: item.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
-                                                <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
-                                                        <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{item.defaultTitle}</Text>
-                                                        <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{item.bookTitle}</Text>
-
-                                                        <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo.iam}</Text>
-                                                </View>
-                                                </View>
-                                                </View>
-
-                                </View>
-                        </View>
-                    </TouchableOpacity>
-                    {/* </View> */}
-        </View>
-)
-}
-
-const ChapterItem = ({ navigation, chapters, chapterKey }) => {
-
-    const [ChapterItemUserinfo, setChapterItemUserinfo] = useState({
-        iam:"익명의.지은이",
-        selfLetter:"안녕하세요 익명의 지은이입니다."
-    });
-
-    console.log({chapters})
-  
-    
-    useEffect(()=>{
-      firebase_db.ref(`users/${chapters.creator}`)
-          .on('value', (snapshot) => {
-              let ChapterItemUserinfo = snapshot.val();
-              if (ChapterItemUserinfo > '') {
-                setChapterItemUserinfo(ChapterItemUserinfo);
-              }
-          })
-  }, []);
+//                                                                 {/* <View style={{ flex: 1, flexDirection: "row"}}>
+//                                                                         <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+//                                                                         <Text style={styles.bookIndexText}>{likeCount}</Text>
+//                                                                         <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+//                                                                         <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+//                                                                 </View> */}
+//                                                         </View>
 
 
-    return (
-            <TouchableOpacity style={{ marginHorizontal: "3%", borderRadius: 10, height: "80%", backgroundColor: "#fff", borderColor: "#A2A2A2", shadowColor: "#e9e9e9", shadowRadius: 2, shadowOpacity: 3, shadowOffset:{width: 0, height: 0}}} 
-            onPress={() => { navigation.navigate('readPopularArticle', { chapterKey: chapterKey, bookKey: chapters.bookKey }) }}>
-                <View style={{height: "75%"}}>
-                <Text style={{ fontSize: 15, fontWeight: '700', marginHorizontal: "5%", marginTop: "5%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                <Text style={{ fontSize: 13, fontWeight: '400', marginHorizontal: "5%", marginTop: "2.5%", marginBottom: "2%", alignSelf: "center" }} numberOfLines={2}>{chapters.mainText}</Text>
-                </View>
-                <Text style={{ fontSize: 12, fontWeight: '400', marginHorizontal: "5%", }}> by. {ChapterItemUserinfo.iam} </Text>
-            </TouchableOpacity>
-    )
-}
+//                                 <View style={{  backgroundColor:"pink", }}>
+//                                                 <View>
+//                                                 <View style={{ backgroundColor:item.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
+//                                                 </View>
+
+//                                                 <View style={{ backgroundColor:item.Color,zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
+//                                                 <Image source={{uri: item.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
+//                                                 <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
+//                                                         <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{item.defaultTitle}</Text>
+//                                                         <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{item.bookTitle}</Text>
+
+//                                                         <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo.iam}</Text>
+//                                                 </View>
+//                                                 </View>
+//                                                 </View>
+
+//                                 </View>
+//                         </View>
+//                     </TouchableOpacity>
+//                     {/* </View> */}
+//         </View>
+// )
+// }
 
 const WritingItem=(props)=> {
     const {writing, navigation}=props;
 
-    const [WritingItemUserinfo, setWritingItemUserinfo] = useState({
-        iam:"익명의.지은이",
-        selfLetter:"안녕하세요 익명의 지은이입니다."
-    });
 
-    useEffect(()=>{
-      firebase_db.ref(`users/${writing.creator}`)
-          .once('value', (snapshot) => {
-              let WritingItemUserinfo = snapshot.val();
-              if (WritingItemUserinfo > '') {
-                setWritingItemUserinfo(WritingItemUserinfo);
-              }
-          })
-  }, []);
 
     return (
-        <View style={{marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
+        <View style={{marginTop:10,borderRadius:10, marginLeft:10, marginRight:10, marginBottom:20}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
-                <View style={{backgroundColor:"#A2AD9C", width: 170, height: 130, borderRadius: 10}}>
+                <View style={{backgroundColor:"#A2AD9C", width: 190, height: "100%", borderRadius: 10}}>
+                    <Image style={{height:"40%", borderRadius: 10}} source={{uri:writing.image}}></Image>
                     <View style={{margin: "10%"}}>
-                        <Text style={{fontSize: 15, color: "white", fontWeight: "600"}} numberofLines={3}>{writing.title}</Text>
-                        <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.text}</Text>
+                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberofLines={3}>{writing.title}</Text>
+                        <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.summary}</Text>
                     </View>
-                    <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
 
                 </View>
 
-                <View style={{backgroundColor:"pink"}}>
-                <Text style={styles.bookIndexText}>{WritingItemUserinfo.iam}</Text>
-                </View>
+
             </TouchableOpacity>
 
         </View>

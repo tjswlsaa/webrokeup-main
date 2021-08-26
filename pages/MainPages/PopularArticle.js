@@ -117,7 +117,7 @@ useEffect(()=>{
 
 
 
-const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
+const ChapterItem = ({ navigation, chapters, chapterKey, bookKey, list }) => {
        // console.log('PopularArticle.js (1), chapters: ',chapters);
        console.log("popualr bookKey",bookKey)
         const [book,setBook] = useState([]);
@@ -146,7 +146,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                 user_uid: '',
             });
 
-        useEffect(getMyItem, []);
+        useEffect(getMyItem, [list]);
         function getMyItem() {
             //console.log('getMyItem()');
             // bookKey-> myitem
@@ -224,7 +224,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                 let temp = [];
                 var likeCount = snapshot.numChildren();
                // console.log('useEffect()');
-               // console.log({likeCount});
+               console.log({likeCount});
                 setLikeCount(likeCount)
                 //// console.log(likeCount)
                 snapshot.forEach((child) => {
@@ -236,7 +236,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
         useEffect (()=>{
                // console.log('PopularArticle.js (2), item: ',item);
 
-            let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+            let arr = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/comments/')
             .on('value', (snapshot) => {
                var commentsNumber = snapshot.numChildren();
                setCommentsNumber(commentsNumber)
@@ -279,7 +279,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
                                 }
                                 style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,padding:"5%"}}>
                                         <View>
-                                        <View style={{ backgroundColor:Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
+                                        <View style={{ backgroundColor:myitem.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                                         </View>
 
                                         <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>

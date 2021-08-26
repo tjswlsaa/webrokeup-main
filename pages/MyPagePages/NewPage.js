@@ -56,10 +56,24 @@ const NewPage = ({ navigation, route }) => {
   const thirdColor = "#33658A"
   const fourthColor= "#494949"
 
-
+  function colordefaultis(bookKey) {
+    if (bookKey.indexOf('1') == 0){
+    return "#9E001C"
+    }
+    else if (bookKey.indexOf('2') == 0){
+    return "#F6AE2D"
+    }
+    else if (bookKey.indexOf('3') == 0){
+    return "#33658A"
+    }
+    else if (bookKey.indexOf('4') == 0){
+    return "#494949"
+    }
+  }
+  const colordefault = colordefaultis(bookKey);
 function colorAis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#9E001C"
+  return "#FFD2CF"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#F6AE2D"
@@ -75,7 +89,7 @@ const colorA = colorAis(bookKey);
 
 function colorBis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#E73F34"
+  return "#FB8A8A"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#DFB82C"
@@ -91,7 +105,7 @@ const colorB = colorBis(bookKey);
 
 function colorCis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#F01D0F"
+  return "#FF3225"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#E8D60C"
@@ -107,7 +121,7 @@ const colorC = colorCis(bookKey);
 
 function colorDis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#623734"
+  return "#D40D12"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#FFDD00"
@@ -123,7 +137,7 @@ const colorD = colorDis(bookKey);
 
 function colorEis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#4A130E"
+  return "#9E001C"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#FFF848"
@@ -139,7 +153,7 @@ const colorE = colorEis(bookKey);
 
 function colorFis(bookKey) {
   if (bookKey.indexOf('1') == 0){
-  return "#EE8D8D"
+  return "#4A130E"
   }
   else if (bookKey.indexOf('2') == 0){
   return "#F2EDC0"
@@ -169,7 +183,7 @@ const colorF = colorFis(bookKey);
   const maintext_a = useRef(null);
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
-  const [chapterColor, setChapterColor] = useState(colorA)
+  const [chapterColor, setChapterColor] = useState(colordefault)
 
   const headerHeight = useHeaderHeight();
   const ScreenHeight = Dimensions.get('window').height   //height
@@ -377,7 +391,7 @@ function headerRight() {
   );
 }
 const options = {
-  headerRight,
+  headerRight, 
 };
 
 export default {

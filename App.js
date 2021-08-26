@@ -45,7 +45,7 @@ import alltheanswers from './pages/MainPages/alltheanswers';
 import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
-
+import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import MyArticle2 from './pages/MyPagePages/MyArticle2';
 const defaultScreenOptions = {
   headerLeft: function () {
@@ -300,6 +300,13 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
+          name="QuestionPallete"
+          component={QuestionPallete}
+          options={{
+            ...defaultScreenOptions,
+          }}
+        />
+        <Stack.Screen
           name="editorBoard"
           component={editorBoard}
           options={{
@@ -352,8 +359,8 @@ const App = ({ navigation }) => {
           options={{ ...readPost.options, ...defaultScreenOptions, title: "게시판" }} />
         <Stack.Screen
           name="editPost"
-          component={editPost}
-          options={{ title: "게시판 글 수정하기", ...defaultScreenOptions }}
+          component={editPost.component}
+          options={{ title: "게시판 글 수정하기", ...defaultScreenOptions, ...editPost.options }}
 
         />
       </Stack.Navigator>

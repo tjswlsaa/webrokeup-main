@@ -199,9 +199,7 @@ const MyBook = ({ navigation, route }) => {
                                 {/* <Image style={styles.bookCoverImage} source={{ uri: item.url ? item.url : null }}></Image> */}
                             </View>
                             <View style={{ height: realScreen * 0.15 }}>
-                                {/* <Text style={{ fontSize: 17, fontWidth: "700", alignSelf: "center", marginVertical: "5%" }}>{myitem.bookTitle}</Text> */}
-                                {myitem.user_uid == user_uid ? (
-                                    <View style={{flexDirection:"row", justifyContent:"center"}}>
+                                    <View style={{flexDirection:"row", justifyContent:"center", marginTop:"5%"}}>
                                     <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%",  alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} 
                                     onPress={() => navigation.navigate("QuestionList", {navigation:navigation, bookKey:bookKey, Color: Color})}>
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 질문지</Text>
@@ -210,17 +208,7 @@ const MyBook = ({ navigation, route }) => {
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 일기</Text>
                                     </TouchableOpacity>
                                     </View>
-                                    ) :
-                                    (
-                                        <View style={{ backgroundColor: "#f5f5f5", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
-                                            <View>
-                                                <TouchableOpacity onPress={()=> navigation.navigate('MyPage',{bookKey:bookKey})}>
-                                                <Text style={{ color: "#21381c", fontSize: 15, fontWeight: "700", textAlign: "center" }}>{userinfo.iam}</Text>
-                                                </TouchableOpacity>
-                                                <Text style={{ color: "#21381c", fontSize: 15, marginTop: "2%", textAlign: "center" }} numberOfLines={2}>{userinfo.selfLetter}</Text>
-                                            </View>
-                                        </View>
-                                    )}
+                                   
                             </View>
                 </View>
                 <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
@@ -261,7 +249,7 @@ function MyChapterItem(props) {
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
+    const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/likes/');
     const headerHeight = useHeaderHeight();
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -293,7 +281,7 @@ function MyChapterItem(props) {
     }, [])
 
     useEffect(() => {
-        let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+        let arr = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)
@@ -309,7 +297,7 @@ function MyChapterItem(props) {
                     <View style={{flex: 1, backgroundColor: chapters.chColor, marginRight: "5%", marginBottom: "5%"}} /> 
                     <View style={{flex: 40}}>
                     <Text style={{fontSize: 15, fontWeight: "600", marginRight: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                    <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
+                    <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={2}>{chapters.mainText}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: "row", marginTop: "1%", }}>

@@ -29,7 +29,7 @@ const Account = ({navigation}) => {
             <View>
                 <TouchableOpacity style= {{marginTop: 30, marginRight: 20, height: 30, width: 30, backgroundColor: "#FAFAFA", borderRadius: 5}}
                     onPress={()=>{navigation.navigate("EditProfile")}}>
-                    <Icon name="edit" size={20} color = "#98C0ED"/>
+                    <Icon name="edit" size={20} color = "#20543F"/>
                 </TouchableOpacity>
             </View>
         </View>

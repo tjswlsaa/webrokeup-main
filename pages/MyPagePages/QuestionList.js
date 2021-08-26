@@ -8,9 +8,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 const QuestionList = ({ navigation, route }) => {
 
-    const { bookKey, Color } = route.params;
+    const { Color } = route.params;
     console.log("bookkey color",Color)
-    console.log("bookKey",bookKey)
 
     function getquestionbox(Color) {
         if (Color == "#9E001C"){
@@ -89,16 +88,18 @@ const PostItem=(props)=> {
 
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
-                <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{questions.title}</Text>
+            <TouchableOpacity style={{ marginTop: "5%",marginHorizontal:"5%" ,marginBottom: "5%"}} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
+                <View style={{flexDirection:"row", flex:1}}>
+                        <View style={{backgroundColor:questions.Color, flex:1}}>
+                        </View>
+                        <Text style={{flex:35,fontSize:17, fontWeight:"600", marginHorizontal:"2%"}} numberOfLines={3}>{questions.title}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText}>{questions.creator}</Text>      
+                <Text numberOfLines={3} style={styles.bookIndexText}>{questions.summary}</Text>      
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation})}} style={{backgroundColor:"pink"}}>
-                <Text style={{marginLeft:"10%"}}>모두의 답변보기</Text>
+            <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation})}} style={{width:"30%", marginHorizontal:"5%", marginBottom:"5%"}}>
+                <Text style={{marginLeft:"15%",color:"gray"}}>모두의 답변보기</Text>
             </TouchableOpacity>
 
         </View>

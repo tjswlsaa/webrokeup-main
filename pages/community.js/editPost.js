@@ -1,12 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, Dimensions,View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
-import paper from '../../assets/paper.png';
+import { CommonActions } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
+const test1 = {
+    navigation:""
+  }
+  
+  const test2 ={
+    postKey:""
+  }
+  
+  const test3 ={
+    editText:""
+  }
+
+
+
 const editPost = ({ navigation, route }) => {
     const { postKey, text, regdate } = route.params;
     const [editText, setEditText] = useState(text);
@@ -17,43 +33,39 @@ const editPost = ({ navigation, route }) => {
         user_uid = user.uid
     }
 
+    test1.navigation=navigation
+    test2.postKey=postKey
+    test3.editText=editText
 
+    const headerHeight = useHeaderHeight();
+    const ScreenWidth = Dimensions.get('window').width  //screen 너비
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = 0;
+    const statusBarHeight = getStatusBarHeight()
+    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
   
+
 
     return (
         <View style={styles.container}>
             <StatusBar style="white" />
             <SafeAreaView style={{ flex: 1 }}>
-            <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
 
-                    <TouchableOpacity style={styles.saveButton} onPress={() => {
-        
-                            firebase_db.ref(`post/${postKey}/`)                                
-                            .update({
-                                    text: editText,
-                                    regdate: new Date().toString()
-                                });
-                            Alert.alert("집필 완료")
-                            navigation.navigate("readPost", {  postKey: postKey})
-                            //title_a.current.clear();
-                            //maintext_a.current.clear();  
-                    }}>
-                        <Text style={{ alignSelf: "center" }}>저장하기</Text>
-                    </TouchableOpacity>
-                    <ImageBackground style={styles.bookImage} source={paper} >
-                    <ScrollView scrollEnabled={false}>
 
-                    <View style={{marginTop:20, marginLeft:10, marginRight:10, padding:40, borderRadius:10, justifyContent:"center"}}>
-     
-                            <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
-                                                multiline={true} defaultValue={text} 
-                                                onChangeText={editText => setEditText(editText)} />              
-                    </View>
-                    </ScrollView>
+            <View style={{flex:1}}>
+                <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.90, marginVertical:"8%", marginHorizontal:"5%" }}>
+                <ScrollView scrollEnabled={true}>
 
-                    </ImageBackground>
+                        <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 ,marginTop:"10%"}}
+                        multiline={true} defaultValue={text} 
+                        onChangeText={editText => setEditText(editText)} />
+               </ScrollView>
 
-                    </ImageBackground>
+                </View>
+          </View>
+
+
 
             </SafeAreaView>
         </View>
@@ -125,4 +137,57 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     }
 });
-export default editPost;
+async function savePage() {
+
+
+    const {navigation}=test1
+    const {postKey}=test2
+    const {editText}= test3
+
+    
+    firebase_db.ref(`post/${postKey}/`)                                
+    .update({
+            text: editText,
+            regdate: new Date().toString()
+        });
+    navigation.navigate("readPost", {  postKey: postKey})
+    Alert.alert("집필 완료")
+
+    navigation.dispatch(state => {
+        const routes = [...state.routes];
+        routes.pop();
+      
+        return CommonActions.reset({
+          ...state,
+          routes,
+          index: routes.length - 1,
+        });
+      });
+      
+    navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey:chapters.chapterKey })
+  }
+  
+
+
+function headerRight() {
+    return (
+  
+      <Icon.Button name='save' size={25}
+      backgroundColor= 'white' color="black" 
+      onPress={savePage}
+      
+      >
+    </Icon.Button>
+  
+    );
+  }
+
+
+const options = {
+    headerRight,
+  };
+  
+  export default {
+    component: editPost,
+    options,
+  };

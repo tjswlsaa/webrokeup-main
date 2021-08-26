@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, Dimensions, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
+import { SafeAreaView, Dimensions,NativeModules, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import moment from 'moment';
@@ -10,7 +10,10 @@ import { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import Swipeable from 'react-native-swipeable-row';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 // import DeleteButton from './DeleteButton'
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+const { StatusBarManager } = NativeModules
 
 const window = Dimensions.get("window");
 
@@ -39,6 +42,18 @@ const readPost = ({ navigation, route }) => {
     Kregdate:'',
   })
 
+  const defaultTextInputHeight = 40;
+  const [textInputHeight, setTextInputHeight] = useState(defaultTextInputHeight);
+
+  const [statusBarHeight, setStatusBarHeight] = useState(0);
+
+  useEffect(() => {
+    Platform.OS == 'ios' ? StatusBarManager.getHeight((statusBarFrameData) => {
+        setStatusBarHeight(statusBarFrameData.height)
+        // console.log('Comment.js');
+        // console.log('statusBarFrameData.height: ', statusBarFrameData.height); // SE2: 20, iPhone11: 43
+    }) : null
+}, []);
   useEffect(() => {
     firebase_db.ref(`post/${postKey}`)
         .on('value', (snapshot) => {
@@ -48,7 +63,12 @@ const readPost = ({ navigation, route }) => {
         })
 }, []) 
 
- 
+const headerHeight = useHeaderHeight();
+const ScreenWidth = Dimensions.get('window').width  //screen 너비
+const ScreenHeight = Dimensions.get('window').height   //height
+const BottomSpace = getBottomSpace()
+const tabBarHeight = 0;
+const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 var user = firebase.auth().currentUser;
 var  user_uid
 if (user != null) {
@@ -244,13 +264,13 @@ const displayedAt=(createdAt)=>{
 
 
       <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{height:450}}>
+      <ScrollView style={{height:realScreen*0.83}}>
           {post.creator==user_uid ? (  <View style={{marginTop:10,flexDirection:"row", height:30,  alignSelf:"flex-end", alignItems:"flex-end"}}>
-                <TouchableOpacity style={{ backgroundColor: "#C4C4C4", borderRadius: 5, justifyContent: "center", width:50, height:25}} 
+                {/* <TouchableOpacity style={{ backgroundColor: "#C4C4C4", borderRadius: 5, justifyContent: "center", width:50, height:25}} 
                 onPress={()=>navigation.navigate("editPost", { postKey: postKey, text:post.text, regdate:post.regdate})}>                
                     <Text style={{alignSelf:"center"}}>편집</Text>
-                </TouchableOpacity>  
-                <TouchableOpacity style={{ backgroundColor: "#C4C4C4", marginLeft:20, marginRight:20, borderRadius: 5, justifyContent: "center", width:50, height:25}} 
+                </TouchableOpacity>   */}
+                <TouchableOpacity style={{ backgroundColor: "#C2C2C2", marginLeft:20, marginRight:30, borderRadius: 5, justifyContent: "center", width:50, height:25}} 
                onPress={()=>deletePost()}>                
                     <Text style={{alignSelf:"center"}}>삭제</Text>
                 </TouchableOpacity> 
@@ -262,13 +282,11 @@ const displayedAt=(createdAt)=>{
 
 
 
-          <View style={{marginTop:20, marginLeft:10, marginRight:10, backgroundColor:"blue",padding:30, borderRadius:10, justifyContent:"center"}}>
+          <View style={{marginTop:20, marginHorizontal:"5%", backgroundColor:"white",padding:30, borderRadius:10, justifyContent:"center"}}>
                   <Text style={{marginBottom:10}}>{readPostUserinfo.iam}</Text>               
                   <Text>{post.text}</Text>               
-                  <Text style={{marginTop:30,alignSelf:"flex-end"}}>{displayedAt(createdAt)}</Text>                 
-          </View>
 
-          <View style={{backgroundColor:"pink", flexDirection:"row", alignItems:"center", marginLeft:15, marginTop:10}}>
+          <View style={{flexDirection:"row", alignItems:"center", marginBottom:10, marginTop:40, height:20,}}>
                 <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
                    // console.log('MyArticle.likeButton.onPress()');
                    // console.log({likedUsers});
@@ -309,7 +327,6 @@ const displayedAt=(createdAt)=>{
  
                      firebase_db.ref(`post/${postKey}/`).child("likeCount").set({"likeCount" : likeCount})
 
-                     Alert.alert('MyArticle.likeButton.onPress() end');
                 }}>                
                             <Icon name="like2" size={20} color="black" style={styles.addIcon}/>
 
@@ -319,18 +336,20 @@ const displayedAt=(createdAt)=>{
                   <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
                 </TouchableOpacity>
                 <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
+                <Text style={{alignSelf:"flex-end",marginLeft: "50%"}}>{displayedAt(createdAt)}</Text>                 
 
 
 
                 </View>
+                </View>
 
 
 
-                 <View style={{backgroundColor:"yellow",}} >
+                 <View style={{}} >
 
                                             {comments.length == 0 ? (
-                                            <View style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }}>
-                                            <Text style={{fontSize:15}}>댓글을 작성해주세요!!</Text>
+                                            <View style= {{  justifyContent:"center", alignItems:"center", marginTop:"30%"}}>
+                                            <Text style={{fontSize:15}}>첫 댓글을 작성해주세요!!</Text>
                                             </View>
                                             ) : 
 
@@ -358,9 +377,9 @@ const displayedAt=(createdAt)=>{
 
                 <KeyboardAvoidingView behavior="padding" 
                   style={{flex:1}}
-                  keyboardVerticalOffset={120} >
+                  keyboardVerticalOffset={100 + statusBarHeight} >
 
-                <View style={{        flexDirection:"row",
+                {/* <View style={{        flexDirection:"row",
                                       backgroundColor:"#C4C4C4",
                                       height:50,
                                       alignItems:"center",
@@ -391,6 +410,48 @@ const displayedAt=(createdAt)=>{
                                           onPress={() => onCommentSend()}>
                             <Icon name="checkcircleo" size={30} color="black" style={styles.addIcon}/>
                         </TouchableOpacity>
+
+                </View> */}
+
+<View style={{
+                    flexDirection: "row", 
+                    backgroundColor: "#e9e9e9", 
+                    // height: 50, 
+                    height: (textInputHeight + 10), 
+                    alignItems: "center", 
+                    justifyContent: "center", 
+                    borderRadius: 5,
+                    
+                }}>
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <TextInput
+                            placeholder="댓글을 입력하세요"
+                            returnKeyType="done"
+                            style={{
+                                width: "85%",
+                                backgroundColor: "white",
+                                // height: "80%",
+                                height: textInputHeight,
+                                borderRadius: 10,
+                                justifyContent: "center",
+                            }}
+                            ref={text_a}
+                            multiline={true}
+                            onChangeText={(text) => setText(text)}
+                            onContentSizeChange={(e) => {
+                                const textInputHeight = Math.max(e.nativeEvent.contentSize.height, defaultTextInputHeight);
+                                setTextInputHeight(textInputHeight);
+                            }}
+                        />
+                    </TouchableWithoutFeedback>
+
+
+                    <TouchableOpacity style={{ height: 30, width: 30, alignItems: "center", justifyContent: "center", borderRadius: 100, marginLeft: 6 }}
+                        keyboardDismissMode="on-drag"
+                        keyboardShouldPersistTaps='handled'
+                        onPress={() => onCommentSend()}>
+                        <Icon name="checkcircleo" size={30} color="black" style={styles.addIcon} />
+                    </TouchableOpacity>
 
                 </View>
                 </KeyboardAvoidingView >
@@ -632,7 +693,6 @@ const closeSwipeable = () => {
 {comment.creator==user_uid ? (   
 
   <View style={{
-    backgroundColor:"pink",
     flexDirection:"row",
     marginBottom:10,
     marginTop:10,

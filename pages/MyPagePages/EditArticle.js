@@ -187,6 +187,17 @@ async function savePage() {
             regdate: new Date().toString()
         });
     Alert.alert("집필 완료")
+    navigation.dispatch(state => {
+        const routes = [...state.routes];
+        routes.pop();
+      
+        return CommonActions.reset({
+          ...state,
+          routes,
+          index: routes.length - 1,
+        });
+      });
+      
     navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey:chapters.chapterKey })
   }
   

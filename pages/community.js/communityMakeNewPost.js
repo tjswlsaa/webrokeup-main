@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, View, Alert, Button, FlatList, ScrollView, StyleSheet, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
+import { SafeAreaView, View, Alert, Button,Dimensions, FlatList, ScrollView, StyleSheet, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -7,7 +7,9 @@ import paper from '../../assets/paper.png';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CommonActions } from '@react-navigation/native';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test2 ={
   text:""
 }
@@ -21,8 +23,14 @@ const test3 ={
 const communityMakeNewPost = ({ navigation, route }) => {
   test1.navigation=navigation
 
-    const book = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTk0/MDAxNjIzMDY3OTkzMTYz.Uyg7r1zEBbPKA-CfVHU0R5ojbmozb02GJzMRapgcP1cg.flIv0UKSYHpE_CHNSOi2huGzv3svilsmEmMFy1G9zH0g.PNG.asj0611/book.png?type=w773"
-    const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
+  const headerHeight = useHeaderHeight();
+  const ScreenWidth = Dimensions.get('window').width  //screen 너비
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const BottomSpace = getBottomSpace()
+  const tabBarHeight = 0;
+  const statusBarHeight = getStatusBarHeight()
+  const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
+
   const [text, setText] = useState('');
   test2.text=text
 
@@ -49,22 +57,20 @@ console.log(userinfo)
   return (
 
       <SafeAreaView style={{ flex: 1 }}>
-        <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
 
-          <View style={styles.bookContainer}>
-            <ImageBackground style={styles.bookImage} source={paper} >
-              <ScrollView scrollEnabled={false}>
-                <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
-                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 }}
+          <View style={{flex:1}}>
+                <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.90, marginVertical:"8%", marginHorizontal:"5%" }}>
+                <ScrollView scrollEnabled={true}>
+
+                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17, marginTop:"10%" }}
                     multiline={true} placeholder="글을 적어주세요"
                     returnKeyType="done"
                     onChangeText={text => setText(text)}
                      />
+              </ScrollView>
+
                 </View>
-             </ScrollView>
-            </ImageBackground>
           </View>
-        </ImageBackground>
       </SafeAreaView>
   )
 }

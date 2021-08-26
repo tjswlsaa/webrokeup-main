@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Dimensions,SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/Feather';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test1 ={ 
     writings:''
 }
@@ -39,9 +42,7 @@ const editorBoard = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <View style={{height:40, justifyContent:"center"}}>
-                <Text  style={{alignSelf:"center", fontSize:15, fontWeight:"500"}}>게시판</Text>
-            </View>
+
                 <ScrollView style={{height:500}}>
 
                         {writings.map(item => {
@@ -86,41 +87,23 @@ const WritingItem=(props)=> {
           })
   }, []);
 
+  const headerHeight = useHeaderHeight();
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const ScreenWidth = Dimensions.get('window').width
+  console.log(ScreenWidth)
+  const BottomSpace = getBottomSpace()
+  // const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight - headerHeight - BottomSpace 
 
-    const createdAt= new Date(writing.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
-    ////console.log('comment.regdate',comment.regdate)
-    ////console.log('createdAt',createdAt)
-  
-    const displayedAt=(createdAt)=>{
-     
-        const milliSeconds = new Date()- createdAt
-        ////console.log('milliSeconds',milliSeconds)
-        ////console.log('new Date()',new Date()) //new Date() 2021-07-05T11:15:46.130Z
-        const seconds = milliSeconds / 1000
-        if (seconds < 60) return `방금 전`
-        const minutes = seconds / 60
-        if (minutes < 60) return `${Math.floor(minutes)}분 전`
-        const hours = minutes / 60
-        if (hours < 24) return `${Math.floor(hours)}시간 전`
-        const days = hours / 24
-        if (days < 7) return `${Math.floor(days)}일 전`
-        const weeks = days / 7
-        if (weeks < 5) return `${Math.floor(weeks)}주 전`
-        const months = days / 30
-        if (months < 12) return `${Math.floor(months)}개월 전`
-        const years = days / 365
-        return `${Math.floor(years)}년 전`
-      }
+
     return (
-        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
+        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10, height:realScreen*0.5}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
-                <View style={{backgroundColor:"pink"}}>
-                <Text style={styles.bookIndexOnePunchLine} >{writing.title}</Text>
+                <Image style={{height:"70%", borderRadius: 10, width:"100%"}} source={{uri:writing.image}}></Image>
 
-                <Text style={styles.bookIndexOnePunchLine} numberofLines={3}>{writing.text}</Text>
-                </View>
-                <Text style={styles.bookIndexText}>{userinfo.iam}</Text>
-                <Text style={styles.bookIndexText}>{displayedAt(createdAt)}</Text>
+                <Text style={{fontSize:18, marginHorizontal:"3%", marginTop:"5%", fontWeight:"500"}} >{writing.title}</Text>
+
+                <Text style={{fontSize:15, marginTop:"2%",marginHorizontal:"3%",}} numberofLines={3}>{writing.summary}</Text>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
             <View style={{flexDirection:"row"}}>

@@ -34,6 +34,10 @@ const test3 = {
 const test4 = {
     chapters: ''
 }
+const test5 = {
+    user_uid: ''
+}
+
 
 const MyArticle = ({ navigation, route }) => {
 
@@ -64,6 +68,7 @@ const MyArticle = ({ navigation, route }) => {
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
+    test4.user_uid=user_uid
 
     
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -522,13 +527,22 @@ function headerRight() {
     const navigation = useNavigation();
     const {bookKey}=test1
     const {chapters}=test4
+    const {user_uid}=test5
+
+
 console.log("myarticlechapters",chapters)
+console.log("myarticlechapterscreator",chapters.creator)
+console.log("myarticlechaptersuser_uid",user_uid)
+
     return (
+        <View>
+        {chapters.creator == user_uid ? (
         <Button
             onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters})}
             title="수정하기"
             color="#000"
-        />
+        />):(<View></View>)}
+        </View>
 
     );
 }
