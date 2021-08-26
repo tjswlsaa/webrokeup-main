@@ -267,7 +267,7 @@ const MyArticle = ({ navigation, route }) => {
                                                     <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
                                                     <Text style={{flex: 15, fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
                                             </View>
-                                                                    <Swiper
+                                                    <Swiper
                                                         // index={myBook.bookKey}
                                                         loop={false}
                                                         showsPagination={true}
@@ -314,6 +314,21 @@ const MyArticle = ({ navigation, route }) => {
                                         )}
                                         
                                             <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" ,  }}>
+                                            {chapters.isPublic == true ? 
+                                                        (
+                                                        <View style={{flexDirection: "row"}}>
+                                                            <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
+                                                            <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
+                                                        </View>
+                                                        )
+                                                : 
+                                                        (
+                                                        <View style={{flexDirection: "row"}}>
+                                                            <Icon name="lock" size={15} color="black" style={{ marginLeft: 20}}/>
+                                                            <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
+                                                        </View>   
+                                                        )
+                                                    }
                                                 <TouchableOpacity style={{marginTop:"4%", marginLeft:"10%"}} onPress={async () => {
                                                     // console.log('MyArticle.likeButton.onPress()');
                                                     // console.log({likedUsers});
@@ -511,7 +526,7 @@ console.log("myarticlechapters",chapters)
     return (
         <Button
             onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters})}
-            title="수정"
+            title="수정하기"
             color="#000"
         />
 

@@ -102,30 +102,23 @@ const MyBookPublic = ({ navigation, route }) => {
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
+    const [userinfo, setUserinfo] = useState({
+        iam: "익명의.지은이",
+        selfLetter: "안녕하세요 익명의 지은이입니다."
+      });
 
+      useEffect(()=> {
+        function getUserId() {
+          firebase_db.ref(`users/${myitem.user_uid}`)
+              .on('value', (snapshot) => {
+                  let user = snapshot.val();
+                  if (user) {
+                    setUserinfo(userinfo);
+              }})
+        }
+      }, []);
 
-    const [userinfo, setuserinfo] = useState({
-        iam:"익명의.지은이",
-        selfLetter:"안녕하세요 익명의 지은이입니다."
-    });
-
-    useEffect(getuserinfo, [bookKey]);
-
-     function getuserinfo(){
-             
-      firebase_db.ref(`users/${myitem.user_uid}`)
-          .on('value', (snapshot) => {
-              let userinfo = snapshot.val();
-                    setuserinfo(userinfo);
-          })
-    }
-      console.log("mybookuserinfo",userinfo)
-    //   const iam = userinfo.iam
-    //   const selfLetter =userinfo.selfLetter
-    let iam = userinfo.iam;
-    console.log({iam})
-    let selfLetter = userinfo.selfLetter;
-    console.log({selfLetter})      
+      const { iam, selfLetter } = useState;
 
 
     const [chapter, setChapter] = useState([]);
@@ -138,34 +131,28 @@ const MyBookPublic = ({ navigation, route }) => {
                 let temp = [];
                 //console.log({'temp.length (.)':temp.length});
                 //console.log({'comments.length (.)':comments.length});
-
-
                 snapshot.forEach((child) => {
                     const item = {
                         ...child.val(), // 구조 분해 할당: 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%EA%B5%AC%EB%AC%B8
                         key: child.key,
-
                     };
-
                     temp.push(item);
-
                 });
-
                 temp.sort(function (a, b) {
                     return new Date(a.regdate) - new Date(b.regdate);
                 });
                 setChapter(temp);
-                //console.log({ temp })
             })
     }
+
     console.log("getChapters11",chapter)
     const arraychapter= Object.values(chapter)
-    console.log("getChapters22",arraychapter)
-
-    console.log("getChapters",chapter.isPublic)
-    // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
-    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic=="true")
-    console.log("myChapterFiltered",myChapterFiltered)
+    // console.log("getChapters22",arraychapter)
+    // console.log("getChapters",chapter.isPublic)
+    // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)   
+    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic==true)
+    // console.log("myChapterFiltered",myChapterFiltered)
+    
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
