@@ -104,29 +104,6 @@ const MyBook = ({ navigation, route }) => {
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
 
-    // const useruid= myitem.user_uid
-    // const [userinfo, setuserinfo] = useState({
-    //     iam:"익명의.지은이",
-    //     selfLetter:"안녕하세요 익명의 지은이입니다."
-    // });
-
-
-    //   useEffect(()=> {
-    //     function getUserId() {
-    //       firebase_db.ref(`users/${myitem.user_uid}`)
-    //           .on('value', (snapshot) => {
-    //               let user = snapshot.val();
-    //               if (user) {
-    //                 setUserinfo(userinfo);
-    //           }})
-    //     }
-    //   }, []);
-    //   const { iam, selfLetter } = useState;
-    //   console.log("iam" + iam);
-    //   console.log(selfLetter);     
-    //   console.log("myitem: " + myitem)
-
-
     const [chapter, setChapter] = useState([]);
 
     useEffect(getChapters, []);
