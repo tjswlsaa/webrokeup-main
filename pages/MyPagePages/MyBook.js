@@ -322,7 +322,7 @@ function MyChapterItem(props) {
                             (
                              <View style={{flexDirection: "row"}}>
                                 <Icon name="lock" size={15} color="black" style={{}}/>
-                                <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
+                                <Text style={{fontSize: 11, marginLeft: "10%", marginTop: "2%",}}>비공개</Text>
                             </View>   
                             )
                         }
