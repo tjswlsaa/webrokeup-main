@@ -274,7 +274,7 @@ const ChapterItem = ({ navigation, chapters, chapterKey, bookKey }) => {
 
                                 <TouchableOpacity
                                 onPress={() => {
-                                        navigation.navigate('MyBook', { bookKey: chapters.bookKey }) }
+                                        navigation.navigate('MyBookPublic', { bookKey: chapters.bookKey }) }
                                 }
                                 style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,padding:"5%"}}>
                                         <View>

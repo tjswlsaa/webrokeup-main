@@ -14,7 +14,7 @@ const test3 = {
     navigation: ''
 }
 
-const MyBook = ({ navigation, route }) => {
+const MyBookPublic = ({ navigation, route }) => {
     test3.navigation = navigation
 
 
@@ -104,22 +104,19 @@ const MyBook = ({ navigation, route }) => {
 
 
 
-    const useruid= myitem.user_uid
     const [userinfo, setuserinfo] = useState({
         iam:"익명의.지은이",
         selfLetter:"안녕하세요 익명의 지은이입니다."
     });
 
-    useEffect(getuserinfo, [myitem]);
+    useEffect(getuserinfo, [bookKey]);
 
      function getuserinfo(){
              
-      firebase_db.ref(`users/${useruid}`)
+      firebase_db.ref(`users/${myitem.user_uid}`)
           .on('value', (snapshot) => {
               let userinfo = snapshot.val();
-              if (userinfo > '') {
                     setuserinfo(userinfo);
-              }
           })
     }
       console.log("mybookuserinfo",userinfo)
@@ -161,23 +158,20 @@ const MyBook = ({ navigation, route }) => {
                 //console.log({ temp })
             })
     }
+    console.log("getChapters11",chapter)
+    const arraychapter= Object.values(chapter)
+    console.log("getChapters22",arraychapter)
 
-    console.log("getChapters",chapter)
-
+    console.log("getChapters",chapter.isPublic)
+    // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)
+    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic=="true")
+    console.log("myChapterFiltered",myChapterFiltered)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
                 <View style={{backgroundColor:"#F5F4F4"}}>
-                            {myitem.user_uid == user_uid ? (
-                                <View style={{ height: realScreen * 0.06 }} >
-                                    <TouchableOpacity 
-                                        onPress={() => navigation.navigate("EditBook", { myitem: myitem, bookKey: bookKey })}
-                                        style={{ backgroundColor: "#fff", borderColor: "#21381C", alignSelf: "flex-end", borderWidth: 1.5, borderRadius: 15, marginTop: "3%", marginRight: "5%", width: "20%", height: "60%", justifyContent:"center" }}>
-                                        <Text style={{ alignSelf: "center", color: "#21381C",}}> 수정하기 </Text>
-                                    </TouchableOpacity>
-                                </View>
-                            ) : (<View style={{ height: realScreen * 0.06 }}></View>)}
+
 
                             <View style={{ height: realScreen * 0.35, width: realScreen * 0.33, alignSelf: "center", }}>
                                 <View style={{ flex: 1 }}>
@@ -198,22 +192,10 @@ const MyBook = ({ navigation, route }) => {
                                         </View>
                                         </TouchableOpacity>
                                 </View>
-                                {/* <Image style={styles.bookCoverImage} source={{ uri: item.url ? item.url : null }}></Image> */}
                             </View>
                             <View style={{ height: realScreen * 0.15 }}>
-                                {/* <Text style={{ fontSize: 17, fontWidth: "700", alignSelf: "center", marginVertical: "5%" }}>{myitem.bookTitle}</Text> */}
-                                {myitem.user_uid == user_uid ? (
-                                    <View style={{flexDirection:"row", justifyContent:"center"}}>
-                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%",  alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} 
-                                    onPress={() => navigation.navigate("QuestionList", {navigation:navigation, bookKey:bookKey, Color: Color})}>
-                                        <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 질문지</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
-                                        <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 일기</Text>
-                                    </TouchableOpacity>
-                                    </View>
-                                    ) :
-                                    (
+                            
+                                    
                                         <View style={{ backgroundColor: "#f5f5f5", width: "96%", height: "100%", alignSelf: "center", marginTop: "5%" }}>
                                             <View>
                                                 <TouchableOpacity onPress={()=> navigation.navigate('MyPage',{bookKey:bookKey})}>
@@ -222,7 +204,6 @@ const MyBook = ({ navigation, route }) => {
                                                 <Text style={{ color: "#21381c", fontSize: 15, marginTop: "2%", textAlign: "center" }} numberOfLines={2}>{userinfo.selfLetter}</Text>
                                             </View>
                                         </View>
-                                    )}
                             </View>
                 </View>
                 <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
@@ -232,7 +213,7 @@ const MyBook = ({ navigation, route }) => {
                             <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
                     </View>
-                    {chapter.map(chapters => {
+                    {myChapterFiltered.map(chapters => {
 
                         return (
                             <MyChapterItem
@@ -437,6 +418,6 @@ const options = {
 };
 
 export default {
-    component: MyBook,
+    component: MyBookPublic,
     options,
 };

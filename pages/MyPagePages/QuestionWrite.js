@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { Switch } from 'react-native-switch';
 
 
 
@@ -51,9 +52,15 @@ const test7 = {
   const test11 ={
     question:""
   }
+  const test12 ={
+    isPublic: ""
+  }
 const QuestionWrite = ({ navigation, route }) => {
     const { questionsKey } = route.params;
     test10.questionsKey=questionsKey
+
+    const [isPublic, setPublic] = useState(true);
+    test12.isPublic = isPublic
 // questionkey로 색깔 구하기
 function getColor(questionsKey) {
     if (questionsKey.indexOf('r') == 0){
@@ -129,9 +136,9 @@ console.log("titleColor",titleColor)
          var CountChapter = snapshot.numChildren();
          setCountChapter(CountChapter)
       })
-  }, [])
+  }, [CountChapter])
   
-console.log("CountChapter",CountChapter)
+console.log("CountChapterquestionwriting",CountChapter)
   test1.navigation=navigation
 
 
@@ -201,25 +208,45 @@ test11.question=question
       <StatusBar style="white" />
         {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
             {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
-              <ScrollView style={{backgroundColor:"white"}} scrollEnabled={true}>
-                <View style={{flexDirection:"row", alignItems:"center", backgroundColor:"#f5f5f5",}}>
-                    <View style={{backgroundColor:titleColor,  height: realScreen*0.05, width: realScreen*0.05,marginLeft:"10%"}}>
-                    </View>
-                    <View style={{ height: realScreen*0.1, backgroundColor:"#f5f5f5", justifyContent:"center", width:"100%"}}>
-            
-                    <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%", }}
-                        multiline={false} placeholder={question.title}
-                        returnKeyType="done"
-                        maxLength={17}
-                        onChangeText={text1 => setText1(text1)}
-                        // ref={title_a} 
-                        />
-                    </View>
+              <ScrollView style={{backgroundColor:"white", marginHorizontal:"5%", marginTop:"5%"}} scrollEnabled={true}>
+              <View style={{ alignSelf: "flex-end", marginRight:"10%", marginTop:"5%",}}>
+                            <Switch
+                              value={isPublic}
+                              // useNativeDriver={true}
+                              activeText={'공개'}
+                              inActiveText={'비공개'}
+                              onValueChange={(value) => setPublic(value)}
+                              backgroundActive={'#C4C4C4'}
+                              backgroundInactive={titleColor}
+                              circleSize={25} //사이즈 조정이 안댐
+                              barHeight={25}
+                              barWidth={30}
+
+                              circleActiveColor={titleColor}
+                              circleInActiveColor={'#f5f5f5'}
+                            />
+                        </View>
+                <View style={{flexDirection:"row", alignItems:"center",  height: realScreen*0.15, marginHorizontal:"5%"}}>
+
+                       
+                        <View style={{backgroundColor:titleColor,  height: realScreen*0.08, width: realScreen*0.05,}}>
+                        </View>
+                        <View style={{ height: realScreen*0.08, justifyContent:"center", width:"100%"}}>
+                
+                            <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%", }}
+                                multiline={false} placeholder={question.title}
+                                returnKeyType="done"
+                                maxLength={17}
+                                onChangeText={text1 => setText1(text1)}
+                                // ref={title_a} 
+                                />
+                        </View>
+                    
                 </View>
-                <View style={{marginHorizontal: "10%", marginTop:realScreen*0.03, marginBottom:realScreen*0.03 }}>
+                <View style={{marginHorizontal: "10%",  marginBottom:realScreen*0.03 }}>
                     <Text style={{fontSize: 15}}>{question.intro}</Text>
                 </View>  
-                <View style={{backgroundColor:"#f5f5f5", height: realScreen*0.08 , justifyContent:"center"}}>
+                <View style={{ height: realScreen*0.08 , justifyContent:"center"}}>
                     <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q1}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
@@ -227,7 +254,7 @@ test11.question=question
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}
                    />
-                <View style={{backgroundColor:"#f5f5f5", height: realScreen*0.08 , justifyContent:"center"}}>
+                <View style={{height: realScreen*0.08 , justifyContent:"center"}}>
                     <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q2}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
@@ -235,7 +262,7 @@ test11.question=question
                   returnKeyType="done"
                   onChangeText={text3 => setText3(text3)}
                   />
-                <View style={{backgroundColor:"#f5f5f5", height: realScreen*0.08 , justifyContent:"center"}}>
+                <View style={{height: realScreen*0.08 , justifyContent:"center"}}>
                     <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q3}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
@@ -243,7 +270,7 @@ test11.question=question
                   returnKeyType="done"
                   onChangeText={text4 => setText4(text4)}
                   />
-                <View style={{backgroundColor:"#f5f5f5", height: realScreen*0.08 , justifyContent:"center"}}>
+                <View style={{ height: realScreen*0.08 , justifyContent:"center"}}>
                     <Text style={{marginHorizontal: "10%", fontSize: 18,}}>감정을 색깔로 표현해주세요</Text>
                 </View>  
                 <View style={{  fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%", flexDirection:"row" , alignSelf:"center", backgroundColor:"pink" }}>
@@ -342,6 +369,7 @@ async function savePage() {
   const {Color}=test9
   const {questionsKey}=test10
   const {question}=test11
+  const {isPublic}=test12
 
   console.log("text1",text1)
   console.log("text12",text2)
@@ -352,7 +380,7 @@ async function savePage() {
   console.log("user_uid",user_uid)
   console.log("Color",Color)
   const colorAnswers = Color+"Answers"
-
+  console.log("chapterKeychapterKey",chapterKey)
   firebase_db
   .ref(`/book/${bookKey}/both/` + chapterKey)
   .set({
@@ -371,7 +399,9 @@ async function savePage() {
     Q3:question.Q3,
     intro:question.intro,
     type:"감정 질문지",
-    color:Color
+    color:Color,
+    isPublic:isPublic,
+
 
   });
 
@@ -389,7 +419,9 @@ async function savePage() {
     text4:text4,
     intro:question.intro,
     type:"감정 질문지",
-    color:Color
+    color:Color,
+    isPublic:isPublic,
+
 
   })
 

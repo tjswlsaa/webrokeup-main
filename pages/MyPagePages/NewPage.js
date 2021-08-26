@@ -11,6 +11,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
+import { Switch } from 'react-native-switch';
 
 
 const test1 = {
@@ -38,6 +39,9 @@ const test6 ={
 
 const test7 ={
   chColor: ""
+}
+const test8 ={
+  isPublic: ""
 }
 
 
@@ -68,7 +72,8 @@ const NewPage = ({ navigation, route }) => {
   const statusBarHeight = getStatusBarHeight();
   const BottomSpace = getBottomSpace();
   const realScreen = ScreenHeight-headerHeight-BottomSpace
-
+  const [isPublic, setPublic] = useState(true);
+  test8.isPublic = isPublic
   var user = firebase.auth().currentUser;
   var user_uid
   if (user != null) {
@@ -110,8 +115,27 @@ const NewPage = ({ navigation, route }) => {
         {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
           <View style={{height: "80%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
             {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
-              <ScrollView scrollEnabled={false}>
-                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "20%"}}>
+              <ScrollView scrollEnabled={true}>
+                <View style={{ alignSelf: "flex-end", marginRight: "6%", marginTop: "5%"}}>
+                  <Switch
+                    value={isPublic}
+                    // useNativeDriver={true}
+                    activeText={'공개'}
+                    inActiveText={'비공개'}
+                    onValueChange={(value) => setPublic(value)}
+                    backgroundActive={'#C4C4C4'}
+                    backgroundInactive={chColor}
+                    circleSize={25} //사이즈 조정이 안댐
+                    barHeight={25}
+                    barWidth={30}
+
+                    circleActiveColor={chColor}
+                    circleInActiveColor={'#f5f5f5'}
+                  />
+
+                  
+                </View>
+                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "10%"}}>
                   <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
                   <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600" }}
                     multiline={true} placeholder="감정을 한 단어로 적어주세요"
@@ -183,6 +207,7 @@ async function savePage() {
   const {mainText}=test5
   const {user_uid}=test6
   const {chColor}=test7
+  const {isPublic}=test8
 
   firebase_db
   .ref(`/book/${bookKey}/chapters/` + chapterKey)
@@ -195,6 +220,7 @@ async function savePage() {
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
     bookKey:bookKey,
+    isPublic:isPublic,
     type:"감정 일기"
   });
 
@@ -211,6 +237,8 @@ async function savePage() {
     bookKey:bookKey,
     type:"감정 일기",
     chColor: chColor,
+    isPublic:isPublic,
+
   });
 Alert.alert("집필 완료")
 

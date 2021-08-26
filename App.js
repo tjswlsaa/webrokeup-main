@@ -24,7 +24,7 @@ import MakeNewBook from "./pages/MyPagePages/MakeNewBook";
 import NewPage from "./pages/MyPagePages/NewPage";
 import IntroArticle from "./pages/MyPagePages/IntroArticle";
 import EditArticle from "./pages/MyPagePages/EditArticle";
-
+import MyBookPublic from './pages/MainPages/MyBookPublic';
 import readPopularArticle from './pages/MyPagePages/readPopularArticle';
 import readIntroArticle from "./pages/MyPagePages/readIntroArticle";
 import EditIntroArticle from "./pages/MyPagePages/EditIntroArticle";
@@ -175,7 +175,14 @@ const App = ({ navigation }) => {
             ...defaultScreenOptions,
           }}
         />
-
+        <Stack.Screen
+          name="MyBookPublic"
+          component={MyBookPublic.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+          }}
+        />
       <Stack.Screen
           name="onboarding"
           component={onboarding}

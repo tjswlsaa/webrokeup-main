@@ -106,6 +106,8 @@ const MyArticle = ({ navigation, route }) => {
 
     }, [])
 
+    console.log("likedUserslikedUsers",likedUsers)
+
     useEffect(() => {
         //// console.log('MyArticle.js (2), chapters: ',chapters);
         // let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')

@@ -29,9 +29,9 @@ const test2 = {
 const test3 = {
   bookTitle: ''
 }
-const test4 = {
-  isPublic: ''
-}
+// const test4 = {
+//   isPublic: ''
+// }
 const test5 = {
   navigation: ''
 }
@@ -183,8 +183,8 @@ test9.bookKey = bookKey;
   // console.log('두줄만들자',bookTitle.length)
   const [image, setImage] = useState(null);
   test2.image = image;
-  const [isPublic, setPublic] = useState(true);
-  test4.isPublic = isPublic
+  // const [isPublic, setPublic] = useState(true);
+  // test4.isPublic = isPublic
   const db = firebase.firestore();
   // const storage = firebase.storage(); 
   // const storageRef=storage.ref();
@@ -243,7 +243,7 @@ test9.bookKey = bookKey;
 
         {/* <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} > */}
         <View style={{flex: 1}}>
-          <View style={{ flex: 1, flexDirection: "row", width: "20%", alignSelf: "flex-end", marginRight: "5%", marginTop: "3%"}}>
+          {/* <View style={{ flex: 1, flexDirection: "row", width: "20%", alignSelf: "flex-end", marginRight: "5%", marginTop: "3%"}}>
             <Switch
               value={isPublic}
               // useNativeDriver={true}
@@ -261,19 +261,18 @@ test9.bookKey = bookKey;
             />
 
             
-          </View>
+          </View> */}
 
 
-          <View style={{ flex: 18,}}>
 
-              <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"80%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"15%" }}>
+              <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"70%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"25%" }}>
               </View>
 
               {image == undefined ? (
 
-              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
 
-                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%", }}>
+                  <View style={{backgroundColor:"white", height:"70%", width:"80%", alignSelf:"center", marginTop:"22.5%", }}>
                   <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
                   <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20,  }}
                     value={bookTitle}
@@ -306,7 +305,7 @@ test9.bookKey = bookKey;
                 <View                 
                 style={{ 
                   zIndex: 0, position: "absolute", 
-                  height: "80%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "15%"}}>
+                  height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
                 <TouchableOpacity 
                  style={{
                   zIndex: 0, position: "absolute", 
@@ -340,7 +339,6 @@ test9.bookKey = bookKey;
 
             </View>
               )}
-          </View>
         </View>
         {/* </ImageBackground> */}
       </View>
@@ -461,7 +459,7 @@ async function handleChapter() {
     const { user_uid } = test;
     const { image }=test2;
     const {bookTitle}=test3;
-    const {isPublic}=test4;
+    // const {isPublic}=test4;
     const {navigation}=test5;
     const {userinfo}=test6;
     const {spinner}=test7;
@@ -530,7 +528,7 @@ async function handleChapter() {
     regdate: new Date().toString(),
     url:downloadURL,
     bookKey:bookKey,
-    isPublic:isPublic,
+    // isPublic:isPublic,
     CountChapter:0,
     Color:Color
     // iam:userinfo.iam,
