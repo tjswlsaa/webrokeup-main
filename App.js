@@ -174,6 +174,7 @@ const App = ({ navigation }) => {
           options={{
             headerShown: true,
             ...defaultScreenOptions,
+            ...MyBook.options,
           }}
         />
         <Stack.Screen
@@ -225,7 +226,7 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="EditBook"
           component={EditBook.component}
-          options={{ headerShown: true, ...EditBook.options, ...defaultScreenOptions }}
+          options={{ headerShown: true, ...defaultScreenOptions, ...EditBook.options, }}
         />
         <Stack.Screen
           name="MakeNewBook"

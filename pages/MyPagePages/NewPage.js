@@ -228,13 +228,13 @@ const colorF = colorFis(bookKey);
                     inActiveText={'비공개'}
                     onValueChange={(value) => setPublic(value)}
                     backgroundActive={'#C4C4C4'}
-                    backgroundInactive={'#c4c4c4'}
+                    backgroundInactive={chapterColor}
                     circleSize={25} //사이즈 조정이 안댐
                     barHeight={25}
                     barWidth={30}
 
-                    circleActiveColor={"#20543F"}
-                    circleInActiveColor={"#20543F"}
+                    circleActiveColor={chapterColor}
+                    circleInActiveColor={"#c4c4c4"}
                   />
 
                   

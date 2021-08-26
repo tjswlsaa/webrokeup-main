@@ -55,6 +55,9 @@ const test7 = {
   const test12 ={
     isPublic: ""
   }
+  const test13 ={
+    chColor: ""
+  }
 const QuestionWrite = ({ navigation, route }) => {
     const { questionsKey } = route.params;
     test10.questionsKey=questionsKey
@@ -199,8 +202,105 @@ test11.question=question
     console.log("index1111",index)
 
  // console.log('이거썌거',chapterKey)
+ function colorAis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#9E001C"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#F6AE2D"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#33658A"
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#494949"
+  }
+}
+const colorA = colorAis(bookKey);
 
+function colorBis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#E73F34"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#DFB82C"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#78CCD1"
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#161616"
+  }
+}
+const colorB = colorBis(bookKey);
 
+function colorCis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#F01D0F"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#E8D60C"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#24A9E2" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#625E5E"
+  }
+}
+const colorC = colorCis(bookKey);
+
+function colorDis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#623734"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#FFDD00"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#4581F5" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#929292"
+  }
+}
+const colorD = colorDis(bookKey);
+
+function colorEis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#4A130E"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#FFF848"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#3624A5" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#C8C8C8"
+  }
+}
+const colorE = colorEis(bookKey);
+
+function colorFis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#EE8D8D"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#F2EDC0"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#342D65" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#ECECEC"
+  }
+}
+const colorF = colorFis(bookKey);
+const [chapterColor, setChapterColor] = useState(titleColor)
+
+ const chColor = chapterColor;
+ test13.chColor = chColor
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -217,21 +317,21 @@ test11.question=question
                               inActiveText={'비공개'}
                               onValueChange={(value) => setPublic(value)}
                               backgroundActive={'#C4C4C4'}
-                              backgroundInactive={titleColor}
+                              backgroundInactive={chapterColor}
                               circleSize={25} //사이즈 조정이 안댐
                               barHeight={25}
                               barWidth={30}
 
-                              circleActiveColor={titleColor}
+                              circleActiveColor={chapterColor}
                               circleInActiveColor={'#f5f5f5'}
                             />
                         </View>
-                <View style={{flexDirection:"row", alignItems:"center",  height: realScreen*0.15, marginHorizontal:"5%"}}>
+                <View style={{flex:1, flexDirection:"row", alignItems:"center",  height: realScreen*0.15, marginHorizontal:"5%"}}>
 
                        
-                        <View style={{backgroundColor:titleColor,  height: realScreen*0.08, width: realScreen*0.05,}}>
+                        <View style={{flex:1,backgroundColor:chapterColor,  height: realScreen*0.08, width: realScreen*0.05,}}>
                         </View>
-                        <View style={{ height: realScreen*0.08, justifyContent:"center", width:"100%"}}>
+                        <View style={{ flex:15, height: realScreen*0.08, justifyContent:"center", width:"100%"}}>
                 
                             <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%", }}
                                 multiline={false} placeholder={question.title}
@@ -271,52 +371,19 @@ test11.question=question
                   onChangeText={text4 => setText4(text4)}
                   />
                 <View style={{ height: realScreen*0.08 , justifyContent:"center"}}>
-                    <Text style={{marginHorizontal: "10%", fontSize: 18,}}>감정을 색깔로 표현해주세요</Text>
                 </View>  
-                <View style={{  fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%", flexDirection:"row" , alignSelf:"center", backgroundColor:"pink" }}>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"0%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"8%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"8%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"8%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"8%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=> setIndex(1)}
-                    style={{backgroundColor:"yellow", height: realScreen*0.05, width: realScreen*0.05,marginLeft:"8%"
-                    , borderColor: index === 1 ? 'green' : 'black'
-                    ,borderWidth: 4,
-                }}>
-                    </TouchableOpacity>
-
+                <View style={{ marginHorizontal: "5%"}}>
+                <Text style={{marginTop: "5%", }}> 오늘의 감정 빛깔은 </Text>
+                </View>
+                <View style={{  fontSize: 15, height:realScreen*0.1, marginTop:"3%", marginBottom:"3%", flexDirection:"row" , alignSelf:"center",  }}>
+                      <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
+                            <TouchableOpacity style={{flex: 1, backgroundColor:colorA}} onPress={()=>setChapterColor(colorA)}/>
+                            <TouchableOpacity style={{flex: 1, backgroundColor: colorB}} onPress={()=>setChapterColor(colorB)}/>
+                            <TouchableOpacity style={{flex: 1, backgroundColor: colorC}} onPress={()=>setChapterColor(colorC)}/>
+                            <TouchableOpacity style={{flex: 1, backgroundColor: colorD}} onPress={()=>setChapterColor(colorD)}/>
+                            <TouchableOpacity style={{flex: 1, backgroundColor: colorE}} onPress={()=>setChapterColor(colorE)}/>
+                            <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
+                      </View>
                 </View>
               </ScrollView>
             {/* </ImageBackground> */}
@@ -370,6 +437,7 @@ async function savePage() {
   const {questionsKey}=test10
   const {question}=test11
   const {isPublic}=test12
+  const {chColor}=test13
 
   console.log("text1",text1)
   console.log("text12",text2)
@@ -401,7 +469,7 @@ async function savePage() {
     type:"감정 질문지",
     color:Color,
     isPublic:isPublic,
-
+    chColor:chColor
 
   });
 
@@ -421,7 +489,7 @@ async function savePage() {
     type:"감정 질문지",
     color:Color,
     isPublic:isPublic,
-
+    chColor:chColor
 
   })
 
