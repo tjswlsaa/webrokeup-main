@@ -208,7 +208,7 @@ const MyBook = ({ navigation, route }) => {
                                     onPress={() => navigation.navigate("QuestionList", {navigation:navigation, bookKey:bookKey, Color: Color})}>
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 질문지</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
+                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, Color:Color, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 일기</Text>
                                     </TouchableOpacity>
                                     </View>

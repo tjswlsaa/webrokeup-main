@@ -47,6 +47,112 @@ const test8 ={
 
 const NewPage = ({ navigation, route }) => {
 
+  const { bookKey } = route.params;
+  test2.bookKey=bookKey;
+  console.log("bookKeynewpage",bookKey)
+
+  const firstColor= "#9E001C"
+  const secondColor="#F6AE2D"
+  const thirdColor = "#33658A"
+  const fourthColor= "#494949"
+
+
+function colorAis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#9E001C"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#F6AE2D"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#33658A"
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#494949"
+  }
+}
+const colorA = colorAis(bookKey);
+
+function colorBis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#E73F34"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#DFB82C"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#78CCD1"
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#161616"
+  }
+}
+const colorB = colorBis(bookKey);
+
+function colorCis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#F01D0F"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#E8D60C"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#24A9E2" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#625E5E"
+  }
+}
+const colorC = colorCis(bookKey);
+
+function colorDis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#623734"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#FFDD00"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#4581F5" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#929292"
+  }
+}
+const colorD = colorDis(bookKey);
+
+function colorEis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#4A130E"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#FFF848"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#3624A5" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#C8C8C8"
+  }
+}
+const colorE = colorEis(bookKey);
+
+function colorFis(bookKey) {
+  if (bookKey.indexOf('1') == 0){
+  return "#EE8D8D"
+  }
+  else if (bookKey.indexOf('2') == 0){
+  return "#F2EDC0"
+  }
+  else if (bookKey.indexOf('3') == 0){
+  return "#342D65" 
+  }
+  else if (bookKey.indexOf('4') == 0){
+  return "#ECECEC"
+  }
+}
+const colorF = colorFis(bookKey);
+
   test1.navigation=navigation
 
   const [CountChapter,setCountChapter]=useState("")
@@ -63,9 +169,7 @@ const NewPage = ({ navigation, route }) => {
   const maintext_a = useRef(null);
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
-  const [chapterColor, setChapterColor] = useState("#F6AE2D")
-  const { bookKey } = route.params;
-  test2.bookKey=bookKey;
+  const [chapterColor, setChapterColor] = useState(colorA)
 
   const headerHeight = useHeaderHeight();
   const ScreenHeight = Dimensions.get('window').height   //height
@@ -154,12 +258,12 @@ const NewPage = ({ navigation, route }) => {
           <View style={{backgroundColor: "#fff", height: "15%", marginHorizontal: "5%", marginTop: "3%" }}>
             <Text style={{marginTop: "5%", marginLeft: "5%"}}> 오늘의 감정 빛깔은 </Text>
             <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
-              <TouchableOpacity style={{flex: 1, backgroundColor:"#FFF848"}} onPress={()=>setChapterColor("#FFF848")}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: "#E8D60C"}} onPress={()=>setChapterColor("#E8D60C")}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: "#FFDD00"}} onPress={()=>setChapterColor("#FFDD00")}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: "#F6AE2D"}} onPress={()=>setChapterColor("#F6AE2D")}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: "#FFC60D"}} onPress={()=>setChapterColor("#FFC60D")}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: "#F2EDC0"}} onPress={()=>setChapterColor("#F2EDC0")}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor:colorA}} onPress={()=>setChapterColor(colorA)}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: colorB}} onPress={()=>setChapterColor(colorB)}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: colorC}} onPress={()=>setChapterColor(colorC)}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: colorD}} onPress={()=>setChapterColor(colorD)}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: colorE}} onPress={()=>setChapterColor(colorE)}/>
+              <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
             </View>
           </View>
         {/* </ImageBackground> */}

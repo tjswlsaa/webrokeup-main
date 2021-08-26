@@ -444,7 +444,7 @@ const MyPage = ({ navigation }) => {
 
                             <TouchableOpacity onPress={()=> navigation.navigate('MyBook',{bookKey:fourthBookKey, color:fourthColor})}  style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginLeft: 80 }}>
 
-                            <View style={{ backgroundColor: fourthColor, opacity: 0.8, height: realScreen * 0.3, width: ScreenWidth * 0.07, zIndex: 1 }}>
+                            <View style={{ backgroundColor: fourthColor, opacity: 0.8, height: realScreen * 0.3, width: ScreenWidth * 0.04, zIndex: 1 }}>
 
                             </View>
 
