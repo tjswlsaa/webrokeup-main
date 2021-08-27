@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import {
-    StyleSheet, TouchableWithoutFeedback, RefreshControl, 
+    StyleSheet, TouchableWithoutFeedback, RefreshControl,
     View, Text, FlatList, Keyboard, Button, TextInput, ScrollView, Dimensions, TouchableOpacity, SafeAreaView, NativeModules, Alert
 } from 'react-native'
 const { StatusBarManager } = NativeModules
@@ -44,8 +44,6 @@ const test7 = {
 }
 
 function Comment({ navigation, route }) {
-
-
     const keyboard = useKeyboard()
 
     console.log('keyboard isKeyboardShow: ', keyboard.keyboardShown)
@@ -59,15 +57,15 @@ function Comment({ navigation, route }) {
     test.bookKey = bookKey;
     test2.chapterKey = chapterKey;
 
-    const { chapterTitle } = route.params;textInputHeight
-    const [commentsNumber, setCommentsNumber] = useState(0);
+    const { chapterTitle } = route.params; textInputHeight
     const [comments, setComments] = useState([]);
+    const [commentsCount, setCommentsCount] = useState(0);
     test5.comments = comments
     const [data, setData] = useState("")
     const [statusBarHeight, setStatusBarHeight] = useState(0);
     const defaultTextInputHeight = 40;
     const [textInputHeight, setTextInputHeight] = useState(defaultTextInputHeight);
-    
+
     //     const realHeight = Dimensions.get('window').height - getStatusBarHeight()- getBottomSpace()-135-10
 
     var user = firebase.auth().currentUser;
@@ -80,15 +78,17 @@ function Comment({ navigation, route }) {
     }
 
     console.log({ statusBarHeight })
+
     useEffect(() => {
+
         firebase_db
             .ref(`book/${bookKey}/both/` + chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 let temp = [];
                 //console.log({'temp.length (.)':temp.length});
                 //console.log({'comments.length (.)':comments.length});
-
-                // console.log({snapshot});
+                var commentsCount = snapshot.numChildren();
+                setCommentsCount(commentsCount)
 
                 snapshot.forEach((child) => {
 
@@ -110,20 +110,21 @@ function Comment({ navigation, route }) {
                     // 근데 우리는 이 val()말고도, key가 필요하고,
                     // firebase에 의하면, 이걸 얻고 싶으면 .key로 (=key property로) 가져와야 한다.
                     // 그래서, 위에서 item을 빚어서, 그걸 push하고 있다.
+                    
                 });
 
                 temp.sort(function (a, b) {
                     return new Date(a.regdate) - new Date(b.regdate);
-                });
+                })
 
                 //console.log({'temp.length (..)':temp.length});
                 ////console.log({temp});
                 setComments(temp);
-
+                
                 //console.log({'comments.length (..)':comments.length});
                 ////console.log('data',data)
             });
-    }, []);
+    }, [commentsCount]);
 
     // console.log('comments이거 모냐고!!!!!!!!',comments)
 
@@ -140,10 +141,18 @@ function Comment({ navigation, route }) {
     test6.commentKey = commentKey
     const text_a = useRef(null);
 
+    // useEffect(()=>{
+    //     firebase_db
+    //         .ref(`book/${bookKey}/both/${chapterKey}/comments`)
+    //         .on('value', (snapshot) => {
+    //             commentsCount=snapshot.numChildren()
+    //             setCommentsCount(commentsCount)
+    //             console.log("commentsCount fb : " + commentsCount)
+    //         })
+    // }, [])
 
-    const onCommentSend = () => {
 
-
+    const onCommentSend = async () => {
         const regdate = new Date()
         //console.log('숫자열',regdate)// 2021-07-05T11:12:35.972Z
 
@@ -155,9 +164,22 @@ function Comment({ navigation, route }) {
                 regdate: new Date().toString(),
             })
 
-        dismissKeyboard()
-        text_a.current.clear();
+        let commentsCount = 0;
+        firebase_db
+            .ref(`book/${bookKey}/both/` + chapterKey + '/comments/')
+            .on('value', (snapshot) => {
+                commentsCount = snapshot.numChildren();
+                setCommentsCount(commentsCount)
+            })
 
+
+        firebase_db
+            .ref(`book/${bookKey}/both/${chapterKey}/`)
+            .child('commentsCount')
+            .set(commentsCount)
+
+        await dismissKeyboard()
+        text_a.current.clear();
     }
 
 
@@ -169,7 +191,7 @@ function Comment({ navigation, route }) {
                 // keyboardVerticalOffse이 ㅇ벖는 경우 
                 // 키보드 없을 경우: ㅇㅋ, 있을 경우: 절반쯤 말려들어감 
                 // B. 없을 경우: ㅇㅋ, 있을 경우: 아예 삼켜진다
-                
+
                 // keyboardVerticalOffset={30 + statusBarHeight} 
                 // 없을 경우: ㅇㅋ, 있을 경우: 좀 뜬다
                 // B. 없을 경우: ㅇㅋ, 있을 경우: 좀 뜬다
@@ -178,15 +200,15 @@ function Comment({ navigation, route }) {
                 // keyboardVerticalOffset={statusBarHeight} 
                 // 없을 경우: ㅇㅋ, 있을 경우: 살짝 말린다
                 // B: 없을 경우: ㅇㅋ, 있을 경우: 아주 살짝 말린다
-                
+
                 // keyboardVerticalOffset={30}
                 // A(SE2): 없을 경우: ㅇㅋ, 있을 경우: 뭔가 딱인거 같다! <- BEST!!
                 // B(11): 없읔 경ㅇ: ㅇㅋ, 있을 경우: 1/4쯤? 말려들어감
 
                 // keyboardVerticalOffset={54} // 11: 작을 수ㅗㄱ, 가라앉는다, 54가 딱이다!
-                keyboardVerticalOffset={10 + statusBarHeight} 
+                keyboardVerticalOffset={10 + statusBarHeight}
 
-                >
+            >
 
                 {/* keyboardVerticalOffset={statusBarHeight+14} > */}
                 {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
@@ -229,12 +251,12 @@ function Comment({ navigation, route }) {
                 </View>
 
                 <View style={{
-                    flexDirection: "row", 
-                    backgroundColor: "#e9e9e9", 
+                    flexDirection: "row",
+                    backgroundColor: "#e9e9e9",
                     // height: 50, 
-                    height: (textInputHeight + 10), 
-                    alignItems: "center", 
-                    justifyContent: "center", 
+                    height: (textInputHeight + 10),
+                    alignItems: "center",
+                    justifyContent: "center",
                     borderRadius: 5,
                 }}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -506,7 +528,7 @@ const ChapterComment = (props) => {
         return `${Math.floor(years)}년 전`
     }
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
 
             {comment.creator == user_uid ? (
 
@@ -522,8 +544,8 @@ const ChapterComment = (props) => {
                     <Swipeable
                         ref={swipeableRef}
                         renderRightActions={() => <DeleteButton />}>
-                        <View style={{flex: 1, flexDirection: "row", }}>
-                            <View style={{flex: 6, flexDirection: "column" }}>
+                        <View style={{ flex: 1, flexDirection: "row", }}>
+                            <View style={{ flex: 6, flexDirection: "column" }}>
                                 <TouchableOpacity
                                     activeOpacity={0.8}
                                 // onPress={()=>deleteComment()}
@@ -539,7 +561,7 @@ const ChapterComment = (props) => {
 
                             </View>
 
-                            <View style={{flex: 1, borderWidth: 1, justifyContent: "center" }}>
+                            <View style={{ flex: 1, borderWidth: 1, justifyContent: "center" }}>
                                 <TouchableOpacity onPress={() => likes()} >
                                     <Icon name="like2" size={20} color="black" style={{}} />
                                 </TouchableOpacity>
