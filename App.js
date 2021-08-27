@@ -359,7 +359,7 @@ const App = ({ navigation }) => {
           options={{ ...readPost.options, ...defaultScreenOptions, title: "게시판" }} />
         <Stack.Screen
           name="editPost"
-          component={editPost.component}
+        component={editPost.component}
           options={{ title: "게시판 글 수정하기", ...defaultScreenOptions, ...editPost.options }}
 
         />

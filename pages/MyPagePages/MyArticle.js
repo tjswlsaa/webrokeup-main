@@ -32,7 +32,7 @@ const test3 = {
 }
 
 const test4 = {
-    chapters: ''
+    item: ''
 }
 const test5 = {
     user_uid: ''
@@ -45,32 +45,23 @@ const MyArticle = ({ navigation, route }) => {
 
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
-
-    console.log("myarticle(1)chapterkey현재페이지의챕터키",) 
-    // console.log("typeofchapterKey",typeof chapterKey) 
-    const makechapterkeynumber= Number(chapterKey) 
-    // console.log("MyArticlemakechapterkeynumber",makechapterkeynumber) 
-    // console.log("typeofmakechapterkeynumber",typeof makechapterkeynumber) 
-    const nextChapterKey = makechapterkeynumber+1 
-    console.log("myarticle(1)다음페이지의챕터키",nextChapterKey) 
-
     test1.bookKey = bookKey
 
-    const [likeCount, setLikeCount] = useState(0);
-    const [likedUsers, setLikedUsers] = useState([]);
-    const [commentsNumber, setCommentsNumber] = useState(0);
-    const [cloverColor, setCloverColor] = useState("#c1c1c1")
-    const [chapters, setChapters] = useState({});
-        // console.log("myarticle author", chapters.creator)
-        console.log("myarticlechapters22",chapters)
+    const [swiper, setSwiper] = useState(null);
 
-    test4.chapters=chapters
+
+
+
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }
     test4.user_uid=user_uid
 
-    
+    const [index, setIndex] = useState(0);
+    useEffect(() => {
+        setIndex(route.params.index);
+    }, []);
+
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
 
@@ -78,28 +69,6 @@ const MyArticle = ({ navigation, route }) => {
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
-
-
-    useEffect(getChapters, []);
-        function getChapters() {
-            firebase_db
-                .ref(`book/${bookKey}/both/` + chapterKey)
-                .on('value', (snapshot) => {
-                    // console.log('getChapters() firebase_db.on()');
-                    let temp = [];
-                    const chapters = snapshot.val()
-
-                    if (chapters > '') { // truthy check
-                        setChapters(chapters);
-                    }
-                });
-        } // function getChapters()
-        console.log("myarticlechapters22",chapters)
-
-        const chapterColor = chapters.chColor;
-        const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapterKey + '/likes/');
-        console.log("chapters",chapters)
-
 
 
         const [chapter, setChapter] = useState([]);
@@ -138,6 +107,98 @@ const MyArticle = ({ navigation, route }) => {
 
 
 
+    return (
+        <View style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1 }}>
+                <StatusBar style="white"/>
+                <View style={{marginHorizontal:"5%",}}> 
+                        {/* <TouchableOpacity onPress={() => { navigation.navigate("MyBook", { bookKey: bookKey, navigation: navigation }) }}style={{backgroundColor:"pink", }}>
+                            <Text>책 보러가기</Text>
+                        </TouchableOpacity> */}
+
+                    <View style={{ height: realScreen*0.9,alignSelf: "center", backgroundColor:"white" , justifyContent:"center", marginVertical:"10%"}}>
+
+                                <View>
+
+                                    
+                                    <View style={{ height: realScreen*0.8,}}>
+                                            
+
+                                                    <Swiper
+                                                        // index={myBook.bookKey}
+                                                        loop={false}
+                                                        index={index}
+                                                        showsPagination={false}
+                                                        onSwiper={setSwiper}
+                                                        showsButtons={true}
+                                                        nextButton={<Text style={{        color: "#21381C",
+                                                        fontSize: 40,}}>›</Text>}
+                                                        prevButton={<Text style={{        color: "#21381C",
+                                                        fontSize: 40,        transform: [{rotate:"180deg"}],
+                                                    }}>›</Text>}
+                                                       
+                                                    >
+                                                    
+                                                        {chapter.map(item => {
+                                                            test4.item=item
+                                                            return (
+                                                            <View>
+                                                                {item.type== "감정 일기"? (
+
+                                                                <ChapterItem 
+                                                                navigation={navigation}
+                                                                item={item}/>
+                                                                ):(
+                                                                <ChapterItem 
+                                                                navigation={navigation}
+                                                                item={item}/>
+                                                                )}
+                                                                
+                                                            </View>
+                                                            )
+                                                        })}
+
+                                          
+
+                                                    </Swiper>
+                                        </View>
+                                        
+
+                            </View>
+
+
+
+
+                    </View>
+                </View>
+            </SafeAreaView>
+        </View>
+    )
+}
+
+function ChapterItem(props) {
+
+
+
+    const { navigation, item, bookKey, chapterKey, } = props;
+    const user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) { user_uid = user.uid }
+    const [likeCount, setLikeCount] = useState(0);
+    const [likedUsers, setLikedUsers] = useState([]);
+    const [commentsNumber, setCommentsNumber] = useState(0);
+    const [cloverColor, setCloverColor] = useState("#c1c1c1")
+    const likeRef = firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey + '/likes/');
+
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width   //height
+
+    const headerHeight = useHeaderHeight();
+    const BottomSpace = getBottomSpace()
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace
+    
+    console.log("itemmyarticle",item)
     useEffect(() => {
         // let temp = [];
         let arr = likeRef.on('value', (snapshot) => {
@@ -154,19 +215,22 @@ const MyArticle = ({ navigation, route }) => {
             setLikedUsers(temp);
         })
 
-    }, [])
+    }, [likeCount])
+    console.log("likeCount",likeCount)
 
     console.log("likedUserslikedUsers",likedUsers)
 
     useEffect(() => {
         //// console.log('MyArticle.js (2), chapters: ',chapters);
         // let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
-        let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
+        let arr = firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)
             })
     }, [])
+
+    console.log("commentsNumber",commentsNumber)
 
     useEffect(()=>{
         let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
@@ -177,284 +241,88 @@ const MyArticle = ({ navigation, route }) => {
             // console.log("likedUsers: " + likedUsers)
             setCloverColor("green")
         }
-    }, [])
-
-    const [CountChapter,setCountChapter]=useState("")
-
-    useEffect (()=>{
-      let arr = firebase_db.ref(`book/${bookKey}/` + '/both/')
-      .on('value', (snapshot) => {
-         var CountChapter = snapshot.numChildren();
-         setCountChapter(CountChapter)
-      })
-  }, [])
-
-  const numBookKey= Number(bookKey)
-  const numCountChapter= Number(CountChapter)
-
-  const endChapterKey= numBookKey+numCountChapter
-
-  console.log("myaricle마지막챕터",endChapterKey)
-
-  //만약 nextChpater가 NUM(bookKey) + NUM(CountChapter) 랑 같다면 next button을 보이지마 
-  // bookKey+CountChapter
-  
-
-  const navigatetonextpage=()=>{
-
-    const {navigation}=test3
-
-    navigation.dispatch(state => {
-        const routes = [...state.routes];
-        routes.pop();
-      
-        return CommonActions.reset({
-          ...state,
-          routes,
-          index: routes.length - 1,
-        });
-      });
-
-      navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }
-
-      const [swiper, setSwiper] = useState(null);
-
-
+    }, [likedUsers])
 
     return (
-        <View style={{ flex: 1 }}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar style="white"/>
-                <View style={{marginHorizontal:"5%", }}> 
-                {/* <View style={{ backgroundColor: "#e6ede8" }}> */}
-                    {/* <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} > */}
+    <View>
 
-                    <View style={{ marginTop: "5%",  height: realScreen*0.85, marginHorizontal:"10%",alignSelf: "center", backgroundColor:"white" }}>
+        <TouchableOpacity style={{ height: "90%", width: "80%", alignSelf: "center" }} onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}>
 
-                                <View>
-                                    {chapters.type== "감정 질문지"? (
-
-                                                                        
-
-                                        <View style={{backgroundColor:"white", height: realScreen*0.8}}>
-                                        <View style={{ marginHorizontal: "10%",height: realScreen*0.1, justifyContent:"center", width:"100%", marginTop:"5%"}}>
-                                                <Text style={{fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
-                                        </View>
-                                        <ScrollView style={{marginHorizontal: "10%", marginTop: "2%"}}>
-
-
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 18}}>{chapters.Q1}</Text>
-                                                <Text style={{fontSize: 15}}>{chapters.mainText}</Text>
-                                                </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 18}}>{chapters.Q2}</Text>
-                                                <Text style={{fontSize: 15}}>{chapters.text3}</Text>
-                                                </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 18}}>{chapters.Q3}</Text>
-                                                <Text style={{fontSize: 15}}>{chapters.text4}</Text>
-                                                </View>
-
-
-                                        </ScrollView>
-                                        </View>
-                                        
-
-                                    ):
-
-                                    (  
-
-                                    
-                                    <View style={{ height: realScreen*0.8,}}>
-                                            
-                                            <View style={{height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "20%"}}>
-                                                    <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
-                                                    <Text style={{flex: 15, fontSize: 20, fontWeight:"600"}}>{chapters.chapterTitle}</Text>
-                                            </View>
-                                                    <Swiper
-                                                        // index={myBook.bookKey}
-                                                        loop={false}
-                                                        showsPagination={true}
-                                                        onSwiper={setSwiper}
-                                                        showsButtons={false}
-                                                        dot={
-                                                            <View style={{           // unchecked dot style
-                                                                backgroundColor: 'rgba(0,0,0,0.2)',
-                                                                width: 10,
-                                                                height: 10,
-                                                                borderRadius: 4,
-                                                                marginLeft: 10,
-                                                                marginRight: 9,
-                                                            }}
-                                                            />}
-                                                        activeDot={<View style={{    // selected dots style
-                                                            backgroundColor: "#21381C",
-                                                            width: 10,
-                                                            height: 10,
-                                                            borderRadius: 4,
-                                                            marginLeft: 10,
-                                                            marginRight: 9,
-                                                        }} />}
-                                                    >
-                                                        {chapter.map(item => {
-                                                            return (
-                                                                <TouchableOpacity style={{ height: "90%", width: "80%", alignSelf: "center" }} onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}>
-                                                                    {/* <BookComponent
-                                                                        key={item.key}
-                                                                        item={item}
-                                                                        url={item.url}
-                                                                        bookTitle={item.bookTitle}
-                                                                        navigation={navigation}
-                                                                        userID={userID}
-                                                                        resizeMode="contain"
-                                                                    /> */}
-                                                                        <Text style={{fontSize: 18}}>{item.chapterTitle}</Text>
-                                                                        <Text style={{fontSize: 15}}>{item.mainText}</Text>
-                                                                </TouchableOpacity>
-                                                            )
-                                                        })}
-                                                    </Swiper>
-                                        </View>
-                                        )}
-                                        
-                                            <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" ,  }}>
-                                            {chapters.isPublic == true ? 
-                                                        (
-                                                        <View style={{flexDirection: "row"}}>
-                                                            <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
-                                                            <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
-                                                        </View>
-                                                        )
-                                                : 
-                                                        (
-                                                        <View style={{flexDirection: "row"}}>
-                                                            <Icon name="lock" size={15} color="black" style={{ marginLeft: 20}}/>
-                                                            <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
-                                                        </View>   
-                                                        )
-                                                    }
-                                                <TouchableOpacity style={{marginTop:"4%", marginLeft:"10%"}} onPress={async () => {
-                                                    // console.log('MyArticle.likeButton.onPress()');
-                                                    // console.log({likedUsers});
-                                                    // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
-                                                    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-                                                    const isMeliked = (meliked > '');
-                                                    const isMeliked2 = ((meliked == '') == false);
-                                                    // console.log("likedUsers: " +likedUsers)
-                                                    // console.log("meliked: " + meliked)
-                                                    // console.log({isMeliked,isMeliked2});
-                                                    let likeCount = 0;
-                                                    // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
-                                                    // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
-                                                    if (meliked == '') {
-                                                        await likeRef.child(user_uid).set({
-                                                            user_uid: user_uid,
-                                                            regdate: new Date().toString(),
-                                                        });
-                                                        // likeReload();
-                                                        likeRef.on('value', (snapshot) => {
-                                                            //  var likeCount = snapshot.numChildren();
-                                                            likeCount = snapshot.numChildren();
-                                                            setLikeCount(likeCount)
-                                                        })
-                                                        await setCloverColor("green")
-                                                    } else {
-                                                        // console.log ("좋아요 취소")
-                                                        // likeRef.child(user_uid).set(null)
-                                                        await likeRef.child(user_uid).remove();
-                                                        // likeReload();
-                                                        likeRef.on('value', (snapshot) => {
-                                                            //  var likeCount = snapshot.numChildren();
-                                                            likeCount = snapshot.numChildren();
-                                                            setLikeCount(likeCount)
-                                                        })
-                                                        await setCloverColor("#c1c1c1")
-
-                                                    }
-                                                   
-                                                    firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey).child("likeCount").set(likeCount)
-
-                                                }}>
-                                                    <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
-
-                                                </TouchableOpacity>
-                                                <Text style={{ marginLeft: "3%",marginTop:"4%", }}> {likeCount} </Text>
-
-                                                <TouchableOpacity
-                                                    onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: bookKey, chapterKey: chapterKey }) }}
-                                                    style={{marginTop:"4%", marginLeft:"5%" }}
-                                                >
-                                                    <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
-
-                                                </TouchableOpacity>
-
-                                                <Text style={{ marginLeft: "3%",marginTop:"4%",  }}> {commentsNumber} </Text>
-
-                                                <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"20%" }}>
-                                                    <Text style={{ fontSize: 13,}}>{chapters.Kregdate}</Text>
-                                                </View>
-                                            </View>
-                            </View>
-
-                            <View style={{ }}>
-                            <View style={{ height:realScreen*0.1, flexDirection: "row", }}>
-                                    
-                                    <View style={{width:ScreenWidth*0.5, justifyContent:"center"}}> 
-                                    {chapters.creator == user_uid ? (
-                                    <View style={{height: realScreen*0.05, width: "90%", flexDirection: "row", alignSelf: "center", alignContent:"center", }}>
-
-                                        {/* <TouchableOpacity style={{marginRight: "5%", borderWidth: 2, borderColor: "#21381c", width: ScreenWidth*0.15, borderRadius: 15, justifyContent:"center"}}>
-                                            <Text style={{alignSelf: "center", color: "#21381c",}} 
-                                                onPress={() => navigation.navigate("EditArticle", { bookKey: bookKey, chapters: chapters, chapterKey: chapterKey })}>수정</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity style={{backgroundColor: "#21381c",width: ScreenWidth*0.15,  borderRadius: 15, justifyContent:"center"}} >
-                                            <Text style={{alignSelf: "center", color: "#fff", }} 
-                                                onPress={() => {
-                                                    // console.log('MyArticle.js (3), chapters: ',chapters);
-
-                                                    firebase_db
-                                                        .ref(`book/${bookKey}/chapters/` + chapterKey)
-                                                        .set(null)
-                                                        .then(function () {
-                                                            Alert.alert("삭제 완료")
-                                                            navigation.navigate("MyBook", { bookKey: bookKey })
-                                                        })
-                                                }}>삭제</Text>
-                                        </TouchableOpacity> */}
-                                    </View>)
-                                    : (<View style={{height: "4%"}}></View>)}
-                                    </View>
-
-                                    <View style={{width:ScreenWidth*0.4, justifyContent:"center",alignContent:"flex-end"}}> 
-
-                                    {endChapterKey==chapterKey? ( 
-                                        <View style={{alignSelf:"flex-end", padding:"7%"}}>
-
-                                            <Text>마지막 챕터입니다</Text>
-                                        </View>
-                                        ):(
-
-                                            <Icon.Button name='right' size={25}
-                                            backgroundColor= 'white' color="black" 
-                                            // onPress={() => { navigation.navigate('MyArticle2', { navigation: navigation, bookKey: bookKey, chapterKey:nextChapterKey }) }}
-                                            onPress={()=>{navigatetonextpage()}}
-                                            >
-                                            </Icon.Button>                            )}
-
-                                    </View>
-
-                            </View>     
-                            </View>
-
-
-
-                        {/* </ImageBackground> */}
+                <Text style={{fontSize: 18}}>{item.chapterTitle}</Text>
+                <Text style={{fontSize: 15}}>{item.mainText}</Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" ,  }}>
+        {item.isPublic == true ? 
+                    (
+                    <View style={{flexDirection: "row"}}>
+                        <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
+                        <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
                     </View>
-                    {/* </ImageBackground> */}
-                </View>
-            </SafeAreaView>
+                    )
+            : 
+                    (
+                    <View style={{flexDirection: "row"}}>
+                        <Icon name="lock" size={15} color="black" style={{ marginLeft: 20}}/>
+                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
+                    </View>   
+                    )
+                }
+            <TouchableOpacity style={{marginTop:"4%", marginLeft:"10%"}} onPress={async () => {
+                // console.log('MyArticle.likeButton.onPress()');
+                // console.log({likedUsers});
+                // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
+                let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+                const isMeliked = (meliked > '');
+                const isMeliked2 = ((meliked == '') == false);
+                // console.log("likedUsers: " +likedUsers)
+                // console.log("meliked: " + meliked)
+                // console.log({isMeliked,isMeliked2});
+                let likeCount = 0;
+                // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
+                // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
+                if (meliked == '') {
+                    await likeRef.child(user_uid).set({
+                        user_uid: user_uid,
+                        regdate: new Date().toString(),
+                    });
+                    // likeReload();
+                    likeRef.on('value', (snapshot) => {
+                        //  var likeCount = snapshot.numChildren();
+                        likeCount = snapshot.numChildren();
+                        setLikeCount(likeCount)
+                    })
+                    await setCloverColor("green")
+                } else {
+                    // console.log ("좋아요 취소")
+                    // likeRef.child(user_uid).set(null)
+                    await likeRef.child(user_uid).remove();
+                    // likeReload();
+                    likeRef.on('value', (snapshot) => {
+                        //  var likeCount = snapshot.numChildren();
+                        likeCount = snapshot.numChildren();
+                        setLikeCount(likeCount)
+                    })
+                    await setCloverColor("#C1C1C1")
+                }
+                firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey).child("likeCount").set(likeCount)
+            }}>
+                <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
+            </TouchableOpacity>
+            <Text style={{ marginLeft: "3%",marginTop:"4%", }}> {likeCount} </Text>
+            <TouchableOpacity
+                onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
+                style={{marginTop:"4%", marginLeft:"5%" }}
+            >
+                <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
+            </TouchableOpacity>
+            <Text style={{ marginLeft: "3%",marginTop:"4%",  }}> {commentsNumber} </Text>
+            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"20%" }}>
+                <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
+            </View>
         </View>
+        </View>
+
+
     )
 }
 const styles = StyleSheet.create({
@@ -526,22 +394,26 @@ console.log("myarticletheend")
 function headerRight() {
     const navigation = useNavigation();
     const {bookKey}=test1
-    const {chapters}=test4
-    const {user_uid}=test5
-
-
-console.log("myarticlechapters",chapters)
-console.log("myarticlechapterscreator",chapters.creator)
-console.log("myarticlechaptersuser_uid",user_uid)
+    const {item}=test4
+    const user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) { user_uid = user.uid }
 
     return (
         <View>
-        {chapters.creator == user_uid ? (
+        {item.creator == user_uid ? (
         <Button
-            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: chapters})}
+            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: item})}
             title="수정하기"
             color="#000"
-        />):(<View></View>)}
+        />
+        ):(<View>
+        <Button
+            onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
+            title="책 보러가기"
+            color="#000"
+        />
+        </View>)}
         </View>
 
     );

@@ -29,9 +29,7 @@ const test = {
 const test2 = {
     chapterKey: ''
 }
-const test3 = {
-    chapters: ''
-}
+
 const test4 = {
     user_uid: ""
 }
@@ -57,10 +55,9 @@ function Comment({ navigation, route }) {
 
     const [text, setText] = useState("")
 
-    const { bookKey, chapters, myitem, chapterKey } = route.params;
+    const { bookKey, myitem, chapterKey } = route.params;
     test.bookKey = bookKey;
     test2.chapterKey = chapterKey;
-    test3.chapters = chapters
 
     const { chapterTitle } = route.params;textInputHeight
     const [commentsNumber, setCommentsNumber] = useState(0);
@@ -85,7 +82,7 @@ function Comment({ navigation, route }) {
     console.log({ statusBarHeight })
     useEffect(() => {
         firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/')
+            .ref(`book/${bookKey}/both/` + chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 let temp = [];
                 //console.log({'temp.length (.)':temp.length});
@@ -151,7 +148,7 @@ function Comment({ navigation, route }) {
         //console.log('숫자열',regdate)// 2021-07-05T11:12:35.972Z
 
         firebase_db
-            .ref(`book/${bookKey}/chapters/` + chapterKey + '/comments/' + commentKey)
+            .ref(`book/${bookKey}/both/` + chapterKey + '/comments/' + commentKey)
             .set({
                 creator: firebase.auth().currentUser.uid,
                 text: text,
@@ -362,7 +359,6 @@ const ChapterComment = (props) => {
     const [likedUsers, setLikedUsers] = useState([]);
     const { bookKey } = test;
     const { chapterKey } = test2;
-    const { chapters } = test3;
     // const {user_uid}=test4
     const { comments } = test5
     const { commentKey } = test6
@@ -371,7 +367,7 @@ const ChapterComment = (props) => {
     const commentKeyforLikes = comment.key
 
     console.log('s없는 코멘트', comment)
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapterKey + `/comments/${comment.key}/likes/`)
+    const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapterKey + `/comments/${comment.key}/likes/`)
 
 
 
@@ -447,7 +443,7 @@ const ChapterComment = (props) => {
 
         const deleteit = () => {
             firebase_db
-                .ref(`book/${bookKey}/chapters/` + chapterKey + `/comments/${comment.key}/`)
+                .ref(`book/${bookKey}/both/` + chapterKey + `/comments/${comment.key}/`)
                 .set(null)
                 .then(function () {
                     Alert.alert("삭제 완료")
