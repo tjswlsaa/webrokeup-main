@@ -45,6 +45,7 @@ import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
+import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -141,7 +142,15 @@ const App = ({ navigation }) => {
           }}
         />
 
-
+<Stack.Screen
+          name="MyArticleQuration"
+          component={MyArticleQuration.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticleQuration.options
+          }}
+        />
 
         <Stack.Screen
           name="QuestionList"

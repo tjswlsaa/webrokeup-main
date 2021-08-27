@@ -35,7 +35,7 @@ const EditArticle = ({ navigation, route }) => {
     const { chapters, bookKey} = route.params;
     test5.chapters=chapters
     test4.bookKey=bookKey
-
+    console.log("EditArticlechapters",chapters)
     const [text1, setText1] = useState(chapters.chapterTitle);
     const [text2, setText2] = useState(chapters.mainText);
     test2.text1=text1

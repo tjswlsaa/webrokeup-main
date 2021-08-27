@@ -55,7 +55,7 @@ function Comment({ navigation, route }) {
 
     const [text, setText] = useState("")
 
-    const { bookKey, myitem, chapterKey } = route.params;
+    const { bookKey, chapterKey } = route.params;
     test.bookKey = bookKey;
     test2.chapterKey = chapterKey;
 

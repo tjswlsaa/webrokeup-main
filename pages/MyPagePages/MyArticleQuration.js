@@ -39,7 +39,7 @@ const test5 = {
 }
 
 
-const MyArticle = ({ navigation, route }) => {
+const MyArticleQuration = ({ navigation, route }) => {
 
     test3.navigation = navigation
 
@@ -72,39 +72,81 @@ const MyArticle = ({ navigation, route }) => {
     const realScreen = ScreenHeight-headerHeight-BottomSpace
 
 
-        const [chapter, setChapter] = useState([]);
+   // mybook큐레이팅
 
-        useEffect(getChapters, []);
-        function getChapters() {
-            firebase_db
-                .ref(`book/${bookKey}/both/`)
-                .on('value', (snapshot) => {
-                    let temp = [];
-                    //console.log({'temp.length (.)':temp.length});
-                    //console.log({'comments.length (.)':comments.length});
-    
-    
-                    snapshot.forEach((child) => {
-                        const item = {
-                            ...child.val(), // 구조 분해 할당: 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#%EA%B5%AC%EB%AC%B8
-                            key: child.key,
-    
-                        };
-    
-                        temp.push(item);
-    
-                    });
-    
-                    temp.sort(function (a, b) {
-                        return new Date(a.regdate) - new Date(b.regdate);
-                    });
-                    setChapter(temp);
-                    //console.log({ temp })
-                })
-        }
-    
-        console.log("getChapters",chapter)
-    
+const qurationBookKey1 = "1069092000"
+const qurationBookKey2 = "3560282000"
+// const qurationBookKey3 = "Blue1"
+// const qurationBookKey4 = "black1"
+// const qurationBookKey5 = "red2"
+
+const qurationChapterKey1 = "1069092001"
+const qurationChapterKey2 = "3560282002"
+// const qurationChapterKey3 = "Blue1"
+// const qurationChapterKey4 = "black1"
+// const qurationChapterKey5 = "red2"
+
+
+
+
+const [chapter1, setChapter1] = useState([]);
+
+useEffect(getChapters1, [qurationChapterKey1]);
+function getChapters1() {
+    firebase_db
+        .ref(`book/${qurationBookKey1}/both/`+qurationChapterKey1)
+        .on('value', (snapshot) => {
+            const chapter1 = snapshot.val()
+            setChapter1(chapter1);
+        })
+}
+
+
+
+const [chapter2, setChapter2] = useState([]);
+
+useEffect(getChapters2, [qurationChapterKey2]);
+function getChapters2() {
+    firebase_db
+        .ref(`book/${qurationBookKey2}/both/`+qurationChapterKey2)
+        .on('value', (snapshot) => {
+            const chapter2 = snapshot.val()
+            setChapter2(chapter2);
+        })
+}
+
+// const [BookItemUserinfo1, setBookItemUserinfo1] = useState({
+//     iam:"익명의.지은이",
+//     selfLetter:"안녕하세요 익명의 지은이입니다."
+// });
+// useEffect(()=>{
+//   firebase_db.ref(`users/${myitem1.user_uid}`)
+//       .on('value', (snapshot) => {
+//           let BookItemUserinfo1 = snapshot.val();
+//           if (BookItemUserinfo1 > '') {
+//             setBookItemUserinfo1(BookItemUserinfo1);
+//           }
+//       })
+// }, [myitem1]);
+
+
+// const [BookItemUserinfo2, setBookItemUserinfo2] = useState({
+// iam:"익명의.지은이",
+// selfLetter:"안녕하세요 익명의 지은이입니다."
+// });
+// useEffect(()=>{
+// firebase_db.ref(`users/${myitem2.user_uid}`)
+//   .on('value', (snapshot) => {
+//       let BookItemUserinfo2 = snapshot.val();
+//       if (BookItemUserinfo2 > '') {
+//         setBookItemUserinfo2(BookItemUserinfo2);
+//       }
+//   })
+// }, [myitem2]);
+
+const qurationchapters = [chapter1,chapter2]
+console.log("chapteris",qurationchapters)
+// 책 큐레이팅 끝
 
 
 
@@ -140,7 +182,7 @@ const MyArticle = ({ navigation, route }) => {
                                                        
                                                     >
                                                     
-                                                        {chapter.map(item => {
+                                                        {qurationchapters.map(item => {
                                                             test4.item=item
                                                             return (
                                                             <View>
@@ -211,7 +253,7 @@ function ChapterItem(props) {
             setLikedUsers(temp);
         })
 
-    }, [likeCount])
+    }, [item])
     console.log("likeCount",likeCount)
 
     console.log("likedUserslikedUsers",likedUsers)
@@ -224,7 +266,7 @@ function ChapterItem(props) {
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)
             })
-    }, [])
+    }, [item])
 
     console.log("commentsNumber",commentsNumber)
 
@@ -426,21 +468,13 @@ function headerRight() {
     if (user != null) { user_uid = user.uid }
 
     return (
-        <View>
-        {item.creator == user_uid ? (
-        <Button
-            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: item})}
-            title="수정"
-            color="#000"
-        />
-        ):(<View>
+
         <Button
             onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
             title="책 보러가기"
             color="#000"
         />
-        </View>)}
-        </View>
+
 
     );
 }
@@ -450,6 +484,6 @@ const options = {
 };
 
 export default {
-    component: MyArticle,
+    component: MyArticleQuration,
     options,
 };
