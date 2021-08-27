@@ -61,6 +61,7 @@ const MyArticle = ({ navigation, route }) => {
     useEffect(() => {
         setIndex(route.params.index);
     }, []);
+    console.log("myarticleindex",index)
 
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
@@ -410,7 +411,7 @@ function headerRight() {
         {item.creator == user_uid ? (
         <Button
             onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: item})}
-            title="수정하기"
+            title="수정"
             color="#000"
         />
         ):(<View>

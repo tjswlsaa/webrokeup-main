@@ -332,20 +332,6 @@ async function savePage() {
   const Newindex= CountChapter
   console.log("newpageindex",Newindex)
   
-  firebase_db
-  .ref(`/book/${bookKey}/chapters/` + chapterKey)
-  .set({
-    chapterKey: chapterKey,
-    chapterTitle: chapterTitle,
-    mainText: mainText,
-    regdate: new Date().toString(),
-    likeCount: 0,
-    Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
-    creator: user_uid,
-    bookKey:bookKey,
-    isPublic:isPublic,
-    type:"감정 일기"
-  });
 
   firebase_db
   .ref(`/book/${bookKey}/both/` + chapterKey)

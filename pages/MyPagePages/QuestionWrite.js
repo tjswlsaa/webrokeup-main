@@ -485,29 +485,12 @@ async function savePage() {
     type:"감정 질문지",
     color:Color,
     isPublic:isPublic,
-    chColor:chColor
+    chColor:chColor,
+    questionsKey:questionsKey
 
   });
 
-  firebase_db.ref(`questions/${colorAnswers}/${questionsKey}/`+chapterKey)
-  .set({
-    chapterKey: chapterKey,
-    regdate: new Date().toString(),
-    likeCount: 0,
-    Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
-    creator: user_uid,
-    bookKey:bookKey,
-    chapterTitle:text1,
-    mainText:text2,
-    text3:text3,
-    text4:text4,
-    intro:question.intro,
-    type:"감정 질문지",
-    color:Color,
-    isPublic:isPublic,
-    chColor:chColor
 
-  })
 
 Alert.alert("집필 완료")
 

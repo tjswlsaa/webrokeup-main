@@ -25,7 +25,6 @@ import NewPage from "./pages/MyPagePages/NewPage";
 import IntroArticle from "./pages/MyPagePages/IntroArticle";
 import EditArticle from "./pages/MyPagePages/EditArticle";
 import MyBookPublic from './pages/MainPages/MyBookPublic';
-import readPopularArticle from './pages/MyPagePages/readPopularArticle';
 import readIntroArticle from "./pages/MyPagePages/readIntroArticle";
 import EditIntroArticle from "./pages/MyPagePages/EditIntroArticle";
 import EditProfile from "./pages/MyPagePages/EditProfile";
@@ -46,7 +45,6 @@ import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
-import MyArticle2 from './pages/MyPagePages/MyArticle2';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -142,22 +140,8 @@ const App = ({ navigation }) => {
             ...MyArticle.options
           }}
         />
-        <Stack.Screen
-          name="readPopularArticle"
-          component={readPopularArticle.component}
-          options={{
-            headerShown: true,
-            ...defaultScreenOptions,
-          }}
-        />
-        <Stack.Screen
-          name="MyArticle2"
-          component={MyArticle2.component}
-          options={{
-            headerShown: true,
-            ...defaultScreenOptions,
-          }}
-        />
+
+
 
         <Stack.Screen
           name="QuestionList"
