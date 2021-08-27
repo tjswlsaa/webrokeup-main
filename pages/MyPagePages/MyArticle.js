@@ -246,13 +246,11 @@ function ChapterItem(props) {
     return (
     <View>
 
-        <TouchableOpacity style={{ height: "90%", width: "80%", alignSelf: "center" }} onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}>
-
-                <Text style={{fontSize: 18}}>{item.chapterTitle}</Text>
-                <Text style={{fontSize: 15}}>{item.mainText}</Text>
-        </TouchableOpacity>
-        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" ,  }}>
-        {item.isPublic == true ? 
+        <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
+        // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
+        >
+            <View style={{alignSelf:"flex-end"}}>
+                    {item.isPublic == true ? 
                     (
                     <View style={{flexDirection: "row"}}>
                         <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
@@ -267,7 +265,15 @@ function ChapterItem(props) {
                     </View>   
                     )
                 }
-            <TouchableOpacity style={{marginTop:"4%", marginLeft:"10%"}} onPress={async () => {
+            </View>
+                <Text style={{fontSize: 18, marginTop:"15%",marginBottom:"10%",fontWeight:"500"}}>{item.chapterTitle}</Text>
+                <ScrollView>
+                <Text style={{fontSize: 15}}>{item.mainText}</Text>
+                </ScrollView>
+        </View>
+        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"10%",  }}>
+       
+            <TouchableOpacity style={{marginTop:"4%", }} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
