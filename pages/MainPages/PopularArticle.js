@@ -13,6 +13,11 @@ const PopularArticle = ({ navigation, route }) => {
         const [list, setList] = useState([]);
         const [hotcolor, setHotColor] = useState("#21381c")
         const [newcolor, setNewColor] = useState("#E9E9E9")
+        const [likeCount, setLikeCount] = useState(0)
+        const [commentsCount, setCommentsCount] = useState(0);
+
+       
+
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
         const BottomSpace = getBottomSpace()
@@ -78,6 +83,38 @@ const PopularArticle = ({ navigation, route }) => {
                 setNewColor("#21381C")
         }
 
+        const bookKey = list.bookKey;
+        const chapterKey = list.chapterKey;
+        const likeRef = firebase_db.ref(`book/${bookKey}/both/${chapterKey}/likes/`);
+        console.log("새로운 likeRef: " + likeRef)
+        console.log("새로운 bookKey: " + bookKey)
+
+        useEffect(() => {
+                // let temp = [];
+                let arr = likeRef
+                        .on('value', (snapshot) => {
+                                let temp = [];
+                                var likeCount = snapshot.numChildren();
+                                // console.log('useEffect()');
+                                setLikeCount(likeCount)
+                                //// console.log(likeCount)
+                                snapshot.forEach((child) => {
+                                        temp.push(child.val());
+                                })
+                        })
+        }, [])
+
+        useEffect(() => {
+                firebase_db.ref(`book/${bookKey}/chapters/${chapterKey}/comments`)
+                        .on('value', (snapshot) => {
+                                let temp = [];
+                                var commentsCount = snapshot.numChildren();
+                                setCommentsCount(commentsCount)
+                                snapshot.forEach((child) => {
+                                        temp.push(child.val());
+                                })
+                        })
+        }, [])
 
 
         return (
@@ -98,13 +135,15 @@ const PopularArticle = ({ navigation, route }) => {
                         </View>
                         <View style={{ flex: 5, backgroundColor: "#E9E9E9" }}>
                                 <ScrollView style={{ flex: 1, marginHorizontal: "2%", backgroundColor: "#FAFAFA" }}>
-                                        {list.map(chapters => (
+                                        {list.map((chapters) => (
                                                 <ChapterItem
                                                         key={chapters.key}
                                                         navigation={navigation}
                                                         chapters={chapters}
                                                         chapterKey={chapters.chapterKey}
                                                         bookKey={chapters.bookKey}
+                                                        likeCount={chapters.likeCount}
+                                                        commentsCount={chapters.commentsCount}
                                                 />))
                                         }
                                 </ScrollView>
@@ -116,11 +155,9 @@ const PopularArticle = ({ navigation, route }) => {
 
 
 
-const ChapterItem = ({ navigation, chapters, }) => {
+const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) => {
         // console.log('PopularArticle.js (1), chapters: ',chapters);
-        const [list, setList] = useState([]);
-        const [likeCount, setLikeCount] = useState(0);
-        const [commentsNumber, setCommentsNumber] = useState(0);
+        // const [list, setList] = useState([]);
         const [myitem, setMyitem] = useState({
                 bookKey: '',
                 bookTitle: '',
@@ -130,6 +167,7 @@ const ChapterItem = ({ navigation, chapters, }) => {
                 url: '',
                 user_uid: '',
         });
+    
         
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
@@ -145,32 +183,32 @@ const ChapterItem = ({ navigation, chapters, }) => {
         console.log("likeRef" + likeRef)
         
 
-        useEffect(() => {
-                firebase_db
-                        .ref(`book`)
-                        .on('value', (snapshot) => {
-                                let list = [];
-                                let temp = [];
-                                snapshot.forEach((child) => {
-                                        const book = child.val();
-                                        const { both } = book;
-                                        //      console.log("useeffectbook",book)
+        // useEffect(() => {
+        //         firebase_db
+        //                 .ref(`book`)
+        //                 .on('value', (snapshot) => {
+        //                         let list = [];
+        //                         let temp = [];
+        //                         snapshot.forEach((child) => {
+        //                                 const book = child.val();
+        //                                 const { both } = book;
+        //                                 //      console.log("useeffectbook",book)
 
-                                        if (both == undefined) {
-                                                console.log("PopularArticle() 챕터가 없습니다")
-                                        } else {
-                                                list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
-                                        }
-                                        const arraylist = Object.values(list)
-                                        const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
+        //                                 if (both == undefined) {
+        //                                         console.log("PopularArticle() 챕터가 없습니다")
+        //                                 } else {
+        //                                         list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
+        //                                 }
+        //                                 const arraylist = Object.values(list)
+        //                                 const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
 
-                                        listFiltered.sort(function (a, b) {
-                                                return (b.likeCount) - (a.likeCount)
-                                        })
-                                        setList(listFiltered);
-                                })
-                        })
-        }, [])
+        //                                 listFiltered.sort(function (a, b) {
+        //                                         return (b.likeCount) - (a.likeCount)
+        //                                 })
+        //                                 setList(listFiltered);
+        //                         })
+        //                 })
+        // }, [])
 
         // console.log("book popular myitem", myitem)
         // console.log("book popular chapters.user_uid", chapters.creator)
@@ -192,6 +230,7 @@ const ChapterItem = ({ navigation, chapters, }) => {
                         })
         }
 
+       
 
 
         const firstColor = "#9E001C"
@@ -218,30 +257,7 @@ const ChapterItem = ({ navigation, chapters, }) => {
 
 
 
-        useEffect(() => {
-                // let temp = [];
-                let arr = likeRef
-                        .on('value', (snapshot) => {
-                                let temp = [];
-                                var likeCount = snapshot.numChildren();
-                                // console.log('useEffect()');
-                                setLikeCount(likeCount)
-                                //// console.log(likeCount)
-                                snapshot.forEach((child) => {
-                                        temp.push(child.val());
-                                })
-                        })
-        }, [])
-
-        useEffect(() => {
-                // console.log('PopularArticle.js (2), item: ',item);
-
-                let arr = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/comments/')
-                        .on('value', (snapshot) => {
-                                var commentsNumber = snapshot.numChildren();
-                                setCommentsNumber(commentsNumber)
-                        })
-        }, [])
+       
 
 
         return (
@@ -264,7 +280,7 @@ const ChapterItem = ({ navigation, chapters, }) => {
                                                                 <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
                                                                 <Text style={styles.bookIndexText}>{likeCount}</Text>
                                                                 <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                                <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                                                                <Text style={styles.bookIndexText}>{commentsCount}</Text>
                                                         </View>
                                                 </View>
                                         </View>
