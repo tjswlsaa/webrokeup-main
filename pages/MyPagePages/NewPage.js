@@ -43,8 +43,10 @@ const test7 ={
 const test8 ={
   isPublic: ""
 }
-
-
+const test9 ={
+  CountChapter
+: ""
+}
 const NewPage = ({ navigation, route }) => {
 
   const { bookKey } = route.params;
@@ -178,7 +180,7 @@ const colorF = colorFis(bookKey);
        setCountChapter(CountChapter)
     })
 }, [])
-
+  test9.CountChapter=CountChapter
   const title_a = useRef(null);
   const maintext_a = useRef(null);
   const [text1, setText1] = useState('');
@@ -326,7 +328,10 @@ async function savePage() {
   const {user_uid}=test6
   const {chColor}=test7
   const {isPublic}=test8
-
+  const {CountChapter}=test9
+  const Newindex= CountChapter
+  console.log("newpageindex",Newindex)
+  
   firebase_db
   .ref(`/book/${bookKey}/chapters/` + chapterKey)
   .set({
@@ -372,7 +377,8 @@ navigation.dispatch(state => {
 });
 
 
-navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
+
+navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey, index:Newindex})
 }
 
 
