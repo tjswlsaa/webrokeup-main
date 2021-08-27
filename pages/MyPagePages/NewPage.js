@@ -206,7 +206,7 @@ const colorF = colorFis(bookKey);
 
   const numBookKey= Number(bookKey)
   const numCountChapter= Number(CountChapter)
-  const chapterKey= (numBookKey+numCountChapter+1)
+  const chapterKey= (numBookKey+numCountChapter+1).toString();
   // const chapterKey = bookKey+(CountChapter+1)
   // console.log("11bookKey Newpage", bookKey)
   // console.log("22newpagechapterKey",chapterKey)
