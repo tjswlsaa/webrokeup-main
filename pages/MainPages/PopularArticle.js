@@ -15,7 +15,7 @@ const PopularArticle = ({ navigation, route }) => {
         const [newcolor, setNewColor] = useState("#E9E9E9")
         const [likeCount, setLikeCount] = useState(0)
         const [commentsCount, setCommentsCount] = useState(0);
-
+        
        
 
         const headerHeight = useHeaderHeight();
@@ -104,17 +104,7 @@ const PopularArticle = ({ navigation, route }) => {
                         })
         }, [])
 
-        useEffect(() => {
-                firebase_db.ref(`book/${bookKey}/chapters/${chapterKey}/comments`)
-                        .on('value', (snapshot) => {
-                                let temp = [];
-                                var commentsCount = snapshot.numChildren();
-                                setCommentsCount(commentsCount)
-                                snapshot.forEach((child) => {
-                                        temp.push(child.val());
-                                })
-                        })
-        }, [])
+ 
 
 
         return (
@@ -155,7 +145,7 @@ const PopularArticle = ({ navigation, route }) => {
 
 
 
-const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) => {
+const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount}) => {
         // console.log('PopularArticle.js (1), chapters: ',chapters);
         // const [list, setList] = useState([]);
         const [myitem, setMyitem] = useState({
@@ -167,7 +157,6 @@ const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) =>
                 url: '',
                 user_uid: '',
         });
-    
         
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
@@ -177,41 +166,6 @@ const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) =>
         const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight;
         const ScreenWidth = Dimensions.get('window').width  //screen 너비
 
-        const bookKey = chapters.bookKey;
-        const chapterKey = chapters.chapterKey;
-        const likeRef = firebase_db.ref(`book/${bookKey}/both/${chapterKey}/likes/`);
-        console.log("likeRef" + likeRef)
-        
-
-        // useEffect(() => {
-        //         firebase_db
-        //                 .ref(`book`)
-        //                 .on('value', (snapshot) => {
-        //                         let list = [];
-        //                         let temp = [];
-        //                         snapshot.forEach((child) => {
-        //                                 const book = child.val();
-        //                                 const { both } = book;
-        //                                 //      console.log("useeffectbook",book)
-
-        //                                 if (both == undefined) {
-        //                                         console.log("PopularArticle() 챕터가 없습니다")
-        //                                 } else {
-        //                                         list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
-        //                                 }
-        //                                 const arraylist = Object.values(list)
-        //                                 const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
-
-        //                                 listFiltered.sort(function (a, b) {
-        //                                         return (b.likeCount) - (a.likeCount)
-        //                                 })
-        //                                 setList(listFiltered);
-        //                         })
-        //                 })
-        // }, [])
-
-        // console.log("book popular myitem", myitem)
-        // console.log("book popular chapters.user_uid", chapters.creator)
 
         const [userinfo, setuserinfo] = useState({
                 iam: "익명의.지은이",
@@ -230,7 +184,22 @@ const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) =>
                         })
         }
 
-       
+        useEffect(()=>{
+                firebase_db.ref(`book/${bookKey}/`)
+                .on('value', (snapshot) => {
+                        const newMyitem = {};
+                        snapshot.forEach((child) => {
+                                const key = child.key;
+                                const value = child.val();
+                                newMyitem[key] = value;
+                })
+                setMyitem({
+                        ...myitem,
+                        ...newMyitem,
+                })
+        })
+        }, [])
+
 
 
         const firstColor = "#9E001C"
@@ -295,13 +264,11 @@ const ChapterItem = ({ navigation, chapters, likeCount, commentsCount, list}) =>
                                         <View>
                                                 <View style={{ backgroundColor: myitem.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                                                 </View>
-
                                                 <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
                                                         <Image source={{ uri: myitem.url }} style={{ zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}></Image>
                                                         <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
                                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem.defaultTitle}</Text>
                                                                 <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
-
                                                                 <Text style={{ marginTop: "20%", marginLeft: "10%", fontSize: 10 }}>{userinfo.iam}</Text>
                                                         </View>
                                                 </View>
