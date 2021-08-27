@@ -39,21 +39,22 @@ useEffect(()=>{
                          } else {
                              list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
                         }
-                         list.sort(function(a, b) {
+                        const arraylist = Object.values(list)
+                        const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
+                
+                        listFiltered.sort(function(a, b) {
                                 return (b.likeCount) - (a.likeCount)
                                 })
-                        setList(list);
+                        setList(listFiltered);
                     })
                 })
         }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
         // console.log("populararticlelist",list)
 
-        const arraylist = Object.values(list)
-        const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
 
         const viewHot = () => {
                // console.log("viewHot")
-                const hotlist = [...listFiltered];
+                const hotlist = [...list];
                 hotlist.sort(function(a, b) {
                         return (b.likeCount) - (a.likeCount)
                         })
@@ -67,7 +68,7 @@ useEffect(()=>{
 
         const viewNew = () => {
                // console.log("viewNew")
-                const newlist = [...listFiltered]
+                const newlist = [...list]
                 newlist.sort(function(a, b) {
                         return new Date(b.regdate) - new Date(a.regdate);
                                 })

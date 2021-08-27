@@ -9,6 +9,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BookComponent from '../../components/BookComponent';
+import {useNavigation} from '@react-navigation/native';
 
 const test3 = {
     navigation: ''
@@ -16,11 +17,7 @@ const test3 = {
 
 const MyBookPublic = ({ navigation, route }) => {
     test3.navigation = navigation
-
-
-    // const { myitem, bookKey } = route.params;
     const { bookKey } = route.params;
-    console.log("bookKey",bookKey)
     const [myitem, setMyitem] = useState({
         bookKey: '',
         bookTitle: '',
@@ -30,11 +27,9 @@ const MyBookPublic = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
-    
+
     useEffect(getMyItem, []);
     function getMyItem() {
-        //console.log('getMyItem()');
-        // bookKey-> myitem
         firebase_db
             .ref(`/book/${bookKey}`)
             .on('value', (snapshot) => {
@@ -51,6 +46,8 @@ const MyBookPublic = ({ navigation, route }) => {
             });
     }
     console.log("mybookuseruid",myitem.user_uid)
+    const author = myitem.user_uid
+    console.log("author" + author)
 
     const firstColor= "#9E001C"
     const secondColor="#F6AE2D"
@@ -72,7 +69,7 @@ const MyBookPublic = ({ navigation, route }) => {
         }
     }
     const Color = getColor(bookKey);
-    console.log("mybook Color", Color)
+    // console.log("mybook Color", Color)
 
     function getBookNameStart(bookKey) {
         if (bookKey.indexOf('1') == 0){
@@ -89,7 +86,7 @@ const MyBookPublic = ({ navigation, route }) => {
         }
     }
     const BookNameStart = getBookNameStart(bookKey);
-    console.log("mybook Color", BookNameStart)
+    // console.log("mybook Color", BookNameStart)
 
     const user = firebase.auth().currentUser;
     var user_uid
@@ -101,24 +98,6 @@ const MyBookPublic = ({ navigation, route }) => {
     const tabBarHeight = 0;
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
-
-    const [userinfo, setUserinfo] = useState({
-        iam: "익명의.지은이",
-        selfLetter: "안녕하세요 익명의 지은이입니다."
-      });
-
-      useEffect(()=> {
-        function getUserId() {
-          firebase_db.ref(`users/${myitem.user_uid}`)
-              .on('value', (snapshot) => {
-                  let user = snapshot.val();
-                  if (user) {
-                    setUserinfo(userinfo);
-              }})
-        }
-      }, []);
-
-      const { iam, selfLetter } = useState;
 
 
     const [chapter, setChapter] = useState([]);
@@ -145,14 +124,37 @@ const MyBookPublic = ({ navigation, route }) => {
             })
     }
 
-    console.log("getChapters11",chapter)
-    const arraychapter= Object.values(chapter)
-    // console.log("getChapters22",arraychapter)
-    // console.log("getChapters",chapter.isPublic)
-    // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)   
-    const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic == true)
-    // console.log("myChapterFiltered",myChapterFiltered)
+    // console.log("getChapters11",chapter)
+    // const arraychapter= Object.values(chapter)
+    // // console.log("getChapters22",arraychapter)
+    // // console.log("getChapters",chapter.isPublic)
+    // // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)   
+    // const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic == true)
+    // // console.log("myChapterFiltered",myChapterFiltered)
     
+    const [userinfo, setUserinfo] = useState([]);
+
+    console.log("author" + author)
+    useEffect(()=>{
+        firebase_db
+        .ref(`users/${author}`)
+        .on('value', (snapshot)=>{
+            const newUserinfo = {};
+            snapshot.forEach((child)=>{
+                    const key = child.key;
+                    const value = child.val();
+                    newUserinfo[key] = value;
+            })
+            setUserinfo({
+                ...userinfo, // 기본 바탕색
+                ...newUserinfo, // 덧칠
+            });
+            console.log("나는" + userinfo.iam)
+            console.log("누구야" + userinfo.selfLetter)
+        })
+    }, [])
+
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -200,7 +202,7 @@ const MyBookPublic = ({ navigation, route }) => {
                             <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
                     </View>
-                    {myChapterFiltered.map(chapters => {
+                    {chapter.map(chapters => {
 
                         return (
                             <MyChapterItem
@@ -241,7 +243,7 @@ function MyChapterItem(props) {
     const statusBarHeight = getStatusBarHeight()
     const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight
 
-    console.log("chapters2222222",chapters)
+    // console.log("chapters2222222",chapters)
 
     useEffect(() => {
         // let temp = [];
