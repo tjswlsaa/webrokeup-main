@@ -29,13 +29,13 @@ const PopularArticle = ({ navigation, route }) => {
                                 let temp = [];
                                 snapshot.forEach((child) => {
                                         const book = child.val();
-                                        const { chapters } = book;
+                                        const { both } = book;
                                         //      console.log("useeffectbook",book)
 
-                                        if (chapters == undefined) {
+                                        if (both == undefined) {
                                                 console.log("PopularArticle() 챕터가 없습니다")
                                         } else {
-                                                list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
+                                                list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
                                         }
                                         const arraylist = Object.values(list)
                                         const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
@@ -140,8 +140,9 @@ const ChapterItem = ({ navigation, chapters, }) => {
         const ScreenWidth = Dimensions.get('window').width  //screen 너비
 
         const bookKey = chapters.bookKey;
-        const likeRef = firebase_db.ref(`book/${bookKey}/chapters/`+chapters.chapterKey+'/likes/');
-        console.log(likeRef)
+        const chapterKey = chapters.chapterKey;
+        const likeRef = firebase_db.ref(`book/${bookKey}/both/${chapterKey}/likes/`);
+        console.log("likeRef" + likeRef)
         
 
         useEffect(() => {
@@ -152,13 +153,13 @@ const ChapterItem = ({ navigation, chapters, }) => {
                                 let temp = [];
                                 snapshot.forEach((child) => {
                                         const book = child.val();
-                                        const { chapters } = book;
+                                        const { both } = book;
                                         //      console.log("useeffectbook",book)
 
-                                        if (chapters == undefined) {
+                                        if (both == undefined) {
                                                 console.log("PopularArticle() 챕터가 없습니다")
                                         } else {
-                                                list = [...list, ...Object.values(chapters)]; // spread를 통한 리스트 병합
+                                                list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
                                         }
                                         const arraylist = Object.values(list)
                                         const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true)
