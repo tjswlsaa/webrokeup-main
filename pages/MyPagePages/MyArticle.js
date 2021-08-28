@@ -459,13 +459,12 @@ function headerRight() {
 
     return (
 
-        <Button
-            onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
-            title="책 보기"
-            color="#000"
-        />
 
-
+        <Icon2.Button name='book-outline' size={23}
+        backgroundColor= 'white' color="black" 
+        onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}        
+        >
+      </Icon2.Button>
     );
 }
 

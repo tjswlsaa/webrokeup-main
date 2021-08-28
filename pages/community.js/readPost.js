@@ -226,7 +226,7 @@ const deletePost = async()=> {
   
 
   Alert.alert(
-    'Alert Title',
+    '알림',
     '삭제하겠습니까?',
     [
 
@@ -703,11 +703,14 @@ return (
   <TouchableOpacity
       activeOpacity={0.8}
       onPress={()=>deleteCommentfunction()}
-      style={{backgroundColor:"grey", width:"20%",justifyContent:"center"}}
+      style={{backgroundColor:"#f5f5f5", width:"20%",justifyContent:"center"}}
   >
-      <Text style={{justifyContent:"center", alignSelf:"center"}}>
+      {/* <Text style={{justifyContent:"center", alignSelf:"center"}}>
           삭제
       </Text>
+      delete */}
+      <Icon name="delete" size={20} color="black" style={{alignSelf:"flex-end", justifyContent:"center", marginLeft:"30%"}}/>
+
   </TouchableOpacity>
 )
 }
@@ -751,7 +754,8 @@ const closeSwipeable = () => {
                     <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
                     <View style={{flexDirection:"row"}}>
                         <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{userinfo2.iam}</Text>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
+                        <Text style={{ fontSize: 11, color: "gray", marginLeft: 10, marginBottom: 10 }}> 공감 {likeCount} </Text>
+                        <Text style={{fontSize:11,color:"gray", marginLeft:10}}>{displayedAt(createdAt)}</Text>
                     </View>
                   </TouchableOpacity>
 
@@ -761,7 +765,6 @@ const closeSwipeable = () => {
                   <TouchableOpacity style={{alignSelf:"center"}} onPress={()=>likes()} >
                   <Clover name="clover" size={20} color={cloverColor} style={{}} />
                   </TouchableOpacity>
-                  <Text style={{alignSelf:"center", marginLeft:"2%"}}> {likeCount} </Text>
               </View>
               </View>
               </Swipeable>
@@ -769,7 +772,7 @@ const closeSwipeable = () => {
 
   ) : (
     <View style={{
-      backgroundColor:"pink",
+      backgroundColor:"f5f5f5",
       flexDirection:"row",
       marginBottom:10,
       marginTop:10,
@@ -788,18 +791,18 @@ const closeSwipeable = () => {
                       >
                     <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
                     <View style={{flexDirection:"row"}}>
-                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{comment.iam}</Text>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
+                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{userinfo2.iam}</Text>
+                        <Text style={{ fontSize: 11, color: "gray", marginLeft: 10, marginBottom: 10 }}> 공감 {likeCount} </Text>
+                        <Text style={{fontSize:11,color:"gray", marginLeft:10}}>{displayedAt(createdAt)}</Text>
                     </View>
                   </TouchableOpacity>
 
               </View>
 
-              <View style={{marginLeft:70,justifyContent:"center"}}>
-                  <TouchableOpacity onPress={()=>likes()} >
-                  <Icon name="like2" size={20} color="black" style={{}} />
+              <View style={{marginLeft:50,flexDirection:"row"}}>
+                  <TouchableOpacity style={{alignSelf:"center"}} onPress={()=>likes()} >
+                  <Clover name="clover" size={20} color={cloverColor} style={{}} />
                   </TouchableOpacity>
-                  <Text> {likeCount} </Text>
               </View>
               </View>
               </View>

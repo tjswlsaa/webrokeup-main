@@ -36,7 +36,7 @@ if (user != null) {
         <View style={{height: realScreen*0.1,  marginTop:"10%"}}>
 {authorUser_uid == user_uid ? (
         <View >
-        <TouchableOpacity  style={{alignSelf:"flex-end", marginRight:"10%"}} onPress={()=>navigation.navigate("EditIntroArticle", {navigation: navigation, intro:intro, bookKey: bookKey})}>
+        <TouchableOpacity  style={{alignSelf:"flex-end", marginRight:"10%"}} onPress={()=>navigation.navigate("EditIntroArticle", {navigation: navigation, intro:intro, bookKey: bookKey,})}>
             <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
         </TouchableOpacity>
 
@@ -48,7 +48,7 @@ if (user != null) {
         </View>
         <View style={{height:realScreen*0.6}}>
         <ScrollView style={styles.textContainer}>
-            <Text style={{lineHeight:"25%", marginHorizontal:"10%"}}>{intro}</Text>
+            <Text style={{lineHeight:25, marginHorizontal:"10%"}}>{intro}</Text>
        </ScrollView>
        </View>
 </View>

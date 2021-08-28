@@ -216,23 +216,7 @@ function ChapterItem(props) {
         <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
-            <View style={{alignSelf:"flex-end"}}>
-                    {item.isPublic == true ? 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
-                    </View>
-                    )
-            : 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="lock" size={15} color="#20543F" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
-                    </View>   
-                    )
-                }
-            </View>
+
             <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
@@ -398,12 +382,11 @@ function headerRight() {
 
     return (
 
-        <Button
-            onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
-            title="책 보러가기"
-            color="#000"
-        />
-
+        <Icon2.Button name='book-outline' size={23}
+        backgroundColor= 'white' color="black" 
+        onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}        
+        >
+      </Icon2.Button>
 
     );
 }
