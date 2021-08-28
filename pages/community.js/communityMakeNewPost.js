@@ -141,7 +141,7 @@ async function saveChapter() {
   });
 
   
-  navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate})
+  navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate, postcreator:user_uid})
   //title_a.current.clear();
   //maintext_a.current.clear();  
 

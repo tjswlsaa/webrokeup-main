@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const communityBoard = ({ navigation, route }) => {
@@ -147,20 +148,20 @@ const PostItem=(props)=> {
       }
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readPost', { postKey:post.key, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readPost', { postKey:post.key, navigation: navigation, postcreator:post.creator}) }}>
                 <View style={{}}>
                 <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{post.text}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText}>{PostItemUserinfo.iam}</Text>
-                <Icon name="like2" size={18} color="black" style={{marginLeft:20,marginTop:3}}/>
-                <Text style={styles.bookIndexText}>{likeCount}</Text>
-                <Icon name="message1" size={20} color="black" style={{marginLeft:20,marginTop:3}}/>
+                <Text style={{ marginLeft: "5%",marginTop: "2%", color:"grey", fontSize:11}}>{PostItemUserinfo.iam}</Text>
+                <Clover name="clover" size={13} color="green" style={{marginLeft:20,marginTop:7}}/>
+                <Text style={{marginLeft: "3%",marginTop: "2%", color:"black", fontSize:11}}>{likeCount}</Text>
+                <Icon name="message1" size={13} color="black" style={{marginLeft:20,marginTop:7}}/>
 
-                <Text style={styles.bookIndexText}>{commentsNumber}</Text>
+                <Text style={{marginLeft: "3%",marginTop: "2%", color:"black", fontSize:11}}>{commentsNumber}</Text>
 
                 
-                <Text style={styles.bookIndexText}>{displayedAt(createdAt)}</Text>
+                <Text style={{marginLeft: "15%",marginTop: "2%", color:"grey", fontSize:11}}>{displayedAt(createdAt)}</Text>
                 </View>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}

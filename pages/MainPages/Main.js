@@ -396,7 +396,7 @@ const ColorOne=question1.Color
     )
 }
 
-async function BookComponent (props) {
+ function BookComponent (props) {
     const { chapter, bookKey, navigation, index } = props
 
     const {qurationchapters} =test5
@@ -427,39 +427,48 @@ async function BookComponent (props) {
               }
           })
   }, []);
-  const [spinner, setSpinner] = useState(true);
+//   const [spinner, setSpinner] = useState(true);
 
-  const [myitem, setMyitem] = useState({
-    bookKey: '',
-    bookTitle: '',
-    chapters: {},
-    intro: '',
-    regdate: '',
-    url: '',
-    user_uid: '',
-    Color:"",
-});
+//   const [myitem, setMyitem] = useState({
+//     bookKey: '',
+//     bookTitle: '',
+//     chapters: {},
+//     intro: '',
+//     regdate: '',
+//     url: '',
+//     user_uid: '',
+//     Color:"",
+// });
+
+// console.log("chapter.bookKey", chapter.bookKey)
   
-  const getMyItem = async() => {
-    setSpinner(true)
-    try{
-    var ref =firebase_db.ref(`/book/${chapter.bookKey}`)
-    let temp =[]
-      await ref.once('value', (snapshot)=>{
-        snapshot.forEach((child) => {
-          temp.push(child.val())
-          console.log("temp",temp)
-      })
-      setMyitem(temp)})
-      setSpinner(false)
-    } catch (error){
-        console.log(error)
-    }
-          };
+//   const getMyItem = async() => {
+//     setSpinner(true)
+//     try{
+//     var ref =firebase_db.ref(`/book/${chapter.bookKey}`)
+//     let temp =[]
+//        ref.on('value', (snapshot)=>{
 
-    useEffect(() => {
-    getMyItem();
-}, []);
+//     //     snapshot.forEach((child) => {
+//     //       temp.push(child.val())
+//     //       console.log("temp",temp)
+//     //   })
+//     //   setMyitem(temp)}
+      
+//       const myitem = await snapshot.val()
+//       setMyitem(myitem)
+//       setSpinner(false)
+
+//       }
+//       )
+//     } catch (error){
+//         console.log(error)
+//     }
+//           };
+
+//     useEffect(() => {
+//     getMyItem();
+// }, []);
 //   if(!myitem){
 
 //      setSpinner(true)}
@@ -467,7 +476,7 @@ async function BookComponent (props) {
 //         setSpinner(false)
 //     }
 
-console.log("BookComponentmyitem",myitem)
+// console.log("BookComponentmyitem",myitem)
 // console.log("BookComponentmyitem",myitem.Color)
 
 
@@ -479,13 +488,13 @@ console.log("BookComponentmyitem",myitem)
     return (
         <View style={{height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" , flexDirection:"row"}}>
                     {/* <View style={{alignContent:"center"}}> */}
-                    {spinner && (
+                    {/* {spinner && (
                             <Spinner
                                 visible={spinner}
                                 textContent={'Loading...'}
                                 textStyle={{ color: '#FFF' }}
                             />
-                            )}
+                            )} */}
 
                                             <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticleQuration', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , qurationchapters:qurationchapters}) }}>
                                                                                     <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginHorizontal:"5%"}}>
@@ -500,7 +509,7 @@ console.log("BookComponentmyitem",myitem)
 
                                                 </TouchableOpacity>
 
-                                               <TouchableOpacity style={{  justifyContent:"center",marginLeft:ScreenWidth*0.05}} onPress={() => {navigation.navigate('MyBook', { bookKey: chapter.bookKey }) }}>
+                                               {/* <TouchableOpacity style={{  justifyContent:"center",marginLeft:ScreenWidth*0.05}} onPress={() => {navigation.navigate('MyBook', { bookKey: chapter.bookKey }) }}>
                                                 <View style={{ backgroundColor:myitem.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                                                 </View>
 
@@ -515,7 +524,7 @@ console.log("BookComponentmyitem",myitem)
                                                         <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo.iam}</Text>
                                                 </View>
                                                 </View>
-                                                </TouchableOpacity> 
+                                                </TouchableOpacity>  */}
                     
         </View>
 )

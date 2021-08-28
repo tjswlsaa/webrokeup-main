@@ -14,6 +14,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 const { StatusBarManager } = NativeModules
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const window = Dimensions.get("window");
 
@@ -32,7 +33,7 @@ const readPost = ({ navigation, route }) => {
   test4.navigation=navigation
 
   const text_a = useRef(null);
-  const { postKey } = route.params;
+  const { postKey,postcreator } = route.params;
   test1.postKey=postKey
   console.log("problempostKey",postKey)
   const [post, setPost] =useState({
@@ -81,9 +82,9 @@ const [readPostUserinfo, setreadPostUserinfo]=useState({
 })
 console.log("여기서부터")
 console.log("post",post)
-console.log('post.creator',post.creator)
+console.log('post.creator',postcreator)
 useEffect(()=>{
-    firebase_db.ref(`users/${post.creator}`)
+    firebase_db.ref(`users/${postcreator}`)
         .once('value', (snapshot) => {
             let readPostUserinfo = snapshot.val();
             if (readPostUserinfo > '') {
@@ -150,7 +151,17 @@ console.log('readPostUserinfo.iam',readPostUserinfo.iam)
 
 console.log('포스트컨멘트',comments)
 
-
+const [cloverColor, setCloverColor] = useState("#c1c1c1")
+useEffect(()=>{
+  let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+  if (meliked == '') {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("#c1c1c1")
+  } else {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("green")
+  }
+}, [likedUsers])
 
 const likeRef = firebase_db.ref(`post/${postKey}/` + '/likes/');
 
@@ -170,7 +181,7 @@ const likeRef = firebase_db.ref(`post/${postKey}/` + '/likes/');
          // console.log({temp});
           setLikedUsers(temp);
       })
-  }, [])
+  }, [likeCount])
 
 
   useEffect (()=>{
@@ -264,15 +275,21 @@ const displayedAt=(createdAt)=>{
 
 
       <SafeAreaView style={{ flex: 1 }}>
+        
+        <KeyboardAvoidingView behavior="padding" 
+                  style={{flex:1}}
+                  keyboardVerticalOffset={44 + statusBarHeight} >
       <ScrollView style={{height:realScreen*0.83}}>
           {post.creator==user_uid ? (  <View style={{marginTop:10,flexDirection:"row", height:30,  alignSelf:"flex-end", alignItems:"flex-end"}}>
                 {/* <TouchableOpacity style={{ backgroundColor: "#C4C4C4", borderRadius: 5, justifyContent: "center", width:50, height:25}} 
                 onPress={()=>navigation.navigate("editPost", { postKey: postKey, text:post.text, regdate:post.regdate})}>                
                     <Text style={{alignSelf:"center"}}>편집</Text>
                 </TouchableOpacity>   */}
-                <TouchableOpacity style={{ backgroundColor: "#C2C2C2", marginLeft:20, marginRight:30, borderRadius: 5, justifyContent: "center", width:50, height:25}} 
-               onPress={()=>deletePost()}>                
-                    <Text style={{alignSelf:"center"}}>삭제</Text>
+                <TouchableOpacity style={{flexDirection:"row",marginLeft:20, marginRight:30, borderRadius: 5,width:50, height:25}} 
+               onPress={()=>deletePost()}>     
+                       <Icon name="delete" size={20} color="black" style={styles.addIcon}/>
+           
+                        <Text style={{marginLeft:"3%", marginTop:"5%"}}>삭제</Text>
                 </TouchableOpacity> 
             </View> ) :(
 
@@ -283,7 +300,7 @@ const displayedAt=(createdAt)=>{
 
 
           <View style={{marginTop:20, marginHorizontal:"5%", backgroundColor:"white",padding:30, borderRadius:10, justifyContent:"center"}}>
-                  <Text style={{marginBottom:10}}>{readPostUserinfo.iam}</Text>               
+                  <Text style={{marginBottom:10, fontSize:13, color:"grey"}}>{readPostUserinfo.iam}</Text>               
                   <Text>{post.text}</Text>               
 
           <View style={{flexDirection:"row", alignItems:"center", marginBottom:10, marginTop:40, height:20,}}>
@@ -311,6 +328,8 @@ const displayedAt=(createdAt)=>{
                              likeCount = snapshot.numChildren();
                              setLikeCount(likeCount)
                          })
+                         await setCloverColor("green")
+
                      } else {
                         // console.log ("좋아요 취소")
                          // likeRef.child(user_uid).set(null)
@@ -321,19 +340,22 @@ const displayedAt=(createdAt)=>{
                              likeCount = snapshot.numChildren();
                              setLikeCount(likeCount)
                          })
+                         await setCloverColor("#C1C1C1")
+
                      }
+
                     // console.log({likeCount});
                     // console.log("여기여기: " + likeCount) 
  
                      firebase_db.ref(`post/${postKey}/`).child("likeCount").set({"likeCount" : likeCount})
 
                 }}>                
-                            <Icon name="like2" size={20} color="black" style={styles.addIcon}/>
+                            <Clover name="clover" size={20} color={cloverColor}style={styles.addIcon}/>
 
                 </TouchableOpacity>  
                 <Text style = {{marginLeft: 10}}> {likeCount} </Text>
                 <TouchableOpacity style={{marginLeft:15}}>
-                  <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
+                  <Icon name="message1" size={20} color="grey" style={styles.addIcon}/>
                 </TouchableOpacity>
                 <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
                 <Text style={{alignSelf:"flex-end",marginLeft: "50%"}}>{displayedAt(createdAt)}</Text>                 
@@ -375,9 +397,6 @@ const displayedAt=(createdAt)=>{
                  </ScrollView>
 
 
-                <KeyboardAvoidingView behavior="padding" 
-                  style={{flex:1}}
-                  keyboardVerticalOffset={100 + statusBarHeight} >
 
                 {/* <View style={{        flexDirection:"row",
                                       backgroundColor:"#C4C4C4",
@@ -534,7 +553,17 @@ const ChapterComment = (props)=> {
         })
 }, []);
 
-
+const [cloverColor, setCloverColor] = useState("#c1c1c1")
+useEffect(()=>{
+  let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+  if (meliked == '') {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("#c1c1c1")
+  } else {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("green")
+  }
+}, [likedUsers])
   useEffect (()=>{
       // let temp = [];
       firebase_db.ref(`post/${postKey}/`  + `/comments/${comment.key}/likes/`) 
@@ -580,6 +609,8 @@ const ChapterComment = (props)=> {
                likeCount = snapshot.numChildren();
                setLikeCount(likeCount)
            })
+           await setCloverColor("green")
+
        } else {
           // console.log ("좋아요 취소")
            // likeRef.child(user_uid).set(null)
@@ -590,6 +621,8 @@ const ChapterComment = (props)=> {
                likeCount = snapshot.numChildren();
                setLikeCount(likeCount)
            })
+           await setCloverColor("#C1C1C1")
+
        }
       // console.log({likeCount});
       // console.log("여기여기: " + likeCount) 
@@ -670,9 +703,9 @@ return (
   <TouchableOpacity
       activeOpacity={0.8}
       onPress={()=>deleteCommentfunction()}
-      style={styles.button}
+      style={{backgroundColor:"grey", width:"20%",justifyContent:"center"}}
   >
-      <Text style={styles.text}>
+      <Text style={{justifyContent:"center", alignSelf:"center"}}>
           삭제
       </Text>
   </TouchableOpacity>
@@ -692,15 +725,15 @@ const closeSwipeable = () => {
 
 {comment.creator==user_uid ? (   
 
-  <View style={{
-    flexDirection:"row",
-    marginBottom:10,
-    marginTop:10,
+            <View style={{
+              flexDirection:"row",
+              marginBottom:10,
+              marginTop:10,
 
-    // backgroundColor:"#C4C4C4",
-    borderRadius:5,
-    width:"90%",
-    alignSelf:"center",}}>
+              backgroundColor:"#f5f5f5",
+              borderRadius:5,
+              width:"90%",
+              alignSelf:"center",}}>
 
 
 
@@ -724,11 +757,11 @@ const closeSwipeable = () => {
 
               </View>
 
-              <View style={{marginLeft:70,justifyContent:"center"}}>
-                  <TouchableOpacity onPress={()=>likes()} >
-                  <Icon name="like2" size={20} color="black" style={{}} />
+              <View style={{marginLeft:50, flexDirection:"row",}}>
+                  <TouchableOpacity style={{alignSelf:"center"}} onPress={()=>likes()} >
+                  <Clover name="clover" size={20} color={cloverColor} style={{}} />
                   </TouchableOpacity>
-                  <Text> {likeCount} </Text>
+                  <Text style={{alignSelf:"center", marginLeft:"2%"}}> {likeCount} </Text>
               </View>
               </View>
               </Swipeable>
