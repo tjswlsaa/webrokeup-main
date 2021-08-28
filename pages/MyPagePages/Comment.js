@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import KeyboardDismissView, { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import {PullToRefreshView} from "react-native-smooth-pull-to-refresh";
 import Icon from 'react-native-vector-icons/AntDesign';
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -377,6 +378,9 @@ const ChapterComment = (props) => {
             })
     }, []);
 
+
+
+
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const { bookKey } = test;
@@ -388,7 +392,9 @@ const ChapterComment = (props) => {
     const { comment } = props;
     const commentKeyforLikes = comment.key
 
-    console.log('s없는 코멘트', comment)
+
+
+
     const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapterKey + `/comments/${comment.key}/likes/`)
 
 
@@ -411,6 +417,17 @@ const ChapterComment = (props) => {
     }, [])
 
     // console.log('이게 들어야 확인해줌',user_uid)
+    const [cloverColor, setCloverColor] = useState("#c1c1c1")
+    useEffect(()=>{
+      let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+      if (meliked == '') {
+          // console.log("likedUsers: " + likedUsers)
+          setCloverColor("#c1c1c1")
+      } else {
+          // console.log("likedUsers: " + likedUsers)
+          setCloverColor("green")
+      }
+    }, [likedUsers])
 
     const likes = async () => {
 
@@ -431,6 +448,8 @@ const ChapterComment = (props) => {
                 likeCount = snapshot.numChildren();
                 setLikeCount(likeCount)
             })
+            await setCloverColor("green")
+
         } else {
             // console.log ("좋아요 취소")
             // likeRef.child(user_uid).set(null)
@@ -441,6 +460,8 @@ const ChapterComment = (props) => {
                 likeCount = snapshot.numChildren();
                 setLikeCount(likeCount)
             })
+            await setCloverColor("#C1C1C1")
+
         }
 
     }
@@ -484,14 +505,13 @@ const ChapterComment = (props) => {
                 style={{
                     width: 60,
                     height: 60,
-                    backgroundColor: '#FE5746',
+                    backgroundColor: '#f5f5f5',
                     justifyContent: 'center',
                     alignItems: 'center',
                     alignSelf: "center"
                 }} >
-                <Text style={styles.text}>
-                    삭제
-                </Text>
+        <Icon name="delete" size={20} color="black" style={{justifyContent:"center", }}/>
+
             </TouchableOpacity>
         )
     }
@@ -528,16 +548,15 @@ const ChapterComment = (props) => {
         return `${Math.floor(years)}년 전`
     }
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, }}>
 
             {comment.creator == user_uid ? (
 
                 <View style={{
                     flex: 1,
-                    backgroundColor: "#fff",
+                    backgroundColor: "#f5f5f5",
                     marginTop: "1%",
                     borderRadius: 5,
-                    borderWidth: 1,
                     marginHorizontal: "1%"
                 }}>
 
@@ -555,17 +574,17 @@ const ChapterComment = (props) => {
                                     <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10, marginLeft: 30, width: 200, }}>{comment.text}</Text>
                                     <View style={{ flexDirection: "row" }}>
                                         <Text style={{ fontSize: 11, color: "gray", marginLeft: 30, marginBottom: 10 }}>{userinfo.iam}</Text>
-                                        <Text style={{ fontSize: 11, color: "gray", marginLeft: 70 }}>{displayedAt(createdAt)}</Text>
+                                        <Text style={{ fontSize: 11, color: "gray", marginLeft: 10, marginBottom: 10 }}> 공감 {likeCount} </Text>
+                                        <Text style={{ fontSize: 11, color: "gray", marginLeft: 10 }}>{displayedAt(createdAt)}</Text>
                                     </View>
                                 </TouchableOpacity>
 
                             </View>
 
-                            <View style={{ flex: 1, borderWidth: 1, justifyContent: "center" }}>
+                            <View style={{ flex: 1, justifyContent: "center" }}>
                                 <TouchableOpacity onPress={() => likes()} >
-                                    <Icon name="like2" size={20} color="black" style={{}} />
+                                    <Clover name="clover" size={20} color={cloverColor} style={{}} />
                                 </TouchableOpacity>
-                                <Text> {likeCount} </Text>
                             </View>
                         </View>
                     </Swipeable>
@@ -583,10 +602,9 @@ const ChapterComment = (props) => {
                     // width: "90%",
                     // alignSelf: "center",
                     flex: 1,
-                    backgroundColor: "#fff",
+                    backgroundColor: "#f5f5f5",
                     marginTop: "1%",
                     borderRadius: 5,
-                    borderWidth: 1,
                     marginHorizontal: "1%"
                 }}>
                     <View style={{ flex: 1, flexDirection: "row" }}>
@@ -599,18 +617,19 @@ const ChapterComment = (props) => {
                             >
                                 <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10, marginLeft: 30, width: 200, }}>{comment.text}</Text>
                                 <View style={{ flexDirection: "row" }}>
-                                    <Text style={{ fontSize: 11, color: "gray", marginLeft: 30, marginBottom: 10 }}>{comment.iam}</Text>
-                                    <Text style={{ fontSize: 11, color: "gray", marginLeft: 70 }}>{displayedAt(createdAt)}</Text>
+                                    <Text style={{ fontSize: 11, color: "gray", marginLeft: 30, marginBottom: 10 }}>{userinfo.iam}</Text>
+                                    <Text style={{ fontSize: 11, color: "gray", marginLeft: 10, marginBottom: 10 }}> 공감 {likeCount} </Text>
+                                    <Text style={{ fontSize: 11, color: "gray", marginLeft: 10 }}>{displayedAt(createdAt)}</Text>
+
                                 </View>
                             </TouchableOpacity>
 
                         </View>
 
-                        <View style={{ flex: 1, borderWidth: 1, justifyContent: "center" }}>
+                        <View style={{ flex: 1,  justifyContent: "center",  }}>
                             <TouchableOpacity onPress={() => likes()} >
-                                <Icon name="like2" size={20} color="black" style={{}} />
+                                <Clover name="clover" size={20} color={cloverColor} style={{}} />
                             </TouchableOpacity>
-                            <Text> {likeCount} </Text>
                         </View>
                     </View>
                 </View>

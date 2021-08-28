@@ -26,10 +26,15 @@ const EditIntroArticle = ({ navigation, route }) => {
     test4.navigation=navigation
     const {intro, bookKey} = route.params;
     test3.bookKey=bookKey
+    console.log("EditIntroArticlebookkey",bookKey)
     const [text1, setText1] = useState(intro);
     test1.text1=text1
 
-
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+        user_uid = user.uid
+    }
 
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
@@ -39,14 +44,26 @@ const EditIntroArticle = ({ navigation, route }) => {
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
 
+    const savePage=()=>{
+        let introKey = "intro";
+    
+    
+        firebase_db
+        .ref( `/book/${bookKey}/`+ introKey)
+        .set(text1)
+        Alert.alert("집필 완료")
+    
+      
+      
+      navigation.navigate("readIntroArticle", { bookKey: bookKey, intro:text1, authorUser_uid: user_uid})
+    }
+
     return (
         <SafeAreaView style={{flex:1}}>
         <KeyboardAvoidingView behavior="padding" style={{flex:1}} keyboardVerticalOffset={50}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                    {/* <TouchableOpacity style={styles.saveButton} onPress={saveEditIntroArticle}>
-                        <Text style={{ alignSelf: "center" }}>저장하기</Text>
-                    </TouchableOpacity> */}
+                    
                     {/* <View style={styles.bookContainer}>
 
 
@@ -60,6 +77,11 @@ const EditIntroArticle = ({ navigation, route }) => {
 
                     </View> */}
 <View style={{ height: realScreen*0.9,alignSelf: "center", backgroundColor:"white" , marginVertical:"10%", width:"90%",}}>
+
+<TouchableOpacity style={{alignSelf:"flex-end", marginRight:"10%", marginTop:"10%"}}  onPress={savePage}>
+                        <Icon name="checkmark-sharp" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
+
+                    </TouchableOpacity>
 
                     <View style={{height:realScreen*0.1,marginHorizontal:"5%", marginTop:"25%"}}>
                                 <Text style={styles.bookTitle}>말머리에서</Text>  
@@ -151,58 +173,56 @@ const styles = StyleSheet.create({
 
 
 
-async function savePage() {
+// async function savePage() {
 
-    const {text1}=test1
-    console.log("text1",text1)
-    const {bookKey}= test3
-    console.log("bookKey",bookKey)
+//     const {text1}=test1
+//     console.log("text1",text1)
+//     const {bookKey}= test3
+//     console.log("bookKey",bookKey)
 
-    const {navigation}= test4
-    // const navigation = useNavigation();
+//     const {navigation}= test4
+//     // const navigation = useNavigation();
 
-    var user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) {
-        user_uid = user.uid
-    }
-    let introKey = "intro";
-    var introArticle = text1;
+//     var user = firebase.auth().currentUser;
+//     var user_uid
+//     if (user != null) {
+//         user_uid = user.uid
+//     }
+//     let introKey = "intro";
+//     var introArticle = text1;
 
 
-    firebase_db
-    .ref( `/book/${bookKey}/`+ introKey)
-    .set(text1)
-    Alert.alert("집필 완료")
-
-  
+//     firebase_db
+//     .ref( `/book/${bookKey}/`+ introKey)
+//     .set(text1)
+//     Alert.alert("집필 완료")
 
   
-  navigation.navigate("readIntroArticle", { bookKey: bookKey, intro:text1,})
-  }
+
+  
+//   navigation.navigate("readIntroArticle", { bookKey: bookKey, intro:text1, authorUser_uid: user_uid})
+//   }
   
   
-  function headerRight() {
-    return (
-    //   <TouchableOpacity onPress={savePage}>
-    //     <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
-    //   </TouchableOpacity>
-      <Icon.Button name='save' size={25}
-      backgroundColor= 'white' color="black" 
-      onPress={savePage()}
+//   function headerRight() {
+//     return (
+//     //   <TouchableOpacity onPress={savePage}>
+//     //     <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
+//     //   </TouchableOpacity>
+//       <Icon.Button name='save' size={25}
+//       backgroundColor= 'white' color="black" 
+//       onPress={savePage()}
       
-      >
-    </Icon.Button>
+//       >
+//     </Icon.Button>
   
-    );
-  }
-  const options = {
-    headerRight, 
-  };
+//     );
+//   }
+//   const options = {
+//     headerRight, 
+//   };
   
-  export default {
-    component: EditIntroArticle,
-    options,
-  };
+  export default EditIntroArticle
+  
 
 

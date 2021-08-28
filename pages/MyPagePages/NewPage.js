@@ -371,15 +371,15 @@ navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey, ind
 
 function headerRight() {
   return (
-    <TouchableOpacity onPress={savePage}>
-      <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
-    </TouchableOpacity>
-  //   <Icon.Button name='save' size={25}
-  //   backgroundColor= 'white' color="black" 
-  //   onPress={savePage}
+    // <TouchableOpacity onPress={savePage}>
+    //   <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
+    // </TouchableOpacity>
+    <Icon.Button name='checkmark-sharp' size={25}
+    backgroundColor= 'white' color="black" 
+    onPress={savePage}
     
-  //   >
-  // </Icon.Button>
+    >
+  </Icon.Button>
 
   );
 }

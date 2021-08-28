@@ -150,7 +150,7 @@ async function saveChapter() {
 function headerRight() {
   return (
 
-    <Icon.Button name='save' size={25}
+    <Icon.Button name='checkmark-sharp' size={25}
     backgroundColor= 'white' color="black" 
     onPress={saveChapter}
     

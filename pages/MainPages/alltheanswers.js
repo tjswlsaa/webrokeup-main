@@ -9,8 +9,16 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test1 = {
+<<<<<<< HEAD
     questions: ""
 }
+=======
+    questions:""
+  }
+  const test2 = {
+    list:""
+  }
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
 const alltheanswers = ({ navigation, route }) => {
 
     const { questionsKey, color } = route.params;
@@ -74,7 +82,12 @@ const alltheanswers = ({ navigation, route }) => {
     // console.log("answers",answers)
 
     const [list, setList] = useState([]);
+<<<<<<< HEAD
     const [hotcolor, setHotColor] = useState(color)
+=======
+    test2.list=list
+    const [hotcolor, setHotColor] = useState("#21381c")
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
     const [newcolor, setNewColor] = useState("#E9E9E9")
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -143,6 +156,7 @@ const alltheanswers = ({ navigation, route }) => {
     console.log("liestalltheanswers", list)
 
     return (
+<<<<<<< HEAD
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ }}>
@@ -181,6 +195,43 @@ const alltheanswers = ({ navigation, route }) => {
                     })}
                 </View>
             </ScrollView>
+=======
+        <SafeAreaView style={{flex:1}}>
+                                    <View style={{ flexDirection: "row", height: "3%", marginVertical: "2%" }}>
+                                <TouchableOpacity
+                                        style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
+                                        onPress={() => viewHot()}>
+                                        <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 답변 </Text>
+                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                        style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
+                                        onPress={() => viewNew()}>
+                                        <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
+                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
+                                </TouchableOpacity>
+                        </View>
+                <Text style={{alignSelf:"center", fontSize:"20", marginTop:"2%"}}>{questions.title}</Text>
+                <Text style={{alignSelf:"center", fontSize:"15", marginTop:"2%", marginHorizontal:"10%"}}>{questions.intro}</Text>
+
+                <ScrollView style={{height:500}}>
+
+                {list.map((item,index)  => {
+                            return (
+                                <PostItem
+                                    navigation={navigation}
+                                    key = {item.key}
+                                    answers={item}
+                                    index={index}
+
+                                />
+                            )
+                        })}
+                </ScrollView>
+                
+
+
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
         </SafeAreaView>
     )
 }
@@ -196,10 +247,19 @@ const PostItem = (props) => {
     console.log("answers.chapterKey", answers.chapterKey)
     console.log("answers.chapterKey", questions)
 
+<<<<<<< HEAD
     const Color = getColor(questionsKey);
     const colorQuestion = Color + "Questions"
     const colorAnswers = Color + "Answers"
     const likeRef = firebase_db.ref(`questions/${colorQuestion}/${questionsKey}/likes`);
+=======
+    const {answers, navigation, index}=props;
+    const {questions} =test1
+    const {list} =test2
+
+    console.log("answers.chapterKey",answers.chapterKey)
+    console.log("answers.listlist",list)
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
 
 
     function getColor(questionsKey) {
@@ -260,6 +320,7 @@ const PostItem = (props) => {
 
 
     return (
+<<<<<<< HEAD
         <View style={{ backgroundColor: "white", marginTop: 5, borderRadius: 10, marginLeft: 10, marginRight: 10 }}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { bookKey: answers.bookKey, chapterKey: answers.chapterKey, navigation: navigation }) }}>
                 <View style={{ flexDirection: "row" }}>
@@ -267,6 +328,12 @@ const PostItem = (props) => {
                     <View style={{ alignSelf: "flex-end", marginRight: "3%" }}>
                         <Text style={{ fontSize: 10 }}>{userinfo.iam}</Text>
                     </View>
+=======
+        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticleQuestions', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation, list:list, index:index}) }}>
+                <View style={{}}>
+                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{answers.chapterTitle}</Text>
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
                 </View>
                 <View style={{ alignContent: "center", marginTop: 10, fontSize: 14 }}>
                     <Text style={{ marginLeft: "3%", marginVertical: "1%" }} numberOfLines={1}>Q1: {answers.mainText}</Text>

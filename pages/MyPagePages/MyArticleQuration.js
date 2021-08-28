@@ -216,47 +216,31 @@ function ChapterItem(props) {
         <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
-            <View style={{alignSelf:"flex-end"}}>
-                    {item.isPublic == true ? 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
-                    </View>
-                    )
-            : 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="lock" size={15} color="#20543F" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
-                    </View>   
-                    )
-                }
-            </View>
+
             <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%"}}>
+                <ScrollView style={{marginTop:"5%", marginLeft:"6%",lineHeight:23}}>
                 {item.type== "감정 일기"? (
 
                 <Text style={{fontSize: 15}}>{item.mainText}</Text>
                 ) :(
 
                             <View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q1}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%",}}>{item.mainText}</Text>
+                                              <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q1}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.mainText}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q2}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%"}}>{item.text3}</Text>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q2}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.text3}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q3}</Text>
-                                                <Text style={{fontSize: 15,  marginVertical:"5%"}}>{item.text4}</Text>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q3}</Text>
+                                                <Text style={{fontSize: 15,  marginVertical:"5%",lineHeight:23}}>{item.text4}</Text>
                                                 </View>
                             </View>
                 )}
@@ -398,12 +382,11 @@ function headerRight() {
 
     return (
 
-        <Button
-            onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
-            title="책 보러가기"
-            color="#000"
-        />
-
+        <Icon2.Button name='book-outline' size={23}
+        backgroundColor= 'white' color="black" 
+        onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}        
+        >
+      </Icon2.Button>
 
     );
 }

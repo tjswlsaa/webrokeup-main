@@ -47,6 +47,8 @@ import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
+import MyArticlePopular from './pages/MyPagePages/MyArticlePopular';
+import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
 
 const defaultScreenOptions = {
   headerLeft: function () {
@@ -151,6 +153,26 @@ const App = ({ navigation }) => {
             headerShown: true,
             ...defaultScreenOptions,
             ...MyArticleQuration.options
+          }}
+        />
+
+<Stack.Screen
+          name="MyArticleQuestions"
+          component={MyArticleQuestions.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticleQuestions.options
+          }}
+        />
+
+<Stack.Screen
+          name="MyArticlePopular"
+          component={MyArticlePopular.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticlePopular.options
           }}
         />
 
@@ -321,7 +343,7 @@ const App = ({ navigation }) => {
         <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "프로필 수정", ...defaultScreenOptions }} />
 
 
-        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle.component} options={{ title: "말머리에서 수정", ...defaultScreenOptions, ...EditArticle.options }} />
+        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle} options={{ title: "말머리에서 수정", ...defaultScreenOptions,  }} />
         <Stack.Screen
           name="PopularArticle"
           component={PopularArticle}

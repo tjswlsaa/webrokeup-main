@@ -292,9 +292,9 @@ function MyChapterItem(props) {
 
 
     return (
-        <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
+        <View style={{marginHorizontal: "3%", height: realScreen*0.22, backgroundColor: "#fff", marginVertical: "1%"}}>
             <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey, index:index }) }}>
-                <View style={{height: realScreen*0.12, flexDirection: "row"}}>
+                <View style={{height: realScreen*0.12, flexDirection: "row", marginTop:"3%"}}>
                     
                     <View style={{flex: 1, backgroundColor: chapters.chColor, marginRight: "5%", marginBottom: "5%"}} /> 
                     <View style={{flex: 40}}>
@@ -302,7 +302,7 @@ function MyChapterItem(props) {
                     <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={2}>{chapters.mainText}</Text>
                     </View>
                 </View>
-                <View style={{ flexDirection: "row", marginTop: "1%", }}>
+                <View style={{ flexDirection: "row", marginTop: "3%", }}>
                     <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
                         {chapters.isPublic == true ? 
                             (
@@ -443,11 +443,16 @@ function headerRight() {
     return (
         <View>
         {myitem.user_uid == user_uid ? 
-        (<Button
-            onPress={() => navigation.navigate("EditBook", {bookKey: bookKey, myitem: myitem})}
-            title="수정"
-            color="#000"
-        />):(<View></View>)}
+        (
+
+        <Icon.Button name='edit' size={23}
+        backgroundColor= 'white' color="black" 
+        onPress={() => navigation.navigate("EditBook", {bookKey: bookKey, myitem: myitem})}
+        >
+        </Icon.Button>
+        
+        
+        ):(<View></View>)}
         </View>
     );
 }
