@@ -262,13 +262,8 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, 
                 <View style={{ height: realScreen * 0.35, flexDirection: "row", backgroundColor: "#F5F4F4" }}>
 
                         <View style={{ flex: 1, }}>
-<<<<<<< HEAD
-                                <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey })
-=======
                                 <TouchableOpacity style={{ flex: 1, padding: "5%" }} onPress={() => {
                                         navigation.navigate('MyArticlePopular', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey, index:index ,list:list})
->>>>>>> 99d73b6f37de77040ec220016603841156e55c34
                                 }}>
                                         <View style={{ flex: 1, flexDirection: "row", padding: "2%"}}>
                                                 <View style={{ flex: 1, marginHorizontal: "1%", marginTop: "2%", marginBottom: "4%", padding: "2%", backgroundColor: "white" }}>
