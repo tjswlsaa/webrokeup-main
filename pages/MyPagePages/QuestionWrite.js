@@ -471,6 +471,7 @@ async function savePage() {
     chapterKey: chapterKey,
     regdate: new Date().toString(),
     likeCount: 0,
+    commentsCount: 0,
     Kregdate: moment(new Date()).format('YYYY년 MM월 DD일'),
     creator: user_uid,
     bookKey:bookKey,
