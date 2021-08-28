@@ -47,6 +47,8 @@ import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
+import MyArticlePopular from './pages/MyPagePages/MyArticlePopular';
+import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
 
 const defaultScreenOptions = {
   headerLeft: function () {
@@ -151,6 +153,26 @@ const App = ({ navigation }) => {
             headerShown: true,
             ...defaultScreenOptions,
             ...MyArticleQuration.options
+          }}
+        />
+
+<Stack.Screen
+          name="MyArticleQuestions"
+          component={MyArticleQuestions.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticleQuestions.options
+          }}
+        />
+
+<Stack.Screen
+          name="MyArticlePopular"
+          component={MyArticlePopular.component}
+          options={{
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticlePopular.options
           }}
         />
 

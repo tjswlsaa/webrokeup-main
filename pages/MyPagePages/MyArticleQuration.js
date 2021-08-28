@@ -223,24 +223,24 @@ function ChapterItem(props) {
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%"}}>
+                <ScrollView style={{marginTop:"5%", marginLeft:"6%",lineHeight:23}}>
                 {item.type== "감정 일기"? (
 
                 <Text style={{fontSize: 15}}>{item.mainText}</Text>
                 ) :(
 
                             <View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q1}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%",}}>{item.mainText}</Text>
+                                              <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q1}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.mainText}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q2}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%"}}>{item.text3}</Text>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q2}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.text3}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03}}>
-                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q3}</Text>
-                                                <Text style={{fontSize: 15,  marginVertical:"5%"}}>{item.text4}</Text>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q3}</Text>
+                                                <Text style={{fontSize: 15,  marginVertical:"5%",lineHeight:23}}>{item.text4}</Text>
                                                 </View>
                             </View>
                 )}

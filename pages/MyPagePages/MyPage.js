@@ -267,7 +267,7 @@ const MyPage = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{flex:1}}>
-                    <Text style={{ fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%" }}> {userinfo.selfLetter}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: "400", color: "#204040", marginHorizontal: "5%" }}> {userinfo.selfLetter}</Text>
                     </View>
                 </View>
                 <View style={{ height: realScreen * 0.7, width: "94%", alignSelf: "center", marginBottom: 10, padding:"2%"}}>

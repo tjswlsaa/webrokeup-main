@@ -10,6 +10,9 @@ import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test1 = {
     questions:""
   }
+  const test2 = {
+    list:""
+  }
 const alltheanswers = ({ navigation, route }) => {
 
     const { questionsKey } = route.params;
@@ -71,6 +74,7 @@ const alltheanswers = ({ navigation, route }) => {
     
 
     const [list, setList] = useState([]);
+    test2.list=list
     const [hotcolor, setHotColor] = useState("#21381c")
     const [newcolor, setNewColor] = useState("#E9E9E9")
     const headerHeight = useHeaderHeight();
@@ -160,12 +164,14 @@ const alltheanswers = ({ navigation, route }) => {
 
                 <ScrollView style={{height:500}}>
 
-                {list.map(item  => {
+                {list.map((item,index)  => {
                             return (
                                 <PostItem
                                     navigation={navigation}
                                     key = {item.key}
                                     answers={item}
+                                    index={index}
+
                                 />
                             )
                         })}
@@ -180,10 +186,12 @@ const alltheanswers = ({ navigation, route }) => {
 
 const PostItem=(props)=> {
 
-    const {answers, navigation}=props;
+    const {answers, navigation, index}=props;
     const {questions} =test1
+    const {list} =test2
+
     console.log("answers.chapterKey",answers.chapterKey)
-    console.log("answers.chapterKey",questions)
+    console.log("answers.listlist",list)
 
 
     const [userinfo, setUserinfo] = useState({
@@ -204,7 +212,7 @@ const PostItem=(props)=> {
 
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticleQuestions', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation, list:list, index:index}) }}>
                 <View style={{}}>
                 <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{answers.chapterTitle}</Text>
                 </View>

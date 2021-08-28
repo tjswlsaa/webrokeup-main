@@ -8,9 +8,12 @@ import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-
+const test1 = {
+        list: ''
+    };
 const PopularArticle = ({ navigation, route }) => {
         const [list, setList] = useState([]);
+        test1.list=list
         const [hotcolor, setHotColor] = useState("#21381c")
         const [newcolor, setNewColor] = useState("#E9E9E9")
         const [likeCount, setLikeCount] = useState(0)
@@ -62,7 +65,7 @@ const PopularArticle = ({ navigation, route }) => {
         }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
         // console.log("populararticlelist",list)
 
-
+        console.log("populararticlelist",list)
         const viewHot = () => {
                 // console.log("viewHot")
                 const hotlist = [...list];
@@ -148,7 +151,7 @@ const PopularArticle = ({ navigation, route }) => {
                         </View>
                         <View style={{ flex: 5, backgroundColor: "#E9E9E9" }}>
                                 <ScrollView style={{ flex: 1, marginHorizontal: "2%", backgroundColor: "#FAFAFA" }}>
-                                        {list.map((chapters) => (
+                                        {list.map((chapters, index) => (
                                                 <ChapterItem
                                                         key={chapters.key}
                                                         navigation={navigation}
@@ -157,6 +160,7 @@ const PopularArticle = ({ navigation, route }) => {
                                                         bookKey={chapters.bookKey}
                                                         likeCount={chapters.likeCount}
                                                         commentsCount={chapters.commentsCount}
+                                                        index={index}
                                                 />))
                                         }
                                 </ScrollView>
@@ -168,9 +172,10 @@ const PopularArticle = ({ navigation, route }) => {
 
 
 
-const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount}) => {
+const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, index}) => {
         // console.log('PopularArticle.js (1), chapters: ',chapters);
         // const [list, setList] = useState([]);
+        const {list} =test1
         const [myitem, setMyitem] = useState({
                 bookKey: '',
                 bookTitle: '',
@@ -180,6 +185,7 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount})
                 url: '',
                 user_uid: '',
         });
+        console.log("ChapterItemlist",list)
         
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
@@ -257,7 +263,7 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount})
 
                         <View style={{ flex: 1, }}>
                                 <TouchableOpacity style={{ flex: 1, padding: "5%" }} onPress={() => {
-                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey })
+                                        navigation.navigate('MyArticlePopular', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey, index:index ,list:list})
                                 }}>
                                         <View style={{ flex: 1, flexDirection: "row" }}>
                                                 <View style={{ flex: 1, marginHorizontal: "5%", marginTop: "2%", padding: "2%", backgroundColor: "white" }}>
