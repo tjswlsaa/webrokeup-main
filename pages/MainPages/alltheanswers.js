@@ -1,50 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions ,Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 const test1 = {
-    questions:""
-  }
+    questions: ""
+}
 const alltheanswers = ({ navigation, route }) => {
 
-    const { questionsKey } = route.params;
-    console.log("bookkey color",questionsKey)
+    const { questionsKey, color } = route.params;
+    console.log("bookkey color", questionsKey)
 
     function getColor(questionsKey) {
-        if (questionsKey.indexOf('r') == 0){
-        return "firstColor"
+        if (questionsKey.indexOf('r') == 0) {
+            return "firstColor"
         }
-        else if (questionsKey.indexOf('y') == 0){
-        return "secondColor"
+        else if (questionsKey.indexOf('y') == 0) {
+            return "secondColor"
         }
-        else if (questionsKey.indexOf('B') == 0){
-        return "thirdColor"
+        else if (questionsKey.indexOf('B') == 0) {
+            return "thirdColor"
         }
-        else if (questionsKey.indexOf('b') == 0){
-        return "fourthColor"
+        else if (questionsKey.indexOf('b') == 0) {
+            return "fourthColor"
         }
     }
     const Color = getColor(questionsKey);
-    const colorQuestion = Color+"Questions"
-    const colorAnswers = Color+"Answers"
+    const colorQuestion = Color + "Questions"
+    const colorAnswers = Color + "Answers"
 
 
     const [questions, setQuestion] = useState([]);
-    useEffect(()=>{
-      firebase_db.ref(`questions/${colorQuestion}/`+questionsKey)
-      .on('value', (snapshot)=>{
-            const questions = snapshot. val()
-    
-            setQuestion(questions)
-        })
-    },[])
-    console.log("allthequestions question",questions)
-    test1.questions=questions
+    const getQuestions = async () => {     
+        await firebase_db.ref(`questions/${colorQuestion}/` + questionsKey)
+            .on('value', (snapshot) => {
+                const questions = snapshot.val()
+
+                setQuestion(questions)
+            })
+        }
+        useEffect(() => {
+            getQuestions()
+        }, [])
+    console.log("allthequestions question", questions)
+    test1.questions = questions
 
 
     // const [answers, setAnswers] = useState([]);
@@ -68,10 +72,9 @@ const alltheanswers = ({ navigation, route }) => {
     // },[])
 
     // console.log("answers",answers)
-    
 
     const [list, setList] = useState([]);
-    const [hotcolor, setHotColor] = useState("#21381c")
+    const [hotcolor, setHotColor] = useState(color)
     const [newcolor, setNewColor] = useState("#E9E9E9")
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -83,108 +86,136 @@ const alltheanswers = ({ navigation, route }) => {
 
     useEffect(() => {
         firebase_db
-                .ref(`book`)
-                .on('value', (snapshot) => {
-                        let list = [];
-                        let temp = [];
-                        snapshot.forEach((child) => {
-                                const book = child.val();
-                                const { both } = book;
-                                //      console.log("useeffectbook",book)
+            .ref(`book`)
+            .on('value', (snapshot) => {
+                let list = [];
+                let temp = [];
+                snapshot.forEach((child) => {
+                    const book = child.val();
+                    const { both } = book;
+                    //      console.log("useeffectbook",book)
 
-                                if (both == undefined) {
-                                        console.log("PopularArticle() 챕터가 없습니다")
-                                } else {
-                                        list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
-                                }
-                                const arraylist = Object.values(list)
-                                const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true && filteredList.questionsKey == questionsKey )
+                    if (both == undefined) {
+                        console.log("PopularArticle() 챕터가 없습니다")
+                    } else {
+                        list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
+                    }
+                    const arraylist = Object.values(list)
+                    const listFiltered = arraylist.filter(filteredList => filteredList.isPublic == true && filteredList.questionsKey == questionsKey)
 
-                                listFiltered.sort(function (a, b) {
-                                        return (b.likeCount) - (a.likeCount)
-                                })
-                                setList(listFiltered);
-                        })
+                    listFiltered.sort(function (a, b) {
+                        return (b.likeCount) - (a.likeCount)
+                    })
+                    setList(listFiltered);
                 })
-}, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
-// console.log("populararticlelist",list)
+            })
+    }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
+    // console.log("populararticlelist",list)
 
 
     const viewHot = () => {
-            // console.log("viewHot")
-            const hotlist = [...list];
-            hotlist.sort(function (a, b) {
-                    return (b.likeCount) - (a.likeCount)
-            })
-            setList(hotlist);
-            // console.log("viewHot done")
-            // console.log ("list 2 (hot): " + {list});
+        // console.log("viewHot")
+        const hotlist = [...list];
+        hotlist.sort(function (a, b) {
+            return (b.likeCount) - (a.likeCount)
+        })
+        setList(hotlist);
+        // console.log("viewHot done")
+        // console.log ("list 2 (hot): " + {list});
 
-            setHotColor("#21381C");
-            setNewColor("#E9E9E9")
+        setHotColor(questions.Color);
+        setNewColor("#E9E9E9")
     }
 
     const viewNew = () => {
-            // console.log("viewNew")
-            const newlist = [...list]
-            newlist.sort(function (a, b) {
-                    return new Date(b.regdate) - new Date(a.regdate);
-            })
-            setList(newlist);
-            // console.log("viewNew done")
-            // console.log("list 3 (new): " + {list});
+        // console.log("viewNew")
+        const newlist = [...list]
+        newlist.sort(function (a, b) {
+            return new Date(b.regdate) - new Date(a.regdate);
+        })
+        setList(newlist);
+        // console.log("viewNew done")
+        // console.log("list 3 (new): " + {list});
 
-            setHotColor("#E9E9E9")
-            setNewColor("#21381C")
+        setHotColor("#E9E9E9")
+        setNewColor(questions.Color)
     }
-    console.log("liestalltheanswers",list)
+    console.log("liestalltheanswers", list)
 
     return (
-        <SafeAreaView style={{flex:1}}>
-                                    <View style={{ flexDirection: "row", height: "3%", marginVertical: "2%" }}>
-                                <TouchableOpacity
-                                        style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
-                                        onPress={() => viewHot()}>
-                                        <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 답변 </Text>
-                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                        style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
-                                        onPress={() => viewNew()}>
-                                        <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
-                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
-                                </TouchableOpacity>
-                        </View>
-                <Text style={{alignSelf:"center", fontSize:"20", marginTop:"2%"}}>{questions.title}</Text>
-                <Text style={{alignSelf:"center", fontSize:"15", marginTop:"2%", marginHorizontal:"10%"}}>{questions.intro}</Text>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView>
+                <View style={{ }}>
+                    <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%" }}>{questions.title}</Text>
+                    <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "2%", marginHorizontal: "10%", marginBottom: "5%" }}>{questions.intro}</Text>
+                </View>
+                <TouchableOpacity style={{ height: "3%", width: "50%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
+                    <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
+                </TouchableOpacity>
+                <View style={{ backgroundColor: "#fafafa", marginTop: "2%" }}>
+                    <View style={{ flexDirection: "row", height: "3%", marginTop: "2%" }}>
+                        <TouchableOpacity
+                            style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
+                            onPress={() => viewHot()}>
+                            <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 답변 </Text>
+                            <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
+                            onPress={() => viewNew()}>
+                            <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
+                            <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
+                        </TouchableOpacity>
+                    </View>
+                    {/* <ScrollView style={{height:500}}> */}
 
-                <ScrollView style={{height:500}}>
-
-                {list.map(item  => {
-                            return (
-                                <PostItem
-                                    navigation={navigation}
-                                    key = {item.key}
-                                    answers={item}
-                                />
-                            )
-                        })}
-                </ScrollView>
-                
-
-
+                    {list.map(item => {
+                        return (
+                            <PostItem
+                                navigation={navigation}
+                                key={item.key}
+                                answers={item}
+                                questionsKey={questionsKey}
+                            />
+                        )
+                    })}
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
 
 
-const PostItem=(props)=> {
+const PostItem = (props) => {
+    const [likeCount, setLikeCount] = useState(0);
+    const [likedUsers, setLikedUsers] = useState([]);
+    const [commentsNumber, setCommentsNumber] = useState(0);
 
-    const {answers, navigation}=props;
-    const {questions} =test1
-    console.log("answers.chapterKey",answers.chapterKey)
-    console.log("answers.chapterKey",questions)
+    const { answers, navigation, questionsKey } = props;
+    const { questions } = test1
+    console.log("answers.chapterKey", answers.chapterKey)
+    console.log("answers.chapterKey", questions)
 
+    const Color = getColor(questionsKey);
+    const colorQuestion = Color + "Questions"
+    const colorAnswers = Color + "Answers"
+    const likeRef = firebase_db.ref(`questions/${colorQuestion}/${questionsKey}/likes`);
+
+
+    function getColor(questionsKey) {
+        if (questionsKey.indexOf('r') == 0) {
+            return "firstColor"
+        }
+        else if (questionsKey.indexOf('y') == 0) {
+            return "secondColor"
+        }
+        else if (questionsKey.indexOf('B') == 0) {
+            return "thirdColor"
+        }
+        else if (questionsKey.indexOf('b') == 0) {
+            return "fourthColor"
+        }
+    }
 
     const [userinfo, setUserinfo] = useState({
         iam: "익명의.지은이",
@@ -200,23 +231,56 @@ const PostItem=(props)=> {
             })
     }, []);
 
+    useEffect(() => {
+        // let temp = [];
+        let arr = likeRef
+            .on('value', (snapshot) => {
+                let temp = [];
+                var likeCount = snapshot.numChildren();
+                // console.log('useEffect()');
+                // console.log({likeCount});
+                setLikeCount(likeCount)
+                //// console.log(likeCount)
+                snapshot.forEach((child) => {
+                    temp.push(child.val());
+                })
+                // console.log({temp});
+                setLikedUsers(temp);
+            })
+    }, [])
+
+    useEffect(() => {
+        let arr = firebase_db.ref(`questions/${colorQuestion}/${questionsKey}/comments`)
+            .on('value', (snapshot) => {
+                var commentsNumber = snapshot.numChildren();
+                setCommentsNumber(commentsNumber)
+            })
+    }, [])
+
 
 
     return (
-        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation}) }}>
-                <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{answers.chapterTitle}</Text>
+        <View style={{ backgroundColor: "white", marginTop: 5, borderRadius: 10, marginLeft: 10, marginRight: 10 }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticle', { bookKey: answers.bookKey, chapterKey: answers.chapterKey, navigation: navigation }) }}>
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ flex: 1, fontSize: 16, fontWeight: "500", marginLeft: "3%" }} numberOfLines={3}>{answers.chapterTitle}</Text>
+                    <View style={{ alignSelf: "flex-end", marginRight: "3%" }}>
+                        <Text style={{ fontSize: 10 }}>{userinfo.iam}</Text>
+                    </View>
                 </View>
-                <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text style={styles.bookIndexText} numberOfLines={3}>{answers.mainText}</Text>      
+                <View style={{ alignContent: "center", marginTop: 10, fontSize: 14 }}>
+                    <Text style={{ marginLeft: "3%", marginVertical: "1%" }} numberOfLines={1}>Q1: {answers.mainText}</Text>
+                    <Text style={{ marginLeft: "3%", marginVertical: "1%" }} numberOfLines={1}>Q2: {answers.text3}</Text>
+                    <Text style={{ marginLeft: "3%", marginVertical: "1%" }} numberOfLines={1}>Q3: {answers.text4}</Text>
                 </View>
-                <View style={{flexDirection:"row",alignSelf:"flex-end",marginTop:10, padding:"2%"}}>
-                <Text style={{fontSize:10}}>{userinfo.iam}</Text>      
+                <View style={{ flexDirection: "row", marginTop: "2%" }}>
+                    <Clover name="clover" size={15} color="grey" style={{ marginLeft: 5 }} />
+                    <Text style={{ fontSize: 11, marginLeft: "5%", }}>{likeCount}</Text>
+                    <Icon name="message1" size={15} color="black" style={{ marginLeft: 20 }} />
+                    <Text style={{ fontSize: 11, marginLeft: "5%", }}>{commentsNumber}</Text>
                 </View>
             </TouchableOpacity>
-            {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
-            <View style={{flexDirection:"row"}}>
+            <View style={{ flexDirection: "row" }}>
 
             </View>
 
