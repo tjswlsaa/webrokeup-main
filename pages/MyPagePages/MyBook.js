@@ -200,11 +200,11 @@ const MyBook = ({ navigation, route }) => {
                             </View>
                             <View style={{ height: realScreen * 0.15 }}>
                                     <View style={{flexDirection:"row", justifyContent:"center", marginTop:"5%"}}>
-                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%",  alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} 
+                                    <TouchableOpacity style={{ backgroundColor: "#999999", width: "30%", height: "70%",  alignSelf: "center", borderRadius: 15,justifyContent:"center"  }} 
                                     onPress={() => navigation.navigate("QuestionList", {navigation:navigation, bookKey:bookKey, Color: Color})}>
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 질문지</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ backgroundColor: "#44705E", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, Color:Color, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
+                                    <TouchableOpacity style={{ backgroundColor: "#999999", width: "30%", height: "70%", alignSelf: "center", borderRadius: 15,justifyContent:"center", marginLeft:"5%" }} onPress={() => navigation.navigate("NewPage", { myitem: myitem, Color:Color, chapters: myitem.chapters, chapterKey: Object.keys(myitem.chapters).toString(), bookKey: bookKey })}>
                                         <Text style={{ fontSize: 14, alignSelf: "center", color: "#fff", }}>감정 일기</Text>
                                     </TouchableOpacity>
                                     </View>
@@ -436,7 +436,7 @@ function headerRight() {
     const navigation = useNavigation();
     const {bookKey}=test1
     const {myitem}=test4
-    console.log("headerRightmyitem",myitem)
+    // console.log("headerRightmyitem",myitem)
     const user = firebase.auth().currentUser;
     var user_uid
     if (user != null) { user_uid = user.uid }

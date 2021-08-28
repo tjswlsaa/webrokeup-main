@@ -46,6 +46,8 @@ import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
+import EditQuestion from './pages/MyPagePages/EditQuestion';
+
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -267,6 +269,14 @@ const App = ({ navigation }) => {
 
           }}
         />
+                <Stack.Screen name="EditQuestion" component={EditQuestion.component}
+          options={{
+            title: "챕터 수정하기2",
+            ...defaultScreenOptions,
+            ...EditQuestion.options
+
+          }}
+        />
         <Stack.Screen name="readIntroArticle" component={readIntroArticle} options={{ title: "말머리에서", ...defaultScreenOptions }} />
         <Stack.Screen name="Notification" component={Notification} options={{title: "공지사항",  ...defaultScreenOptions}}/>
 
@@ -311,7 +321,7 @@ const App = ({ navigation }) => {
         <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "프로필 수정", ...defaultScreenOptions }} />
 
 
-        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle} options={{ title: "말머리에서 수정", ...defaultScreenOptions }} />
+        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle.component} options={{ title: "말머리에서 수정", ...defaultScreenOptions, ...EditArticle.options }} />
         <Stack.Screen
           name="PopularArticle"
           component={PopularArticle}

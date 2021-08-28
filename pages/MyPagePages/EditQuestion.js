@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Dimensions, TouchableWithoutFeedback, Keyboard, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
@@ -21,25 +21,34 @@ const test1 = {
     text2:""
   }
 
-  
+  const test4 ={
+    bookKey:""
+  }
   
   const test5 ={
     chapters:""
   }
-
-const EditArticle = ({ navigation, route }) => {
+  const test6 ={
+    text3:""
+  }
+  const test7 ={
+    text4:""
+  }
+const EditQuestion = ({ navigation, route }) => {
     test1.navigation=navigation
 
-    const { chapters} = route.params;
+    const { chapters, bookKey} = route.params;
     test5.chapters=chapters
-    console.log("EditArticlechapters222",chapters.bookKey)
-
+    test4.bookKey=bookKey
+    console.log("EditArticlechapters",chapters)
     const [text1, setText1] = useState(chapters.chapterTitle);
     const [text2, setText2] = useState(chapters.mainText);
-
+    const [text3, setText3] = useState(chapters.text3);
+    const [text4, setText4] = useState(chapters.text4);
     test2.text1=text1
     test3.text2=text2
-
+    test6.text3=text3
+    test7.text3=text4
 
     const title_a = useRef(null);
     const maintext_a = useRef(null);
@@ -57,9 +66,9 @@ const EditArticle = ({ navigation, route }) => {
     const realScreen = ScreenHeight-headerHeight-BottomSpace
     
     return (
-        <View style={{ height: "90%", width: "90%", alignSelf: "center", backgroundColor:"white", marginVertical:"10%"}} >
-           {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-
+        <View style={{ height: "90%", width: "90%", alignSelf: "center", backgroundColor:"white", marginVertical:"10%"}} 
+        // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
+        >
 
             <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",marginVertical:"5%", marginHorizontal:"10%"}}>
                 <View style={{backgroundColor:chapters.chColor, flex:1, height:realScreen*0.05, }}></View>
@@ -74,18 +83,35 @@ const EditArticle = ({ navigation, route }) => {
                 <ScrollView style={{marginTop:"5%",marginHorizontal:"10%"}}>
                     
 
-                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
-                                    multiline={true} defaultValue={chapters.mainText} returnKeyType="done"
-                                    onChangeText={text2 => setText2(text2)}
-                                    ref={maintext_a} />
-            
-                </ScrollView>
-                {/* </TouchableWithoutFeedback>  */}
 
+                            <View>
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q1}</Text>
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                            multiline={true} defaultValue={chapters.mainText} returnKeyType="done"
+                                                            onChangeText={text2 => setText2(text2)}
+                                                            ref={maintext_a} />
+                                                </View>
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q2}</Text>
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                            multiline={true} defaultValue={chapters.text3} returnKeyType="done"
+                                                            onChangeText={text3 => setText3(text3)}
+                                                            ref={maintext_a} />
+                                                </View>
+                                                <View style={{ marginBottom:realScreen*0.03}}>
+                                                <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q3}</Text>
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                            multiline={true} defaultValue={chapters.text4} returnKeyType="done"
+                                                            onChangeText={text4 => setText4(text4)}
+                                                            ref={maintext_a} />                                                
+                                                </View>
+                            </View>
+                
+                </ScrollView>
         </View>
     )
 }
-
 const styles = StyleSheet.create({
     container: {
         //앱의 배경 색
@@ -160,7 +186,10 @@ async function savePage() {
     const {navigation}=test1
     const {text1}=test2
     const {text2}= test3
+    const {bookKey}=test4
     const {chapters}=test5
+    const {text3}=test6
+    const {text4}=test7
 
     
     firebase_db
@@ -168,6 +197,8 @@ async function savePage() {
         .update({
             chapterTitle: text1,
             mainText: text2,
+            text3:text3,
+            text4:text4,
         });
     Alert.alert("집필 완료")
     navigation.dispatch(state => {
@@ -181,7 +212,7 @@ async function savePage() {
         });
       });
       
-    navigation.navigate("MyArticle", { bookKey: chapters.bookKey, chapterKey:chapters.chapterKey })
+    navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey:chapters.chapterKey })
   }
   
   
@@ -202,6 +233,6 @@ async function savePage() {
   };
   
   export default {
-    component: EditArticle,
+    component: EditQuestion,
     options,
   };

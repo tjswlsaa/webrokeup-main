@@ -12,6 +12,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import covernpaper from '../../assets/covernpapernew.png';
 
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const test1 = {
     userinfo: ''
@@ -31,6 +32,10 @@ const test2 = {
 
 const test4 = {
     chapteritem:""
+}
+
+const test5 ={
+    qurationchapters:""
 }
 
 const Main = ({navigation}) => {
@@ -126,7 +131,7 @@ const qurationChapterKey2 = "3560282002"
 
 const [chapter1, setChapter1] = useState([]);
 
-useEffect(getChapters1, [qurationChapterKey1]);
+useEffect(getChapters1, []);
 function getChapters1() {
     firebase_db
         .ref(`book/${qurationBookKey1}/both/`+qurationChapterKey1)
@@ -138,7 +143,7 @@ function getChapters1() {
 
 const [chapter2, setChapter2] = useState([]);
 
-useEffect(getChapters2, [qurationChapterKey2]);
+useEffect(getChapters2, []);
 function getChapters2() {
     firebase_db
         .ref(`book/${qurationBookKey2}/both/`+qurationChapterKey2)
@@ -150,8 +155,9 @@ function getChapters2() {
 
 
 
-const qurationchapters = [chapter1,chapter2]
 
+const qurationchapters = [chapter1,chapter2]
+test5.qurationchapters=qurationchapters
 console.log("chapteris",qurationchapters)
 // 책 큐레이팅 끝
 
@@ -257,7 +263,7 @@ const ColorOne=question1.Color
                         prevButton={<Text style={styles.prevButtonText}>›</Text>}
                     >
 
-                        {qurationchapters.map( (chapter, index) => {
+                        {qurationchapters.map((chapter, index) => {
 
                             return(
 
@@ -267,6 +273,8 @@ const ColorOne=question1.Color
                                                         navigation={navigation}
                                                         chapter={chapter}
                                                         bookKey={chapter.bookKey}
+                                                        index={index}
+
                                                          />
                                     </View>
 
@@ -352,23 +360,7 @@ const ColorOne=question1.Color
                     </Swiper>
                 </View>
 
-                {/* <View style={{flexDirection:"row", marginHorizontal:"5%", flex:1}}>
-                        <TouchableOpacity style={{  height: realScreen*0.045,  flex:1,backgroundColor: "#9E001C",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('QuestionList',{Color:"#9E001C"})}}>
-                         </TouchableOpacity>
-                         <TouchableOpacity style={{height: realScreen*0.045,flex:1,backgroundColor: "#F6AE2D",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
-                         </TouchableOpacity>
-                </View>
-                <View style={{flexDirection:"row", marginHorizontal:"5%", flex:1}}>
 
-                         <TouchableOpacity style={{  height: realScreen*0.045,flex:1,backgroundColor: "#33658A",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('QuestionList',{Color:"#33658A"})}}>
-                         </TouchableOpacity>
-                         <TouchableOpacity style={{ height: realScreen*0.045, flex:1,backgroundColor: "#494949",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('QuestionList',{Color:"#494949"})}}>
-                         </TouchableOpacity>
-                </View> */}
 
             </View>
             <View style={{ height: realScreen*0.5, backgroundColor: "#fafafa"}}>
@@ -404,9 +396,10 @@ const ColorOne=question1.Color
     )
 }
 
-function BookComponent (props) {
+ function BookComponent (props) {
     const { chapter, bookKey, navigation, index } = props
 
+    const {qurationchapters} =test5
     // console.log("BookComponentchapter2222",chapter)
     // console.log("BookComponentchapter",chapter.bookKey)
     // console.log("BookComponentchapterbookKey",bookKey)
@@ -434,36 +427,76 @@ function BookComponent (props) {
               }
           })
   }, []);
+//   const [spinner, setSpinner] = useState(true);
 
-  const [myitem, setMyitem] = useState({
-    bookKey: '',
-    bookTitle: '',
-    chapters: {},
-    intro: '',
-    regdate: '',
-    url: '',
-    user_uid: '',
-});
-  useEffect(getMyItem, []);
-  function getMyItem() {
-      //console.log('getMyItem()');
-      // bookKey-> myitem
-      firebase_db
-          .ref(`/book/${bookKey}`)
-          .on('value', (snapshot) => {
+//   const [myitem, setMyitem] = useState({
+//     bookKey: '',
+//     bookTitle: '',
+//     chapters: {},
+//     intro: '',
+//     regdate: '',
+//     url: '',
+//     user_uid: '',
+//     Color:"",
+// });
 
-              const myitem = snapshot. val()
-              setMyitem(myitem)
-          });
-  }
-console.log("BookComponentmyitem",myitem)
+// console.log("chapter.bookKey", chapter.bookKey)
+  
+//   const getMyItem = async() => {
+//     setSpinner(true)
+//     try{
+//     var ref =firebase_db.ref(`/book/${chapter.bookKey}`)
+//     let temp =[]
+//        ref.on('value', (snapshot)=>{
+
+//     //     snapshot.forEach((child) => {
+//     //       temp.push(child.val())
+//     //       console.log("temp",temp)
+//     //   })
+//     //   setMyitem(temp)}
+      
+//       const myitem = await snapshot.val()
+//       setMyitem(myitem)
+//       setSpinner(false)
+
+//       }
+//       )
+//     } catch (error){
+//         console.log(error)
+//     }
+//           };
+
+//     useEffect(() => {
+//     getMyItem();
+// }, []);
+//   if(!myitem){
+
+//      setSpinner(true)}
+//     {
+//         setSpinner(false)
+//     }
+
+// console.log("BookComponentmyitem",myitem)
+// console.log("BookComponentmyitem",myitem.Color)
+
+
+
+
+
+
 
     return (
         <View style={{height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" , flexDirection:"row"}}>
                     {/* <View style={{alignContent:"center"}}> */}
+                    {/* {spinner && (
+                            <Spinner
+                                visible={spinner}
+                                textContent={'Loading...'}
+                                textStyle={{ color: '#FFF' }}
+                            />
+                            )} */}
 
-
-                                            <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticleQuration', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , }) }}>
+                                            <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticleQuration', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , qurationchapters:qurationchapters}) }}>
                                                                                     <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginHorizontal:"5%"}}>
                                                                                             <View style={{flexDirection:"row", flex:1, }}>
                                                                                                     <View style={{backgroundColor:chapter.chColor, flex:1, height:"50%", marginTop:"15%"}}> 
@@ -491,7 +524,7 @@ console.log("BookComponentmyitem",myitem)
                                                         <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{BookItemUserinfo.iam}</Text>
                                                 </View>
                                                 </View>
-                                                </TouchableOpacity> */}
+                                                </TouchableOpacity>  */}
                     
         </View>
 )
@@ -508,8 +541,8 @@ const WritingItem=(props)=> {
                 <View style={{backgroundColor:"#A2AD9C", width: 190, height: "100%", borderRadius: 10}}>
                     <Image style={{height:"40%", borderRadius: 10}} source={{uri:writing.image}}></Image>
                     <View style={{margin: "10%"}}>
-                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberofLines={3}>{writing.title}</Text>
-                        <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.summary}</Text>
+                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberOfLines={2}>{writing.title}</Text>
+                        <Text style={{fontSize: 13, marginTop: 10}} numberOfLines={3}>{writing.summary}</Text>
                     </View>
 
                 </View>

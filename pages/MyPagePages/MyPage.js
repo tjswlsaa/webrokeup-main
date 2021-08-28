@@ -259,14 +259,16 @@ const MyPage = ({ navigation }) => {
                 <View style={{ height: realScreen * 0.06, alignItems: "center", justifyContent: "center", backgroundColor: "#FBFBFB" }}>
                     <Text style={{ fontSize: 17, fontWeight: "700", marginTop: "2%", color: "#21381C" }}>FEEL ME FILL ME</Text>
                 </View>
-                <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, alignSelf: "center", backgroundColor: "#F2F2F2" }}>
-                    <View style={{ flex: 1, flexDirection: "row", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10 }}>
+                <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, backgroundColor: "#F2F2F2" , justifyContent:"center"}}>
+                    <View style={{ flex: 1.5, flexDirection: "row", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10,  }}>
                         <Text style={{ flex: 1, fontSize: 17, fontWeight: "600", marginTop: "7%", marginLeft: "3%" }}>{userinfo.iam}</Text>
                         <TouchableOpacity style={{ alignSelf: "center", borderRadius: 50, height: 34, width: 34 }} onPress={() => { navigation.navigate('Account') }}>
                             <Icon name="settings-outline" size={27} color="#21381C" style={{ alignSelf: "center", marginTop: "10%", marginRight: "20%" }} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={{ flex: 1, fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%" }}> {userinfo.selfLetter}</Text>
+                    <View style={{flex:1}}>
+                    <Text style={{ fontSize: 14, fontWeight: "400", fontColor: "#204040", marginHorizontal: "5%" }}> {userinfo.selfLetter}</Text>
+                    </View>
                 </View>
                 <View style={{ height: realScreen * 0.7, width: "94%", alignSelf: "center", marginBottom: 10, padding:"2%"}}>
                     
@@ -465,7 +467,7 @@ const MyPage = ({ navigation }) => {
                         )}
 
                         {colorBookListValues.length == 0 ? (
-                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#44705E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
+                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#999999", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
                                         <Text>도움말보기</Text>
                                     </TouchableOpacity>) :(
                                         <View></View>

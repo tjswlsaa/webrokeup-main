@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView,ScrollView, ImageBackground, } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-import paper from '../../assets/paper.png';
 
 const policytwo = ({navigation, route}) => {
 
@@ -11,17 +9,15 @@ const policytwo = ({navigation, route}) => {
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
-
-        <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} >
-
-             <ImageBackground style={{height:"100%",resizeMode:"cover", marginTop:"10%"}} source={paper} >
-
-                    <View style={{height:"80%"}}>
+                    <View style={{height:"90%", backgroundColor:"white", marginHorizontal:"5%", marginVertical:"10%"}}>
                         <View>
-                            <Text style={styles.bookTitle}>개인정보 처리방침</Text>  
+                            <Text style={{               fontSize: 20,
+                marginTop:60, marginHorizontal:"10%"
+               }}>개인정보 처리방침</Text>  
                         </View>
-                        <ScrollView style={styles.textContainer}>
-                            <Text style={styles.bookText}>
+                        <ScrollView style={{marginHorizontal:"10%",marginVertical:"10%"}}>
+                            <Text style={{lineHeight:"22%"}}>
+
                             이별록(이하 "회사" 또는 "이별록"이라 함)은 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법, 통신비밀보호법, 전기통신사업법, 등 정보통신서비스제공자가 준수하여야 할 관련 법령상의 개인정보보호 규정을 준수하며, 관련 법령에 의거한 개인정보취급방침을 정하여 이용자 권익 보호에 최선을 다하고 있습니다.
                             {"\n"}
                             {"\n"}
@@ -157,9 +153,7 @@ const policytwo = ({navigation, route}) => {
                         </ScrollView>
                     </View>
 
-            </ImageBackground>
 
-        </ImageBackground>
         </SafeAreaView>
         )}
     
