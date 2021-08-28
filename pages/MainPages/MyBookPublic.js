@@ -207,7 +207,7 @@ const MyBookPublic = ({ navigation, route }) => {
                 </View>
                 <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
                     <View style={{ marginHorizontal: "3%"}}>
-                        <TouchableOpacity style={{ marginVertical: "1%", marginTop: "2%", backgroundColor: "#e9e9e9", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, authorUser_uid: myitem.user_uid, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
+                        <TouchableOpacity style={{ marginVertical: "1%", marginTop: "2%", backgroundColor: "#e9e9e9", height: realScreen * 0.16 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, authorUser_uid: myitem.user_uid, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
                             <Text style={{ marginTop: "5%", marginHorizontal: "6%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
                             <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
@@ -281,21 +281,26 @@ function MyChapterItem(props) {
             })
     }, [])
     return (
-        <View style={{marginHorizontal: "3%", height: realScreen*0.18, backgroundColor: "#fff", marginVertical: "1%"}}>
+        <View style={{marginHorizontal: "3%", height: realScreen*0.2, backgroundColor: "#fff", marginVertical: "1%"}}>
             <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
-                <View style={{height: realScreen*0.12}}>
-                    <Text style={{fontSize: 15, fontWeight: "600", marginHorizontal: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                    <Text style={{fontSize: 14, marginTop: "3%", marginHorizontal: "3%",}} numberOfLines={3}>{chapters.mainText}</Text>
-                </View>
-                <View style={{ flexDirection: "row", marginTop: "2%"}}>
-                    <View style={{flex: 2, flexDirection: "row", marginLeft: "3%"}}>
-                        <Clover name="clover" size={16} color="grey" style={{marginLeft: "3%"}}/>
-                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>{likeCount}</Text>
-                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
-                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%"}}>{commentsNumber}</Text>
+            <View style={{height: realScreen*0.12, flexDirection: "row", marginTop:"3%"}}>
+                    
+                    <View style={{flex: 1, backgroundColor: chapters.chColor, marginRight: "5%", marginBottom: "5%"}} /> 
+                    <View style={{flex: 40}}>
+                    <Text style={{fontSize: 15, fontWeight: "600", marginRight: "3%",}} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                    <Text style={{fontSize: 14, marginTop: "3%", marginRight: "3%",}} numberOfLines={2}>{chapters.mainText}</Text>
                     </View>
-                    <Text style={{flex: 1, fontSize: 11, alignSelf:"flex-end"}}>{chapters.Kregdate}</Text>
                 </View>
+                
+                <View style={{ height: realScreen*0.8, flexDirection: "row",}}>
+                        <Clover name="clover" size={16} color="grey" style={{marginLeft: "3%"}}/>
+                        <Text style={{fontSize: 11, marginLeft: "5%",}}>{likeCount}</Text>
+                        <Icon name="message1" size={15} color="black" style={{ marginLeft: 20}} />
+                        <Text style={{fontSize: 11, marginLeft: "5%",}}>{commentsNumber}</Text>
+                        <Text style={{flex: 1, fontSize: 11,marginLeft:"33%" }}>{chapters.Kregdate}</Text>
+
+                </View>
+
             </TouchableOpacity>
         </View>
     )
