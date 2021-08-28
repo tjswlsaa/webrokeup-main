@@ -28,9 +28,8 @@ const MyBookPublic = ({ navigation, route }) => {
         user_uid: '',
     });
 
-    useEffect(getMyItem, []);
-    function getMyItem() {
-        firebase_db
+    const getMyItem = async ()  => {
+        await firebase_db
             .ref(`/book/${bookKey}`)
             .on('value', (snapshot) => {
                 const newMyitem = {};
@@ -39,12 +38,19 @@ const MyBookPublic = ({ navigation, route }) => {
                     const value = child.val();
                     newMyitem[key] = value; // 우리가 잘 아는 javascript object가 된다!
                 });
+            
                 setMyitem({
                     ...myitem, // 기본 바탕색
                     ...newMyitem, // 덧칠
                 });
+                console.log({myitem})
             });
     }
+
+    useEffect(() => {
+        getMyItem();
+    }, []);
+    
     console.log("mybookuseruid",myitem.user_uid)
     const author = myitem.user_uid
     console.log("author" + author)
@@ -132,29 +138,33 @@ const MyBookPublic = ({ navigation, route }) => {
     // const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic == true)
     // // console.log("myChapterFiltered",myChapterFiltered)
     
-    const [userinfo, setUserinfo] = useState([]);
+    const [userinfo, setUserinfo] = useState({
+        iam: "익명의 지은이",
+        selfLetter: "익명의 지은이입니다."
+    });
 
-    console.log("author" + author)
-    useEffect(()=>{
-        firebase_db
-        .ref(`users/${author}`)
-        .on('value', (snapshot)=>{
-            const newUserinfo = {};
-            snapshot.forEach((child)=>{
-                    const key = child.key;
-                    const value = child.val();
-                    newUserinfo[key] = value;
-            })
-            setUserinfo({
-                ...userinfo, // 기본 바탕색
-                ...newUserinfo, // 덧칠
-            });
-            console.log("나는" + userinfo.iam)
-            console.log("누구야" + userinfo.selfLetter)
-        })
-    }, [])
-
-
+    const getUserinfo = async () => {
+        await firebase_db.ref(`users/${myitem.user_uid}`)
+              .on('value', (snapshot) => {
+                  console.log('..')
+                  console.log({snapshot})
+                  const newUserinfo = {};
+                  snapshot.forEach((child)=>{
+                      const key = child.key;
+                      const value = child.val();
+                      newUserinfo[key] = value
+                  })
+                  setUserinfo({
+                      ...userinfo,
+                      ...newUserinfo
+                  })
+                })
+                console.log({userinfo})
+            }
+      
+    useEffect(()=> {
+        getUserinfo()
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

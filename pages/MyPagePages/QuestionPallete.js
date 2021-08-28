@@ -8,6 +8,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 
+
 const QuestionPallete = ({ navigation, route }) => {
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -16,25 +17,95 @@ const QuestionPallete = ({ navigation, route }) => {
     const realScreen = ScreenHeight-headerHeight-BottomSpace
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <View style={{flex:1, }}>
+        <SafeAreaView style={{flex:1, marginHorizontal:"5%", marginVertical: "3%"}}>
+            <View style= {{flex: 1, }}>
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                onPress={() => { navigation.navigate('QuestionList',{Color:"#9E001C"})}}>
+                    <Icon name = "login" size = {30} color="#9E001C"/>
+                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                        <Text style={{fontSize: 20, fontWeight: "700"}}>빨간 감정</Text> 
+                        <Text style={{fontSize: 13, marginTop: "3%"}}> 
+                        활활 타오르다 꺼져 버리는 {"\n"}
+                        가득 물들다 터져 버리는 {"\n"}
+                        펄펄 끓어 오르다 흘러 넘치는 {"\n"}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
+                <Icon name = "login" size = {30} color="#F6AE2D"/>
+                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                        <Text style={{fontSize: 20, fontWeight: "700"}}> 노란 감정 </Text>
+                        <Text style={{fontSize: 13, marginTop: "3%"}}> 
+                        따갑게 내리 쬐는 {"\n"}함박 웃음 짓는 {"\n"}한아름 품에 안은   </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                onPress={() => { navigation.navigate('QuestionList',{Color:"#33658A"})}}>
+                <Icon name = "login" size = {30} color="#33658A"/>
+                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                        <Text style={{fontSize: 20, fontWeight: "700"}}> 파란 감정 </Text>
+                        <Text style={{fontSize: 13, marginTop: "3%"}}> 
+                        싸늘하게 남겨지는 {"\n"}새파랗게 떨어지는 {"\n"}차분하게 질식하는   </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                onPress={() => { navigation.navigate('QuestionList',{Color:"#494949"})}}>
+                <Icon name = "login" size = {30} color="#494949"/>
+                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                        <Text style={{fontSize: 20, fontWeight: "700"}}> 검정 감정 </Text>
+                        <Text style={{fontSize: 13, marginTop: "3%"}}>
+                        고요하게 침잠하는 {"\n"}발자국 남기지 않고 찾아와 곁에 앉은 {"\n"}아무 소리 내지 못하게 집어 삼키는  </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
 
-                <View style={{flexDirection:"row", marginHorizontal:"5%"}}>
-                        <TouchableOpacity style={{  borderRadius: 25, height: realScreen*0.045,  width: realScreen*0.045,backgroundColor: "#9E001C",justifyContent:'center' }}
+                {/* <View style={{flex: 1, }}>
+                    <View style={{flex: 1, flexDirection: "row", margin: 4, alignSelf: "center"}}> 
+                        <TouchableOpacity style={{  borderRadius: 30, height:"100%", width: "50%", backgroundColor: 'rgba(158, 0, 28, 0.2)', margin: 4}}
                             onPress={() => { navigation.navigate('QuestionList',{Color:"#9E001C"})}}>
+                                <Text style={{fontSize: 27, fontWeight: "700", color: "#9E001C", marginLeft: "5%", marginTop: "40%"}}>빨간 감정</Text>
+                                <Text style={{fontSize: 12, color: "#9E001C", marginLeft: "3%", marginTop: "15%"}}>
+                                    활활 타오르다 꺼져 버리는 {"\n"}
+                                    가득 물들다 터져 버리는,{"\n"}
+                                    펄펄 끓어 오르다 흘러 넘치는, {"\n"}
+                                    </Text>
                          </TouchableOpacity>
-                         <TouchableOpacity style={{ borderRadius: 25, height: realScreen*0.045, width: realScreen*0.045,backgroundColor: "#F6AE2D",justifyContent:'center' }}
-                            onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
-                         </TouchableOpacity>
-                         <TouchableOpacity style={{  borderRadius: 25, height: realScreen*0.045, width: realScreen*0.045,backgroundColor: "#33658A",justifyContent:'center' }}
+                         <TouchableOpacity style={{  borderRadius: 30, height:"100%", width: "50%", backgroundColor: 'rgba(51, 101, 138, 0.2)', margin: 4}}
                             onPress={() => { navigation.navigate('QuestionList',{Color:"#33658A"})}}>
+                                <Text style={{fontSize: 27, fontWeight: "700", color: "#33658A", marginLeft: "3%", marginTop: "40%"}}>파란 감정</Text>
+                                <Text style={{fontSize: 12, color: "#33658A", marginLeft: "3%", marginTop: "15%"}}>
+                                    싸늘하게 남겨지는{"\n"}
+                                    새파랗게 떨어지는{"\n"}
+                                    차분하게 질식하는{"\n"}
+                                    </Text>
                          </TouchableOpacity>
-                         <TouchableOpacity style={{ borderRadius: 25, height: realScreen*0.045, width: realScreen*0.045,backgroundColor: "#494949",justifyContent:'center' }}
+                    </View>
+                    <View style={{flex: 1, flexDirection: "row", margin: 4, alignSelf: "center"}}> 
+                        <TouchableOpacity style={{ borderRadius: 30, height:"100%", width: "50%", backgroundColor: 'rgba(246, 174, 45, 0.15)', margin: 4}}
+                            onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
+                                    <Text style={{fontSize: 27, fontWeight: "700", color: "#F6AE2D", marginLeft: "3%", marginTop: "40%"}}>노란 감정</Text>
+                                    <Text style={{fontSize: 12, color: "#F6AE2D", marginLeft: "3%", marginTop: "15%"}}>
+                                        따갑게 내리 쬐는{"\n"}
+                                        함박 웃음 짓는{"\n"}
+                                        한아름 품에 안은{"\n"}
+                                    </Text>
+                         </TouchableOpacity>
+                         <TouchableOpacity style={{ borderRadius: 30, height:"100%", width: "50%", backgroundColor: 'rgba(73, 73, 73, 0.2)', margin: 4}}
                             onPress={() => { navigation.navigate('QuestionList',{Color:"#494949"})}}>
+                                <Text style={{fontSize: 27, fontWeight: "700", color: "#000", marginLeft: "3%", marginTop: "40%"}}>검정 감정</Text>
+                                <Text style={{fontSize: 12, color: "#000", marginLeft: "3%", marginTop: "10%"}}>
+                                한없이 가라앉는{"\n"}
+                                발자국 자국 남기지 않고 곁에 앉은{"\n"}
+                                아무 소리 내지 못하게 집어 삼키는{"\n"}
+                                고요하게 침잠하는{"\n"}
+                                </Text>
                          </TouchableOpacity>
-                </View>
-
-
+                    </View>
+                </View> */}
         </SafeAreaView>
+        </View>
     )
 }
 

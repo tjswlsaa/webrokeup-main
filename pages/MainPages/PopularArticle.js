@@ -15,7 +15,15 @@ const PopularArticle = ({ navigation, route }) => {
         const [newcolor, setNewColor] = useState("#E9E9E9")
         const [likeCount, setLikeCount] = useState(0)
         const [commentsCount, setCommentsCount] = useState(0);
-        
+        const [myitem, setMyitem] = useState({
+                bookKey: '',
+                bookTitle: '',
+                chapters: {},
+                intro: '',
+                regdate: '',
+                url: '',
+                user_uid: '',
+        });
        
 
         const headerHeight = useHeaderHeight();
@@ -104,7 +112,22 @@ const PopularArticle = ({ navigation, route }) => {
                         })
         }, [])
 
- 
+        useEffect(()=>{
+                firebase_db.ref(`book/${bookKey}/`)
+                .on('value', (snapshot) => {
+                        const newMyitem = {};
+                        snapshot.forEach((child) => {
+                                const key = child.key;
+                                const value = child.val();
+                                // newMyitem[key] = value;
+                })
+                setMyitem({
+                        ...myitem,
+                        ...newMyitem,
+                })
+        })
+        }, [])
+
 
 
         return (
