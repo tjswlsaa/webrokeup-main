@@ -79,6 +79,7 @@ const test1 = {
 
     const [list, setList] = useState([]);
     test2.list=list;
+    const [selectedList, setSelectedList] = useState([]);
     const [hotcolor, setHotColor] = useState(color)
     const [newcolor, setNewColor] = useState("#E9E9E9")
     const headerHeight = useHeaderHeight();
@@ -112,6 +113,40 @@ const test1 = {
                         return (b.likeCount) - (a.likeCount)
                     })
                     setList(listFiltered);
+
+                    const listoften = [];
+                    if (listFiltered.length >= 1) {
+                        listoften.push(listFiltered[0]);
+                    }
+                    if (listFiltered.length >= 2) {
+                        listoften.push(listFiltered[1]);
+                    }
+                    if (listFiltered.length >= 3) {
+                            listoften.push(listFiltered[2]);
+                        }
+                    if (listFiltered.length >= 4) {
+                    listoften.push(listFiltered[3]);
+                    }
+                    if (listFiltered.length >= 5) {
+                    listoften.push(listFiltered[4]);
+                    }
+                    if (listFiltered.length >= 6) {
+                    listoften.push(listFiltered[5]);
+                    }
+                    if (listFiltered.length >= 7) {
+                    listoften.push(listFiltered[6]);
+                    }
+                    if (listFiltered.length >= 8) {
+                    listoften.push(listFiltered[7]);
+                    }
+                    if (listFiltered.length >= 9) {
+                    listoften.push(listFiltered[8]);
+                    }
+                    if (listFiltered.length >= 10) {
+                    listoften.push(listFiltered[9]);
+                    }
+
+                    setSelectedList(listoften);
                 })
             })
     }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
@@ -122,26 +157,82 @@ const test1 = {
         // console.log("viewHot")
         const hotlist = [...list];
         hotlist.sort(function (a, b) {
-            return (b.likeCount) - (a.likeCount)
+                return (b.likeCount) - (a.likeCount)
         })
-        setList(hotlist);
-        // console.log("viewHot done")
-        // console.log ("list 2 (hot): " + {list});
+        const listoften = [];
+        if (hotlist.length >= 1) {
+            listoften.push(hotlist[0]);
+        }
+        if (hotlist.length >= 2) {
+            listoften.push(hotlist[1]);
+        }
+        if (hotlist.length >= 3) {
+                listoften.push(hotlist[2]);
+            }
+        if (hotlist.length >= 4) {
+        listoften.push(hotlist[3]);
+        }
+        if (hotlist.length >= 5) {
+        listoften.push(hotlist[4]);
+        }
+        if (hotlist.length >= 6) {
+        listoften.push(hotlist[5]);
+        }
+        if (hotlist.length >= 7) {
+        listoften.push(hotlist[6]);
+        }
+        if (hotlist.length >= 8) {
+        listoften.push(hotlist[7]);
+        }
+        if (hotlist.length >= 9) {
+        listoften.push(hotlist[8]);
+        }
+        if (hotlist.length >= 10) {
+        listoften.push(hotlist[9]);
+        }
+        setSelectedList(listoften);
 
         setHotColor(questions.Color);
         setNewColor("#E9E9E9")
     }
 
     const viewNew = () => {
-        // console.log("viewNew")
         const newlist = [...list]
-        newlist.sort(function (a, b) {
-            return new Date(b.regdate) - new Date(a.regdate);
-        })
-        setList(newlist);
-        // console.log("viewNew done")
-        // console.log("list 3 (new): " + {list});
-
+                newlist.sort(function (a, b) {
+                        return new Date(b.regdate) - new Date(a.regdate);
+                })
+                const newlistoften = [];
+                if (newlist.length >= 1) {
+                        newlistoften.push(newlist[0]);
+                }
+                if (newlist.length >= 2) {
+                        newlistoften.push(newlist[1]);
+                }
+                if (newlist.length >= 3) {
+                        newlistoften.push(newlist[2]);
+                        }
+                if (newlist.length >= 4) {
+                newlistoften.push(newlist[3]);
+                }
+                if (newlist.length >= 5) {
+                newlistoften.push(newlist[4]);
+                }
+                if (newlist.length >= 6) {
+                newlistoften.push(newlist[5]);
+                }
+                if (newlist.length >= 7) {
+                newlistoften.push(newlist[6]);
+                }
+                if (newlist.length >= 8) {
+                newlistoften.push(newlist[7]);
+                }
+                if (newlist.length >= 9) {
+                newlistoften.push(newlist[8]);
+                }
+                if (newlist.length >= 10) {
+                newlistoften.push(newlist[9]);
+                }
+                setSelectedList(newlistoften);
         setHotColor("#E9E9E9")
         setNewColor(questions.Color)
     }
@@ -154,11 +245,11 @@ const test1 = {
                     <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%" }}>{questions.title}</Text>
                     <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "2%", marginHorizontal: "10%", marginBottom: "5%" }}>{questions.intro}</Text>
                 </View>
-                <TouchableOpacity style={{ height: "3%", width: "50%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
+                <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
                     <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
                 </TouchableOpacity>
-                <View style={{ backgroundColor: "#fafafa", marginTop: "2%" }}>
-                    <View style={{ flexDirection: "row", height: "3%", marginTop: "2%" }}>
+                <View style={{ backgroundColor: "#fafafa", marginTop: 10 }}>
+                    <View style={{ flexDirection: "row", height: 30, marginTop: "2%" }}>
                         <TouchableOpacity
                             style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
                             onPress={() => viewHot()}>
@@ -174,7 +265,7 @@ const test1 = {
                     </View>
                     {/* <ScrollView style={{height:500}}> */}
 
-                    {list.map((item, index) => {
+                    {selectedList.map((item, index) => {
                         return (
                             <PostItem
                                 navigation={navigation}
@@ -182,6 +273,8 @@ const test1 = {
                                 answers={item}
                                 questionsKey={questionsKey}
                                 index={index}
+                                likeCount={item.likeCount}
+                                commentsCount={item.commentsCount}
                             />
                         )
                     })}
@@ -193,11 +286,8 @@ const test1 = {
 
 
 const PostItem = (props) => {
-    const [likeCount, setLikeCount] = useState(0);
-    const [likedUsers, setLikedUsers] = useState([]);
-    const [commentsNumber, setCommentsNumber] = useState(0);
 
-    const { answers, navigation, questionsKey, index } = props;
+    const { answers, navigation, questionsKey, index, likeCount, commentsCount } = props;
     const { questions } = test1
     const { list } = test2; 
 
@@ -243,33 +333,7 @@ const PostItem = (props) => {
             })
     }, []);
 
-    useEffect(() => {
-        // let temp = [];
-        let arr = likeRef
-            .on('value', (snapshot) => {
-                let temp = [];
-                var likeCount = snapshot.numChildren();
-                // console.log('useEffect()');
-                // console.log({likeCount});
-                setLikeCount(likeCount)
-                //// console.log(likeCount)
-                snapshot.forEach((child) => {
-                    temp.push(child.val());
-                })
-                // console.log({temp});
-                setLikedUsers(temp);
-            })
-    }, [])
-
-    useEffect(() => {
-        let arr = firebase_db.ref(`questions/${colorQuestion}/${questionsKey}/comments`)
-            .on('value', (snapshot) => {
-                var commentsNumber = snapshot.numChildren();
-                setCommentsNumber(commentsNumber)
-            })
-    }, [])
-
-
+    
 
     return (
         <View style={{ backgroundColor: "white", marginTop: 5, borderRadius: 10, marginLeft: 10, marginRight: 10 }}>
@@ -290,7 +354,7 @@ const PostItem = (props) => {
                     <Clover name="clover" size={15} color="grey" style={{ marginLeft: 5 }} />
                     <Text style={{ fontSize: 11, marginLeft: "5%", }}>{likeCount}</Text>
                     <Icon name="message1" size={15} color="black" style={{ marginLeft: 20 }} />
-                    <Text style={{ fontSize: 11, marginLeft: "5%", }}>{commentsNumber}</Text>
+                    <Text style={{ fontSize: 11, marginLeft: "5%", }}>{commentsCount}</Text>
                 </View>
             </TouchableOpacity>
             <View style={{ flexDirection: "row" }}>
