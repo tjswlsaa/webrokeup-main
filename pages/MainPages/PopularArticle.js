@@ -12,6 +12,7 @@ import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PopularArticle = ({ navigation, route }) => {
         const [list, setList] = useState([]);
+        const [selectedList, setSelectedList] = useState([]);
         const [hotcolor, setHotColor] = useState("#21381c")
         const [newcolor, setNewColor] = useState("#E9E9E9")
         const [likeCount, setLikeCount] = useState(0)
@@ -58,8 +59,41 @@ const PopularArticle = ({ navigation, route }) => {
                                                 return (b.likeCount) - (a.likeCount)
                                         })
                                         
-
                                         setList(listFiltered);
+
+                                        const listoften = [];
+                                        if (listFiltered.length >= 1) {
+                                            listoften.push(listFiltered[0]);
+                                        }
+                                        if (listFiltered.length >= 2) {
+                                            listoften.push(listFiltered[1]);
+                                        }
+                                        if (listFiltered.length >= 3) {
+                                                listoften.push(listFiltered[2]);
+                                            }
+                                        if (listFiltered.length >= 4) {
+                                        listoften.push(listFiltered[3]);
+                                        }
+                                        if (listFiltered.length >= 5) {
+                                        listoften.push(listFiltered[4]);
+                                        }
+                                        if (listFiltered.length >= 6) {
+                                        listoften.push(listFiltered[5]);
+                                        }
+                                        if (listFiltered.length >= 7) {
+                                        listoften.push(listFiltered[6]);
+                                        }
+                                        if (listFiltered.length >= 8) {
+                                        listoften.push(listFiltered[7]);
+                                        }
+                                        if (listFiltered.length >= 9) {
+                                        listoften.push(listFiltered[8]);
+                                        }
+                                        if (listFiltered.length >= 10) {
+                                        listoften.push(listFiltered[9]);
+                                        }
+
+                                        setSelectedList(listoften);
                                 })
                         })
         }, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
@@ -72,7 +106,38 @@ const PopularArticle = ({ navigation, route }) => {
                 hotlist.sort(function (a, b) {
                         return (b.likeCount) - (a.likeCount)
                 })
-                setList(hotlist);
+                const listoften = [];
+                if (hotlist.length >= 1) {
+                    listoften.push(hotlist[0]);
+                }
+                if (hotlist.length >= 2) {
+                    listoften.push(hotlist[1]);
+                }
+                if (hotlist.length >= 3) {
+                        listoften.push(hotlist[2]);
+                    }
+                if (hotlist.length >= 4) {
+                listoften.push(hotlist[3]);
+                }
+                if (hotlist.length >= 5) {
+                listoften.push(hotlist[4]);
+                }
+                if (hotlist.length >= 6) {
+                listoften.push(hotlist[5]);
+                }
+                if (hotlist.length >= 7) {
+                listoften.push(hotlist[6]);
+                }
+                if (hotlist.length >= 8) {
+                listoften.push(hotlist[7]);
+                }
+                if (hotlist.length >= 9) {
+                listoften.push(hotlist[8]);
+                }
+                if (hotlist.length >= 10) {
+                listoften.push(hotlist[9]);
+                }
+                setSelectedList(listoften);
                 // console.log("viewHot done")
                 // console.log ("list 2 (hot): " + {list});
 
@@ -86,7 +151,38 @@ const PopularArticle = ({ navigation, route }) => {
                 newlist.sort(function (a, b) {
                         return new Date(b.regdate) - new Date(a.regdate);
                 })
-                setList(newlist);
+                const newlistoften = [];
+                if (newlist.length >= 1) {
+                        newlistoften.push(newlist[0]);
+                }
+                if (newlist.length >= 2) {
+                        newlistoften.push(newlist[1]);
+                }
+                if (newlist.length >= 3) {
+                        newlistoften.push(newlist[2]);
+                        }
+                if (newlist.length >= 4) {
+                newlistoften.push(newlist[3]);
+                }
+                if (newlist.length >= 5) {
+                newlistoften.push(newlist[4]);
+                }
+                if (newlist.length >= 6) {
+                newlistoften.push(newlist[5]);
+                }
+                if (newlist.length >= 7) {
+                newlistoften.push(newlist[6]);
+                }
+                if (newlist.length >= 8) {
+                newlistoften.push(newlist[7]);
+                }
+                if (newlist.length >= 9) {
+                newlistoften.push(newlist[8]);
+                }
+                if (newlist.length >= 10) {
+                newlistoften.push(newlist[9]);
+                }
+                setSelectedList(newlistoften);
                 // console.log("viewNew done")
                 // console.log("list 3 (new): " + {list});
 
@@ -151,7 +247,7 @@ const PopularArticle = ({ navigation, route }) => {
                         </View>
                         <View style={{ flex: 5, backgroundColor: "#E9E9E9" }}>
                                 <ScrollView style={{ flex: 1, marginHorizontal: "2%", backgroundColor: "#FAFAFA" }}>
-                                        {list.map((chapters) => (
+                                        {selectedList.map((chapters) => (
                                                 <ChapterItem
                                                         key={chapters.key}
                                                         navigation={navigation}
