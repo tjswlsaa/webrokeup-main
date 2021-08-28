@@ -20,40 +20,40 @@ const QuestionPallete = ({ navigation, route }) => {
         <View style={{flex:1, }}>
         <SafeAreaView style={{flex:1, marginHorizontal:"5%", marginVertical: "3%"}}>
             <View style= {{flex: 1, }}>
-                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", marginVertical: "2%"}}
                 onPress={() => { navigation.navigate('QuestionList',{Color:"#9E001C"})}}>
                     <Icon name = "login" size = {30} color="#9E001C"/>
-                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                    <View style= {{flex: 40, paddingLeft: "5%", paddingTop: "7%", paddingBottom: "6%"}}>
                         <Text style={{fontSize: 20, fontWeight: "700"}}>빨간 감정</Text> 
                         <Text style={{fontSize: 13, marginTop: "3%"}}> 
                         활활 타오르다 꺼져 버리는 {"\n"}
                         가득 물들다 터져 버리는 {"\n"}
-                        펄펄 끓어 오르다 흘러 넘치는 {"\n"}
+                        펄펄 끓어 오르다 흘러 넘치는
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", marginVertical: "2%"}}
                 onPress={() => { navigation.navigate('QuestionList',{Color:"#F6AE2D"})}}>
                 <Icon name = "login" size = {30} color="#F6AE2D"/>
-                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                    <View style= {{flex: 40, paddingLeft: "5%", paddingTop: "7%", paddingBottom: "6%"}}>
                         <Text style={{fontSize: 20, fontWeight: "700"}}> 노란 감정 </Text>
                         <Text style={{fontSize: 13, marginTop: "3%"}}> 
                         따갑게 내리 쬐는 {"\n"}함박 웃음 짓는 {"\n"}한아름 품에 안은   </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", marginVertical: "2%"}}
                 onPress={() => { navigation.navigate('QuestionList',{Color:"#33658A"})}}>
                 <Icon name = "login" size = {30} color="#33658A"/>
-                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                    <View style= {{flex: 40, paddingLeft: "5%", paddingTop: "7%", paddingBottom: "6%"}}>
                         <Text style={{fontSize: 20, fontWeight: "700"}}> 파란 감정 </Text>
                         <Text style={{fontSize: 13, marginTop: "3%"}}> 
                         싸늘하게 남겨지는 {"\n"}새파랗게 떨어지는 {"\n"}차분하게 질식하는   </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", height: "16%", marginVertical: "2%"}}
+                <TouchableOpacity style={{flexDirection : "row", borderRadius: 10, backgroundColor: "white", marginVertical: "2%"}}
                 onPress={() => { navigation.navigate('QuestionList',{Color:"#494949"})}}>
                 <Icon name = "login" size = {30} color="#494949"/>
-                    <View style= {{flex: 40,marginLeft: "3%", marginVertical: "5%"}}>
+                    <View style= {{flex: 40, paddingLeft: "5%", paddingTop: "7%", paddingBottom: "6%"}}>
                         <Text style={{fontSize: 20, fontWeight: "700"}}> 검정 감정 </Text>
                         <Text style={{fontSize: 13, marginTop: "3%"}}>
                         고요하게 침잠하는 {"\n"}발자국 남기지 않고 찾아와 곁에 앉은 {"\n"}아무 소리 내지 못하게 집어 삼키는  </Text>
