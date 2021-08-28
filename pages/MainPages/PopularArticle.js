@@ -262,14 +262,22 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, 
                 <View style={{ height: realScreen * 0.35, flexDirection: "row", backgroundColor: "#F5F4F4" }}>
 
                         <View style={{ flex: 1, }}>
+<<<<<<< HEAD
+                                <TouchableOpacity style={{ flex: 1, }} onPress={() => {
+                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey })
+=======
                                 <TouchableOpacity style={{ flex: 1, padding: "5%" }} onPress={() => {
                                         navigation.navigate('MyArticlePopular', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey, index:index ,list:list})
+>>>>>>> 99d73b6f37de77040ec220016603841156e55c34
                                 }}>
-                                        <View style={{ flex: 1, flexDirection: "row" }}>
-                                                <View style={{ flex: 1, marginHorizontal: "5%", marginTop: "2%", padding: "2%", backgroundColor: "white" }}>
+                                        <View style={{ flex: 1, flexDirection: "row", padding: "2%"}}>
+                                                <View style={{ flex: 1, marginHorizontal: "1%", marginTop: "2%", marginBottom: "4%", padding: "2%", backgroundColor: "white" }}>
                                                         <View style={{ flex: 5 }}>
-                                                                <Text style={{ fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
-                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "2%" }} numberOfLines={6} >{chapters.mainText}</Text>
+                                                                <View style={{flexDirection: "row"}}> 
+                                                                        <View style={{flex: 1, backgroundColor: chapters.chColor, height: "70%", marginTop: "10%"}}/>
+                                                                        <Text style={{flex: 20, fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                                                                </View>
+                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "10%" }} numberOfLines={6} >{chapters.mainText}</Text>
                                                         </View>
                                                         <View>
                                                                 <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
@@ -289,7 +297,7 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, 
 
                                 <TouchableOpacity
                                         onPress={() => {navigation.navigate('MyBookPublic', { bookKey: chapters.bookKey })}}
-                                        style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, padding: "5%" }}>
+                                        style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginTop: "5%",marginLeft: "3%"}}>
                                         <View>
                                                 <View style={{ backgroundColor: myitem.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                                                 </View>

@@ -98,7 +98,7 @@ const PostItem=(props)=> {
                 <Text numberOfLines={3} style={styles.bookIndexText}>{questions.summary}</Text>      
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation})}} style={{width:"30%", marginHorizontal:"5%", marginBottom:"5%"}}>
+            <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation, color: questions.Color})}} style={{width:"30%", marginHorizontal:"5%", marginBottom:"5%"}}>
                 <Text style={{marginLeft:"15%",color:"gray"}}>모두의 답변보기</Text>
             </TouchableOpacity>
 
