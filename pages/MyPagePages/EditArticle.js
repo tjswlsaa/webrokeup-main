@@ -8,6 +8,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { CommonActions } from '@react-navigation/native';
+import Icon2 from 'react-native-vector-icons/AntDesign';
 
 const test1 = {
     navigation:""
@@ -66,12 +67,12 @@ const EditArticle = ({ navigation, route }) => {
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 {/* <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{chapters.chapterTitle}</Text> */}
                 <TextInput style={{ fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"6%", backgroundColor: 'rgba(52,52,52,0)',  }}
-                                        multiline={true} defaultValue={chapters.chapterTitle} returnKeyType="done"
+                                        multiline={false} defaultValue={chapters.chapterTitle} returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)}
                                         ref={title_a} />
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%",marginHorizontal:"10%"}}>
+                <ScrollView style={{marginTop:"5%",marginHorizontal:"10%",}}>
                     
 
                 <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
@@ -81,7 +82,21 @@ const EditArticle = ({ navigation, route }) => {
             
                 </ScrollView>
                 {/* </TouchableWithoutFeedback>  */}
+                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", marginRight:"10%", padding:"5%"}} 
+                onPress={() => {
+                    // console.log('MyArticle.js (3), chapters: ',chapters);
+                    firebase_db
+                        .ref(`book/${chapters.bookKey}/chapters/` + chapters.chapterKey)
+                        .set(null)
+                        .then(function () {
+                            Alert.alert("삭제 완료")
+                            navigation.navigate("MyBook", { bookKey: chapters.bookKey })
+                        })
+                }}>
+                                
+                                 <Icon2 name="delete" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon2>
 
+                            </TouchableOpacity>
         </View>
     )
 }

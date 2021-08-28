@@ -1,5 +1,5 @@
 import React, { useState, useRef,useEffect } from 'react';
-import { SafeAreaView, View, Alert, ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput,Dimensions,KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView, View, Alert,TouchableWithoutFeedback, Keyboard,ScrollView, StyleSheet, ImageBackground, Text, TouchableOpacity, TextInput,Dimensions,KeyboardAvoidingView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { Switch } from 'react-native-switch';
 
@@ -230,11 +231,15 @@ const colorF = colorFis(bookKey);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior ="padding" style={{flex:1}}>
+ {/* <KeyboardAwareScrollView style={{flex:1}}> */}
+
+
       <StatusBar style="white" />
         {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
           <View style={{height: "80%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
             {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
               <ScrollView scrollEnabled={true}>
                 <View style={{ alignSelf: "flex-end", marginRight: "6%", marginTop: "5%"}}>
                   <Switch
@@ -255,6 +260,7 @@ const colorF = colorFis(bookKey);
 
                   
                 </View>
+                
                 <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "10%"}}>
                   <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
                   <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600" }}
@@ -269,6 +275,7 @@ const colorF = colorFis(bookKey);
                   onChangeText={text2 => setText2(text2)}
                   ref={maintext_a} />
               </ScrollView>
+              </TouchableWithoutFeedback>
             {/* </ImageBackground> */}
           </View>
           <View style={{backgroundColor: "#fff", height: "15%", marginHorizontal: "5%", marginTop: "3%" }}>
@@ -283,7 +290,7 @@ const colorF = colorFis(bookKey);
             </View>
           </View>
         {/* </ImageBackground> */}
-        </KeyboardAvoidingView>
+        {/* </KeyboardAwareScrollView> */}
     </SafeAreaView>
   )
 }

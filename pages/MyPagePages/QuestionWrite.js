@@ -58,6 +58,9 @@ const test7 = {
   const test13 ={
     chColor: ""
   }
+  const test14 ={
+    CountChapter: ""
+  }
 const QuestionWrite = ({ navigation, route }) => {
     const { questionsKey } = route.params;
     test10.questionsKey=questionsKey
@@ -132,7 +135,7 @@ console.log("titleColor",titleColor)
     console.log("getColorcolorBookList",bookKey)
 
     const [CountChapter,setCountChapter]=useState("")
-
+    test14.CountChapter=CountChapter
     useEffect (()=>{
       let arr = firebase_db.ref(`book/${bookKey}/` + '/both/')
       .on('value', (snapshot) => {
@@ -454,15 +457,11 @@ async function savePage() {
   const {question}=test11
   const {isPublic}=test12
   const {chColor}=test13
+  const {CountChapter}=test14
+  const Newindex= CountChapter
+  console.log("colorAnswerNewindex",Newindex)
 
-  console.log("text1",text1)
-  console.log("text12",text2)
-  console.log("text13",text3)
-  console.log("text14",text4)
-  console.log("chapterKey",chapterKey)
-  console.log("bookKey",bookKey)
-  console.log("user_uid",user_uid)
-  console.log("Color",Color)
+
   const colorAnswers = Color+"Answers"
   console.log("chapterKeychapterKey",chapterKey)
   firebase_db
@@ -506,7 +505,7 @@ navigation.dispatch(state => {
 });
 
 
-navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey})
+navigation.navigate("MyArticle", { bookKey: bookKey, chapterKey: chapterKey, index:Newindex})
 }
 
 
