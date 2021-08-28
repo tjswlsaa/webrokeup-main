@@ -321,7 +321,7 @@ const App = ({ navigation }) => {
         <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "프로필 수정", ...defaultScreenOptions }} />
 
 
-        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle} options={{ title: "말머리에서 수정", ...defaultScreenOptions }} />
+        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle.component} options={{ title: "말머리에서 수정", ...defaultScreenOptions, ...EditArticle.options }} />
         <Stack.Screen
           name="PopularArticle"
           component={PopularArticle}

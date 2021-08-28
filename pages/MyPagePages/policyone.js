@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView,ScrollView, ImageBackground, } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-import paper from '../../assets/paper.png';
 
 const policyone = ({navigation, route}) => {
 
@@ -12,16 +10,16 @@ const policyone = ({navigation, route}) => {
 
         <SafeAreaView style={{ flex: 1 }}>
 
-        <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} >
 
-             <ImageBackground style={{height:"100%",resizeMode:"cover", marginTop:"10%"}} source={paper} >
 
-                    <View style={{height:"80%"}}>
+                    <View style={{height:"90%", backgroundColor:"white", marginHorizontal:"5%", marginVertical:"10%"}}>
                         <View>
-                            <Text style={styles.bookTitle}>서비스약관</Text>  
+                            <Text style={{               fontSize: 20,
+                marginTop:60, marginHorizontal:"10%"
+               }}>서비스약관</Text>  
                         </View>
-                        <ScrollView style={styles.textContainer}>
-                            <Text style={styles.bookText}>
+                        <ScrollView style={{marginHorizontal:"10%",marginVertical:"10%"}}>
+                            <Text style={{lineHeight:"22%"}}>
 
  본 서비스약관(“본 약관”)은 귀하가 당사의 각종 웹사이트, SMS, API, 알림 이메일, 애플리케이션, 버튼 및 위젯을 비롯한 서비스(“본 서비스” 또는 “이별록”)뿐만 아니라 본 서비스상에서 업로드 또는 다운로드 되거나 보여지는 정보, 문구, 그래픽, 사진 또는 기타 자료(이하 통칭하여 “콘텐츠”)에 액세스하여 이를 이용하는 행위 일체를 규율합니다. 귀하가 본 서비스에 액세스하고 이를 이용하는 행위는 귀하가 본 약관에 동의하고 이를 준수하는 것을 전제로 합니다. 본 서비스에 액세스하거나 본 서비스를 이용함으로써, 귀하는 본 약관에 구속되는 것에 동의합니다.
  {"\n"}
@@ -159,9 +157,7 @@ const policyone = ({navigation, route}) => {
                         </ScrollView>
                     </View>
 
-            </ImageBackground>
 
-        </ImageBackground>
         </SafeAreaView>
         )}
     

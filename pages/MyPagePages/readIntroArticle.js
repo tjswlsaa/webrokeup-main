@@ -1,14 +1,24 @@
 import React, {useState,useRef,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Dimensions} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const readIntroArticle = ({navigation, route}) => {
   const introArticle_a = useRef(null);
   const [text, setText] = useState('');
   const [data,setData] = useState('');
   const {bookKey, authorUser_uid, intro} = route.params;
 
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const ScreenWidth = Dimensions.get('window').width   //height
 
+  const headerHeight = useHeaderHeight();
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight-headerHeight-BottomSpace
 
   var user = firebase.auth().currentUser;
 var  user_uid
@@ -19,32 +29,30 @@ if (user != null) {
     <SafeAreaView style={{flex:1}}>
 
         <StatusBar style="white" />
+        <View style={{marginHorizontal:"5%",}}> 
+        
 
-        {authorUser_uid == user_uid ? (
-        <View style={styles.upperButtonContainer}>
-        <TouchableOpacity style={styles.editButton}>                
-                    <Text style={styles.editButtonText} onPress={()=>navigation.navigate("EditIntroArticle", {navigation: navigation, intro:intro, bookKey: bookKey})}>편집</Text>
-                </TouchableOpacity> 
+<View style={{ height: realScreen*0.9,alignSelf: "center", backgroundColor:"white" , marginVertical:"10%", width:"95%",}}>
+        <View style={{height: realScreen*0.1,  marginTop:"10%"}}>
+{authorUser_uid == user_uid ? (
+        <View >
+        <TouchableOpacity  style={{alignSelf:"flex-end", marginRight:"10%"}} onPress={()=>navigation.navigate("EditIntroArticle", {navigation: navigation, intro:intro, bookKey: bookKey})}>
+            <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
+        </TouchableOpacity>
 
         </View>) : 
-        (<View style={{height:100}}></View>)}
-
-        <View style={{height:100}}>
+        (<View></View>)}
+        </View>
+        <View style={{height:realScreen*0.1,marginHorizontal:"5%"}}>
             <Text style={styles.bookTitle}>말머리에서</Text>  
         </View>
-        <View>
+        <View style={{height:realScreen*0.6}}>
         <ScrollView style={styles.textContainer}>
-            <Text style={styles.bookText}>{intro}</Text>
+            <Text style={{lineHeight:"25%", marginHorizontal:"10%"}}>{intro}</Text>
        </ScrollView>
        </View>
-       {/* <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity style={styles.likeButton}>                
-                <Text style={styles.likeButtonText}>공감</Text>
-            </TouchableOpacity>  
-            <TouchableOpacity style={styles.commentButton}>
-                <Text style={styles.commentButtonText}>댓글</Text>
-            </TouchableOpacity>  
-        </View> */}
+</View>
+</View>
     </SafeAreaView>
   )}
 const styles = StyleSheet.create({ 

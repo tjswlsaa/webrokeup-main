@@ -1,58 +1,77 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, KeyboardAvoidingView, Keyboard, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, Dimensions, Keyboard, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, TouchableWithoutFeedback } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
 import paper from '../../assets/paper.png';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { CommonActions } from '@react-navigation/native';
+
+import {useNavigation } from '@react-navigation/native';
+
+const test1 = {
+    text1:""
+  }
+ 
+  const test3 = {
+    bookKey:""
+  }
+  const test4 = {
+    navigation:""
+  }
 const EditIntroArticle = ({ navigation, route }) => {
+    test4.navigation=navigation
     const {intro, bookKey} = route.params;
+    test3.bookKey=bookKey
     const [text1, setText1] = useState(intro);
-    const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-    var user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) {
-        user_uid = user.uid
-    }
-    const saveEditIntroArticle =()=>{
-        let introKey = "intro";
-        var introArticle = text1;
-        firebase_db
-        .ref( `/book/${bookKey}/`+ introKey)
-        .set(introArticle)
-        Alert.alert("집필 완료")
-        navigation.navigate("MyBook", { bookKey: bookKey })
-        //title_a.current.clear();
-        //maintext_a.current.clear();  
-    }
+    test1.text1=text1
+
+
+
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const ScreenWidth = Dimensions.get('window').width   //height
+  
+    const headerHeight = useHeaderHeight();
+    const BottomSpace = getBottomSpace()
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight-headerHeight-BottomSpace
+
     return (
         <SafeAreaView style={{flex:1}}>
         <KeyboardAvoidingView behavior="padding" style={{flex:1}} keyboardVerticalOffset={50}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                <ImageBackground style={styles.bookBackgroundImage} source={{ uri: bookBackground }} >
-                    <TouchableOpacity style={styles.saveButton} onPress={saveEditIntroArticle}>
+                    {/* <TouchableOpacity style={styles.saveButton} onPress={saveEditIntroArticle}>
                         <Text style={{ alignSelf: "center" }}>저장하기</Text>
-                    </TouchableOpacity>
-                    <View style={styles.bookContainer}>
-                        <ImageBackground style={styles.bookImage} source={paper} >
+                    </TouchableOpacity> */}
+                    {/* <View style={styles.bookContainer}>
+
+
                              <Text style={styles.bookTitle}>말머리에서</Text>  
                                 <View style={{ flexDirection: 'row', padding: 10, marginTop: 70 }}>
                                     <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17 }}
                                         multiline={true} defaultValue={intro}  returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)} />
                                 </View>
-                        </ImageBackground>
-                    </View>
-                    <View style={styles.bottomButtonContainer}>
-                        <TouchableOpacity style={styles.likeButton}>
-                            <Text style={styles.likeButtonText}></Text>
-                        </TouchableOpacity>
-                        <Text style={{ marginLeft: 10 }}></Text>
-                        <TouchableOpacity style={styles.commentButton}>
-                            <Text style={styles.commentButtonText}></Text>
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
+
+
+                    </View> */}
+<View style={{ height: realScreen*0.9,alignSelf: "center", backgroundColor:"white" , marginVertical:"10%", width:"90%",}}>
+
+                    <View style={{height:realScreen*0.1,marginHorizontal:"5%", marginTop:"25%"}}>
+                                <Text style={styles.bookTitle}>말머리에서</Text>  
+                            </View>
+                            <View style={{height:realScreen*0.6}}>
+                            <ScrollView style={styles.textContainer}>
+                            <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 14,lineHeight:"25%", }}
+                                        multiline={true} defaultValue={intro}  returnKeyType="done"
+                                        onChangeText={text1 => setText1(text1)} />                        
+                            </ScrollView>
+                        </View>
+</View>
                 </TouchableWithoutFeedback>
         </KeyboardAvoidingView >
         </SafeAreaView>
@@ -124,4 +143,66 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
     }
 });
-export default EditIntroArticle;
+
+
+
+
+
+
+
+
+async function savePage() {
+
+    const {text1}=test1
+    console.log("text1",text1)
+    const {bookKey}= test3
+    console.log("bookKey",bookKey)
+
+    const {navigation}= test4
+    // const navigation = useNavigation();
+
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+        user_uid = user.uid
+    }
+    let introKey = "intro";
+    var introArticle = text1;
+
+
+    firebase_db
+    .ref( `/book/${bookKey}/`+ introKey)
+    .set(text1)
+    Alert.alert("집필 완료")
+
+  
+
+  
+  navigation.navigate("readIntroArticle", { bookKey: bookKey, intro:text1,})
+  }
+  
+  
+  function headerRight() {
+    return (
+    //   <TouchableOpacity onPress={savePage}>
+    //     <Text style={{ fontSize: 15, fontWeight: "600" }}> 완료 </Text>
+    //   </TouchableOpacity>
+      <Icon.Button name='save' size={25}
+      backgroundColor= 'white' color="black" 
+      onPress={savePage()}
+      
+      >
+    </Icon.Button>
+  
+    );
+  }
+  const options = {
+    headerRight, 
+  };
+  
+  export default {
+    component: EditIntroArticle,
+    options,
+  };
+
+

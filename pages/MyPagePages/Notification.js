@@ -2,8 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, Switch, Touchable} from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
-const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
-import paper from '../../assets/paper.png';
 
 
 const Notification = ({navigation}) => {
@@ -11,21 +9,13 @@ const Notification = ({navigation}) => {
         
         <SafeAreaView style={{ flex: 1 }}>
 
-        <ImageBackground style={{height:"100%",resizeMode:"cover"}} source={{ uri: bookBackground }} >
-
-             <ImageBackground style={{height:"100%",resizeMode:"cover", marginTop:"10%"}} source={paper} >
-
-             <View style={{height:"80%"}}>
-                        <View>
-                            <Text style={styles.bookTitle}>환영합니다 :)</Text>  
-                        </View>
+             <View style={{height:"90%", backgroundColor:"white", marginHorizontal:"5%", marginVertical:"10%", }}>
+                
                         <ScrollView style={styles.textContainer}>
-                            <Text style={styles.bookText}/>
+                        <Text style={{marginVertical:"10%", marginHorizontal:"10%"}}>환영합니다 :)</Text>  
                         </ScrollView>
             </View>
-        </ImageBackground>
 
-        </ImageBackground>
         </SafeAreaView>
     )
 }
