@@ -254,21 +254,21 @@ function ChapterItem(props) {
                 <ScrollView style={{marginTop:"5%"}}>
                 {item.type== "감정 일기"? (
 
-                <Text style={{fontSize: 15, marginLeft:"6%"}}>{item.mainText}</Text>
+                <Text style={{fontSize: 15, marginLeft:"6%", lineHeight:23}}>{item.mainText}</Text>
                 ) :(
 
                             <View>
                                                 <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q1}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%",}}>{item.mainText}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.mainText}</Text>
                                                 </View>
                                                 <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q2}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%"}}>{item.text3}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.text3}</Text>
                                                 </View>
                                                 <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q3}</Text>
-                                                <Text style={{fontSize: 15,  marginVertical:"5%"}}>{item.text4}</Text>
+                                                <Text style={{fontSize: 15,  marginVertical:"5%",lineHeight:23}}>{item.text4}</Text>
                                                 </View>
                             </View>
                 )}
