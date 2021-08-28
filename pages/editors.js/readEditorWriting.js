@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, Dimensions, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
+import { SafeAreaView, Dimensions, View, Animated,  Image, Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import moment from 'moment';
@@ -10,8 +10,11 @@ import { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import Swipeable from 'react-native-swipeable-row';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 // import DeleteButton from './DeleteButton'
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 const window = Dimensions.get("window");
 
 // import {
@@ -43,6 +46,13 @@ const readEditorWriting = ({ navigation, route }) => {
   if (user != null) {
     user_uid = user.uid;
   }
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const ScreenWidth = Dimensions.get('window').width   //height
+
+  const headerHeight = useHeaderHeight();
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight-headerHeight-BottomSpace
 
 
   const [writing, setWriting] =useState({
@@ -154,6 +164,19 @@ const likeRef = firebase_db.ref(`editor/${writingKey}/` + '/likes/');
       })
   }, [])
 
+  const [cloverColor, setCloverColor] = useState("#c1c1c1")
+
+  useEffect(()=>{
+    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+    if (meliked == '') {
+        // console.log("likedUsers: " + likedUsers)
+        setCloverColor("#c1c1c1")
+    } else {
+        // console.log("likedUsers: " + likedUsers)
+        setCloverColor("green")
+    }
+  }, [likedUsers])
+
 
   useEffect (()=>{
     let arr = firebase_db.ref(`editor/${writingKey}/` + '/comments/')
@@ -218,6 +241,7 @@ const deleteWriting = async()=> {
 }
 
 
+
 const createdAt= new Date(writing.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
 ////console.log('comment.regdate',comment.regdate)
 ////console.log('createdAt',createdAt)
@@ -247,159 +271,85 @@ const displayedAt=(createdAt)=>{
 
 
       <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{height:450}}>
-          {writing.creator==user_uid ? (          <View style={{marginTop:10,flexDirection:"row", height:30,  alignSelf:"flex-end", alignItems:"flex-end"}}>
-                <TouchableOpacity style={{ backgroundColor: "#C4C4C4", borderRadius: 5, justifyContent: "center", width:50, height:25}} 
-                onPress={()=>navigation.navigate("editWriting", { writingKey: writingKey, text:writing.text, title:writing.title,})}
-                >                
-                    <Text style={{alignSelf:"center"}}>편집</Text>
-                </TouchableOpacity>  
-                <TouchableOpacity style={{ backgroundColor: "#C4C4C4", marginLeft:20, marginRight:20, borderRadius: 5, justifyContent: "center", width:50, height:25}} 
-               onPress={()=>deleteWriting()}>                
-                    <Text style={{alignSelf:"center"}}>삭제</Text>
-                </TouchableOpacity> 
-            </View> ) :(
-
-<View></View>
-
-            ) }
+      <ScrollView style={{backgroundColor:"white"}}>
 
 
 
-          <View style={{marginTop:20, marginLeft:10, marginRight:10, backgroundColor:"blue",padding:30, borderRadius:10, justifyContent:"center"}}>
-                  <Text style={{marginBottom:10}}>{userinfo.iam}</Text> 
-                  <Text>{writing.title}</Text>               
+
+          <View style={{backgroundColor:"white",justifyContent:"center"}}>
+                  <Image style={{height:realScreen*0.4, width:"100%",}} source={{uri:writing.image}}></Image>
+                  
+                  <View style={{backgroundColor:"#f5f5f5"}}>
+                  <Text style={{marginLeft:"5%", fontSize:20, marginVertical:"5%",marginHorizontal:"5%",}}>{writing.title}</Text>               
               
-                  <Text>{writing.text}</Text>               
-                  <Text style={{marginTop:30,alignSelf:"flex-end"}}>{displayedAt(createdAt)}</Text>                 
+                    <View style={{  flexDirection: "row", alignItems: "center", marginLeft: "5%", marginBottom:"5%"}}>
+                      <TouchableOpacity style={styles.likeButton} onPress={async () => {
+
+                        let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+                        const isMeliked = (meliked > '');
+                        const isMeliked2 = ((meliked == '') == false);
+ 
+                        let likeCount = 0;
+         
+                        if (meliked == '') {
+                          await likeRef.child(user_uid).set({
+                            user_uid: user_uid,
+                            regdate: new Date().toString(),
+                          });
+                          // likeReload();
+                          likeRef.on('value', (snapshot) => {
+                            //  var likeCount = snapshot.numChildren();
+                            likeCount = snapshot.numChildren();
+                            setLikeCount(likeCount)
+                          })
+                          await setCloverColor("green")
+
+                        } else {
+                          // console.log ("좋아요 취소")
+                          // likeRef.child(user_uid).set(null)
+                          await likeRef.child(user_uid).remove();
+                          // likeReload();
+                          likeRef.on('value', (snapshot) => {
+                            //  var likeCount = snapshot.numChildren();
+                            likeCount = snapshot.numChildren();
+                            setLikeCount(likeCount)
+                          })
+                          await setCloverColor("#C1C1C1")
+
+                        }
+
+
+                        firebase_db.ref(`editor/${writingKey}/`).child("likeCount").set({ "likeCount": likeCount })
+
+                        Alert.alert('MyArticle.likeButton.onPress() end');
+                      }}>
+                        <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
+
+                      </TouchableOpacity>
+                      <Text style={{ marginLeft: 5 }}> {likeCount} </Text>
+                      {/* <TouchableOpacity style={{marginLeft:15}}>
+                                    <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
+                                  </TouchableOpacity>
+                                  <Text style = {{marginLeft: 10}}> {commentsNumber} </Text> */}
+
+                      <Text style={{marginLeft:"5%", color:"grey"}}>{displayedAt(createdAt)}</Text>                 
+                      </View>
+
+                    </View>
+
+
+
+
+
+
+
+                  <Text style={{marginLeft:"5%", fontSize:15, marginVertical:"5%", marginHorizontal:"5%", lineHeight:"25%"}}>{writing.text}</Text>               
           </View>
 
-          <View style={{backgroundColor:"pink", flexDirection:"row", alignItems:"center", marginLeft:15, marginTop:10}}>
-                <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
-                   // console.log('MyArticle.likeButton.onPress()');
-                   // console.log({likedUsers});
-                    // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
-                    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-                     const isMeliked = (meliked > '');
-                     const isMeliked2 = ((meliked == '') == false);
-                    // console.log("likedUsers: " +likedUsers)
-                    // console.log("meliked: " + meliked)
-                    // console.log({isMeliked,isMeliked2});
-                     let likeCount = 0; 
-                     // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
-                     // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
-                     if (meliked == ''){
-                         await likeRef.child(user_uid).set({
-                             user_uid: user_uid,
-                             regdate: new Date().toString(),
-                         });
-                         // likeReload();
-                         likeRef.on('value', (snapshot) =>{
-                            //  var likeCount = snapshot.numChildren();
-                             likeCount = snapshot.numChildren();
-                             setLikeCount(likeCount)
-                         })
-                     } else {
-                        // console.log ("좋아요 취소")
-                         // likeRef.child(user_uid).set(null)
-                         await likeRef.child(user_uid).remove();
-                         // likeReload();
-                         likeRef.on('value', (snapshot) =>{
-                            //  var likeCount = snapshot.numChildren();
-                             likeCount = snapshot.numChildren();
-                             setLikeCount(likeCount)
-                         })
-                     }
-                    // console.log({likeCount});
-                    // console.log("여기여기: " + likeCount) 
- 
-                     firebase_db.ref(`editor/${writingKey}/`).child("likeCount").set({"likeCount" : likeCount})
-
-                     Alert.alert('MyArticle.likeButton.onPress() end');
-                }}>                
-                            <Icon name="like2" size={20} color="black" style={styles.addIcon}/>
-
-                </TouchableOpacity>  
-                <Text style = {{marginLeft: 10}}> {likeCount} </Text>
-                <TouchableOpacity style={{marginLeft:15}}>
-                  <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
-                </TouchableOpacity>
-                <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
-
-
-
-                </View>
-
-
-
-                 <View style={{backgroundColor:"yellow",}} >
-
-                                            {comments.length == 0 ? (
-                                            <View style= {{  justifyContent:"center", alignItems:"center", marginTop:"55%" }}>
-                                            <Text style={{fontSize:15}}>댓글을 작성해주세요!!</Text>
-                                            </View>
-                                            ) : 
-
-                                                comments.map(item => {
-                                                // <Text>item.key: {item.key}</Text>
-                                                test3.item=item
-                                                return(
-                                                <WritingComment
-                                                    key={item.key}
-                                                    comment={item}
-                                                    creator={item.creator}
-                                                    text={item.text}
-                                                    regdate={item.regdate}
-                                      
-                                                />)
-                                                })
-
-                                        } 
-
-                                            
-
-                 </View> 
+  
                  </ScrollView>
 
 
-                <KeyboardAvoidingView behavior="padding" 
-                  style={{flex:1}}
-                  keyboardVerticalOffset={120} >
-
-                <View style={{        flexDirection:"row",
-                                      backgroundColor:"#C4C4C4",
-                                      height:50,
-                                      alignItems:"center",
-                                      justifyContent:"center",
-                                      borderRadius:5,}}>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <TextInput
-                            placeholder='댓글을 남겨주세요'
-                            textAlign='justify'
-                            style={{        width:"85%",
-                                            backgroundColor:"white",
-                                            height:"80%",
-                                            borderRadius:5,
-                                            justifyContent:"center",}}
-                            multiline = {true}
-                            ref={text_a}
-                            onChangeText={(text) => setText(text)} />
-                </TouchableWithoutFeedback> 
-        
-                        <TouchableOpacity style={{        height:30,
-                                                          width:30,
-                                                          alignItems:"center",
-                                                          justifyContent:"center",
-                                                          borderRadius:100,
-                                                          marginLeft:6}}     
-                                          keyboardDismissMode="on-drag"
-                                          keyboardShouldPersistTaps='handled'
-                                          onPress={() => onCommentSend()}>
-                            <Icon name="checkcircleo" size={30} color="black" style={styles.addIcon}/>
-                        </TouchableOpacity>
-
-                </View>
-                </KeyboardAvoidingView >
 
 
 

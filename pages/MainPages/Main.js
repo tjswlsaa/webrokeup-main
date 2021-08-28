@@ -541,8 +541,8 @@ const WritingItem=(props)=> {
                 <View style={{backgroundColor:"#A2AD9C", width: 190, height: "100%", borderRadius: 10}}>
                     <Image style={{height:"40%", borderRadius: 10}} source={{uri:writing.image}}></Image>
                     <View style={{margin: "10%"}}>
-                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberofLines={3}>{writing.title}</Text>
-                        <Text style={{fontSize: 13, marginTop: 10}} numberofLines={3}>{writing.summary}</Text>
+                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberOfLines={2}>{writing.title}</Text>
+                        <Text style={{fontSize: 13, marginTop: 10}} numberOfLines={3}>{writing.summary}</Text>
                     </View>
 
                 </View>

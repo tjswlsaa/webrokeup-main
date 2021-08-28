@@ -99,11 +99,11 @@ const WritingItem=(props)=> {
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10, height:realScreen*0.5}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
-                <Image style={{height:"70%", borderRadius: 10, width:"100%"}} source={{uri:writing.image}}></Image>
+                <Image style={{height:realScreen*0.25, borderRadius: 10, width:"100%"}} source={{uri:writing.image}}></Image>
 
-                <Text style={{fontSize:18, marginHorizontal:"3%", marginTop:"5%", fontWeight:"500"}} >{writing.title}</Text>
+                <Text style={{fontSize:18, marginHorizontal:"3%", marginTop:"5%", fontWeight:"500"}} numberOfLines={2}>{writing.title}</Text>
 
-                <Text style={{fontSize:15, marginTop:"2%",marginHorizontal:"3%",}} numberofLines={3}>{writing.summary}</Text>
+                <Text style={{fontSize:15, marginTop:"2%",marginHorizontal:"3%",}} numberOfLines={3}>{writing.summary}</Text>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}
             <View style={{flexDirection:"row"}}>
