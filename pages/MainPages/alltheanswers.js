@@ -14,7 +14,8 @@ const test1 = {
   const test2 = {
     list:""
   }
-const alltheanswers = ({ navigation, route }) => {
+
+  const alltheanswers = ({ navigation, route }) => {
 
     const { questionsKey, color } = route.params;
     console.log("bookkey color", questionsKey)
@@ -77,8 +78,8 @@ const alltheanswers = ({ navigation, route }) => {
     // console.log("answers",answers)
 
     const [list, setList] = useState([]);
-    test2.list=list
-    const [hotcolor, setHotColor] = useState("#21381c")
+    test2.list=list;
+    const [hotcolor, setHotColor] = useState(color)
     const [newcolor, setNewColor] = useState("#E9E9E9")
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -147,41 +148,45 @@ const alltheanswers = ({ navigation, route }) => {
     console.log("liestalltheanswers", list)
 
     return (
-        <SafeAreaView style={{flex:1}}>
-                                    <View style={{ flexDirection: "row", height: "3%", marginVertical: "2%" }}>
-                                <TouchableOpacity
-                                        style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
-                                        onPress={() => viewHot()}>
-                                        <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 답변 </Text>
-                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                        style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
-                                        onPress={() => viewNew()}>
-                                        <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
-                                        <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
-                                </TouchableOpacity>
-                        </View>
-                <Text style={{alignSelf:"center", fontSize:"20", marginTop:"2%"}}>{questions.title}</Text>
-                <Text style={{alignSelf:"center", fontSize:"15", marginTop:"2%", marginHorizontal:"10%"}}>{questions.intro}</Text>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView>
+                <View style={{ }}>
+                    <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%" }}>{questions.title}</Text>
+                    <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "2%", marginHorizontal: "10%", marginBottom: "5%" }}>{questions.intro}</Text>
+                </View>
+                <TouchableOpacity style={{ height: "3%", width: "50%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
+                    <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
+                </TouchableOpacity>
+                <View style={{ backgroundColor: "#fafafa", marginTop: "2%" }}>
+                    <View style={{ flexDirection: "row", height: "3%", marginTop: "2%" }}>
+                        <TouchableOpacity
+                            style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
+                            onPress={() => viewHot()}>
+                            <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 답변 </Text>
+                            <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
+                            onPress={() => viewNew()}>
+                            <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
+                            <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
+                        </TouchableOpacity>
+                    </View>
+                    {/* <ScrollView style={{height:500}}> */}
 
-                <ScrollView style={{height:500}}>
-
-                {list.map((item,index)  => {
-                            return (
-                                <PostItem
-                                    navigation={navigation}
-                                    key = {item.key}
-                                    answers={item}
-                                    index={index}
-
-                                />
-                            )
-                        })}
-                </ScrollView>
-                
-
-
+                    {list.map((item, index) => {
+                        return (
+                            <PostItem
+                                navigation={navigation}
+                                key={item.key}
+                                answers={item}
+                                questionsKey={questionsKey}
+                                index={index}
+                            />
+                        )
+                    })}
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -192,13 +197,21 @@ const PostItem = (props) => {
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
 
-    const { answers, navigation, questionsKey } = props;
+    const { answers, navigation, questionsKey, index } = props;
     const { questions } = test1
+    const { list } = test2; 
 
-    const {list} =test2
+    console.log("answers.chapterKey", answers.chapterKey)
+    console.log("answers.chapterKey", questions)
 
-    // console.log("answers.chapterKey",answers.chapterKey)
-    // console.log("answers.listlist",list)
+
+    const Color = getColor(questionsKey);
+    const colorQuestion = Color + "Questions"
+    const colorAnswers = Color + "Answers"
+    const likeRef = firebase_db.ref(`questions/${colorQuestion}/${questionsKey}/likes`);
+
+    console.log("answers.chapterKey",answers.chapterKey)
+    console.log("answers.listlist",list)
 
 
     function getColor(questionsKey) {
@@ -259,10 +272,14 @@ const PostItem = (props) => {
 
 
     return (
-        <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
+        <View style={{ backgroundColor: "white", marginTop: 5, borderRadius: 10, marginLeft: 10, marginRight: 10 }}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('MyArticleQuestions', { bookKey:answers.bookKey, chapterKey:answers.chapterKey,navigation: navigation, list:list, index:index}) }}>
-                <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{answers.chapterTitle}</Text>
+                <View style={{ flexDirection: "row" }}>
+                    <Text style={{ flex: 1, fontSize: 16, fontWeight: "500", marginLeft: "3%" }} numberOfLines={3}>{answers.chapterTitle}</Text>
+                    <View style={{ alignSelf: "flex-end", marginRight: "3%" }}>
+                        <Text style={{ fontSize: 10 }}>{userinfo.iam}</Text>
+                    </View>
+
                 </View>
                 <View style={{ alignContent: "center", marginTop: 10, fontSize: 14 }}>
                     <Text style={{ marginLeft: "3%", marginVertical: "1%" }} numberOfLines={1}>Q1: {answers.mainText}</Text>
