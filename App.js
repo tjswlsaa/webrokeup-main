@@ -46,6 +46,8 @@ import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
+import EditQuestion from './pages/MyPagePages/EditQuestion';
+
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -264,6 +266,14 @@ const App = ({ navigation }) => {
             title: "챕터 수정하기",
             ...defaultScreenOptions,
             ...EditArticle.options
+
+          }}
+        />
+                <Stack.Screen name="EditQuestion" component={EditQuestion.component}
+          options={{
+            title: "챕터 수정하기2",
+            ...defaultScreenOptions,
+            ...EditQuestion.options
 
           }}
         />

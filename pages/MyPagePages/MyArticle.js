@@ -46,6 +46,7 @@ const MyArticle = ({ navigation, route }) => {
     // const {myitem, chapters, chapterTitle} = route.params;
     const { bookKey, chapterKey } = route.params;
     test1.bookKey = bookKey
+    console.log("EditArticlechapters22233",bookKey)
 
     const [swiper, setSwiper] = useState(null);
 
@@ -60,7 +61,7 @@ const MyArticle = ({ navigation, route }) => {
     const [index, setIndex] = useState(0);
     useEffect(() => {
         setIndex(route.params.index);
-    }, []);
+    }, [index]);
     console.log("myarticleindex",index)
 
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -103,7 +104,6 @@ const MyArticle = ({ navigation, route }) => {
                 })
         }
     
-        console.log("getChapters",chapter)
     
 
 
@@ -245,23 +245,16 @@ function ChapterItem(props) {
         <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
-            <View style={{alignSelf:"flex-end"}}>
-                    {item.isPublic == true ? 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="unlock" size={15} color="black" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 12, marginLeft: "10%", marginTop: "3%"}}>공개</Text>
-                    </View>
-                    )
-            : 
-                    (
-                    <View style={{flexDirection: "row"}}>
-                        <Icon name="lock" size={15} color="#20543F" style={{ marginLeft: 20}}/>
-                        <Text style={{fontSize: 11, marginLeft: "5%", marginTop: "2%",}}>비공개</Text>
-                    </View>   
-                    )
-                }
-            </View>
+       {item.type== "감정 일기"? (
+
+<View>
+  {item.creator== user_uid? (
+
+        <TouchableOpacity  onPress={() => navigation.navigate("EditArticle", {chapters: item, })}>
+            <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
+        </TouchableOpacity>
+  ):(<View></View>)}
+
             <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
@@ -269,12 +262,28 @@ function ChapterItem(props) {
                 </View>
             </View>
                 <ScrollView style={{marginTop:"5%"}}>
-                {item.type== "감정 일기"? (
 
                 <Text style={{fontSize: 15}}>{item.mainText}</Text>
-                ) :(
+                </ScrollView>
+</View> ) : (
 
-                            <View>
+<View>
+  {item.creator== user_uid? (
+
+        <TouchableOpacity  onPress={() => navigation.navigate("EditQuestion", {bookKey: bookKey, chapters: item})}>
+            <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
+        </TouchableOpacity>
+  ):(<View></View>)}
+
+            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
+                <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
+                <View style={{height:realScreen*0.1, flex:25,}}>
+                <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
+                </View>
+            </View>
+                <ScrollView style={{marginTop:"5%"}}>
+
+                <View>
                                                 <View style={{ marginBottom:realScreen*0.03}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q1}</Text>
                                                 <Text style={{fontSize: 15, marginVertical:"5%",}}>{item.mainText}</Text>
@@ -287,13 +296,16 @@ function ChapterItem(props) {
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{item.Q3}</Text>
                                                 <Text style={{fontSize: 15,  marginVertical:"5%"}}>{item.text4}</Text>
                                                 </View>
-                            </View>
-                )}
+                </View>
                 </ScrollView>
+</View>
+)}
+
+
         </View>
-        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"10%",  }}>
+        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"4%" }}>
        
-            <TouchableOpacity style={{marginTop:"4%", }} onPress={async () => {
+            <TouchableOpacity style={{marginTop:"4%", marginLeft:"5%"}} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
@@ -332,17 +344,37 @@ function ChapterItem(props) {
                 }
                 firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey).child("likeCount").set(likeCount)
             }}>
-                <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
+                <Clover name="clover" size={18} color={cloverColor} style={{marginLeft:"0%",marginTop:"4%"}} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "3%",marginTop:"4%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "0%",marginTop:"4%", }}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
-                style={{marginTop:"4%", marginLeft:"5%" }}
+                style={{marginTop:"4%", marginLeft:"4%" }}
             >
-                <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
+                <Icon name="message1" size={18} color="grey" style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "3%",marginTop:"4%",  }}> {commentsNumber} </Text>
-            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"20%" }}>
+            <Text style={{ marginLeft: "0%",marginTop:"4%",  }}> {commentsNumber} </Text>
+            <View style={{marginLeft: "4%",marginTop:"4%",}}>
+                    {item.isPublic == true ? 
+                    (
+                    <View style={{flexDirection: "row"}}>
+                        <Icon name="unlock" size={18} color="grey" style={{ marginLeft: "4%",}}/>
+                        <Text style={{fontSize: 12, marginLeft: "0%", marginTop: "4%"}}>공개</Text>
+
+                        
+                    </View>
+                    )
+            : 
+                    (
+                    <View style={{flexDirection: "row"}}>
+                        <Icon name="lock" size={18} color="#20543F" style={{ marginLeft: "4%"}}/>
+                        <Text style={{fontSize: 11, marginLeft: "0%", marginTop: "4%",}}>비공개</Text>
+                    </View>   
+                    )
+                }
+
+            </View>
+            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"10%" }}>
                 <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
             </View>
         </View>
@@ -426,21 +458,13 @@ function headerRight() {
     if (user != null) { user_uid = user.uid }
 
     return (
-        <View>
-        {item.creator == user_uid ? (
-        <Button
-            onPress={() => navigation.navigate("EditArticle", {bookKey: bookKey, chapters: item})}
-            title="수정"
-            color="#000"
-        />
-        ):(<View>
+
         <Button
             onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}
-            title="책 보러가기"
+            title="책 보기"
             color="#000"
         />
-        </View>)}
-        </View>
+
 
     );
 }
