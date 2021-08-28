@@ -233,7 +233,7 @@ function MyChapterItem(props) {
     const [likeCount, setLikeCount] = useState(0);
     const [likedUsers, setLikedUsers] = useState([]);
     const [commentsNumber, setCommentsNumber] = useState(0);
-    const likeRef = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/likes/');
+    const likeRef = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/likes/');
     const headerHeight = useHeaderHeight();
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -264,7 +264,7 @@ function MyChapterItem(props) {
     }, [])
 
     useEffect(() => {
-        let arr = firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey + '/comments/')
+        let arr = firebase_db.ref(`book/${bookKey}/both/` + chapters.chapterKey + '/comments/')
             .on('value', (snapshot) => {
                 var commentsNumber = snapshot.numChildren();
                 setCommentsNumber(commentsNumber)

@@ -457,9 +457,9 @@ async function BookComponent (props) {
     }
           };
 
-          useEffect(() => {
-            getMyItem();
-        }, []);
+    useEffect(() => {
+    getMyItem();
+}, []);
 //   if(!myitem){
 
 //      setSpinner(true)}
