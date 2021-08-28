@@ -8,6 +8,7 @@ import BookComponent from '../../components/BookComponent';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PopularArticle = ({ navigation, route }) => {
         const [list, setList] = useState([]);
@@ -268,13 +269,13 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount})
                                                                         <View style={{flex: 1, backgroundColor: chapters.chColor, height: "70%", marginTop: "10%"}}/>
                                                                         <Text style={{flex: 20, fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                                                                 </View>
-                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "10%" }} numberOfLines={6} >{chapters.mainText}</Text>
+                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "10%" }} numberOfLines={4} >{chapters.mainText}</Text>
                                                         </View>
                                                         <View>
                                                                 <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
                                                         </View>
                                                         <View style={{ flex: 1, flexDirection: "row" }}>
-                                                                <Icon name="like2" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
+                                                                <Clover name="clover" size={15} color="grey" style={{ marginLeft: 10, marginTop: 5 }} />
                                                                 <Text style={styles.bookIndexText}>{likeCount}</Text>
                                                                 <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
                                                                 <Text style={styles.bookIndexText}>{commentsCount}</Text>
