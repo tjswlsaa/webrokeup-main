@@ -29,6 +29,12 @@ const test2 = {
     user_uid: ''
 }
 
+const test3 = {
+    questionKey: '',
+    likeCount: '',
+    title: '',
+    intro: '',
+}
 
 const test4 = {
     chapteritem:""
@@ -36,6 +42,10 @@ const test4 = {
 
 const test5 ={
     qurationchapters:""
+}
+
+const test6 ={
+    index: ''
 }
 
 const Main = ({navigation}) => {
@@ -265,13 +275,15 @@ useEffect(() => {
                             } else {
                                     list = [...list, ...Object.values(question)]; // spread를 통한 리스트 병합
                             }
-                            const listFiltered = Object.values(question)
+                            const listFiltered = Object.values(list)
 
                             listFiltered.sort(function (a, b) {
                                     return (b.likeCount) - (a.likeCount)
                             })
                             
                             setList3(listFiltered);
+                            console.log("setList3 " + list3)
+
 
                             const listoften = [];
                             if (listFiltered.length >= 1) {
@@ -308,7 +320,7 @@ useEffect(() => {
                             setSelectedList3(listoften);
                     })
             })
-}, []) // 여기에 원래 list 가 있었음... 이거 없애니 렉은 안걸림
+}, []) 
 console.log("setSelectedList3",selectedList3)
 
 
@@ -327,7 +339,7 @@ console.log("setSelectedList3",selectedList3)
                         </View>
                         <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center" }}
                         onPress={() => { navigation.navigate('popularbook')}}>
-                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
                 <View style={{height:realScreen*0.45, width:"100%",}}> 
@@ -338,12 +350,12 @@ console.log("setSelectedList3",selectedList3)
                             return(
 
                                                
-                                                        <BookComponent2
-                                                        navigation={navigation}
-                                                        book={book}
-                                                        bookKey={book.bookKey}
+                                <BookComponent2
+                                navigation={navigation}
+                                book={book}
+                                bookKey={book.bookKey}
 
-                                                         />
+                                    />
 
                             )})}
 
@@ -361,7 +373,7 @@ console.log("setSelectedList3",selectedList3)
                         </View>
                         <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045, justifyContent:'center' }}
                             onPress={() => { navigation.navigate('QuestionPallete')}}>
-                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
 
                 </View>
@@ -372,25 +384,26 @@ console.log("setSelectedList3",selectedList3)
                         loop={true}
                         showsPagination={false}
                         onSwiper={setAutoSwiper}
-                        style={{ marginTop: "5%" }} 
+                        style={{ marginTop: "5%" }}
                         showsButtons={false}
                         autoplay={true}
                         autoplayTimeout={3}
                         resizeMode="contain"
                     >
-                                {selectedList3.map(question => (
 
+                                {selectedList3.map((question, index) => (
+                                    test3.question=question,
+                                    test6.index=index,
 
-                                                
-                                                            <QuestionComponent
-                                                            key={question.chapterKey}
-                                                            navigation={navigation}
-                                                            question={question}
-                                                            questionsKey={question.questionsKey}
-
-                                                            />
-
-                                ))}
+                                    <QuestionComponent
+                                    key={question.chapterKey}
+                                    navigation={navigation}
+                                    question={question}
+                                    questionsKey={question.questionsKey}
+                                    index={index}
+                                    />
+                                ))
+                                }
                     </Swiper>
                 </View>
 
@@ -407,7 +420,7 @@ console.log("setSelectedList3",selectedList3)
                         </View>
                         <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center" }}
                         onPress={() => { navigation.navigate('PopularArticle')}}>
-                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
                 <View style={{height:realScreen*0.45, width:"100%",}}> 
@@ -424,18 +437,18 @@ console.log("setSelectedList3",selectedList3)
                     >
 
                         {selectedList.map((chapter, index) => {
-
+                            // console.log("bookcomponent selectedList " + selectedList)
                             return(
 
                                     <View style={{flexDirection:"row", height: realScreen*0.4, backgroundColor:"#FBFBFB", width:"90%" }}>
                                                
-                                                        <BookComponent
-                                                        navigation={navigation}
-                                                        chapter={chapter}
-                                                        bookKey={chapter.bookKey}
-                                                        index={index}
-                                                        selectedList={selectedList}
-                                                         />
+                                        <BookComponent
+                                        navigation={navigation}
+                                        chapter={chapter}
+                                        bookKey={chapter.bookKey}
+                                        index={index}
+                                        selectedList={selectedList}
+                                            />
                                     </View>
 
                             )})}
@@ -457,7 +470,7 @@ console.log("setSelectedList3",selectedList3)
                     </View>
                     <TouchableOpacity style={{ flex:1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center"}}
                         onPress={() => { navigation.navigate('editorBoard')}}>
-                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
+                            <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                     </TouchableOpacity>
                 </View>
                 <View style= {{flex:8}}>  
