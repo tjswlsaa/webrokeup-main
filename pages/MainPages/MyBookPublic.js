@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, ScrollView, Button, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Dimensions, ScrollView, Button, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import { firebase_db } from '../../firebaseConfig';
@@ -10,6 +10,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BookComponent from '../../components/BookComponent';
 import {useNavigation} from '@react-navigation/native';
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const test3 = {
     navigation: ''
@@ -17,7 +18,7 @@ const test3 = {
 
 const MyBookPublic = ({ navigation, route }) => {
     test3.navigation = navigation
-    const { bookKey, user_uid } = route.params;
+    const { bookKey, userinfo } = route.params;
     const [myitem, setMyitem] = useState({
         bookKey: '',
         bookTitle: '',
@@ -27,6 +28,12 @@ const MyBookPublic = ({ navigation, route }) => {
         url: '',
         user_uid: '',
     });
+
+    var user = firebase.auth().currentUser;
+    var  user_uid
+    if (user != null) {
+      user_uid = user.uid;  
+    }
 
     const getMyItem = async ()  => {
         await firebase_db
@@ -51,9 +58,7 @@ const MyBookPublic = ({ navigation, route }) => {
         getMyItem();
     }, []);
     
-    console.log("mybookuseruid",myitem.user_uid)
-    const author = myitem.user_uid
-    console.log("author" + author)
+
 
     const firstColor= "#9E001C"
     const secondColor="#F6AE2D"
@@ -128,48 +133,47 @@ const MyBookPublic = ({ navigation, route }) => {
             })
     }
 
-    // console.log("getChapters11",chapter)
-    // const arraychapter= Object.values(chapter)
-    // // console.log("getChapters22",arraychapter)
-    // // console.log("getChapters",chapter.isPublic)
-    // // const myBookFiltered = myBook.filter(filteredMyBook => filteredMyBook.user_uid == user_uid)   
-    // const myChapterFiltered = arraychapter.filter(filteredMyChapter => filteredMyChapter.isPublic == true)
-    // // console.log("myChapterFiltered",myChapterFiltered)
-    
-    const [userinfo, setUserinfo] = useState({
-        iam: "익명의 지은이",
-        selfLetter: "익명의 지은이입니다."
-    });
+    const alert = async ()=> {
 
-    const getUserinfo = async () => {
-        await firebase_db.ref(`users/${user_uid}`)
-              .on('value', (snapshot) => {
-                  console.log('..')
-                  console.log({snapshot})
-                  const newUserinfo = {};
-                  snapshot.forEach((child)=>{
-                      const key = child.key;
-                      const value = child.val();
-                      newUserinfo[key] = value
-                  })
-                  setUserinfo({
-                      ...userinfo,
-                      ...newUserinfo
-                  })
-                })
-                console.log({userinfo})
-            }
+        const alertfunction=()=>{
+          firebase_db
+          .ref(`alert/${bookKey}/`)
+          .set({
+            user_uid: user_uid,
+            regdate: new Date().toString(),
+            bookkey:bookKey
+          })
+          .then(function(){
+              Alert.alert("신고 완료")
+         })}
+         Alert.alert(
+          '알림',
+          '신고 하시겠습니까?',
+          [
       
-    useEffect(()=> {
-        getUserinfo()
-    }, []);
+            {
+              text: '취소',
+              // onPress: () => console.log('취소되었습니다'),
+              style: 'cancel',
+            },
+            {text: '신고', onPress: () => alertfunction()},
+      
+          ],
+          {cancelable: false},
+        );
+      
+      }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
                 <View style={{backgroundColor:"#F5F4F4"}}>
 
+                <TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
 
+                </TouchableOpacity>
                             <View style={{ height: realScreen * 0.35, width: realScreen * 0.33, alignSelf: "center", }}>
                                 <View style={{ flex: 1 }}>
             

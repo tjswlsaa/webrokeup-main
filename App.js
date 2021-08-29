@@ -98,7 +98,8 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="GoogleCheck"
           component={GoogleCheck}
-          options={{ headerShown: true, ...defaultScreenOptions,
+          options={{
+            headerShown: true, ...defaultScreenOptions,
           }}
         />
         <Stack.Screen
@@ -139,6 +140,8 @@ const App = ({ navigation }) => {
           name="MyArticle"
           component={MyArticle}
           options={{
+            title: "감정록",
+
             headerShown: true,
             ...defaultScreenOptions,
           }}
@@ -146,10 +149,12 @@ const App = ({ navigation }) => {
 
 
 
-<Stack.Screen
+        <Stack.Screen
           name="MyArticleQuestions"
           component={MyArticleQuestions.component}
           options={{
+            title: "감정록",
+
             headerShown: true,
             ...defaultScreenOptions,
             ...MyArticleQuestions.options
@@ -161,6 +166,8 @@ const App = ({ navigation }) => {
           name="QuestionList"
           component={QuestionList}
           options={{
+            title: "감정 질문지",
+
             headerShown: true,
             ...defaultScreenOptions,
           }}
@@ -170,6 +177,8 @@ const App = ({ navigation }) => {
           name="MyBook"
           component={MyBook.component}
           options={{
+            title: "나의 감정책",
+
             headerShown: true,
             ...defaultScreenOptions,
             ...MyBook.options,
@@ -179,14 +188,18 @@ const App = ({ navigation }) => {
           name="MyBookPublic"
           component={MyBookPublic.component}
           options={{
+            title: "감정책",
+
             headerShown: true,
             ...defaultScreenOptions,
           }}
         />
-      <Stack.Screen
+        <Stack.Screen
           name="onboarding"
           component={onboarding}
           options={{
+            title: "도움말",
+
             headerShown: true,
             ...defaultScreenOptions,
           }}
@@ -195,14 +208,15 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="emailSignup"
           component={emailSignup}
-          options={{ headerShown: true,  ...defaultScreenOptions,}}
+          options={{ headerShown: true, ...defaultScreenOptions, title: "이메일 회원가입",
+        }}
         />
 
         <Stack.Screen
           name="policyoneforlogin"
           component={policyoneforlogin}
           options={{
-            headerShown: true, title: "서비스 약관",...defaultScreenOptions
+            headerShown: true, title: "서비스 약관", ...defaultScreenOptions
 
           }}
         />
@@ -210,23 +224,25 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="policytwoforlogin"
           component={policytwoforlogin}
-          options={{ headerShown: true, title: "개인정보 처리방침",...defaultScreenOptions }}
+          options={{ headerShown: true, title: "개인정보 처리방침", ...defaultScreenOptions }}
         />
         <Stack.Screen
           name="emailLogin"
           component={emailLogin}
-          options={{ headerShown: true, ...defaultScreenOptions}}
-            />
+          options={{ headerShown: true, ...defaultScreenOptions
+          ,title: "이메일 로그인",
+        }}
+        />
 
         <Stack.Screen
           name="EditBook"
           component={EditBook.component}
-          options={{ headerShown: true, ...defaultScreenOptions, ...EditBook.options, }}
+          options={{ headerShown: true, ...defaultScreenOptions, ...EditBook.options, title:"감정책 수정"}}
         />
-                <Stack.Screen
+        <Stack.Screen
           name="popularbook"
           component={popularbook}
-          options={{ headerShown: true, ...defaultScreenOptions }}
+          options={{ headerShown: true, ...defaultScreenOptions, title:"인기 감정책" }}
         />
         <Stack.Screen
           name="MakeNewBook"
@@ -252,7 +268,7 @@ const App = ({ navigation }) => {
         />
         <Stack.Screen name="NewPage" component={NewPage.component}
           options={{
-            title: "새챕터 만들기",
+            title: "감정 일기 쓰기",
             ...defaultScreenOptions,
             ...NewPage.options
 
@@ -260,36 +276,37 @@ const App = ({ navigation }) => {
         />
         <Stack.Screen name="QuestionWrite" component={QuestionWrite.component}
           options={{
-            title: "새챕터 만들기",
+            title: "감정 질문지 쓰기",
             ...defaultScreenOptions,
             ...QuestionWrite.options
 
           }}
-        />        
+        />
         <Stack.Screen name="EditArticle" component={EditArticle.component}
           options={{
-            title: "챕터 수정하기",
+            title: "감정 일기 수정하기",
             ...defaultScreenOptions,
             ...EditArticle.options
 
           }}
         />
-                <Stack.Screen name="EditQuestion" component={EditQuestion.component}
+        <Stack.Screen name="EditQuestion" component={EditQuestion.component}
           options={{
-            title: "챕터 수정하기2",
+            title: "감정 질문지 수정",
             ...defaultScreenOptions,
             ...EditQuestion.options
 
           }}
         />
         <Stack.Screen name="readIntroArticle" component={readIntroArticle} options={{ title: "말머리에서", ...defaultScreenOptions }} />
-        <Stack.Screen name="Notification" component={Notification} options={{title: "공지사항",  ...defaultScreenOptions}}/>
+        <Stack.Screen name="Notification" component={Notification} options={{ title: "공지사항", ...defaultScreenOptions }} />
 
         <Stack.Screen
           name="editorMakeNewWriting"
           options={{ headerShown: true }}
           component={editorMakeNewWriting}
           options={{
+            title:"에디터 글쓰기",
             ...defaultScreenOptions,
           }}
         />
@@ -297,6 +314,7 @@ const App = ({ navigation }) => {
           name="readEditorWriting"
           component={readEditorWriting}
           options={{
+            title:"감정 에디터",
             ...defaultScreenOptions,
           }}
         />
@@ -311,6 +329,8 @@ const App = ({ navigation }) => {
           name="QuestionPallete"
           component={QuestionPallete}
           options={{
+            title: "감정 질문지",
+
             ...defaultScreenOptions,
           }}
         />
@@ -318,6 +338,8 @@ const App = ({ navigation }) => {
           name="editorBoard"
           component={editorBoard}
           options={{
+            title: "필미필미 에디터",
+
             ...defaultScreenOptions,
           }}
         />
@@ -326,12 +348,12 @@ const App = ({ navigation }) => {
         <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "프로필 수정", ...defaultScreenOptions }} />
 
 
-        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle} options={{ title: "말머리에서 수정", ...defaultScreenOptions,  }} />
+        <Stack.Screen name="EditIntroArticle" component={EditIntroArticle} options={{ title: "말머리에서 수정", ...defaultScreenOptions, }} />
         <Stack.Screen
           name="PopularArticle"
           component={PopularArticle}
           options={{
-            title: "오늘의 이별록",
+            title: "오늘의 감정록",
             headerTintColor: "#21381c",
             ...defaultScreenOptions,
           }} />
@@ -339,7 +361,7 @@ const App = ({ navigation }) => {
           name="PopularBook"
           component={PopularBook}
           options={{
-            title: "오늘의 이별록",
+            title: "오늘의 감정책",
             ...defaultScreenOptions,
           }} />
 
@@ -353,7 +375,7 @@ const App = ({ navigation }) => {
             ...communityMakeNewPost.options
 
           }} />
-                  <Stack.Screen
+        <Stack.Screen
           name="alltheanswers"
           component={alltheanswers}
           options={{
@@ -365,12 +387,12 @@ const App = ({ navigation }) => {
           name="readPost"
           component={readPost.component}
           options={{ ...readPost.options, ...defaultScreenOptions, title: "게시판" }} />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="editPost"
-        component={editPost.component}
+          component={editPost.component}
           options={{ title: "게시판 글 수정하기", ...defaultScreenOptions, ...editPost.options }}
 
-        />
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   )
