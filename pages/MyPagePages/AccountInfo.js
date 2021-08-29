@@ -67,36 +67,32 @@ const AccountInfo = ({navigation}) => {
 
      
     return(
-        <View style= {{flex: 1, backgroundColor: "white"}}>
-                <View style={{flex: 1,  marginHorizontal : 10,}}>
-                    <View style={{flex:1}}>
-                        <View style={{borderwidth: 5, borderColor: "grey"}}></View>
-                        <Text style={{marginVertical: 15, fontSize: 15, fontWeight: "bold"}}>계정 정보</Text>
-                    </View>
+        <View style= {{flex: 1, backgroundColor: "#fafafa"}}>
+                <View style={{flex: 1,  marginHorizontal : "3%",}}>
+                        <View style={{ borderwidth: 5, borderColor: "grey"}}></View>
+                        <Text style={{ marginTop: "5%", marginVertical: 15, fontSize: 17, fontWeight: "bold"}}>계정 정보</Text>
 
-                        <View style={{flex: 1, flexDirection: "row", }}>
-                                <Text style={{flex: 2, fontSize: 15, marginVertical: 15}}> 회원가입 경로 </Text>
-                                <Text style={{flex: 3, marginVertical: 15}}> {userinfo.method} </Text>
+                        <View style={{height: "7%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                                <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 회원가입 경로 </Text>
+                                <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.method} </Text>
                             </View>
-                        <View style={{flex: 1, flexDirection: "row", }}>
-                            <Text style={{flex: 2, fontSize: 15, marginVertical: 15}}> 이메일 </Text>
-                            <Text style={{flex: 3, marginVertical: 15}}> {userinfo.email} </Text>
+                        <View style={{height: "7%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                            <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 이메일 </Text>
+                            <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.email} </Text>
                         </View>
                 </View>
-                
-                <View style={{flex:3}}>
-
-                    <TouchableOpacity style={{backgroundColor: "white", marginTop: 5, height: 50}} onPress={() => firebase.auth().signOut()}>
-                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignContent: "center", height: 20}}>로그아웃</Text>
+                <View style={{marginBottom: "5%", marginHorizontal:"3%"}}>
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", marginTop: 5, height: 50 }} onPress={() => firebase.auth().signOut()}>
+                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center", height: 20}}>로그아웃</Text>
                     </TouchableOpacity>
                     <View style={{borderwidth: 5, borderColor: "grey"}}></View>
 
-                    <TouchableOpacity style={{backgroundColor: "white", height: 50, marginTop: 5}} 
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", height: 50, marginTop: 5}} 
                     onPress={() => deleteAccount()}>
      
-                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600"}}>탈퇴하기</Text>
+                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center"}}>탈퇴하기</Text>
                     </TouchableOpacity>
-               </View> 
+                </View>
         </View>
     )
 }

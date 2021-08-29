@@ -530,7 +530,8 @@ async function handleChapter() {
     bookKey:bookKey,
     // isPublic:isPublic,
     CountChapter:0,
-    Color:Color
+    Color:Color,
+    likeCountSum: 0,
     // iam:userinfo.iam,
     // selfLetter:userinfo.selfLetter
   });
