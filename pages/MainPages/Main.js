@@ -329,7 +329,7 @@ console.log("setSelectedList3",selectedList3)
         <View>
             <StatusBar style= "white" />
             <ScrollView>
-            <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
+            <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center" }}>
                 <Text style={{fontSize: 18, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>FEEL ME FILL ME</Text>
             </View>
             <View style={{ height: realScreen*0.47, backgroundColor: "#fafafa"}}>
@@ -342,7 +342,6 @@ console.log("setSelectedList3",selectedList3)
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
-                <View style={{height:realScreen*0.45, width:"100%",}}> 
 
                 <ScrollView style={{ marginHorizontal: "5%"}} horizontal = {true}>
 
@@ -358,7 +357,6 @@ console.log("setSelectedList3",selectedList3)
                                     />
 
                             )})}
-
                 </ScrollView>
                                        
 
@@ -589,7 +587,14 @@ function BookComponent2 (props) {
     return (
         <View style={{height: realScreen*0.25, backgroundColor:"#FBFBFB", width:ScreenWidth*0.95}}>
 
-                                            <TouchableOpacity style={{width:ScreenWidth*0.95,  height:realScreen * 0.25 , marginTop:"5%",}} onPress={() => {navigation.navigate('MyArticleQuestions', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , list:selectedList}) }}>
+                                            <TouchableOpacity style={{width:ScreenWidth*0.95,  height:realScreen * 0.25 , marginTop:"5%", shadowColor: "#595959",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 10}} onPress={() => {navigation.navigate('MyArticleQuestions', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , list:selectedList}) }}>
                                                                                     <View style={{ width: ScreenWidth * 0.85,padding:"5%",backgroundColor:"white", marginHorizontal:"2%", flex:1, marginLeft:"4%"}}>
                                                                                             <View style={{flexDirection:"row", flex:1}}>
                                                                                                     <View style={{backgroundColor:chapter.chColor, flex:1, marginTop:"2%"}}> 
@@ -631,9 +636,16 @@ function QuestionComponent (props) {
 
 
     return (
-        <View style={{ height: realScreen * 0.25, width: ScreenWidth*0.95}}>
+        <View style={{ height: realScreen * 0.25, width: ScreenWidth*0.95, shadowColor: "#595959",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        elevation: 10,}}>
 
-            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.Color })}>
+            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.zzzzzz })}>
                 <View style={{ width: ScreenWidth * 0.85, padding: "5%", backgroundColor: "white", marginHorizontal: "5%", flex: 1,  }}>
                     <View style={{ flexDirection: "row", flex: 1 ,}}>
                         <View style={{ backgroundColor: question.Color, flex: 1, marginTop: "2%" }}>
