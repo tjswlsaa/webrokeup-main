@@ -330,9 +330,9 @@ console.log("setSelectedList3",selectedList3)
             <StatusBar style= "white" />
             <ScrollView>
             <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
-                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>Feel Me Fill Me</Text>
+                <Text style={{fontSize: 18, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>FEEL ME FILL ME</Text>
             </View>
-            <View style={{ height: realScreen*0.47, }}>
+            <View style={{ height: realScreen*0.47, backgroundColor: "#fafafa"}}>
                     <View style={{height: realScreen*0.05, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%",justifyContent:"center"}}>
                         <View style={{ flex: 4 }} >
                             <Text style={{ fontSize: 18, fontWeight: "700", }}> 오늘의 감정책 </Text>
@@ -633,12 +633,12 @@ function QuestionComponent (props) {
     return (
         <View style={{ height: realScreen * 0.25, width: ScreenWidth*0.95}}>
 
-            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey })}>
+            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.Color })}>
                 <View style={{ width: ScreenWidth * 0.85, padding: "5%", backgroundColor: "white", marginHorizontal: "5%", flex: 1,  }}>
                     <View style={{ flexDirection: "row", flex: 1 ,}}>
                         <View style={{ backgroundColor: question.Color, flex: 1, marginTop: "2%" }}>
                         </View>
-                        <Text style={{ flex: 20, fontSize: 20, fontWeight: "700", marginTop: "4%", marginHorizontal: "5%", }}>{question.title}</Text>
+                        <Text style={{ flex: 20, fontSize: 17, fontWeight: "700", marginTop: "4%", marginHorizontal: "5%", }}>{question.title}</Text>
                     </View>
                     <View style={{ flex: 2 }}>
                         <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "5%", marginBottom: "5%", }} numberOfLines={3} >{question.summary}</Text>

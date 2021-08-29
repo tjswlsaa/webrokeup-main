@@ -321,7 +321,6 @@ const displayedAt=(createdAt)=>{
 
                         firebase_db.ref(`editor/${writingKey}/`).child("likeCount").set({ "likeCount": likeCount })
 
-                        Alert.alert('MyArticle.likeButton.onPress() end');
                       }}>
                         <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
 
