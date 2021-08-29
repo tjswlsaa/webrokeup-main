@@ -145,7 +145,7 @@ const emailSignup = ({ navigation }) => {
         email: userCredential.user.email,
         user_uid: userCredential.user.uid,
         iam: userCredential.user.uid.substring(0, 6)+".지은이", 
-        selfLetter: "안녕하세요. 이별록 작가 " + userCredential.user.uid.substring(0, 6) + " 입니다.",
+        selfLetter: "안녕하세요. 감정록 작가 " + userCredential.user.uid.substring(0, 6) + " 입니다.",
         created_at: Date.now(),
         gender:gender,
         birth:moment(new Date(date)).format('YYYY년 MM월 DD일')

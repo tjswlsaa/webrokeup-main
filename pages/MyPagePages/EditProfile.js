@@ -51,10 +51,10 @@ const EditProfile = ({navigation}) => {
 
                 <View style={{flex: 1, marginTop: 10, height: "30%", backgroundColor: "white"}}>
                     {/* <View style = {{flex:2}}> */}
-                        <View style={{flex:1, flexDirection: "row", marginTop: 20, }}>
+                        <View style={{flex:1, flexDirection: "row", marginTop: 20, backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
                             <TextInput 
                                 color = "#20543F"
-                                style={{marginLeft: 30, marginTop: 20, height: 40, fontWeight: "bold", fontSize: 25, alignSelf: "flex-start"}}
+                                style={{marginLeft: 10, marginTop: 20, height: 40, fontWeight: "bold", fontSize: 25, alignSelf: "flex-start",}}
                                 returnKeyType="done"
                                 multiline={false}
                                 defaultValue = {userinfo.iam} 

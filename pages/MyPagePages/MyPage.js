@@ -272,14 +272,14 @@ const MyPage = ({ navigation }) => {
                 </View>
                 <View style={{ height: realScreen * 0.7, width: "94%", alignSelf: "center", marginBottom: 10, padding:"2%"}}>
                     
-                    <View style={{flexDirection:"row"}}>
+                    <View style={{flexDirection:"row", marginLeft:"2%"}}>
                         <Text style={{marginTop:"3%"}}>내 감정의 색깔은? </Text>
                         <TouchableOpacity style={{marginLeft:"45%", marginTop:"3%"}}>
                             <Text>감정도움말</Text>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{ flexDirection: "row", marginTop:"5%", marginLeft:"1%"}}>
+                    <View style={{ flexDirection: "row", marginTop:"5%", marginLeft:"2.5%"}}>
 
                                 {firstBookKey == undefined ? (
 
@@ -373,7 +373,7 @@ const MyPage = ({ navigation }) => {
 
 
 
-                    <View style={{ flexDirection: "row",marginLeft:"1%" }}>
+                    <View style={{ flexDirection: "row",marginLeft:"2.5%" }}>
 
                     {secondBookKey == undefined ? (
 

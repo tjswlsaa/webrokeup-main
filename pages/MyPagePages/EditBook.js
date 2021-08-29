@@ -73,7 +73,7 @@ const EditBook = ({ navigation, route }) => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
         if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!')
+          alert('갤러리 접근을 허용해주세요. 책 사진을 불러오기 위해 갤러리가 사용됩니다.');
         }
       }
     })()
