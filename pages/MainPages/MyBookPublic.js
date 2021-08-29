@@ -17,7 +17,7 @@ const test3 = {
 
 const MyBookPublic = ({ navigation, route }) => {
     test3.navigation = navigation
-    const { bookKey } = route.params;
+    const { bookKey, user_uid } = route.params;
     const [myitem, setMyitem] = useState({
         bookKey: '',
         bookTitle: '',
@@ -94,9 +94,7 @@ const MyBookPublic = ({ navigation, route }) => {
     const BookNameStart = getBookNameStart(bookKey);
     // console.log("mybook Color", BookNameStart)
 
-    const user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) { user_uid = user.uid }
+ 
     const headerHeight = useHeaderHeight();
     const ScreenWidth = Dimensions.get('window').width  //screen 너비
     const ScreenHeight = Dimensions.get('window').height   //height
@@ -144,7 +142,7 @@ const MyBookPublic = ({ navigation, route }) => {
     });
 
     const getUserinfo = async () => {
-        await firebase_db.ref(`users/${myitem.user_uid}`)
+        await firebase_db.ref(`users/${user_uid}`)
               .on('value', (snapshot) => {
                   console.log('..')
                   console.log({snapshot})

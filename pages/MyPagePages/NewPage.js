@@ -253,7 +253,7 @@ const colorF = colorFis(bookKey);
   
                 <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "10%", alignContent:"center"}}>
                   <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
-                  <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600", alignSelf:"center", justifyContent:"center", alignContent:"center", marginBottom:"5%" }}
+                  <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600", alignSelf:"center", justifyContent:"center", alignContent:"center", marginBottom:"5%", lineHeight:23 }}
                     multiline={false} placeholder="감정을 한 단어로 적어주세요"
                     returnKeyType="done"
                     onChangeText={text1 => setText1(text1)}

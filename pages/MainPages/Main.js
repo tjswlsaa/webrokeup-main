@@ -320,13 +320,13 @@ console.log("setSelectedList3",selectedList3)
             <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>Feel Me Fill Me</Text>
             </View>
-            <View style={{ height: realScreen*0.5, }}>
+            <View style={{ height: realScreen*0.47, }}>
                     <View style={{height: realScreen*0.05, flexDirection:"row", marginTop: "5%", marginHorizontal: "3%",justifyContent:"center"}}>
                         <View style={{ flex: 4 }} >
                             <Text style={{ fontSize: 18, fontWeight: "700", }}> 오늘의 감정책 </Text>
                         </View>
                         <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center" }}
-                        onPress={() => { navigation.navigate('PopularArticle')}}>
+                        onPress={() => { navigation.navigate('popularbook')}}>
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:18}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
@@ -354,7 +354,7 @@ console.log("setSelectedList3",selectedList3)
                 </View>
             </View>
 
-            <View style={{ height: realScreen*0.35, backgroundColor: "#FAFAFA" }}>
+            <View style={{ height: realScreen*0.33, backgroundColor: "#FAFAFA" }}>
                 <View style={{flex:1, flexDirection: "row", marginHorizontal: "3%"}}>
                         <View style={{ flex: 4}}> 
                             <Text style={{ fontSize: 18, fontWeight: "700" }}> 감정 질문지 </Text>

@@ -47,7 +47,7 @@ import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
 import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
-
+import popularbook from './pages/MyPagePages/popularbook';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -222,6 +222,11 @@ const App = ({ navigation }) => {
           name="EditBook"
           component={EditBook.component}
           options={{ headerShown: true, ...defaultScreenOptions, ...EditBook.options, }}
+        />
+                <Stack.Screen
+          name="popularbook"
+          component={popularbook}
+          options={{ headerShown: true, ...defaultScreenOptions }}
         />
         <Stack.Screen
           name="MakeNewBook"

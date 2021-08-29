@@ -92,7 +92,21 @@ const PopularArticle = ({ navigation, route }) => {
                                         if (listFiltered.length >= 10) {
                                         listoften.push(listFiltered[9]);
                                         }
-
+                                        if (listFiltered.length >= 11) {
+                                                listoften.push(listFiltered[10]);
+                                                }
+                                        if (listFiltered.length >= 12) {
+                                        listoften.push(listFiltered[11]);
+                                        }
+                                        if (listFiltered.length >= 13) {
+                                                listoften.push(listFiltered[12]);
+                                                }
+                                                if (listFiltered.length >= 14) {
+                                                        listoften.push(listFiltered[13]);
+                                                        }
+                                                        if (listFiltered.length >= 15) {
+                                                                listoften.push(listFiltered[14]);
+                                                                }
                                         setSelectedList(listoften);
                                 })
                         })
@@ -137,6 +151,21 @@ const PopularArticle = ({ navigation, route }) => {
                 if (hotlist.length >= 10) {
                 listoften.push(hotlist[9]);
                 }
+                if (hotlist.length >= 11) {
+                        listoften.push(hotlist[10]);
+                        }
+                if (hotlist.length >= 12) {
+                        listoften.push(hotlist[11]);
+                }
+                if (hotlist.length >= 13) {
+                        listoften.push(hotlist[12]);
+                        }
+                        if (hotlist.length >= 14) {
+                                listoften.push(hotlist[13]);
+                                }
+                                if (hotlist.length >= 15) {
+                                        listoften.push(hotlist[14]);
+                                        }
                 setSelectedList(listoften);
                 // console.log("viewHot done")
                 // console.log ("list 2 (hot): " + {list});
@@ -182,6 +211,21 @@ const PopularArticle = ({ navigation, route }) => {
                 if (newlist.length >= 10) {
                 newlistoften.push(newlist[9]);
                 }
+                if (newlist.length >= 11) {
+                        newlistoften.push(newlist[10]);
+                        }
+                if (newlist.length >= 12) {
+                        newlistoften.push(newlist[11]);
+                }
+                if (newlist.length >= 13) {
+                        newlistoften.push(newlist[12]);
+                        }
+                        if (newlist.length >= 14) {
+                                newlistoften.push(newlist[13]);
+                                }
+                                if (newlist.length >= 15) {
+                                        newlistoften.push(newlist[14]);
+                                        }
                 setSelectedList(newlistoften);
                 // console.log("viewNew done")
                 // console.log("list 3 (new): " + {list});
@@ -235,17 +279,17 @@ const PopularArticle = ({ navigation, route }) => {
                                 <TouchableOpacity
                                         style={{ flex: 1, marginLeft: "2%", marginRight: "1%" }}
                                         onPress={() => viewHot()}>
-                                        <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 이별록 </Text>
+                                        <Text style={{ alignSelf: "center", fontSize: 17 }} > 인기 감정록 </Text>
                                         <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: hotcolor, marginTop: "3%" }} />
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                         style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
                                         onPress={() => viewNew()}>
-                                        <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 이별록 </Text>
+                                        <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 감정록 </Text>
                                         <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
                                 </TouchableOpacity>
                         </View>
-                        <View style={{ flex: 5, backgroundColor: "#E9E9E9" }}>
+                        <View style={{ flex: 5, backgroundColor: "#F5F4F4" }}>
                                 <ScrollView style={{ flex: 1, marginHorizontal: "2%", backgroundColor: "#FAFAFA" }}>
                                         {selectedList.map((chapters,index) => (
                                                 <ChapterItem
@@ -355,55 +399,37 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, 
 
 
         return (
-                <View style={{ height: realScreen * 0.35, flexDirection: "row", backgroundColor: "#F5F4F4" }}>
+                <View style={{ height: realScreen * 0.35, flexDirection: "row",
+                 backgroundColor: "#F5F4F4" 
+                
+                }}>
 
-                        <View style={{ flex: 1, }}>
+                        <View style={{ flex: 1,borderRadius:10 }}>
                                 <TouchableOpacity style={{ flex: 1, }} onPress={() => {
                                         navigation.navigate('MyArticleQuestions', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey, list:selectedList, index:index})
                                 }}>
-                                        <View style={{ flex: 1, flexDirection: "row", padding: "2%"}}>
-                                                <View style={{ flex: 1, marginHorizontal: "1%", marginTop: "2%", marginBottom: "4%", padding: "2%", backgroundColor: "white" }}>
-                                                        <View style={{ flex: 5 }}>
-                                                                <View style={{flexDirection: "row"}}> 
-                                                                        <View style={{flex: 1, backgroundColor: chapters.chColor, height: "70%", marginTop: "10%"}}/>
-                                                                        <Text style={{flex: 20, fontSize: 16, fontWeight: "700", marginHorizontal: "5%", marginTop: "15%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
+                                        <View style={{ flex: 1, flexDirection: "row", padding: "2%",}}>
+                                                <View style={{ flex: 1, marginHorizontal: "1%", marginTop: "3%", padding: "2%", backgroundColor: "white", borderRadius:15 }}>
+                                                        <View style={{ flex: 6 }}>
+                                                                <View style={{flexDirection: "row", height:realScreen*0.05, marginTop:"2%"}}> 
+                                                                        <View style={{flex: 1, backgroundColor: chapters.chColor, marginTop: "2%", marginLeft:"5%"}}/>
+                                                                        <Text style={{flex: 40, fontSize: 16, fontWeight: "700", marginHorizontal: "3%", marginTop: "3%" }} numberOfLines={1}>{chapters.chapterTitle}</Text>
                                                                 </View>
-                                                                <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "10%" }} numberOfLines={4} >{chapters.mainText}</Text>
-                                                        </View>
-                                                        <View>
-                                                                <Text style={{ marginLeft: "5%", fontSize: 10 }}>{chapters.Kregdate}</Text>
+                                                                <Text style={{ fontWeight: "500", marginHorizontal: "6%", marginTop: "9%", marginLeft:"10%" }} numberOfLines={3} >{chapters.mainText}</Text>
                                                         </View>
                                                         <View style={{ flex: 1, flexDirection: "row" }}>
-                                                                <Clover name="clover" size={15} color="grey" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                                <Text style={styles.bookIndexText}>{likeCount}</Text>
-                                                                <Icon name="message1" size={15} color="black" style={{ marginLeft: 10, marginTop: 5 }} />
-                                                                <Text style={styles.bookIndexText}>{commentsCount}</Text>
+                                                                <Clover name="clover" size={15} color="grey" style={{ marginLeft: "5%", marginTop: 5 }} />
+                                                                <Text style={{marginTop:"1%", marginLeft:"3%"}}>{likeCount}</Text>
+                                                                <Icon name="message1" size={15} color="black" style={{ marginLeft: "5%", marginTop: 5 }} />
+                                                                <Text style={{marginTop:"1%", marginLeft:"3%"}}>{commentsCount}</Text>
+                                                                <Text style={{ marginLeft: "40%", fontSize: 10, marginTop:"2%" }}>{chapters.Kregdate}</Text>
+
                                                         </View>
                                                 </View>
                                         </View>
                                 </TouchableOpacity>
                         </View>
   
-                        <View style={{ flex: 1 }}>
-
-                                <TouchableOpacity
-                                        onPress={() => {navigation.navigate('MyBookPublic', { bookKey: chapters.bookKey })}}
-                                        style={{ flexDirection: "row", height: ScreenHeight * 0.3, width: ScreenWidth * 0.25, marginTop: "5%",marginLeft: "3%"}}>
-                                        <View>
-                                                <View style={{ backgroundColor: myitem.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
-                                                </View>
-                                                <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
-                                                        <Image source={{ uri: myitem.url }} style={{ zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}></Image>
-                                                        <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
-                                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{myitem.defaultTitle}</Text>
-                                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
-                                                                <Text style={{ marginTop: "20%", marginLeft: "10%", fontSize: 10 }}>{userinfo.iam}</Text>
-                                                        </View>
-                                                </View>
-                                        </View>
-                                </TouchableOpacity>
-
-                        </View>
 
                 </View>
         )

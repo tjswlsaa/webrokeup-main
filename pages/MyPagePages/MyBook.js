@@ -146,7 +146,7 @@ const MyBook = ({ navigation, route }) => {
     const author = myitem.user_uid
     console.log("author" + author)
     useEffect(()=>{
-        firebase_db.ref(`users/${author}`)
+        firebase_db.ref(`users/${user_uid}`)
         .on('value', (snapshot)=>{
             const newUserinfo = {};
             snapshot.forEach((child)=>{
