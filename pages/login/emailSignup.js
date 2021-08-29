@@ -77,16 +77,16 @@ const emailSignup = ({ navigation }) => {
     //// console.log({ email, password, confirmPassword });
     //// console.log({gender, date})
 
-    if (gender == ""){
-      Alert.alert("성별을 입력주세요");
-      return;
-    }
+    // if (gender == ""){
+    //   Alert.alert("성별을 입력주세요");
+    //   return;
+    // }
    // console.log('gender is',gender)
 
-    if (moment(new Date(date)).format('YYYY년 MM월 DD일')== moment(new Date()).format('YYYY년 MM월 DD일')){
-      Alert.alert("생년월일을 입력해주세요");
-      return;
-    }
+    // if (moment(new Date(date)).format('YYYY년 MM월 DD일')== moment(new Date()).format('YYYY년 MM월 DD일')){
+    //   Alert.alert("생년월일을 입력해주세요");
+    //   return;
+    // }
    // console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
    // console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
 
@@ -170,8 +170,10 @@ const emailSignup = ({ navigation }) => {
             <Text style={{ fontSize: 20, marginBottom: "10%", marginTop:"2%" }}> 필미필미에 오신걸 환영합니다! </Text>
             <View style={{flex:1}}>
             <View style={{ flex: 1 }}>
-              <View>
+              <View style={{flexDirection:"row"}}>
                 <Text style={{ fontSize: 15 }}> 성별 </Text>
+                <Text style={{ fontSize: 15 , color:"grey"}}> (선택사항 입니다) </Text>
+
               </View>
               <Picker
                 placeholder="선택"
@@ -205,7 +207,10 @@ const emailSignup = ({ navigation }) => {
               </Picker>
             </View>
             <View style={{ flex: 1, marginTop: "10%" }}>
+              <View style={{flexDirection:"row"}}>
               <Text style={{ fontSize: 15, }}> 생년월일</Text>
+              <Text style={{ fontSize: 15 , color:"grey"}}> (선택사항 입니다) </Text>
+              </View>
               <TouchableHighlight
                 style={{ flex: 1, borderWidth: 1, borderColor: "#E2E2E2", marginTop: "2%" }}
                 activeOpacity={0}

@@ -24,7 +24,7 @@ const LoginScreen  = ({navigation,route}) => {
 
           <View style={{alignSelf:"center"}}>
 
-          <TouchableOpacity style={{ alignSelf: "center", }} onPress={() => navigation.navigate('GoogleCheck')}>
+          {/* <TouchableOpacity style={{ alignSelf: "center", }} onPress={() => navigation.navigate('GoogleCheck')}>
               <View style={{ justifyContent: 'center', marginTop: 15, flexDirection: "row" }}>
 
                 <Icon2 name="logo-google" size={20} color="black" style={{ }} />
@@ -32,7 +32,7 @@ const LoginScreen  = ({navigation,route}) => {
                 <Text style={{ fontSize: 15,marginLeft:"5%" }}> 구글로 시작하기 </Text>
               </View>
 
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity style={{ alignSelf: "center",marginTop:"10%" , marginLeft:"4%"}} onPress={() => { navigation.navigate("emailLogin") }}>
               <View style={{ flexDirection: "row" }}>

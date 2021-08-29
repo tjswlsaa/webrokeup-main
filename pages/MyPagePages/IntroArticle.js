@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Dimensions, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, Touchable, Alert, SafeAreaView } from 'react-native';
+import { Dimensions, StyleSheet, Text,Keyboard, TouchableWithoutFeedback, TextInput, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, Touchable, Alert, SafeAreaView } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { firebase_db } from '../../firebaseConfig';
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 const test1 = {
@@ -75,9 +76,18 @@ const IntroArticle = ({ navigation, route }) => {
     })
   }, [])
   return (
+    <KeyboardAwareScrollView
+    
+    extraHeight={0}
+    scrollEnabled={true}
+    enableAutomaticScroll={true}
+    // contentContainerStyle={{height:-30}}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    contentContainerStyle ={{height:realScreen*0.98}}
+    >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView behavior="padding"
-        style={{ flex: 1 }}>
+
         <View style={{ backgroundColor: "#F5F4F4", flex: 1}}>
           <StatusBar style="white" />
           <View style={{height: "96%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
@@ -97,8 +107,10 @@ const IntroArticle = ({ navigation, route }) => {
             </ScrollView>
           </View>
         </View>
-      </KeyboardAvoidingView >
     </SafeAreaView>
+    </TouchableWithoutFeedback>
+
+</KeyboardAwareScrollView>
   )
 }
 const styles = StyleSheet.create({

@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, Dimensions,NativeModules, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
+import { SafeAreaView, Dimensions,NativeModules, View, Animated,  Alert, Button, FlatList, Keyboard, ScrollView, TouchableHighlight, StyleSheet, TouchableWithoutFeedback, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase, AsyncStorage } from 'react-native';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
+
+
 import { dismissKeyboard } from 'react-native-keyboard-dismiss-view';
 // import Swipeout from 'react-native-swipeout';
 // import SwipeToDelete from 'react-swipe-to-delete-component';
@@ -213,6 +216,40 @@ const onCommentSend = () => {
 }
 
 
+var alarmKey = Math.random().toString().replace(".","");
+
+const alert = async ()=> {
+
+  const alertfunction=()=>{
+    firebase_db
+    .ref(`alert/${postKey}/`)
+    .set({
+      user_uid: user_uid,
+      regdate: new Date().toString(),
+      postKey:postKey
+    })
+    .then(function(){
+        Alert.alert("신고 완료")
+   })}
+   Alert.alert(
+    '알림',
+    '신고 하시겠습니까?',
+    [
+
+      {
+        text: '취소',
+        // onPress: () => console.log('취소되었습니다'),
+        style: 'cancel',
+      },
+      {text: '신고', onPress: () => alertfunction()},
+
+    ],
+    {cancelable: false},
+  );
+
+}
+
+
 const deletePost = async()=> {
 
  const deletefunction=()=>{
@@ -356,7 +393,11 @@ const displayedAt=(createdAt)=>{
                 </TouchableOpacity> 
             </View> ) :(
 
-<View></View>
+<TouchableOpacity style={{flexDirection:"row",marginLeft:70,  width:50, height:25,marginTop:"5%", }} onPress={()=>alert()}>                        
+  <Icon2 name="alarm-light-outline" size={15} color="black" style={styles.addIcon} />
+  <Text style={{marginLeft:"6%", marginTop:"3%",color:"grey"}}>신고</Text>
+
+</TouchableOpacity>
 
             ) }
 
@@ -384,7 +425,8 @@ const displayedAt=(createdAt)=>{
                                                     creator={item.creator}
                                                     text={item.text}
                                                     regdate={item.regdate}
-                                      
+                                                    commentKey={commentKey}
+
                                                 />)
                                                 })
 
@@ -397,39 +439,7 @@ const displayedAt=(createdAt)=>{
 
 
 
-                {/* <View style={{        flexDirection:"row",
-                                      backgroundColor:"#C4C4C4",
-                                      height:50,
-                                      alignItems:"center",
-                                      justifyContent:"center",
-                                      borderRadius:5,}}>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                        <TextInput
-                            placeholder='댓글을 남겨주세요'
-                            textAlign='justify'
-                            style={{        width:"85%",
-                                            backgroundColor:"white",
-                                            height:"80%",
-                                            borderRadius:5,
-                                            justifyContent:"center",}}
-                            multiline = {true}
-                            ref={text_a}
-                            onChangeText={(text) => setText(text)} />
-                </TouchableWithoutFeedback> 
-        
-                        <TouchableOpacity style={{        height:30,
-                                                          width:30,
-                                                          alignItems:"center",
-                                                          justifyContent:"center",
-                                                          borderRadius:100,
-                                                          marginLeft:6}}     
-                                          keyboardDismissMode="on-drag"
-                                          keyboardShouldPersistTaps='handled'
-                                          onPress={() => onCommentSend()}>
-                            <Icon name="checkcircleo" size={30} color="black" style={styles.addIcon}/>
-                        </TouchableOpacity>
 
-                </View> */}
 
 <View style={{
                     flexDirection: "row", 
@@ -528,7 +538,7 @@ const ChapterComment = (props)=> {
   // const {comment}=props;
   const [likeCount, setLikeCount] = useState(0);
   const [likedUsers, setLikedUsers] = useState([]);
-  const {comment}=props;
+  const {comment, commentKey}=props;
   const {postKey}=test1
   const {item}=test3
   const {progress,dragX}=props
@@ -714,6 +724,57 @@ return (
 )
 }
 
+const AlertButton = () => {
+
+
+  return (
+    <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={()=>alert()}
+        style={{backgroundColor:"#f5f5f5", width:"20%",justifyContent:"center"}}
+    >
+
+        <Icon2 name="alarm-light-outline" size={20} color="black" style={{alignSelf:"flex-end", justifyContent:"center", marginLeft:"30%", backgroundColor:"#f5f5f5"}}/>
+
+    </TouchableOpacity>
+  )
+  }
+
+
+const alert = async()=> {
+  Alert.alert(
+    '알림',
+    '신고 하시겠습니까?',
+    [
+
+      {
+        text: '취소',
+        // onPress: () => console.log('취소되었습니다'),
+        style: 'cancel',
+      },
+      {text: '신고', onPress: () => alertfunction()},
+
+    ],
+    {cancelable: false},
+  );
+  const alertfunction=()=>{
+    firebase_db
+    .ref(`alert/${commentKey}/`)
+    .set({
+      user_uid: user_uid,
+      regdate: new Date().toString(),
+      commentKey:commentKey,
+      // postKey:postKey,
+    })
+    .then(function(){
+        Alert.alert("신고 완료")
+   })}
+  
+
+}
+
+
+
 const swipeableRef = useRef(null);
 
 const closeSwipeable = () => {
@@ -770,6 +831,7 @@ const closeSwipeable = () => {
               </View>
 
   ) : (
+    
     <View style={{
       backgroundColor:"f5f5f5",
       flexDirection:"row",
@@ -780,7 +842,12 @@ const closeSwipeable = () => {
       borderRadius:5,
       width:"90%",
       alignSelf:"center",}}>
+                      <Swipeable
+                ref={swipeableRef}
+              renderRightActions={()=><AlertButton/>}>
               <View style={{flexDirection:"row"}}>
+
+
               <View style={{flexDirection: "column"}}>
                 <TouchableOpacity
                           activeOpacity={0.8}
@@ -804,6 +871,7 @@ const closeSwipeable = () => {
                   </TouchableOpacity>
               </View>
               </View>
+              </Swipeable>
               </View>
 
 

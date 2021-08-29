@@ -519,7 +519,7 @@ function BookComponent2 (props) {
 
     return (
         <View style={{height: realScreen*0.25, backgroundColor:"#FBFBFB", flexDirection:"row", marginRight:30,}}>                                                                      
-            <TouchableOpacity style={{ width: ScreenWidth * 0.4, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => { navigation.navigate('MyBookPublic', { bookKey: book.bookKey }) }}>
+            <TouchableOpacity style={{ width: ScreenWidth * 0.4, height: realScreen * 0.25, marginTop: "5%" }} onPress={() => { navigation.navigate('MyBookPublic', { bookKey: book.bookKey, userinfo:BookItemUserinfo }) }}>
                 <View style={{ backgroundColor: book.Color, opacity: 0.8, height: realScreen * 0.32, width: ScreenWidth * 0.042, zIndex: 1 }}>
                 </View>
                 <View style={{

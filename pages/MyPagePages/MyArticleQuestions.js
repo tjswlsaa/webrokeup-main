@@ -19,6 +19,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons';
 import { CommonActions } from '@react-navigation/native';
 import Swiper from 'react-native-swiper'
 // import paper from '../../assets/paper.png';
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
@@ -209,6 +210,37 @@ function ChapterItem(props) {
         }
     }, [likedUsers])
 
+    const alert = async ()=> {
+
+        const alertfunction=()=>{
+          firebase_db
+          .ref(`alert/${item.chapterKey}/`)
+          .set({
+            user_uid: user_uid,
+            regdate: new Date().toString(),
+            chapterKey:item.chapterKey
+          })
+          .then(function(){
+              Alert.alert("신고 완료")
+         })}
+         Alert.alert(
+          '알림',
+          '신고 하시겠습니까?',
+          [
+      
+            {
+              text: '취소',
+              // onPress: () => console.log('취소되었습니다'),
+              style: 'cancel',
+            },
+            {text: '신고', onPress: () => alertfunction()},
+      
+          ],
+          {cancelable: false},
+        );
+      
+      }
+
     return (
     <View>
 
@@ -245,7 +277,7 @@ function ChapterItem(props) {
                 )}
                 </ScrollView>
         </View>
-        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"10%",  }}>
+        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"8%",  }}>
        
             <TouchableOpacity style={{marginTop:"4%", }} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
@@ -288,15 +320,21 @@ function ChapterItem(props) {
             }}>
                 <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "3%",marginTop:"4%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "2%",marginTop:"4%", }}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
-                style={{marginTop:"4%", marginLeft:"5%" }}
+                style={{marginTop:"4%", marginLeft:"4%" }}
             >
                 <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "3%",marginTop:"4%",  }}> {commentsNumber} </Text>
-            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"20%" }}>
+            <Text style={{ marginLeft: "2%",marginTop:"4%",  }}> {commentsNumber} </Text>
+            <TouchableOpacity style={{marginLeft:"3%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
+
+                </TouchableOpacity>
+
+            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"8%" }}>
                 <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
             </View>
         </View>

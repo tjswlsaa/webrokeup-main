@@ -98,7 +98,7 @@ const EditArticle = ({ navigation, route }) => {
                 onPress={() => {
                     // console.log('MyArticle.js (3), chapters: ',chapters);
                     firebase_db
-                        .ref(`book/${chapters.bookKey}/chapters/` + chapters.chapterKey)
+                        .ref(`book/${chapters.bookKey}/both/` + chapters.chapterKey)
                         .set(null)
                         .then(function () {
                             Alert.alert("삭제 완료")

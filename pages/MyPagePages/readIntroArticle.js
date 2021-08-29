@@ -1,11 +1,14 @@
 import React, {useState,useRef,useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Dimensions, Alert} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons';
+import { firebase_db } from '../../firebaseConfig';
+
 const readIntroArticle = ({navigation, route}) => {
   const introArticle_a = useRef(null);
   const [text, setText] = useState('');
@@ -25,6 +28,38 @@ var  user_uid
 if (user != null) {
   user_uid = user.uid;  
 }
+
+const alert = async ()=> {
+
+  const alertfunction=()=>{
+    firebase_db
+    .ref(`alert/${bookKey}/`)
+    .set({
+      user_uid: user_uid,
+      regdate: new Date().toString(),
+      bookkey:bookKey,
+      intro:"intro"
+    })
+    .then(function(){
+        Alert.alert("신고 완료")
+   })}
+   Alert.alert(
+    '알림',
+    '신고 하시겠습니까?',
+    [
+
+      {
+        text: '취소',
+        // onPress: () => console.log('취소되었습니다'),
+        style: 'cancel',
+      },
+      {text: '신고', onPress: () => alertfunction()},
+
+    ],
+    {cancelable: false},
+  );
+
+}
   return (
     <SafeAreaView style={{flex:1}}>
 
@@ -41,7 +76,13 @@ if (user != null) {
         </TouchableOpacity>
 
         </View>) : 
-        (<View></View>)}
+        (<View>
+          <TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,flexDirection:"row" }} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
+
+                </TouchableOpacity>
+        </View>)}
         </View>
         <View style={{height:realScreen*0.1,marginHorizontal:"5%"}}>
             <Text style={styles.bookTitle}>말머리에서</Text>  

@@ -19,6 +19,7 @@ import Icon2 from 'react-native-vector-icons/Ionicons';
 import { CommonActions } from '@react-navigation/native';
 import Swiper from 'react-native-swiper'
 // import paper from '../../assets/paper.png';
+import Icon3 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // const bookBackground = "https://postfiles.pstatic.net/MjAyMTA2MDdfMTE1/MDAxNjIzMDY2NDQwOTUx.N4v5uCLTMbsT_2K1wPR0sBPZRX3AoDXjBCUKFKkiC0gg.BXjLzL7CoF2W39CT8NaYTRvMCD2feaVCy_2EWOTkMZsg.PNG.asj0611/bookBackground.png?type=w773"
 
@@ -122,7 +123,7 @@ const MyArticle = ({ navigation, route }) => {
                                 <View>
 
                                     
-                                    <View style={{ height: realScreen*0.8,}}>
+                                    <View style={{ height: realScreen*0.85, }}>
                                             
 
                                                     <Swiper
@@ -239,10 +240,41 @@ function ChapterItem(props) {
         }
     }, [likedUsers])
 
+
+    const alert = async ()=> {
+
+        const alertfunction=()=>{
+          firebase_db
+          .ref(`alert/${item.chapterKey}/`)
+          .set({
+            user_uid: user_uid,
+            regdate: new Date().toString(),
+            bookkey:item.chapterKey
+          })
+          .then(function(){
+              Alert.alert("신고 완료")
+         })}
+         Alert.alert(
+          '알림',
+          '신고 하시겠습니까?',
+          [
+      
+            {
+              text: '취소',
+              // onPress: () => console.log('취소되었습니다'),
+              style: 'cancel',
+            },
+            {text: '신고', onPress: () => alertfunction()},
+      
+          ],
+          {cancelable: false},
+        );
+      
+      }
     return (
     <View>
 
-        <View style={{ height: "100%", width: "80%", alignSelf: "center" }} 
+        <View style={{ height: realScreen*0.75, width: "80%", alignSelf: "center",  }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
        {item.type== "감정 일기"? (
@@ -253,7 +285,14 @@ function ChapterItem(props) {
         <TouchableOpacity  onPress={() => navigation.navigate("EditArticle", {chapters: item, })}>
             <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
         </TouchableOpacity>
-  ):(<View></View>)}
+  ):(<View>
+
+<TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
+
+                </TouchableOpacity>
+  </View>)}
 
             <View style={{ flexDirection:"row", marginTop:"1%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
@@ -303,7 +342,7 @@ function ChapterItem(props) {
 
 
         </View>
-        <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"4%" }}>
+        <View style={{ flexDirection: "row", height: realScreen*0.1,  marginHorizontal:"4%", marginTop:"5%" }}>
 
             <TouchableOpacity style={{marginTop:"4%", marginLeft:"4%"}} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
