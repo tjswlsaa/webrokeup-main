@@ -209,10 +209,10 @@ const GoogleCheck = ({ navigation, route }) => {
 
                                 </Picker>
                                 </View>
-                        <View style={{ flex: 1, marginTop: "10%" }}>
+                        <View style={{ flex: 1, marginTop: "10%", borderRadius:10,paddingVertical: "4%" }}>
                         <Text style={{ fontSize: 15, }}> 생년월일</Text>
                         <TouchableHighlight
-                            style={{ flex: 1, borderWidth: 1, borderColor: "#E2E2E2", marginTop: "2%" }}
+                            style={{ flex: 1, borderWidth: 1, borderColor: "#E2E2E2", marginTop: "2%",borderRadius:10  }}
                             activeOpacity={0}
                             onPress={() => { setShow(true) }}>
                             <View>
