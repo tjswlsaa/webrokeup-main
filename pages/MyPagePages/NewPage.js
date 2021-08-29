@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { Switch } from 'react-native-switch';
 
@@ -230,68 +230,86 @@ const colorF = colorFis(bookKey);
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
- {/* <KeyboardAwareScrollView style={{flex:1}}> */}
+    <KeyboardAwareScrollView
+    
+    // extraHeight={300}
+    scrollEnabled={false}
+    enableAutomaticScroll={true}
+    // contentContainerStyle={{height:-30}}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    contentContainerStyle ={{height:realScreen}}
+    >
+
+    <SafeAreaView style={{ flex: 1 ,backgroundColor: "white"}}>
+
 
 
       <StatusBar style="white" />
-        {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
-          <View style={{height: "80%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
-            {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-              <ScrollView scrollEnabled={true}>
-                <View style={{ alignSelf: "flex-end", marginRight: "6%", marginTop: "5%"}}>
-                  <Switch
-                    value={isPublic}
-                    // useNativeDriver={true}
-                    activeText={'공개'}
-                    inActiveText={'비공개'}
-                    onValueChange={(value) => setPublic(value)}
-                    backgroundActive={'#C4C4C4'}
-                    backgroundInactive={chapterColor}
-                    circleSize={25} //사이즈 조정이 안댐
-                    barHeight={25}
-                    barWidth={30}
+          <View style={{ width: "90%", alignSelf: "center", backgroundColor:"white"}}>
 
-                    circleActiveColor={chapterColor}
-                    circleInActiveColor={"#c4c4c4"}
-                  />
 
-                  
-                </View>
-                
-                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "10%"}}>
+  
+                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "12%", alignContent:"center"}}>
                   <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
-                  <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600" }}
-                    multiline={true} placeholder="감정을 한 단어로 적어주세요"
+                  <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600", alignSelf:"center", justifyContent:"center", alignContent:"center", marginBottom:"5%" }}
+                    multiline={false} placeholder="감정을 한 단어로 적어주세요"
                     returnKeyType="done"
                     onChangeText={text1 => setText1(text1)}
                     ref={title_a} />
+                            
                 </View>
-                <TextInput style={{ marginHorizontal: "10%", fontSize: 15 }}
+
+                <View style={{ }}>
+
+                <TextInput style={{ marginHorizontal: "10%", fontSize: 15,  height:realScreen*0.6}}
                   multiline={true} placeholder="어떤 일이 있었는지 적어주세요"
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}
                   ref={maintext_a} />
-              </ScrollView>
-              </TouchableWithoutFeedback>
-            {/* </ImageBackground> */}
+                </View>
+
+                
+                <View style={{backgroundColor: "#fff", height: realScreen*0.1, marginHorizontal: "5%", marginTop:"5%"}}>
+                  <Text style={{marginLeft:"5%", color:"grey"}}>감정의 빛깔을 선택해주세요</Text>
+                    <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
+                      <TouchableOpacity style={{flex: 1, backgroundColor:colorA}} onPress={()=>setChapterColor(colorA)}/>
+                      <TouchableOpacity style={{flex: 1, backgroundColor: colorB}} onPress={()=>setChapterColor(colorB)}/>
+                      <TouchableOpacity style={{flex: 1, backgroundColor: colorC}} onPress={()=>setChapterColor(colorC)}/>
+                      <TouchableOpacity style={{flex: 1, backgroundColor: colorD}} onPress={()=>setChapterColor(colorD)}/>
+                      <TouchableOpacity style={{flex: 1, backgroundColor: colorE}} onPress={()=>setChapterColor(colorE)}/>
+                      <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
+                    </View>
+                  </View>
+                  <View style={{backgroundColor: "#fff", height: realScreen*0.1, marginHorizontal: "5%", marginTop:"5%", flexDirection:"row"}}>
+                    <Text style={{marginLeft:"5%", color:"grey"}}>공개여부를 선택해주세요</Text>
+                              <View style={{ marginRight: "6%",marginLeft:"25%"}}>
+                                  <Switch
+                                    value={isPublic}
+                                    // useNativeDriver={true}
+                                    activeText={'공개'}
+                                    inActiveText={'비공개'}
+                                    onValueChange={(value) => setPublic(value)}
+                                    backgroundActive={'#C4C4C4'}
+                                    backgroundInactive={chapterColor}
+                                    circleSize={25} //사이즈 조정이 안댐
+                                    barHeight={25}
+                                    barWidth={30}
+                                    circleActiveColor={chapterColor}
+                                    circleInActiveColor={"#c4c4c4"}
+                                  />
+                                </View>
+                  </View>
           </View>
-          <View style={{backgroundColor: "#fff", height: "15%", marginHorizontal: "5%", marginTop: "3%" }}>
-            <Text style={{marginTop: "5%", marginLeft: "5%"}}> 오늘의 감정 빛깔은 </Text>
-            <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
-              <TouchableOpacity style={{flex: 1, backgroundColor:colorA}} onPress={()=>setChapterColor(colorA)}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: colorB}} onPress={()=>setChapterColor(colorB)}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: colorC}} onPress={()=>setChapterColor(colorC)}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: colorD}} onPress={()=>setChapterColor(colorD)}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: colorE}} onPress={()=>setChapterColor(colorE)}/>
-              <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
-            </View>
-          </View>
+          </TouchableWithoutFeedback>
+
+
         {/* </ImageBackground> */}
-        {/* </KeyboardAwareScrollView> */}
+
     </SafeAreaView>
+    </KeyboardAwareScrollView>
+    
   )
 }
 const styles = StyleSheet.create({

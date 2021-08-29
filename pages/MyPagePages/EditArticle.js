@@ -9,6 +9,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { CommonActions } from '@react-navigation/native';
 import Icon2 from 'react-native-vector-icons/AntDesign';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const test1 = {
     navigation:""
@@ -58,11 +59,22 @@ const EditArticle = ({ navigation, route }) => {
     const realScreen = ScreenHeight-headerHeight-BottomSpace
     
     return (
+        <KeyboardAwareScrollView
+    
+        extraHeight={100}
+        scrollEnabled={false}
+        enableAutomaticScroll={true}
+        // contentContainerStyle={{height:-30}}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle ={{height:realScreen}}
+        >
+                  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
         <View style={{ height: "90%", width: "90%", alignSelf: "center", backgroundColor:"white", marginVertical:"10%"}} >
            {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
 
 
-            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",marginVertical:"5%", marginHorizontal:"10%"}}>
+            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",marginVertical:"2%", marginHorizontal:"10%"}}>
                 <View style={{backgroundColor:chapters.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 {/* <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{chapters.chapterTitle}</Text> */}
@@ -72,7 +84,7 @@ const EditArticle = ({ navigation, route }) => {
                                         ref={title_a} />
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%",marginHorizontal:"10%",}}>
+                <View style={{marginHorizontal:"15%",height:realScreen*0.58,}}>
                     
 
                 <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
@@ -80,9 +92,9 @@ const EditArticle = ({ navigation, route }) => {
                                     onChangeText={text2 => setText2(text2)}
                                     ref={maintext_a} />
             
-                </ScrollView>
+                </View>
                 {/* </TouchableWithoutFeedback>  */}
-                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", marginRight:"10%", padding:"5%"}} 
+                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", marginRight:"7%", padding:"5%", marginTop:"10%"}} 
                 onPress={() => {
                     // console.log('MyArticle.js (3), chapters: ',chapters);
                     firebase_db
@@ -98,6 +110,8 @@ const EditArticle = ({ navigation, route }) => {
 
                             </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     )
 }
 

@@ -242,7 +242,7 @@ function ChapterItem(props) {
     return (
     <View>
 
-        <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
+        <View style={{ height: "100%", width: "80%", alignSelf: "center" }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
        {item.type== "감정 일기"? (
@@ -255,13 +255,13 @@ function ChapterItem(props) {
         </TouchableOpacity>
   ):(<View></View>)}
 
-            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
+            <View style={{ flexDirection:"row", marginTop:"1%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%"}}>
+                <ScrollView style={{marginTop:"5%", height:realScreen*0.6}}>
 
                 <Text style={{fontSize: 15, marginLeft:"6%", lineHeight:23}}>{item.mainText}</Text>
                 </ScrollView>
@@ -275,7 +275,7 @@ function ChapterItem(props) {
         </TouchableOpacity>
   ):(<View></View>)}
 
-            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
+            <View style={{ flexDirection:"row", marginTop:"1%",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%",}}>{item.chapterTitle}</Text>

@@ -328,23 +328,7 @@ const [chapterColor, setChapterColor] = useState(titleColor)
         {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={{ uri: bookBackground }} > */}
             {/* <ImageBackground style={{height: "100%", resizeMode: "cover",}} source={paper} > */}
               <ScrollView style={{backgroundColor:"white", marginHorizontal:"5%", marginTop:"5%"}} scrollEnabled={true}>
-              <View style={{ alignSelf: "flex-end", marginRight:"10%", marginTop:"5%",}}>
-                            <Switch
-                              value={isPublic}
-                              // useNativeDriver={true}
-                              activeText={'공개'}
-                              inActiveText={'비공개'}
-                              onValueChange={(value) => setPublic(value)}
-                              backgroundActive={'#C4C4C4'}
-                              backgroundInactive={chapterColor}
-                              circleSize={25} //사이즈 조정이 안댐
-                              barHeight={25}
-                              barWidth={30}
 
-                              circleActiveColor={chapterColor}
-                              circleInActiveColor={'#f5f5f5'}
-                            />
-                        </View>
                 <View style={{flex:1, flexDirection:"row", alignItems:"center",  height: realScreen*0.15, marginHorizontal:"5%"}}>
 
                        
@@ -355,7 +339,7 @@ const [chapterColor, setChapterColor] = useState(titleColor)
                             <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%", }}
                                 multiline={false} placeholder={question.title}
                                 returnKeyType="done"
-                                maxLength={17}
+                                // maxLength={17}
                                 onChangeText={text1 => setText1(text1)}
                                 // ref={title_a} 
                                 />
@@ -392,10 +376,10 @@ const [chapterColor, setChapterColor] = useState(titleColor)
                 <View style={{ height: realScreen*0.08 , justifyContent:"center"}}>
                 </View>  
                 <View style={{ marginHorizontal: "5%"}}>
-                <Text style={{marginTop: "5%", }}> 오늘의 감정 빛깔은 </Text>
+                <Text style={{marginLeft:"5%", color:"grey"}}> 오늘의 감정 빛깔은 </Text>
                 </View>
-                <View style={{  fontSize: 15, height:realScreen*0.1, marginTop:"3%", marginBottom:"3%", flexDirection:"row" , alignSelf:"center",  }}>
-                      <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
+                <View style={{  fontSize: 15, height:realScreen*0.08, marginTop:"3%", marginBottom:"3%", flexDirection:"row" , alignSelf:"center",  }}>
+                      <View style={{flex: 1, flexDirection: "row", marginHorizontal: "10%", marginVertical: "3%"}}>
                             <TouchableOpacity style={{flex: 1, backgroundColor:colorA}} onPress={()=>setChapterColor(colorA)}/>
                             <TouchableOpacity style={{flex: 1, backgroundColor: colorB}} onPress={()=>setChapterColor(colorB)}/>
                             <TouchableOpacity style={{flex: 1, backgroundColor: colorC}} onPress={()=>setChapterColor(colorC)}/>
@@ -404,6 +388,26 @@ const [chapterColor, setChapterColor] = useState(titleColor)
                             <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
                       </View>
                 </View>
+                <View style={{  fontSize: 15, height:realScreen*0.08, marginTop:"3%", marginBottom:"3%", flexDirection:"row"   }}>
+                    <Text style={{marginLeft:"10%",color:"grey"}}>공개 여부를 선택해주세요</Text>
+                      <View style={{ marginLeft:"20%"}}>
+                                  <Switch
+                                    value={isPublic}
+                                    // useNativeDriver={true}
+                                    activeText={'공개'}
+                                    inActiveText={'비공개'}
+                                    onValueChange={(value) => setPublic(value)}
+                                    backgroundActive={'#C4C4C4'}
+                                    backgroundInactive={chapterColor}
+                                    circleSize={25} //사이즈 조정이 안댐
+                                    barHeight={25}
+                                    barWidth={30}
+
+                                    circleActiveColor={chapterColor}
+                                    circleInActiveColor={'#f5f5f5'}
+                                  />
+                              </View>
+                    </View>
               </ScrollView>
             {/* </ImageBackground> */}
         {/* </ImageBackground> */}
