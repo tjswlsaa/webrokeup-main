@@ -166,17 +166,15 @@ const GoogleCheck = ({ navigation, route }) => {
 
     return(
 
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor:"white" }}>
             <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1, marginVertical: "10%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Icon style={{ marginHorizontal: "10%" }} name="arrowleft" size="20" color="black" />
-                    </TouchableOpacity>
+                <View style={{ flex: 1, marginVertical: "10%" }}>
+
                     <View style={{ flex: 1, marginHorizontal: "5%" }}>
-                        <Text style={{ fontSize: 20, marginTop: "10%" }}> 안녕하세요, 이별로거님 </Text>
-                        <Text style={{ fontSize: 20, marginBottom: "10%" }}> 약관 동의 후 로그인을 진행해주세요 </Text>
-                        <View style={{flex:1}}>
-                            <View style={{ flex: 1 }}>
+                        <Text style={{ fontSize: 20, marginTop: "10%" }}> 안녕하세요,  </Text>
+                        <Text style={{ fontSize: 20, marginBottom: "10%", marginTop:"2%" }}> 성별과 생년월일을 입력해주세요 </Text>
+                        <View style={{flex:1,}}>
+                            <View style={{ flex: 1 , marginTop:"15%"}}>
                                 <View>
                                     <Text style={{ fontSize: 15 }}> 성별 </Text>
                                 </View>
@@ -230,7 +228,7 @@ const GoogleCheck = ({ navigation, route }) => {
                                     <TouchableHighlight
                                     underlayColor={'#FFFFFF'}
                                     style={{ flex: 1, }}>
-                                    <View style={{ backgroundColor: "white", height: 256, overflow: 'hidden' }}>
+                                    <View style={{ backgroundColor: "white", height: 240, overflow: 'hidden' }}>
                                         <View style={{ marginTop: 20 }}>
                                         <DateTimePicker
                                             display={Platform.OS === 'ios' ? 'spinner' : 'default'}
@@ -285,11 +283,11 @@ const GoogleCheck = ({ navigation, route }) => {
 
                         </View>
 
-                        <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "20%", backgroundColor: "#4cb2c8" }}
+                        <TouchableOpacity style={{ marginTop: "30%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "20%", backgroundColor: "#20543F" }}
                                onPress={promptAsync} 
                                disabled={!request}
                                >
-                          <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>이별록 시작하기</Text>
+                          <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>필미필미 시작하기</Text>
                         </TouchableOpacity>
 {/* 
                         <Button
@@ -299,7 +297,7 @@ const GoogleCheck = ({ navigation, route }) => {
                         /> */}
                     </View>
                     
-        </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
 

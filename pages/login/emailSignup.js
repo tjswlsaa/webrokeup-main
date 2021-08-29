@@ -161,15 +161,13 @@ const emailSignup = ({ navigation }) => {
 
   
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:"white" }}>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView style={{ flex: 1, marginVertical: "10%" }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon style={{ marginHorizontal: "10%" }} name="arrowleft" size="20" color="black" />
-          </TouchableOpacity>
+
           <View style={{ flex: 1, marginHorizontal: "5%" }}>
-            <Text style={{ fontSize: 20, marginTop: "10%" }}> 안녕하세요, 이별로거님 </Text>
-            <Text style={{ fontSize: 20, marginBottom: "10%" }}> 아래 네 가지 카테고리에 답해주세요 </Text>
+            <Text style={{ fontSize: 20, marginTop: "5%" }}> 안녕하세요,  </Text>
+            <Text style={{ fontSize: 20, marginBottom: "10%", marginTop:"2%" }}> 필미필미에 오신걸 환영합니다! </Text>
             <View style={{flex:1}}>
             <View style={{ flex: 1 }}>
               <View>
@@ -327,10 +325,9 @@ const emailSignup = ({ navigation }) => {
 
 
             </View>
-            <TouchableOpacity style={{ marginTop: "20%", alignSelf: "center", borderRadius: 10, paddingVertical: "4%", paddingHorizontal: "35%", backgroundColor:"#4cb2c8"}}
+            <TouchableOpacity style={{ marginTop: "10%", alignSelf: "center", borderRadius: 10, height:40 , width:"80%", backgroundColor:"#20543F", justifyContent:"center"}}
               onPress={() => handleSignUp(gender, date, email, password, confirmPassword)}>
-              {/* //성별, 생년월일 저장하는 코드 들어가야 */}
-              <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>이별록 시작하기</Text>
+              <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>필미필미 시작하기</Text>
             </TouchableOpacity>
           </View>
           </View>

@@ -227,7 +227,7 @@ const PopularArticle = ({ navigation, route }) => {
         })
         }, [])
 
-
+        console.log("firstselectedlist",selectedList)
 
         return (
                 <View style={{ flex: 1 }}>
@@ -247,7 +247,7 @@ const PopularArticle = ({ navigation, route }) => {
                         </View>
                         <View style={{ flex: 5, backgroundColor: "#E9E9E9" }}>
                                 <ScrollView style={{ flex: 1, marginHorizontal: "2%", backgroundColor: "#FAFAFA" }}>
-                                        {selectedList.map((chapters) => (
+                                        {selectedList.map((chapters,index) => (
                                                 <ChapterItem
                                                         key={chapters.key}
                                                         navigation={navigation}
@@ -256,6 +256,9 @@ const PopularArticle = ({ navigation, route }) => {
                                                         bookKey={chapters.bookKey}
                                                         likeCount={chapters.likeCount}
                                                         commentsCount={chapters.commentsCount}
+                                                        selectedList={selectedList}
+                                                        index={index}
+
                                                 />))
                                         }
                                 </ScrollView>
@@ -267,8 +270,8 @@ const PopularArticle = ({ navigation, route }) => {
 
 
 
-const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount}) => {
-        // console.log('PopularArticle.js (1), chapters: ',chapters);
+const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, selectedList, index}) => {
+        
         // const [list, setList] = useState([]);
         const [myitem, setMyitem] = useState({
                 bookKey: '',
@@ -356,7 +359,7 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount})
 
                         <View style={{ flex: 1, }}>
                                 <TouchableOpacity style={{ flex: 1, }} onPress={() => {
-                                        navigation.navigate('MyArticle', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey })
+                                        navigation.navigate('MyArticleQuestions', { chapterKey: chapters.chapterKey, bookKey: chapters.bookKey, list:selectedList, index:index})
                                 }}>
                                         <View style={{ flex: 1, flexDirection: "row", padding: "2%"}}>
                                                 <View style={{ flex: 1, marginHorizontal: "1%", marginTop: "2%", marginBottom: "4%", padding: "2%", backgroundColor: "white" }}>

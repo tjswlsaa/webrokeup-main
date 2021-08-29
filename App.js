@@ -45,9 +45,7 @@ import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
 import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
-import MyArticleQuration from './pages/MyPagePages/MyArticleQuration';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
-import MyArticlePopular from './pages/MyPagePages/MyArticlePopular';
 import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
 
 const defaultScreenOptions = {
@@ -100,7 +98,8 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="GoogleCheck"
           component={GoogleCheck}
-          options={{ headerShown: false }}
+          options={{ headerShown: true, ...defaultScreenOptions,
+          }}
         />
         <Stack.Screen
           name="LoadingScreen"
@@ -138,23 +137,14 @@ const App = ({ navigation }) => {
 
         <Stack.Screen
           name="MyArticle"
-          component={MyArticle.component}
+          component={MyArticle}
           options={{
             headerShown: true,
             ...defaultScreenOptions,
-            ...MyArticle.options
           }}
         />
 
-<Stack.Screen
-          name="MyArticleQuration"
-          component={MyArticleQuration.component}
-          options={{
-            headerShown: true,
-            ...defaultScreenOptions,
-            ...MyArticleQuration.options
-          }}
-        />
+
 
 <Stack.Screen
           name="MyArticleQuestions"
@@ -166,15 +156,6 @@ const App = ({ navigation }) => {
           }}
         />
 
-<Stack.Screen
-          name="MyArticlePopular"
-          component={MyArticlePopular.component}
-          options={{
-            headerShown: true,
-            ...defaultScreenOptions,
-            ...MyArticlePopular.options
-          }}
-        />
 
         <Stack.Screen
           name="QuestionList"
@@ -214,31 +195,28 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="emailSignup"
           component={emailSignup}
-          options={{ headerShown: false }}
+          options={{ headerShown: true,  ...defaultScreenOptions,}}
         />
 
         <Stack.Screen
           name="policyoneforlogin"
           component={policyoneforlogin}
           options={{
-            headerShown: true, title: "서비스 약관",
-            // headerLeft: () => (
-            //   <Icon.Button name='ios-menu' size={25}
-            //     backgroundColor= '#009387'  onPress={() => navigation.navigate('LoginScreen')}>
-            //   </Icon.Button>)
+            headerShown: true, title: "서비스 약관",...defaultScreenOptions
+
           }}
         />
 
         <Stack.Screen
           name="policytwoforlogin"
           component={policytwoforlogin}
-          options={{ headerShown: true, title: "개인정보 처리방침" }}
+          options={{ headerShown: true, title: "개인정보 처리방침",...defaultScreenOptions }}
         />
         <Stack.Screen
           name="emailLogin"
           component={emailLogin}
-          options={{ headerShown: false }}
-        />
+          options={{ headerShown: true, ...defaultScreenOptions}}
+            />
 
         <Stack.Screen
           name="EditBook"

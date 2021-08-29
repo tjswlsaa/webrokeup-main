@@ -448,33 +448,30 @@ const styles = StyleSheet.create({
 
 
 
-console.log("myarticletheend")
+// console.log("myarticletheend")
 
 
-function headerRight() {
-    const navigation = useNavigation();
-    const {bookKey}=test1
-    const {item}=test4
-    const user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) { user_uid = user.uid }
+// function headerRight() {
+//     const navigation = useNavigation();
+//     const {bookKey}=test1
+//     const {item}=test4
+//     const user = firebase.auth().currentUser;
+//     var user_uid
+//     if (user != null) { user_uid = user.uid }
 
-    return (
+//     return (
 
 
-        <Icon2.Button name='book-outline' size={23}
-        backgroundColor= 'white' color="black" 
-        onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}        
-        >
-      </Icon2.Button>
-    );
-}
+//         <Icon2.Button name='book-outline' size={23}
+//         backgroundColor= 'white' color="black" 
+//         onPress={() => navigation.navigate("MyBook", {bookKey: bookKey, })}        
+//         >
+//       </Icon2.Button>
+//     );
+// }
 
-const options = {
-    headerRight,
-};
+// const options = {
+//     headerRight,
+// };
 
-export default {
-    component: MyArticle,
-    options,
-};
+export default MyArticle

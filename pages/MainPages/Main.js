@@ -158,7 +158,6 @@ function getChapters2() {
 
 const qurationchapters = [chapter1,chapter2]
 test5.qurationchapters=qurationchapters
-console.log("chapteris",qurationchapters)
 // 책 큐레이팅 끝
 
 //큐레이팅 설문지
@@ -178,7 +177,6 @@ console.log("chapteris",qurationchapters)
             setQuestion1(question1)
         })
     },[])
-    console.log("Newpage question",question1)
 
     const [question2, setQuestion2] = useState([]);
     useEffect(()=>{
@@ -189,7 +187,6 @@ console.log("chapteris",qurationchapters)
             setQuestion2(question2)
         })
     },[])
-    console.log("Newpage question",question2)
     
     const [question3, setQuestion3] = useState([]);
     useEffect(()=>{
@@ -200,7 +197,6 @@ console.log("chapteris",qurationchapters)
             setQuestion3(question3)
         })
     },[])
-    console.log("Newpage question",question3)
 
     const [question4, setQuestion4] = useState([]);
     useEffect(()=>{
@@ -211,7 +207,6 @@ console.log("chapteris",qurationchapters)
             setQuestion4(question4)
         })
     },[])
-    console.log("Newpage question",question4)
 
     const [question5, setQuestion5] = useState([]);
     useEffect(()=>{
@@ -222,7 +217,6 @@ console.log("chapteris",qurationchapters)
             setQuestion5(question5)
         })
     },[])
-    console.log("Newpage question",question5)
 
 //큐레이팅 설문지 끝
 
@@ -230,7 +224,6 @@ const firstColor= "#9E001C"
 const secondColor="#F6AE2D"
 const thirdColor = "#33658A"
 const fourthColor= "#494949"
-console.log("question1.Color",question1.Color)
 const ColorOne=question1.Color
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: "#fbfbfb"}}>
@@ -274,6 +267,7 @@ const ColorOne=question1.Color
                                                         chapter={chapter}
                                                         bookKey={chapter.bookKey}
                                                         index={index}
+                                                        qurationchapters={qurationchapters}
 
                                                          />
                                     </View>
@@ -397,9 +391,8 @@ const ColorOne=question1.Color
 }
 
  function BookComponent (props) {
-    const { chapter, bookKey, navigation, index } = props
+    const { chapter, bookKey, navigation, index,qurationchapters } = props
 
-    const {qurationchapters} =test5
     // console.log("BookComponentchapter2222",chapter)
     // console.log("BookComponentchapter",chapter.bookKey)
     // console.log("BookComponentchapterbookKey",bookKey)
@@ -427,57 +420,6 @@ const ColorOne=question1.Color
               }
           })
   }, []);
-//   const [spinner, setSpinner] = useState(true);
-
-//   const [myitem, setMyitem] = useState({
-//     bookKey: '',
-//     bookTitle: '',
-//     chapters: {},
-//     intro: '',
-//     regdate: '',
-//     url: '',
-//     user_uid: '',
-//     Color:"",
-// });
-
-// console.log("chapter.bookKey", chapter.bookKey)
-  
-//   const getMyItem = async() => {
-//     setSpinner(true)
-//     try{
-//     var ref =firebase_db.ref(`/book/${chapter.bookKey}`)
-//     let temp =[]
-//        ref.on('value', (snapshot)=>{
-
-//     //     snapshot.forEach((child) => {
-//     //       temp.push(child.val())
-//     //       console.log("temp",temp)
-//     //   })
-//     //   setMyitem(temp)}
-      
-//       const myitem = await snapshot.val()
-//       setMyitem(myitem)
-//       setSpinner(false)
-
-//       }
-//       )
-//     } catch (error){
-//         console.log(error)
-//     }
-//           };
-
-//     useEffect(() => {
-//     getMyItem();
-// }, []);
-//   if(!myitem){
-
-//      setSpinner(true)}
-//     {
-//         setSpinner(false)
-//     }
-
-// console.log("BookComponentmyitem",myitem)
-// console.log("BookComponentmyitem",myitem.Color)
 
 
 
@@ -496,7 +438,7 @@ const ColorOne=question1.Color
                             />
                             )} */}
 
-                                            <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticleQuration', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , qurationchapters:qurationchapters}) }}>
+                                            <TouchableOpacity style={{width:ScreenWidth*0.4,  padding:"5%", justifyContent:"center", }} onPress={() => {navigation.navigate('MyArticleQuestions', { chapterKey: chapter.chapterKey,bookKey:chapter.bookKey, index:index , list:qurationchapters}) }}>
                                                                                     <View style={{ width: ScreenWidth * 0.38,padding:"5%",height:realScreen * 0.32 ,backgroundColor:"white", marginHorizontal:"5%"}}>
                                                                                             <View style={{flexDirection:"row", flex:1, }}>
                                                                                                     <View style={{backgroundColor:chapter.chColor, flex:1, height:"50%", marginTop:"15%"}}> 

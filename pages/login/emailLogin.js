@@ -37,50 +37,46 @@ const emailLogin = ({navigation}) => {
   }
 
 return (
+  <View style={{backgroundColor:"white", flex:1}}>
 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-  <View style={{flex:1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "15%"}}>
-    <TouchableOpacity onPress={()=>navigation.goBack()}>
-      <Icon name="arrowleft" size="20" color="black"/>
-    </TouchableOpacity>
+  <View style={{flex:1, justifyContent: 'center', marginHorizontal: "5%", marginVertical: "15%",}}>
+
     <View style={{flex:4, justifyContent:'center', marginVertical: "50%", marginHorizontal: "3%"}}>  
-      <Text> 이메일 </Text>
+    <View style={{flexDirection:"row", backgroundColor:"#f5f5f5", height:"30%", width:"100%", justifyContent:"center", borderRadius:15}}>
+      <Icon name="user" size={18} color="grey" style={{ marginLeft: "4%",backgroundColor:"#f5f5f5", justifyContent:"center", marginTop:"4%"}}/>
       <TextInput
-        placeholder="이메일을 입력해 주세요"
+        placeholder="이메일 입력"
         autoCorrect={false}
         autoCapitalize="none"
         onChangeText={(email)=>setEmail(email)}
         keyboardType="email-address"
-        style={{fontSize: 20, marginVertical: 10}}
+        style={{fontSize: 18,marginLeft:"5%", backgroundColor:"#f5f5f5", borderRadius:10, height:"100%", width:"80%"}}
         />
-      <Text style={{marginTop: 10}}> 비밀번호 </Text>
+
+      </View>
+
+      <View style={{flexDirection:"row", backgroundColor:"#f5f5f5", height:"30%", width:"100%",  borderRadius:15, marginTop:"5%",}}>
+      <Icon name="lock" size={18} color="grey" style={{ marginLeft: "6%",backgroundColor:"#f5f5f5", justifyContent:"center", marginTop:"4%"}}/>
       <TextInput
-        placeholder="비밀번호를 입력해 주세요"
+        placeholder="비밀번호 입력"
         secureTextEntry={true}
         autoCorrect={false}
         autoCapitalize="none"
         onChangeText={(password)=>setPassword(password)}
-        style={{fontSize: 20, marginVertical: 10}}
+        style={{fontSize: 18, marginVertical: 10,marginLeft:"5%"}}
       />
-      <TouchableOpacity style={{borderWidth:1, alignSelf: "center", borderRadius: 10, paddingVertical: "5%", paddingHorizontal: "40%", marginTop: "15%"}}onPress={()=>{loginUser(email, password)}}>
-        <Text style={{alignSelf:"center", fontSize:17}}>로그인</Text>
+      </View>
+      <TouchableOpacity style={{alignSelf: "center", borderRadius: 15, paddingVertical: "5%", paddingHorizontal: "40%", marginTop: "20%", backgroundColor:"#20543F"}}onPress={()=>{loginUser(email, password)}}>
+        <Text style={{alignSelf:"center", fontSize:17, color:"white"}}>로그인</Text>
       </TouchableOpacity>
-    </View>
-    <View style={{flex:1, marginHorizontal: "3%", marginBottom: "5%"}} >
-    <View style={{height: "40%", flexDirection: "row"}} >
-        <Text style = {{flex:1}}>이별록이 처음이라면?</Text>
-        <TouchableOpacity style= {{flex: 1, alignItems: "flex-end"}} onPress={()=>{navigation.navigate('emailSignup')}}>
-          <Text style={{fontSize:14}}>회원가입하기</Text>
+      <TouchableOpacity style={{alignSelf:"center", marginTop:"10%"}} onPress={()=>{navigation.navigate('emailSignup')}}>
+          <Text style={{fontSize:15}}>계정이 없으시다면? 회원 가입하기</Text>
         </TouchableOpacity>
-      </View>
-      <View style = {{flex:1, flexDirection: "row"}}>
-        <Text style = {{flex:2}}>비밀번호를 잊어버리셨나요?</Text>
-        <TouchableOpacity style= {{flex: 1, alignItems: "flex-end"}}>
-          <Text style={{fontSize:14}}>비밀번호 찾기</Text>
-        </TouchableOpacity>
-      </View>
     </View>
+
   </View>
 </TouchableWithoutFeedback>
+</View>
     )
 }
 
