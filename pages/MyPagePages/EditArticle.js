@@ -62,7 +62,7 @@ const EditArticle = ({ navigation, route }) => {
         <KeyboardAwareScrollView
     
         extraHeight={100}
-        scrollEnabled={false}
+        scrollEnabled={true}
         enableAutomaticScroll={true}
         // contentContainerStyle={{height:-30}}
         resetScrollToCoords={{ x: 0, y: 0 }}

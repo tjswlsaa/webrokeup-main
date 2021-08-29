@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { SafeAreaView, View, Alert, Button,Dimensions, FlatList, ScrollView, StyleSheet, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
+import { SafeAreaView, View, Alert, Button,Dimensions,Keyboard,TouchableWithoutFeedback, FlatList, ScrollView, StyleSheet, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -10,8 +10,13 @@ import { CommonActions } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const test2 ={
   text:""
+}
+const test4 ={
+  title:""
 }
 
 const test1 ={
@@ -33,6 +38,8 @@ const communityMakeNewPost = ({ navigation, route }) => {
 
   const [text, setText] = useState('');
   test2.text=text
+  const [title, setTitle] = useState('');
+  test4.title=title
 
   var user = firebase.auth().currentUser;
   var user_uid
@@ -55,23 +62,44 @@ console.log(userinfo)
 
 
   return (
+    <KeyboardAwareScrollView
+    
+    extraHeight={0}
+    scrollEnabled={true}
+    enableAutomaticScroll={true}
+    // contentContainerStyle={{height:-30}}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    // contentContainerStyle ={{height:realScreen}}
+    >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
       <SafeAreaView style={{ flex: 1 }}>
 
           <View style={{flex:1}}>
-                <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.90, marginVertical:"8%", marginHorizontal:"5%" }}>
-                <ScrollView scrollEnabled={true}>
+                   <View style={{ backgroundColor:'white', height:realScreen*0.1, marginTop:"5%", marginHorizontal:"5%",borderRadius:15}}>
+
+                    <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 17,height:realScreen*0.05, marginTop:"5%", marginLeft:"10%"}}
+                      multiline={false} placeholder="제목을 적어주세요"
+                      returnKeyType="done"
+                      onChangeText={title => setTitle(title)}
+                      />
+
+                    </View>
+                    <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.8, marginVertical:"5%", marginHorizontal:"5%",borderRadius:15 }}>
 
                   <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17, marginTop:"10%" }}
                     multiline={true} placeholder="글을 적어주세요"
                     returnKeyType="done"
                     onChangeText={text => setText(text)}
                      />
-              </ScrollView>
 
                 </View>
           </View>
       </SafeAreaView>
+      </TouchableWithoutFeedback>
+
+          </KeyboardAwareScrollView>
+
   )
 }
 const styles = StyleSheet.create({
@@ -116,6 +144,7 @@ async function saveChapter() {
   const {navigation} =test1
   const {text}= test2;
   const {user_uid}=test3;
+  const {title}=test4;
 
   firebase_db
   .ref(`/post/${postKey}/`)
@@ -125,7 +154,8 @@ async function saveChapter() {
     text: text,
     regdate: regdate,
     Kregdate:Kregdate,
-  
+    title: title,
+
   });
   Alert.alert("집필 완료")
 
@@ -141,7 +171,7 @@ async function saveChapter() {
   });
 
   
-  navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate, postcreator:user_uid})
+  navigation.navigate("readPost", { postKey: postKey, text:text, regdate:regdate, Kregdate:Kregdate, postcreator:user_uid, title:title})
   //title_a.current.clear();
   //maintext_a.current.clear();  
 

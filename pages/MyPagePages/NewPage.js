@@ -233,25 +233,25 @@ const colorF = colorFis(bookKey);
     <KeyboardAwareScrollView
     
     // extraHeight={300}
-    scrollEnabled={false}
+    scrollEnabled={true}
     enableAutomaticScroll={true}
     // contentContainerStyle={{height:-30}}
     resetScrollToCoords={{ x: 0, y: 0 }}
     contentContainerStyle ={{height:realScreen}}
     >
 
-    <SafeAreaView style={{ flex: 1 ,backgroundColor: "white"}}>
+    <SafeAreaView style={{ flex: 1 }}>
 
 
 
       <StatusBar style="white" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-          <View style={{ width: "90%", alignSelf: "center", backgroundColor:"white"}}>
+          <View style={{ width: "90%", alignSelf: "center", backgroundColor:"white", marginVertical:"5%", marginBottom:"5%"}}>
 
 
   
-                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "12%", alignContent:"center"}}>
+                <View style={{ height: realScreen*0.08, flexDirection: "row", marginHorizontal: "10%", marginTop: "10%", alignContent:"center"}}>
                   <View style={{flex: 1, backgroundColor: chapterColor, marginRight: "5%", marginBottom: "5%"}} /> 
                   <TextInput style={{ flex: 15, fontSize: 20, fontWeight: "600", alignSelf:"center", justifyContent:"center", alignContent:"center", marginBottom:"5%" }}
                     multiline={false} placeholder="감정을 한 단어로 적어주세요"
@@ -270,7 +270,7 @@ const colorF = colorFis(bookKey);
                   ref={maintext_a} />
                 </View>
 
-                
+
                 <View style={{backgroundColor: "#fff", height: realScreen*0.1, marginHorizontal: "5%", marginTop:"5%"}}>
                   <Text style={{marginLeft:"5%", color:"grey"}}>감정의 빛깔을 선택해주세요</Text>
                     <View style={{flex: 1, flexDirection: "row", marginHorizontal: "5%", marginVertical: "3%"}}>
@@ -282,7 +282,7 @@ const colorF = colorFis(bookKey);
                       <TouchableOpacity style={{flex: 1, backgroundColor: colorF}} onPress={()=>setChapterColor(colorF)}/>
                     </View>
                   </View>
-                  <View style={{backgroundColor: "#fff", height: realScreen*0.1, marginHorizontal: "5%", marginTop:"5%", flexDirection:"row"}}>
+                  <View style={{backgroundColor: "#fff", height: realScreen*0.08, marginHorizontal: "5%", marginTop:"1%", flexDirection:"row",}}>
                     <Text style={{marginLeft:"5%", color:"grey"}}>공개여부를 선택해주세요</Text>
                               <View style={{ marginRight: "6%",marginLeft:"25%"}}>
                                   <Switch

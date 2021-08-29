@@ -280,28 +280,15 @@ const displayedAt=(createdAt)=>{
                   style={{flex:1}}
                   keyboardVerticalOffset={44 + statusBarHeight} >
       <ScrollView style={{height:realScreen*0.83}}>
-          {post.creator==user_uid ? (  <View style={{marginTop:10,flexDirection:"row", height:30,  alignSelf:"flex-end", alignItems:"flex-end"}}>
-                {/* <TouchableOpacity style={{ backgroundColor: "#C4C4C4", borderRadius: 5, justifyContent: "center", width:50, height:25}} 
-                onPress={()=>navigation.navigate("editPost", { postKey: postKey, text:post.text, regdate:post.regdate})}>                
-                    <Text style={{alignSelf:"center"}}>편집</Text>
-                </TouchableOpacity>   */}
-                <TouchableOpacity style={{flexDirection:"row",marginLeft:20, marginRight:30, borderRadius: 5,width:50, height:25}} 
-               onPress={()=>deletePost()}>     
-                       <Icon name="delete" size={20} color="black" style={styles.addIcon}/>
-           
-                        <Text style={{marginLeft:"3%", marginTop:"5%"}}>삭제</Text>
-                </TouchableOpacity> 
-            </View> ) :(
 
-<View></View>
-
-            ) }
 
 
 
           <View style={{marginTop:20, marginHorizontal:"5%", backgroundColor:"white",padding:30, borderRadius:10, justifyContent:"center"}}>
-                  <Text style={{marginBottom:10, fontSize:13, color:"grey"}}>{readPostUserinfo.iam}</Text>               
-                  <Text>{post.text}</Text>               
+                  <Text style={{marginBottom:10, fontSize:13, color:"grey"}}>{readPostUserinfo.iam}</Text> 
+                  <Text style={{fontSize:17}}>{post.title}</Text>               
+              
+                  <Text style={{marginTop:"5%", lineHeight:23}}>{post.text}</Text>               
 
           <View style={{flexDirection:"row", alignItems:"center", marginBottom:10, marginTop:40, height:20,}}>
                 <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
@@ -358,8 +345,20 @@ const displayedAt=(createdAt)=>{
                   <Icon name="message1" size={20} color="grey" style={styles.addIcon}/>
                 </TouchableOpacity>
                 <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
-                <Text style={{alignSelf:"flex-end",marginLeft: "50%"}}>{displayedAt(createdAt)}</Text>                 
+                <Text style={{alignSelf:"flex-end",marginLeft:10, color:"grey"}}>{displayedAt(createdAt)}</Text>                 
+                {post.creator==user_uid ? (  <View style={{}}>
 
+                <TouchableOpacity style={{flexDirection:"row",marginLeft:70,  width:50, height:25,marginTop:"5%"}} 
+               onPress={()=>deletePost()}>     
+                       <Icon name="delete" size={15} color="grey" style={styles.addIcon}/>
+           
+                        <Text style={{marginLeft:"6%", marginTop:"3%",color:"grey"}}>삭제</Text>
+                </TouchableOpacity> 
+            </View> ) :(
+
+<View></View>
+
+            ) }
 
 
                 </View>

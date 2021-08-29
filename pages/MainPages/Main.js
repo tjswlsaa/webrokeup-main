@@ -421,7 +421,50 @@ const ColorOne=question1.Color
           })
   }, []);
 
-
+//   const [spinner, setSpinner] = useState(true);
+//   const [myitem, setMyitem] = useState({
+//     bookKey: '',
+//     bookTitle: '',
+//     chapters: {},
+//     intro: '',
+//     regdate: '',
+//     url: '',
+//     user_uid: '',
+//     Color:"",
+// });
+// console.log("chapter.bookKey", chapter.bookKey)
+  
+//   const getMyItem = async() => {
+//     setSpinner(true)
+//     try{
+//     var ref =firebase_db.ref(`/book/${chapter.bookKey}`)
+//     let temp =[]
+//        ref.on('value', (snapshot)=>{
+//     //     snapshot.forEach((child) => {
+//     //       temp.push(child.val())
+//     //       console.log("temp",temp)
+//     //   })
+//     //   setMyitem(temp)}
+      
+//       const myitem = await snapshot.val()
+//       setMyitem(myitem)
+//       setSpinner(false)
+//       }
+//       )
+//     } catch (error){
+//         console.log(error)
+//     }
+//           };
+//     useEffect(() => {
+//     getMyItem();
+// }, []);
+//   if(!myitem){
+//      setSpinner(true)}
+//     {
+//         setSpinner(false)
+//     }
+// console.log("BookComponentmyitem",myitem)
+// console.log("BookComponentmyitem",myitem.Color)
 
 
 
