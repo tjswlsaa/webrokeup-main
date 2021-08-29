@@ -5,13 +5,21 @@ import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Clover from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const communityBoard = ({ navigation, route }) => {
 
     const [posts, setPosts] =useState([])
     
-
+    const headerHeight = useHeaderHeight();
+    const ScreenHeight = Dimensions.get('window').height   //height
+    const BottomSpace = getBottomSpace()
+    const tabBarHeight = 0
+    const statusBarHeight = getStatusBarHeight();
+    const realScreen = ScreenHeight - headerHeight - BottomSpace - tabBarHeight;
+    const ScreenWidth = Dimensions.get('window').width  //screen 너비
      
 
       useEffect(() => {
@@ -37,8 +45,8 @@ const communityBoard = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={{flex:1}}>
-            <View style={{height:40, justifyContent:"center"}}>
-                <Text  style={{alignSelf:"center", fontSize:15, fontWeight:"500"}}>게시판</Text>
+               <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
+                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>커뮤니티</Text>
             </View>
                 <ScrollView style={{height:500}}>
 
