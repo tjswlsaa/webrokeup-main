@@ -48,6 +48,7 @@ import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
 import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
 import popularbook from './pages/MyPagePages/popularbook';
+import feelingtutorial from './pages/MyPagePages/feelingtutorial';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -199,7 +200,6 @@ const App = ({ navigation }) => {
           component={onboarding}
           options={{
             title: "도움말",
-
             headerShown: true,
             ...defaultScreenOptions,
           }}
@@ -315,6 +315,16 @@ const App = ({ navigation }) => {
           component={readEditorWriting}
           options={{
             title:"감정 에디터",
+            ...defaultScreenOptions,
+          }}
+        />
+
+<Stack.Screen
+          name="feelingtutorial"
+          component={feelingtutorial}
+          options={{
+            title:"감정 도움말",
+            headerShown: false, 
             ...defaultScreenOptions,
           }}
         />

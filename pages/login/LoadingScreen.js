@@ -6,7 +6,6 @@ import logo from '../../assets/logo.png';
 
 
 
-const star="https://i.pinimg.com/originals/fe/df/d2/fedfd24f4a01191b9fc51ebc978b0516.jpg"
 
 const LoadingScreen = ({ navigation, route }) => {
   useEffect(() => {

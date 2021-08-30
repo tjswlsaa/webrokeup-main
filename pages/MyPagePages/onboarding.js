@@ -12,18 +12,17 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-// import onboarding1 from '../../assets/onboarding1.PNG';
-// import onboarding2 from '../../assets/onboarding2.PNG';
-// import onboarding3 from '../../assets/onboarding3.PNG';
+import tutorialTwoIs from '../../assets/tutorialTwoIs.jpg';
+import tutorialThreeIs from '../../assets/tutorialThreeIs.jpg';
+import tutorialFourIs from '../../assets/tutorialFourIs.jpg';
+import tutorialOneIs from '../../assets/tutorialOneIs.jpg';
 
 
 const test2 = {
     item: ""
 }
 const onboarding = ({ navigation }) => {
-    const onboardingimage2="https://miricanvas.zendesk.com/hc/article_attachments/900002066746/________________16_.png"
-    const onboardingimage= "https://lh3.googleusercontent.com/proxy/gk0CmvRC45vMYOFxGYE6pwniRsooFYGOZ84nKVLc9PLLY2ChPv6mj7gKMfkrQVvORj1jpezYxzkngiWxXLDen7cSIl46PBlEjtJ8VvFW9uhQv-k4s9mHk6wZCWT3Ye_r29PTprDOXiRhANqRa1DrbkcYThPURdU"
-    const onboardingimage3="https://t1.daumcdn.net/cfile/tistory/99CCD5475B4DFA5D12"
+
     const headerHeight = useHeaderHeight();
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width
@@ -34,11 +33,10 @@ const onboarding = ({ navigation }) => {
     const [swiper, setSwiper] = useState(null);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#FBFBFB" }}>
             <View style={{ flex: 1 }}>
                 <StatusBar style="white" />
               
-                        <View style={{ height: realScreen * 0.9, width: "100%", marginTop: "5%" }}>
+                        <View style={{ flex: 1, width: "100%", }}>
                             <Swiper
                                 // index={myBook.bookKey}
                                 loop={false}
@@ -64,16 +62,19 @@ const onboarding = ({ navigation }) => {
                                     marginRight: 9,
                                 }} />}
                             >
-                                    <View style={{backgroundColor:"yellow"}}>
-                                        <Text>온보딩</Text>
+                                   <View style={{flex:1, backgroundColor:"white"}}>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialOneIs} ></Image>
+                                    </View>
+    <View style={{flex:1, backgroundColor:"white"}}>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialTwoIs} ></Image>
                                     </View>
 
-                                    <View>
-                                    <Text>온보딩2</Text>
+                                    <View style={{flex:1, backgroundColor:"white"}}>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialThreeIs} ></Image>
                                     </View>
 
-                                    <View>
-                                    <Text>온보딩3</Text>
+                                    <View style={{flex:1, backgroundColor:"white"}}>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialFourIs} ></Image>
                                     </View>
 
      
@@ -82,7 +83,6 @@ const onboarding = ({ navigation }) => {
                     
                     
                 </View>
-        </SafeAreaView>
     )
 }
 AppRegistry.registerComponent('onboarding', () => SwiperComponent)

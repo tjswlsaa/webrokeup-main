@@ -162,7 +162,7 @@ const PostItem=(props)=> {
                         <Text style={{flex:35,fontSize:17, fontWeight:"600", marginHorizontal:"2%"}} numberOfLines={3}>{questions.title}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
-                <Text numberOfLines={3} style={styles.bookIndexText}>{questions.summary}</Text>      
+                <Text numberOfLines={4} style={styles.bookIndexText}>{questions.summary}</Text>      
                 </View>
             </TouchableOpacity>
 
