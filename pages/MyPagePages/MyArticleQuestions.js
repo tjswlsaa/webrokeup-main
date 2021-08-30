@@ -257,20 +257,20 @@ function ChapterItem(props) {
     return (
     <View>
 
-        <View style={{ height: "90%", width: "80%", alignSelf: "center" }} 
+        <View style={{ height: "90%", width: "85%", alignSelf: "center" }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
 
-            <View style={{ flexDirection:"row", marginTop:"10%",alignItems:"center",}}>
+            <View style={{ flexDirection:"row",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%"}}>
+                <ScrollView style={{marginTop:"3%"}}>
                 {item.type== "감정 일기"? (
 
-                <Text style={{fontSize: 15, marginLeft:"6%", lineHeight:23}}>{item.mainText}</Text>
+                <Text style={{fontSize: 15, marginLeft:"6%", lineHeight:23, marginRight:"3%"}}>{item.mainText}</Text>
                 ) :(
 
                             <View>
@@ -292,7 +292,7 @@ function ChapterItem(props) {
         </View>
         <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"8%",  }}>
        
-            <TouchableOpacity style={{marginTop:"4%", }} onPress={async () => {
+            <TouchableOpacity style={{marginTop:"10%", }} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
@@ -333,21 +333,21 @@ function ChapterItem(props) {
             }}>
                 <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "2%",marginTop:"4%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "2%",marginTop:"10%", }}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
-                style={{marginTop:"4%", marginLeft:"4%" }}
+                style={{marginTop:"10%", marginLeft:"4%" }}
             >
-                <Icon name="message1" size={20} color="grey" style={styles.addIcon} />
+                <Icon name="message1" size={20} color="grey" style={{}} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "2%",marginTop:"4%",  }}> {commentsNumber} </Text>
-            <TouchableOpacity style={{marginLeft:"3%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
-                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+            <Text style={{ marginLeft: "2%",marginTop:"10%",  }}> {commentsNumber} </Text>
+            <TouchableOpacity style={{marginLeft:"3%",  width:50, height:25,marginTop:"10%",flexDirection:"row" }} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={18} color="grey" style={{}} />
                 <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
 
                 </TouchableOpacity>
 
-            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"8%" }}>
+            <View style={{ flexDirection:"column", marginTop: "10%", marginLeft:"8%" }}>
                 <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
             </View>
         </View>
