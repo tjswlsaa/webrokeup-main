@@ -357,7 +357,15 @@ async function savePage() {
   const Newindex= CountChapter
   console.log("newpageindex",Newindex)
   
+  if (chapterTitle == ""){
+    Alert.alert("제목을 입력해주세요");
+    return;
+  }
 
+  if (mainText == ""){
+    Alert.alert("글을 입력해주세요");
+    return;
+  }
   firebase_db
   .ref(`/book/${bookKey}/both/` + chapterKey)
   .set({

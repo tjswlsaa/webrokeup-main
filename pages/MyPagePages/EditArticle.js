@@ -78,7 +78,7 @@ const EditArticle = ({ navigation, route }) => {
                 <View style={{backgroundColor:chapters.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 {/* <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{chapters.chapterTitle}</Text> */}
-                <TextInput style={{ fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"6%", backgroundColor: 'rgba(52,52,52,0)',  }}
+                <TextInput style={{ fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"6%", backgroundColor: 'rgba(52,52,52,0)', lineHeight:23 }}
                                         multiline={false} defaultValue={chapters.chapterTitle} returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)}
                                         ref={title_a} />
@@ -87,14 +87,14 @@ const EditArticle = ({ navigation, route }) => {
                 <View style={{marginHorizontal:"15%",height:realScreen*0.58,}}>
                     
 
-                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15,lineHeight:23 }}
                                     multiline={true} defaultValue={chapters.mainText} returnKeyType="done"
                                     onChangeText={text2 => setText2(text2)}
                                     ref={maintext_a} />
             
                 </View>
                 {/* </TouchableWithoutFeedback>  */}
-                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", marginRight:"7%", padding:"5%", marginTop:"10%"}} 
+                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", padding:"5%", marginTop:"10%"}} 
                 onPress={() => {
                     // console.log('MyArticle.js (3), chapters: ',chapters);
                     firebase_db

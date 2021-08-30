@@ -139,13 +139,22 @@ async function saveChapter() {
   const regdate=  new Date().toString()
   const Kregdate= moment(new Date()).format('YYYY년 MM월 DD일') 
 
-
-
   const {navigation} =test1
   const {text}= test2;
   const {user_uid}=test3;
   const {title}=test4;
 
+    if (title == ""){
+      Alert.alert("제목을 입력해주세요");
+      return;
+    }
+
+    if (text == ""){
+      Alert.alert("글을 입력해주세요");
+      return;
+    }
+
+ 
   firebase_db
   .ref(`/post/${postKey}/`)
   .set({

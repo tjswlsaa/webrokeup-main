@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableWithoutFeedback,Keyboard,TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert } from 'react-native';
 import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
 import { StatusBar } from 'expo-status-bar';
@@ -8,6 +8,8 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { CommonActions } from '@react-navigation/native';
+import Icon2 from 'react-native-vector-icons/AntDesign';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const test1 = {
     navigation:""
@@ -48,7 +50,7 @@ const EditQuestion = ({ navigation, route }) => {
     test2.text1=text1
     test3.text2=text2
     test6.text3=text3
-    test7.text3=text4
+    test7.text4=text4
 
     const title_a = useRef(null);
     const maintext_a = useRef(null);
@@ -66,7 +68,17 @@ const EditQuestion = ({ navigation, route }) => {
     const realScreen = ScreenHeight-headerHeight-BottomSpace
     
     return (
-        <View style={{ height: "90%", width: "90%", alignSelf: "center", backgroundColor:"white", marginVertical:"10%"}} 
+      <KeyboardAwareScrollView
+    
+        extraHeight={100}
+        scrollEnabled={true}
+        enableAutomaticScroll={true}
+        // contentContainerStyle={{height:-30}}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        contentContainerStyle ={{height:realScreen}}
+        >
+                  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ height: realScreen*0.9, width: "90%", alignSelf: "center", backgroundColor:"white",marginTop:"8%"}} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
 
@@ -106,10 +118,29 @@ const EditQuestion = ({ navigation, route }) => {
                                                             onChangeText={text4 => setText4(text4)}
                                                             ref={maintext_a} />                                                
                                                 </View>
+
+
                             </View>
                 
                 </ScrollView>
+                <TouchableOpacity style={{ width: "15%", borderRadius: 15, alignSelf:"flex-end", marginRight:"1%", padding:"2%", marginTop:"5%"}} 
+                onPress={() => {
+                    // console.log('MyArticle.js (3), chapters: ',chapters);
+                    firebase_db
+                        .ref(`book/${chapters.bookKey}/both/` + chapters.chapterKey)
+                        .set(null)
+                        .then(function () {
+                            Alert.alert("삭제 완료")
+                            navigation.navigate("MyBook", { bookKey: chapters.bookKey })
+                        })
+                }}>
+                                
+                                 <Icon2 name="delete" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon2>
+
+                            </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     )
 }
 const styles = StyleSheet.create({

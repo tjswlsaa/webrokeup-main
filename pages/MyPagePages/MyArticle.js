@@ -320,7 +320,7 @@ function ChapterItem(props) {
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%",}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%"}}>
+            <ScrollView style={{marginTop:"5%", height:realScreen*0.6, marginBottom:"4%"}}>
 
                 <View>
                                                 <View style={{ marginBottom:realScreen*0.03,marginLeft:"2%"}}>
