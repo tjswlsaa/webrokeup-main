@@ -274,7 +274,7 @@ function ChapterItem(props) {
     return (
     <View>
 
-        <View style={{ height: realScreen*0.75, width: "80%", alignSelf: "center",  }} 
+        <View style={{ height: realScreen*0.75, width: "85%", alignSelf: "center",  }} 
         // onPress={() => { navigation.navigate("MyBook", { item: item, bookKey: item.bookKey, navigation: navigation }) }}
         >
        {item.type== "감정 일기"? (
@@ -287,20 +287,20 @@ function ChapterItem(props) {
         </TouchableOpacity>
   ):(<View>
 
-<TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
+<TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,marginTop:"3%",flexDirection:"row" }} onPress={()=>alert()}>                        
                 <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
                 <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
 
                 </TouchableOpacity>
   </View>)}
 
-            <View style={{ flexDirection:"row", marginTop:"1%",alignItems:"center",}}>
+            <View style={{ flexDirection:"row",alignItems:"center",}}>
                 <View style={{backgroundColor:item.chColor, flex:1, height:realScreen*0.05, }}></View>
                 <View style={{height:realScreen*0.1, flex:25,}}>
                 <Text style={{fontSize: 18, fontWeight:"500",  marginLeft:"2%", marginTop:"7.5%"}}>{item.chapterTitle}</Text>
                 </View>
             </View>
-                <ScrollView style={{marginTop:"5%", height:realScreen*0.6, marginBottom:"4%"}}>
+                <ScrollView style={{marginTop:"4%", height:realScreen*0.6, marginBottom:"4%"}}>
 
                 <Text style={{fontSize: 15, marginLeft:"6%", lineHeight:23, marginRight:"5%"}}>{item.mainText}</Text>
                 </ScrollView>
@@ -344,7 +344,7 @@ function ChapterItem(props) {
         </View>
         <View style={{ flexDirection: "row", height: realScreen*0.1,  marginHorizontal:"4%", marginTop:"5%" }}>
 
-            <TouchableOpacity style={{marginTop:"4%", marginLeft:"4%"}} onPress={async () => {
+            <TouchableOpacity style={{marginTop:"7%", marginLeft:"4%"}} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
@@ -384,17 +384,17 @@ function ChapterItem(props) {
                 firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey).child("likeCount").set(likeCount)
             }}>
                 
-                <Clover name="clover" size={18} color={cloverColor} style={{marginLeft:"0%",marginTop:"4%"}} />
+                <Clover name="clover" size={18} color={cloverColor} style={{marginLeft:"0%",marginTop:"7%"}} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "0%",marginTop:"4%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "0%",marginTop:"7%", }}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
-                style={{marginTop:"4%", marginLeft:"4%" }}
+                style={{marginTop:"7%", marginLeft:"4%" }}
             >
                 <Icon name="message1" size={18} color="grey" style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "0%",marginTop:"4%",  }}> {commentsNumber} </Text>
-            <View style={{marginLeft: "4%",marginTop:"4%",}}>
+            <Text style={{ marginLeft: "0%",marginTop:"7%",  }}> {commentsNumber} </Text>
+            <View style={{marginLeft: "4%",marginTop:"7%",}}>
                     {item.isPublic == true ? 
                     (
                     <View style={{flexDirection: "row"}}>
@@ -414,7 +414,7 @@ function ChapterItem(props) {
                 }
 
             </View>
-            <View style={{ flexDirection:"column", marginTop: "4%", marginLeft:"13%" }}>
+            <View style={{ flexDirection:"column", marginTop: "7%", marginLeft:"13%" }}>
                 <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
             </View>
             
