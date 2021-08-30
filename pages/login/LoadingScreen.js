@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View, ImageBackground,Image } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View, ImageBackground,Image} from "react-native";
 import React, { Component, useEffect, useState } from "react";
 import { CommonActions } from '@react-navigation/native';
 import firebase from "firebase";
@@ -38,7 +38,9 @@ const LoadingScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-          <Image style={{flex: 1, height:"100%",width:"100%"}} source={loading_logo} ></Image>
+          <ImageBackground style={{flex: 1, height:"100%",width:"100%"}} source={loading_logo} >
+            <Text style= {{alignSelf:"center", marginTop: "135%", fontSize: 25, fontWeight: "600", color: "#20543F"}}> Feel me Fill me </Text>
+          </ImageBackground>
     </View>
   );
 };
