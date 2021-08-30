@@ -12,10 +12,10 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import tutorialTwoIs from '../../assets/low_2.jpg';
-import tutorialThreeIs from '../../assets/low_3.jpg';
-import tutorialFourIs from '../../assets/low_4.jpg';
-import tutorialOneIs from '../../assets/low_1.jpg';
+import tutorialTwoIs from '../../assets/low_2.png';
+import tutorialThreeIs from '../../assets/low_3.png';
+import tutorialFourIs from '../../assets/low_4.png';
+import tutorialOneIs from '../../assets/low_1.png';
 
 
 const test2 = {
@@ -63,7 +63,7 @@ const onboarding = ({ navigation }) => {
                                 }} />}
                             >
                                    <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialOneIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"contain", marginTop:"5%"}} source={tutorialOneIs} ></Image>
                                     </View>
     <View style={{flex:1, backgroundColor:"white"}}>
                                     <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialTwoIs} ></Image>
