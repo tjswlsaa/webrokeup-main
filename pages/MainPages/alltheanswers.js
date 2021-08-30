@@ -276,7 +276,11 @@ const test1 = {
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ }}>
+                <View style={{ backgroundColor: questions.Color, flex: 1, marginTop: "2%", height:"70%" }}>
+                        </View>
                     <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%", textAlign: "center", fontWeight: "600" }}>{questions.title}</Text>
+                    <View style={{ backgroundColor: questions.Color, marginTop: "2%", height:realScreen*0.003, width:"80%", alignSelf:"center"}}></View>
+
                     <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "3%", marginHorizontal: "5%", marginBottom: "5%", textAlign: "center" }}>{questions.intro}</Text>
                 </View>
 
