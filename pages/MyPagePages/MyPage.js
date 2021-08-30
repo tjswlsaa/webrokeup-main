@@ -253,12 +253,13 @@ const MyPage = ({ navigation }) => {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fbfbfb" }}>
-            <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff"}}>
+            <View style={{ flex: 1}}>
                 <StatusBar style="white" />
                 <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
-                <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>나의 감정록</Text>
-            </View>
+                    <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>나의 감정록</Text>
+                </View>
+                <View style={{backgroundColor: "#fbfbfb"}}>
                 <View style={{ height: realScreen * 0.16, marginHorizontal: "5%", borderRadius: 10, backgroundColor: "#F2F2F2" , justifyContent:"center", marginTop:"2%"}}>
                     <View style={{ flex: 1.5, flexDirection: "row", alignSelf: "center", marginHorizontal: "3%", borderRadius: 10,  }}>
                         <Text style={{ flex: 1, fontSize: 17, fontWeight: "600", marginTop: "7%", marginLeft: "3%" }}>{userinfo.iam}</Text>
@@ -477,6 +478,7 @@ const MyPage = ({ navigation }) => {
 
 
 
+                    </View>
                 </View>
             </View>
         </SafeAreaView>

@@ -44,12 +44,12 @@ const communityBoard = ({ navigation, route }) => {
 
 
     return (
-        <SafeAreaView style={{flex:1, backgroundColor: "#fbfbfb"}}>
+        <SafeAreaView style={{flex:1, backgroundColor: "#fff"}}>
                <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>커뮤니티</Text>
             </View>
-                <ScrollView style={{height:500}}>
-
+                <ScrollView style={{height:500, backgroundColor: "#fbfbfb"}}>
+                
                         {posts.map(item => {
                             return (
                                 <PostItem
@@ -61,7 +61,7 @@ const communityBoard = ({ navigation, route }) => {
                         })}
                 </ScrollView>
                 
-                <View style={{}}>
+                <View style={{backgroundColor: "#fbfbfb"}}>
 
                     <TouchableOpacity 
                     onPress={()=>navigation.navigate("communityMakeNewPost")}
