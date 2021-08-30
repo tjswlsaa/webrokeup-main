@@ -39,7 +39,7 @@ const LoadingScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
           <ImageBackground style={{flex: 1, height:"100%",width:"100%"}} source={loading_logo} >
-            <Text style= {{alignSelf:"center", marginTop: "135%", fontSize: 25, fontWeight: "600", color: "#20543F"}}> Feel me Fill me </Text>
+            <Text style= {{alignSelf:"center", marginTop: "135%", fontSize: 25, fontWeight: "600", color: "#20543F"}}> Feel Me Fill Me </Text>
           </ImageBackground>
     </View>
   );
