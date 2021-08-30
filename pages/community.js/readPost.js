@@ -323,7 +323,7 @@ const displayedAt=(createdAt)=>{
 
           <View style={{marginTop:20, marginHorizontal:"5%", backgroundColor:"white",padding:30, borderRadius:10, justifyContent:"center"}}>
                   <Text style={{marginBottom:10, fontSize:13, color:"grey"}}>{readPostUserinfo.iam}</Text> 
-                  <Text style={{fontSize:17}}>{post.title}</Text>               
+                  <Text style={{fontSize:17, fontWeight:"600"}}>{post.title}</Text>               
               
                   <Text style={{marginTop:"5%", lineHeight:23}}>{post.text}</Text>               
 
