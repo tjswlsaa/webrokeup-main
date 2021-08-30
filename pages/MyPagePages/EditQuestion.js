@@ -87,21 +87,21 @@ const EditQuestion = ({ navigation, route }) => {
                             <View>
                                                 <View style={{ marginBottom:realScreen*0.03}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q1}</Text>
-                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 ,lineHeight:23}}
                                                             multiline={true} defaultValue={chapters.mainText} returnKeyType="done"
                                                             onChangeText={text2 => setText2(text2)}
                                                             ref={maintext_a} />
                                                 </View>
                                                 <View style={{ marginBottom:realScreen*0.03}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q2}</Text>
-                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15,lineHeight:23 }}
                                                             multiline={true} defaultValue={chapters.text3} returnKeyType="done"
                                                             onChangeText={text3 => setText3(text3)}
                                                             ref={maintext_a} />
                                                 </View>
                                                 <View style={{ marginBottom:realScreen*0.03}}>
                                                 <Text style={{fontSize: 16, fontWeight:"600",}}>{chapters.Q3}</Text>
-                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15 }}
+                                                <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 15,lineHeight:23 }}
                                                             multiline={true} defaultValue={chapters.text4} returnKeyType="done"
                                                             onChangeText={text4 => setText4(text4)}
                                                             ref={maintext_a} />                                                

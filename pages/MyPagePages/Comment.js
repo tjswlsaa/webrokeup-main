@@ -271,6 +271,7 @@ function Comment({ navigation, route }) {
                                 height: textInputHeight,
                                 borderRadius: 10,
                                 justifyContent: "center",
+                                lineHeight:23
                             }}
                             ref={text_a}
                             multiline={true}

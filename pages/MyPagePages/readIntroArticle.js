@@ -89,7 +89,7 @@ const alert = async ()=> {
         </View>
         <View style={{height:realScreen*0.6}}>
         <ScrollView style={styles.textContainer}>
-            <Text style={{lineHeight:"25%", marginHorizontal:"10%"}}>{intro}</Text>
+            <Text style={{lineHeight:23, marginHorizontal:"10%"}}>{intro}</Text>
        </ScrollView>
        </View>
 </View>

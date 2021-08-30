@@ -57,7 +57,7 @@ const editPost = ({ navigation, route }) => {
                 <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.90, marginVertical:"8%", marginHorizontal:"5%" }}>
                 <ScrollView scrollEnabled={true}>
 
-                        <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 ,marginTop:"10%"}}
+                        <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, flexShrink: 1, fontSize: 17 ,marginTop:"10%",lineHeight:23}}
                         multiline={true} defaultValue={text} 
                         onChangeText={editText => setEditText(editText)} />
                </ScrollView>

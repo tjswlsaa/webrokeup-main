@@ -348,7 +348,7 @@ return(
                       <Text style={{marginLeft:"5%", color:"grey"}}>{writing.Kregdate}</Text>                 
                       </View>
                     </View>
-                  <Text style={{marginLeft:"5%", fontSize:15, marginVertical:"5%", marginHorizontal:"5%", lineHeight:"25%"}}>{writing.text}</Text>               
+                  <Text style={{marginLeft:"5%", fontSize:15, marginVertical:"5%", marginHorizontal:"5%", lineHeight:23}}>{writing.text}</Text>               
           </ScrollView>
           </View>
 )
