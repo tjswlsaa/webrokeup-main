@@ -467,8 +467,8 @@ const MyPage = ({ navigation }) => {
                         )}
 
                         {colorBookListValues.length == 0 ? (
-                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#999999", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
-                                        <Text>도움말보기</Text>
+                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#44705E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
+                                        <Text style={{color: "white"}}>도움말보기</Text>
                                     </TouchableOpacity>) :(
                                         <View></View>
                                     )}

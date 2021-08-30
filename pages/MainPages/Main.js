@@ -646,7 +646,7 @@ function QuestionComponent (props) {
         shadowRadius: 2,
         elevation: 10,}}>
 
-            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.3, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.zzzzzz })}>
+            <TouchableOpacity style={{ width: ScreenWidth * 0.95, height: realScreen * 0.3, marginTop: "5%" }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.Color })}>
                 <View style={{ width: ScreenWidth * 0.85, padding: "5%", backgroundColor: "white", marginHorizontal: "5%", flex: 1,  height: realScreen * 0.3,  }}>
                     <View style={{ flexDirection: "row", flex: 2,}}>
                         <View style={{ backgroundColor: question.Color, flex: 1, marginTop: "2%", height:"70%" }}>
