@@ -45,12 +45,15 @@ const editorBoard = ({ navigation, route }) => {
 
                 <ScrollView style={{height:500}}>
 
-                        {writings.map(item => {
+                        {writings.map((item,index) => {
                             return (
                                 <WritingItem
                                     navigation={navigation}
                                     key = {item.key}
                                     writing={item}
+                                    list={writings}
+                                    index={index}
+
                                 />
                             )
                         })}
@@ -69,7 +72,7 @@ const editorBoard = ({ navigation, route }) => {
 
 
 const WritingItem=(props)=> {
-    const {writing, navigation}=props;
+    const {writing, navigation,index, list}=props;
     // const {writing}=test1
 
 
@@ -98,7 +101,7 @@ const WritingItem=(props)=> {
 
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10, height:realScreen*0.5}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation, index:index, list:list}) }}>
                 <Image style={{height:realScreen*0.25, borderRadius: 10, width:"100%"}} source={{uri:writing.image}}></Image>
 
                 <Text style={{fontSize:18, marginHorizontal:"3%", marginTop:"5%", fontWeight:"500"}} numberOfLines={2}>{writing.title}</Text>
