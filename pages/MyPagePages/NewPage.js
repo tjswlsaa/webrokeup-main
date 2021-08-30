@@ -263,7 +263,7 @@ const colorF = colorFis(bookKey);
 
                 <View style={{ }}>
 
-                <TextInput style={{ marginHorizontal: "10%", fontSize: 15,  height:realScreen*0.6}}
+                <TextInput style={{ marginHorizontal: "10%", fontSize: 15,  height:realScreen*0.6, lineHeight:23}}
                   multiline={true} placeholder="어떤 일이 있었는지 적어주세요"
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}

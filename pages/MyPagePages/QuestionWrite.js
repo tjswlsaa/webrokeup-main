@@ -336,7 +336,7 @@ const [chapterColor, setChapterColor] = useState(titleColor)
                         </View>
                         <View style={{ flex:15, height: realScreen*0.08, justifyContent:"center", width:"100%"}}>
                 
-                            <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%", }}
+                            <TextInput style={{ fontSize: 20, fontWeight: "600", marginHorizontal: "2%",lineHeight:23 }}
                                 multiline={false} placeholder={question.title}
                                 returnKeyType="done"
                                 // maxLength={17}

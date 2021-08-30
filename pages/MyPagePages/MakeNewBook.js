@@ -277,7 +277,7 @@ test9.bookKey = bookKey;
                   <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20,  }}
                     value={bookTitle}
                     multiline={false}
-                    maxLength={10}
+                    maxLength={12}
                     returnKeyType="done"
                     onChangeText={bookTitle => setBookTitle(bookTitle)}
                     placeholder="단어로 표현해주세요" />

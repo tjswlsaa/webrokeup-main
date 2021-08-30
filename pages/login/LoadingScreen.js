@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View, ImageBackground } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View, ImageBackground,Image } from "react-native";
 import React, { Component, useEffect, useState } from "react";
 import { CommonActions } from '@react-navigation/native';
 import firebase from "firebase";

@@ -96,7 +96,7 @@ const IntroArticle = ({ navigation, route }) => {
             </View>
             <ScrollView style={{ marginHorizontal: "10%"}}>
               <TextInput 
-                style={{fontSize: 15}}
+                style={{fontSize: 15, lineHeight:23}}
                 multiline={true}
                 placeholder="내용을 입력하세요"
                 returnKeyType="done"
