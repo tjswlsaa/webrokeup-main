@@ -713,7 +713,7 @@ return (
   <TouchableOpacity
       activeOpacity={0.8}
       onPress={()=>deleteCommentfunction()}
-      style={{backgroundColor:"#f5f5f5", width:"20%",justifyContent:"center"}}
+      style={{backgroundColor:"#EFEFEF", width:"20%",justifyContent:"center"}}
   >
       {/* <Text style={{justifyContent:"center", alignSelf:"center"}}>
           삭제
@@ -732,7 +732,7 @@ const AlertButton = () => {
     <TouchableOpacity
         activeOpacity={0.8}
         onPress={()=>alert()}
-        style={{backgroundColor:"#f5f5f5", width:"20%",justifyContent:"center"}}
+        style={{backgroundColor:"#EFEFEF", width:"20%",justifyContent:"center"}}
     >
 
         <Icon2 name="alarm-light-outline" size={20} color="black" style={{alignSelf:"flex-end", justifyContent:"center", marginLeft:"30%", backgroundColor:"#f5f5f5"}}/>
