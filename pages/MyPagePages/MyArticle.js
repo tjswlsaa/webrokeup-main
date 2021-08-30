@@ -323,17 +323,17 @@ function ChapterItem(props) {
                 <ScrollView style={{marginTop:"5%"}}>
 
                 <View>
-                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"2%"}}>
                                                 <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q1}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.mainText}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%", marginLeft: "1%", lineHeight:23}}>{item.mainText}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"2%"}}>
                                                 <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q2}</Text>
-                                                <Text style={{fontSize: 15, marginVertical:"5%",lineHeight:23}}>{item.text3}</Text>
+                                                <Text style={{fontSize: 15, marginVertical:"5%", marginLeft: "1%", lineHeight:23}}>{item.text3}</Text>
                                                 </View>
-                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"6%"}}>
+                                                <View style={{ marginBottom:realScreen*0.03,marginLeft:"2%"}}>
                                                 <Text style={{fontSize: 15, fontWeight:"600",}}>{item.Q3}</Text>
-                                                <Text style={{fontSize: 15,  marginVertical:"5%",lineHeight:23}}>{item.text4}</Text>
+                                                <Text style={{fontSize: 15,  marginVertical:"5%", marginLeft: "1%", lineHeight:23}}>{item.text4}</Text>
                                                 </View>
                 </View>
                 </ScrollView>

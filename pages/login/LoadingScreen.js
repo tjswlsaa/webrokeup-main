@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet, Text, View, ImageBackground,Image } from
 import React, { Component, useEffect, useState } from "react";
 import { CommonActions } from '@react-navigation/native';
 import firebase from "firebase";
-import logo from '../../assets/logo.png';
+import loading_logo from '../../assets/loading_logo.jpg';
 
 
 
@@ -39,8 +39,7 @@ const LoadingScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-
-          <Image style={{height:200, width:200, alignSelf:"center"}} source={logo} ></Image>
+          <Image style={{flex: 1, resizeMode:"contain"}} source={loading_logo} ></Image>
     </View>
   );
 };

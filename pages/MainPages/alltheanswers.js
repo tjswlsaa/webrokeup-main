@@ -242,8 +242,8 @@ const test1 = {
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
                 <View style={{ }}>
-                    <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%" }}>{questions.title}</Text>
-                    <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "2%", marginHorizontal: "10%", marginBottom: "5%" }}>{questions.intro}</Text>
+                    <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%", textAlign: "center", fontWeight: "600" }}>{questions.title}</Text>
+                    <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "3%", marginHorizontal: "5%", marginBottom: "5%", textAlign: "center" }}>{questions.intro}</Text>
                 </View>
                 <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
                     <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
