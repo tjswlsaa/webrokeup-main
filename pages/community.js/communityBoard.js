@@ -158,7 +158,13 @@ const PostItem=(props)=> {
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readPost', { postKey:post.key, navigation: navigation, postcreator:post.creator}) }}>
                 <View style={{}}>
-                <Text style={styles.bookIndexOnePunchLine} numberOfLines={3}>{post.text}</Text>
+                <Text style={{        fontWeight: '700',fontSize:16,
+        marginLeft: "5%",
+        marginTop: "2%",}} numberOfLines={3}>{post.title}</Text>
+
+                <Text style={{        fontWeight: '400',
+        marginLeft: "5%",
+        marginTop: "2%",}} numberOfLines={2}>{post.text}</Text>
                 </View>
                 <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
                 <Text style={{ marginLeft: "5%",marginTop: "2%", color:"grey", fontSize:11}}>{PostItemUserinfo.iam}</Text>

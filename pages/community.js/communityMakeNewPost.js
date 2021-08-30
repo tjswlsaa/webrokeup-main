@@ -78,7 +78,7 @@ console.log(userinfo)
           <View style={{flex:1}}>
                    <View style={{ backgroundColor:'white', height:realScreen*0.1, marginTop:"5%", marginHorizontal:"5%",borderRadius:15}}>
 
-                    <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 17,height:realScreen*0.05, marginTop:"5%", marginLeft:"10%",lineHeight:23}}
+                    <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)',  fontSize: 17,height:realScreen*0.05, marginTop:"4%", marginLeft:"10%",lineHeight:23}}
                       multiline={false} placeholder="제목을 적어주세요"
                       returnKeyType="done"
                       onChangeText={title => setTitle(title)}
