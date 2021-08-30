@@ -92,7 +92,7 @@ const popularbook = ({ navigation, route }) => {
                                                 listoften.push(listFiltered2[13]);
                                                 }
                                                 if (listFiltered2.length >= 15) {
-                                                        listoften.push(listFiltered2[14]);
+                                                        listoften.push(hotlist[14]);
                                                         }
         
                                     setSelectedList2(listoften);
@@ -189,7 +189,7 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
                                         <Image source={{uri: book.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
                                         <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{book.defaultTitle}</Text>
-                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{book.bookTitle}</Text>
+                                                <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{book.bookTitle}</Text>
                                                 <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                         </View>
                                         </View>
