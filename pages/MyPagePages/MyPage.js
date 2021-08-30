@@ -314,9 +314,9 @@ const MyPage = ({ navigation }) => {
     
                                         <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                             <Image source={{uri: firstBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
-                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>빨간색 감정은</Text>
-                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{firstBook.bookTitle}</Text>
+                                                <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{firstBook.bookTitle}</Text>
 
                                                 <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                             </View>
@@ -335,7 +335,7 @@ const MyPage = ({ navigation }) => {
  
 
                                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
-                                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                                     <Text style={{ marginTop: "30%", marginLeft: "10%" }}>파란색 감정은</Text>
                                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
@@ -358,9 +358,9 @@ const MyPage = ({ navigation }) => {
 
                                     <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                         <Image source={{uri: thirdBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
-                                        <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                        <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                             <Text style={{ marginTop: "30%", marginLeft: "10%" }}>파란색 감정은</Text>
-                                            <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{thirdBook.bookTitle}</Text>
+                                            <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{thirdBook.bookTitle}</Text>
  
                                             <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                         </View>
@@ -384,7 +384,7 @@ const MyPage = ({ navigation }) => {
                             </View>
 
                             <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
-                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                     <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란색 감정은</Text>
                                     <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
 
@@ -408,9 +408,9 @@ const MyPage = ({ navigation }) => {
                             <View style={{ backgroundColor: "#c4c4c4", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                 <Image source={{uri: secondBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
 
-                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                     <Text style={{ marginTop: "30%", marginLeft: "10%" }}>노란색 감정은</Text>
-                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{secondBook.bookTitle}</Text>
+                                    <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{secondBook.bookTitle}</Text>
 
                                     <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
 
@@ -429,9 +429,9 @@ const MyPage = ({ navigation }) => {
                             </View>
 
                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
-                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                     <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
-                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>책 제목이다.</Text>
+                                    <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>책 제목이다.</Text>
 
                                     {/* <View style={{ backgroundColor: fourthColor, opacity: 0.4, position: "absolute", zIndeox: 0, marginTop: "60%", width: ScreenWidth * 0.20, height: realScreen * 0.004, marginLeft: 6 }}>
                                     </View> */}
@@ -452,9 +452,9 @@ const MyPage = ({ navigation }) => {
 
                             <View style={{ backgroundColor: "#c5c5c5", zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                 <Image source={{uri: fourthBook.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
-                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                     <Text style={{ marginTop: "30%", marginLeft: "10%" }}>검은색 감정은</Text>
-                                    <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{fourthBook.bookTitle}</Text>
+                                    <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{fourthBook.bookTitle}</Text>
 
                                     <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
 

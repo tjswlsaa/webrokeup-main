@@ -188,9 +188,9 @@ const MyBook = ({ navigation, route }) => {
 
                                         <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                             <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
-                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.27, }}>
+                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
                                                 <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
-                                                <Text style={{ marginTop: "5%", marginLeft: "10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
+                                                <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
                                                 <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                             </View>
                                         </View>
