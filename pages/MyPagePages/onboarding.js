@@ -63,18 +63,18 @@ const onboarding = ({ navigation }) => {
                                 }} />}
                             >
                                    <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialOneIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialOneIs} ></Image>
                                     </View>
     <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialTwoIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialTwoIs} ></Image>
                                     </View>
 
                                     <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialThreeIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialThreeIs} ></Image>
                                     </View>
 
                                     <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"center", marginTop:"5%"}} source={tutorialFourIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialFourIs} ></Image>
                                     </View>
 
      
