@@ -49,20 +49,11 @@ const EditProfile = ({navigation}) => {
             <View style ={{flex: 1, backgroundColor: "#FAFAFA"}}>  
                                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                <View style={{flex: 1, marginTop: 10, height: "30%", backgroundColor: "white"}}>
+                <View style={{flex: 1, backgroundColor: "white"}}>
                     {/* <View style = {{flex:2}}> */}
-                        <View style={{flex:1, flexDirection: "row", marginTop: 20, backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
-                            <TextInput 
-                                color = "#20543F"
-                                style={{marginLeft: 10, marginTop: 20, height: 40, fontWeight: "bold", fontSize: 25, alignSelf: "flex-start",}}
-                                returnKeyType="done"
-                                multiline={false}
-                                defaultValue = {userinfo.iam} 
-                                onChangeText={ID=>setID(ID)}
-                                ref={idtext}/>
-
-                        </View>
-                        <TouchableOpacity style= {{padding:10, width: "20%", backgroundColor: "#20543F", borderRadius: 10, marginRight:20,alignSelf:"flex-end"}}
+                    <View style={{flex: 1, flexDirection: "row"}}>
+                        <Text style={{flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이</Text>
+                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "40%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
                             onPress={()=>{
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
@@ -75,20 +66,22 @@ const EditProfile = ({navigation}) => {
                             }}>
                             <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
                         </TouchableOpacity>
-
-
+                        </View>    
+                        <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
                             <TextInput 
-                                backgroundColor = "#FAFAFA"
-                                style={{marginHorizontal: 30, marginTop: 30, height: 150, fontSize:15, marginLeft:30, marginBottom:10,lineHeight:23}}
-                                multiline={true}
-                                maxLength={30}
+                                color = "#20543F"
+                                style={{marginLeft: 10, paddingVertical: "3%", fontWeight: "bold", fontSize: 17, alignSelf: "flex-start",}}
                                 returnKeyType="done"
-                                defaultValue = {userinfo.selfLetter}
-                                onChangeText={selfLetter=>setSelfLetter(selfLetter)}
-                                ref={selflettertext}/>
-                    <View style={{flex: 0.5, backgroundColor: "white", }}>
+                                multiline={false}
+                                defaultValue = {userinfo.iam} 
+                                onChangeText={ID=>setID(ID)}
+                                ref={idtext}/>
 
-                        <TouchableOpacity style= {{padding:10, width: "20%", backgroundColor: "#20543F", borderRadius: 10, alignSelf:"flex-end", marginRight:20,}}
+                        </View>
+                        
+                        <View style={{flex: 1, flexDirection: "row"}}>
+                            <Text style={{ flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이 소개</Text>
+                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "40%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
                             onPress={()=>{
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
@@ -101,8 +94,25 @@ const EditProfile = ({navigation}) => {
                             }}>
                             <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
                         </TouchableOpacity>
+                        </View>
+                            
+                            <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
+                                <TextInput 
+                                    backgroundColor = "#FAFAFA"
+                                    style={{marginHorizontal: 30, paddingVertical: "3%", fontSize:15, marginLeft:10, marginBottom:10,lineHeight:23}}
+                                    multiline={true}
+                                    maxLength={30}
+                                    returnKeyType="done"
+                                    defaultValue = {userinfo.selfLetter}
+                                    onChangeText={selfLetter=>setSelfLetter(selfLetter)}
+                                    ref={selflettertext}/>
+                            </View>
+
+                    <View style={{flex: 0.5, backgroundColor: "white", }}>
+
+                        
                     </View>
-                    <View style={{flex: 3, backgroundColor: "white"}}>
+                    <View style={{flex: 8, backgroundColor: "white"}}>
                     </View>
                  </View>
                  </TouchableWithoutFeedback>
