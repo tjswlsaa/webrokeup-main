@@ -572,7 +572,7 @@ const ChapterComment = (props) => {
                                 // style={{backgroundColor:"pink"}}
                                 // style={done ? styles.done : styles.check}
                                 >
-                                    <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10, marginLeft: 30, width: 200, }}>{comment.text}</Text>
+                                    <Text style={{ fontSize: 15, marginTop: 10, marginBottom: 10, marginLeft: 30, width: 250, }}>{comment.text}</Text>
                                     <View style={{ flexDirection: "row" }}>
                                         <Text style={{ fontSize: 11, color: "gray", marginLeft: 30, marginBottom: 10 }}>{userinfo.iam}</Text>
                                         <Text style={{ fontSize: 11, color: "gray", marginLeft: 10, marginBottom: 10 }}> 공감 {likeCount} </Text>
