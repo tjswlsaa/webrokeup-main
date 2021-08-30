@@ -52,9 +52,9 @@ return (
 
   <View style={{backgroundColor:"white", flex:1}}>
 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-  <View style={{flex:1, justifyContent: 'center', marginHorizontal: "5%", marginVertical: "15%",}}>
-<View style={{ height:realScreen*0.3}}>
-  <Image style={{height:200, width:200, alignSelf:"center"}} source={logo} ></Image>
+  <View style={{flex:1, justifyContent: 'center', marginHorizontal: "5%", }}>
+<View style={{ height:realScreen*0.35}}>
+  <Image style={{height:realScreen*0.3, width:200, alignSelf:"center"}} source={logo} ></Image>
   <Text style= {{alignSelf: "center", fontSize: 27, marginTop: "5%", fontWeight: "600", color: "#20543F"}}> Feel me Fill me </Text> 
   </View>
 
@@ -83,7 +83,7 @@ return (
         style={{fontSize: 18, marginVertical: 10,marginLeft:"5%"}}
       />
       </View>
-      <TouchableOpacity style={{alignSelf: "center", borderRadius: 15, paddingVertical: "3%", paddingHorizontal: "40%", marginTop: "10%", backgroundColor:"#20543F", height:realScreen*0.06, width: "100%"}}onPress={()=>{loginUser(email, password)}}>
+      <TouchableOpacity style={{alignSelf: "center", borderRadius: 15,justifyContent:"center" ,paddingHorizontal: "40%", marginTop: "10%", backgroundColor:"#20543F", height:realScreen*0.06, width: "100%"}}onPress={()=>{loginUser(email, password)}}>
         <Text style={{alignSelf:"center", marginTop: "4%", fontSize:17, color:"white", fontSize: 18}}>로그인</Text>
       </TouchableOpacity>
       <TouchableOpacity style={{alignSelf:"center",marginTop:"6%"}} onPress={()=>{navigation.navigate('emailSignup')}}>
