@@ -38,7 +38,7 @@ const LoadingScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-          <Image style={{flex: 1, resizeMode:"contain"}} source={loading_logo} ></Image>
+          <Image style={{flex: 1, height:"100%",width:"100%"}} source={loading_logo} ></Image>
     </View>
   );
 };

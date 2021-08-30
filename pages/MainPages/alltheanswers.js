@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -37,8 +37,42 @@ const test1 = {
     const Color = getColor(questionsKey);
     const colorQuestion = Color + "Questions"
     const colorAnswers = Color + "Answers"
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+        user_uid = user.uid;
+    }
 
+    const [colorBookList, setColorBookList] = useState([]);
 
+    useEffect(()=>{
+        firebase_db.ref(`users/${user_uid}/myBooks`)
+            .on('value',(snapshot)=>{
+                let colorBookList = snapshot.val();
+                if (colorBookList>""){
+                    setColorBookList(colorBookList)
+                }
+                })
+            },[])// 여기에 colorBookList 이거 넣으면 책 삭제 되면 바로업로드 되는데... 대신 로딩이 안됨 진퇴양난
+
+            console.log("questionlist color book list", colorBookList)
+
+            const istherebook =()=> {
+ 
+        if(Color=='firstColor'){
+            return colorBookList.firstColor
+        }
+        if(Color=='secondColor'){
+            return colorBookList.secondColor
+        }
+        if(Color=='thirdColor'){
+            return colorBookList.thirdColor
+        }
+        if(Color=='fourthColor'){
+            return colorBookList.fourthColor
+        }
+    }
+    
     const [questions, setQuestion] = useState([]);
     const getQuestions = async () => {     
         await firebase_db.ref(`questions/${colorQuestion}/` + questionsKey)
@@ -245,9 +279,16 @@ const test1 = {
                     <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%", textAlign: "center", fontWeight: "600" }}>{questions.title}</Text>
                     <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "3%", marginHorizontal: "5%", marginBottom: "5%", textAlign: "center" }}>{questions.intro}</Text>
                 </View>
+
+                {istherebook() == undefined? ( <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={() =>Alert.alert("책을 먼저 만들어주세요")}>
+                    <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
+                </TouchableOpacity> ):(
                 <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
                     <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
+
+
+
                 <View style={{ backgroundColor: "#fafafa", marginTop: 10 }}>
                     <View style={{ flexDirection: "row", height: 30, marginTop: "2%" }}>
                         <TouchableOpacity
