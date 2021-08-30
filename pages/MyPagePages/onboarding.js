@@ -63,7 +63,7 @@ const onboarding = ({ navigation }) => {
                                 }} />}
                             >
                                    <View style={{flex:1, backgroundColor:"white"}}>
-                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"contain", marginTop:"5%"}} source={tutorialOneIs} ></Image>
+                                    <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialOneIs} ></Image>
                                     </View>
     <View style={{flex:1, backgroundColor:"white"}}>
                                     <Image style={{height:"100%", width:"99%", alignSelf:"center", resizeMode:"cover", marginTop:"5%"}} source={tutorialTwoIs} ></Image>
