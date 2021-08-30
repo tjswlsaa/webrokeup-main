@@ -1,10 +1,22 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, ImageBackground, ScrollView, TextInput, Alert, Switch, Touchable} from 'react-native';
-import { firebase_db } from '../../firebaseConfig';
 import firebase from 'firebase/app'
+import { firebase_db } from '../../firebaseConfig';
 
 
 const Notification = ({navigation}) => {
+
+    const [notification, setnotification] = useState([]);
+
+    useEffect(()=>{
+      firebase_db.ref(`notification/`)
+          .on('value', (snapshot) => {
+              let notification = snapshot.val();
+              setnotification(notification);
+          })
+  }, []);
+  
+  console.log("공지사항",notification)
     return(
         
         <SafeAreaView style={{ flex: 1 }}>
@@ -12,7 +24,7 @@ const Notification = ({navigation}) => {
              <View style={{height:"90%", backgroundColor:"white", marginHorizontal:"5%", marginVertical:"10%", }}>
                 
                         <ScrollView style={styles.textContainer}>
-                        <Text style={{marginVertical:"10%", marginHorizontal:"10%"}}>환영합니다 :)</Text>  
+                        {/* <Text style={{marginVertical:"10%", marginHorizontal:"10%"}}>{notification}</Text>   */}
                         </ScrollView>
             </View>
 

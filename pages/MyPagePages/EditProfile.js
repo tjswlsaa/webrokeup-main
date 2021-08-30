@@ -53,7 +53,7 @@ const EditProfile = ({navigation}) => {
                     {/* <View style = {{flex:2}}> */}
                     <View style={{flex: 1, flexDirection: "row"}}>
                         <Text style={{flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이</Text>
-                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "40%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
+                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 , justifyContent:"center"}}
                             onPress={()=>{
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
@@ -81,7 +81,7 @@ const EditProfile = ({navigation}) => {
                         
                         <View style={{flex: 1, flexDirection: "row"}}>
                             <Text style={{ flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이 소개</Text>
-                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "40%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
+                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 ,justifyContent:"center"}}
                             onPress={()=>{
                                 firebase_db
                                   .ref('users/'+user_uid + '/')
