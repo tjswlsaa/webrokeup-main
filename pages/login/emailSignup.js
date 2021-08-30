@@ -331,7 +331,7 @@ const emailSignup = ({ navigation }) => {
 
 
             </View>
-            <TouchableOpacity style={{ marginTop: "10%", alignSelf: "center", borderRadius: 10, height:40 , width:"80%", backgroundColor:"#20543F", justifyContent:"center"}}
+            <TouchableOpacity style={{ marginTop: "10%", alignSelf: "center", borderRadius: 10, height:40 , width:"100%", backgroundColor:"#20543F", justifyContent:"center"}}
               onPress={() => handleSignUp(gender, date, email, password, confirmPassword)}>
               <Text style={{ color: "white", fontSize: 17, alignSelf: "center" }}>필미필미 시작하기</Text>
             </TouchableOpacity>
