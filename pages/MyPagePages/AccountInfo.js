@@ -82,15 +82,15 @@ const AccountInfo = ({navigation}) => {
                         </View>
                 </View>
                 <View style={{marginBottom: "5%", marginHorizontal:"3%"}}>
-                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", marginTop: 5, height: 50, borderWidth: 1, borderRadius: 10, borderColor: "#20543F" }} onPress={() => firebase.auth().signOut()}>
-                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center", height: 20}}>로그아웃</Text>
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", marginTop: 5, height: 50, borderWidth: 1, borderRadius: 10, borderColor: "#20543F", justifyContent:"center" }} onPress={() => firebase.auth().signOut()}>
+                        <Text style={{marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center", height: 20}}>로그아웃</Text>
                     </TouchableOpacity>
                     <View style={{borderwidth: 5, borderColor: "grey"}}></View>
 
-                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", height: 50, marginTop: 5, borderWidth: 1, borderRadius: 10, borderColor: "#20543F"}} 
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", height: 50, marginTop: 5, borderWidth: 1, borderRadius: 10, borderColor: "#20543F", justifyContent:"center"}} 
                     onPress={() => deleteAccount()}>
      
-                        <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center"}}>탈퇴하기</Text>
+                        <Text style={{ marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center"}}>탈퇴하기</Text>
                     </TouchableOpacity>
                 </View>
         </View>
