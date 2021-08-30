@@ -18,7 +18,7 @@ const policyoneforlogin = ({navigation, route}) => {
                }}>서비스약관</Text>  
                         </View>
                         <ScrollView style={{marginHorizontal:"10%",marginVertical:"10%"}}>
-                            <Text style={{lineHeight:"22%"}}>
+                            <Text style={{lineHeight:23}}>
 
 
 

@@ -79,14 +79,15 @@ const EditProfile = ({navigation}) => {
 
                             <TextInput 
                                 backgroundColor = "#FAFAFA"
-                                style={{marginHorizontal: 30, marginTop: 30, height: 150, fontSize:15, marginLeft:30, marginBottom:10}}
+                                style={{marginHorizontal: 30, marginTop: 30, height: 150, fontSize:15, marginLeft:30, marginBottom:10,lineHeight:23}}
                                 multiline={true}
+                                maxLength={30}
                                 returnKeyType="done"
                                 defaultValue = {userinfo.selfLetter}
                                 onChangeText={selfLetter=>setSelfLetter(selfLetter)}
                                 ref={selflettertext}/>
                     <View style={{flex: 0.5, backgroundColor: "white", }}>
-    
+
                         <TouchableOpacity style= {{padding:10, width: "20%", backgroundColor: "#20543F", borderRadius: 10, alignSelf:"flex-end", marginRight:20,}}
                             onPress={()=>{
                                 firebase_db

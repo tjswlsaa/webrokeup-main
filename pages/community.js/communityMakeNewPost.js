@@ -87,7 +87,7 @@ console.log(userinfo)
                     </View>
                     <View style={{  padding: 10, backgroundColor:'white', height:realScreen*0.8, marginVertical:"5%", marginHorizontal:"5%",borderRadius:15 }}>
 
-                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17, marginTop:"10%" }}
+                  <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 17, marginTop:"10%", lineHeight:23}}
                     multiline={true} placeholder="글을 적어주세요"
                     returnKeyType="done"
                     onChangeText={text => setText(text)}
