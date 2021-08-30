@@ -64,7 +64,7 @@ const EditProfile = ({navigation}) => {
                                   Alert.alert("수정 완료되었습니다")
                                 //   navigation.navigate("Account")
                             }}>
-                            <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
+                            <Text style={{color: "white", alignSelf: "center"}}>수정하기</Text>
                         </TouchableOpacity>
                         </View>    
                         <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
@@ -92,7 +92,7 @@ const EditProfile = ({navigation}) => {
                                   Alert.alert("수정 완료되었습니다")
                                 //   navigation.navigate("Account")
                             }}>
-                            <Text style={{color: "white", alignSelf: "center"}}>저장하기</Text>
+                            <Text style={{color: "white", alignSelf: "center"}}>수정하기</Text>
                         </TouchableOpacity>
                         </View>
                             

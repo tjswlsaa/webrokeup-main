@@ -68,26 +68,26 @@ const AccountInfo = ({navigation}) => {
      
     return(
         <View style= {{flex: 1, backgroundColor: "#fafafa"}}>
-                <View style={{flex: 1,  marginHorizontal : "3%",}}>
+                <View style={{flex: 1,  marginHorizontal : "5%", marginTop: "5%"}}>
                         <View style={{ borderwidth: 5, borderColor: "grey"}}></View>
                         <Text style={{ marginTop: "5%", marginVertical: 15, fontSize: 17, fontWeight: "bold"}}>계정 정보</Text>
 
-                        <View style={{height: "13%", flexDirection: "row", backgroundColor: "#fafafa"}}>
-                                <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 회원가입 경로 </Text>
-                                <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.method} </Text>
+                        <View style={{height: "10%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                                <Text style={{flex: 1, fontSize: 15, marginTop: "3%", }}> 회원가입 경로 </Text>
+                                <Text style={{flex: 2, marginTop: "3%", }}> {userinfo.method} </Text>
                             </View>
-                        <View style={{height: "13%", flexDirection: "row", backgroundColor: "#fafafa"}}>
-                            <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 이메일 </Text>
-                            <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.email} </Text>
+                        <View style={{height: "10%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                            <Text style={{flex: 1, fontSize: 15, }}> 이메일 </Text>
+                            <Text style={{flex: 2, }}> {userinfo.email} </Text>
                         </View>
                 </View>
                 <View style={{marginBottom: "5%", marginHorizontal:"3%"}}>
-                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", marginTop: 5, height: 50 }} onPress={() => firebase.auth().signOut()}>
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", marginTop: 5, height: 50, borderWidth: 1, borderRadius: 10, borderColor: "#20543F" }} onPress={() => firebase.auth().signOut()}>
                         <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center", height: 20}}>로그아웃</Text>
                     </TouchableOpacity>
                     <View style={{borderwidth: 5, borderColor: "grey"}}></View>
 
-                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", height: 50, marginTop: 5}} 
+                    <TouchableOpacity style={{height: "10%", backgroundColor: "#fff", height: 50, marginTop: 5, borderWidth: 1, borderRadius: 10, borderColor: "#20543F"}} 
                     onPress={() => deleteAccount()}>
      
                         <Text style={{paddingVertical: 20, marginLeft: 10, fontSize: 15, fontWeight:"600", alignSelf: "center"}}>탈퇴하기</Text>

@@ -22,7 +22,7 @@ const Account = ({navigation}) => {
     <View style ={{flex: 1, backgroundColor: "#FAFAFA"}}>  
         <View style={{flex: 1, marginTop: 10, height: "30%", flexDirection: "row",}}>
             <View style = {{flex:1}}>
-                <Text style={{marginLeft: 30, marginTop: 30, alignSelf: "flex-start"}}> 이별록 지은이 </Text>
+                <Text style={{marginLeft: 30, marginTop: 30, alignSelf: "flex-start"}}> 감정록 지은이 </Text>
                 <Text style={{marginLeft: 33, marginTop: 20, fontWeight: "bold", fontSize: 25, alignSelf: "flex-start"}}>{userinfo.iam} </Text>
                 <Text style={{marginHorizontal: 30, alignSelf: "flex-start",marginTop: 10,}}> {userinfo.selfLetter} </Text>
             </View>
