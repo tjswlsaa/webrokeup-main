@@ -24,6 +24,8 @@ const EditProfile = ({navigation}) => {
             })
     }, []);
 
+    console.log("userinfoiam",userinfo.iam)
+
     const [ID,setID] = useState(userinfo.iam);
     const [selfLetter, setSelfLetter] = useState(userinfo.selfLetter);
     const idtext = useRef(null);
@@ -31,20 +33,44 @@ const EditProfile = ({navigation}) => {
 
     var userID=user_uid.substring(0,6)
 
+    const iam = userinfo.iam
+    const saveID =async()=>{
 
-    // const handleSubmit =()=>{
+        console.log("ID",ID)
+        console.log("iam",iam)
 
+        if (ID == undefined){
+            Alert.alert("수정사항을 입력해주세요");
+            return;
+          }
+        firebase_db
+        .ref(`users/${user_uid}`)
+          .update({
+            iam: ID,
+            // selfLetter: selfLetter,
+          })
+          Alert.alert("수정 완료되었습니다")
+        //   navigation.navigate("Account")
+    }
 
+    const saveSelfLetter =async()=>{
 
-    //     firebase_db
-    //     .ref('users/'+user_uid + '/')
-    //     .update({
-    //       iam: ID,
-    //       selfLetter: selfLetter,
-    //     })
-    //     Alert.alert("프로필 완료")
-    //     navigation.navigate("Account")
-    // }
+        console.log("ID",ID)
+        console.log("iam",iam)
+
+          if (selfLetter == undefined){
+            Alert.alert("수정사항을 입력해주세요");
+            return;
+          }
+        firebase_db
+          .ref('users/'+user_uid + '/')
+          .update({
+            // iam: ID,
+            selfLetter: selfLetter,
+          })
+          Alert.alert("수정 완료되었습니다")
+    }
+
         return(
             <View style ={{flex: 1, backgroundColor: "#FAFAFA"}}>  
                                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -53,18 +79,9 @@ const EditProfile = ({navigation}) => {
                     {/* <View style = {{flex:2}}> */}
                     <View style={{flex: 1, flexDirection: "row"}}>
                         <Text style={{flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이</Text>
-                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
-                            onPress={()=>{
-                                firebase_db
-                                  .ref('users/'+user_uid + '/')
-                                  .update({
-                                    iam: ID,
-                                    // selfLetter: selfLetter,
-                                  })
-                                  Alert.alert("수정 완료되었습니다")
-                                //   navigation.navigate("Account")
-                            }}>
-                            <Text style={{color: "white", alignSelf: "center", marginTop: "5%"}}>수정하기</Text>
+                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%",  borderRadius: 5, marginRight:20 }}
+                            onPress={()=>saveID()}>
+                            <Text style={{color: "#20543F", alignSelf: "center",fontWeight:"700"}}>수정하기</Text>
                         </TouchableOpacity>
                         </View>    
                         <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
@@ -81,18 +98,9 @@ const EditProfile = ({navigation}) => {
                         
                         <View style={{flex: 1, flexDirection: "row"}}>
                             <Text style={{ flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이 소개</Text>
-                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%", backgroundColor: "#20543F", borderRadius: 5, marginRight:20 }}
-                            onPress={()=>{
-                                firebase_db
-                                  .ref('users/'+user_uid + '/')
-                                  .update({
-                                    // iam: ID,
-                                    selfLetter: selfLetter,
-                                  })
-                                  Alert.alert("수정 완료되었습니다")
-                                //   navigation.navigate("Account")
-                            }}>
-                            <Text style={{color: "white", alignSelf: "center",  marginTop: "5%"}}>수정하기</Text>
+                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%",  borderRadius: 5, marginRight:20 }}
+                            onPress={async()=>saveSelfLetter()}>
+                            <Text style={{color: "#20543F", alignSelf: "center", fontWeight:"700" }}>수정하기</Text>
                         </TouchableOpacity>
                         </View>
                             

@@ -118,6 +118,12 @@ const emailSignup = ({ navigation }) => {
       return; 
     }
 
+    const isValid = (userCredential > ''); // 제가 (이은국씨가) 개인적으로 즐겨하는 truthy 체크 방법
+    if (isValid == false) {
+      Alert.alert("이미 가입되어있습니다. 로그인해주세요")
+      return; 
+    }
+  
     const userCredential = await firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(error => {
@@ -126,12 +132,7 @@ const emailSignup = ({ navigation }) => {
       });
 
    // console.log('..');
-    const isValid = (userCredential > ''); // 제가 (이은국씨가) 개인적으로 즐겨하는 truthy 체크 방법
-    if (isValid == false) {
-      Alert.alert("이미 가입되어있습니다. 로그인해주세요")
-      return; 
-    }
-  
+
 
   
 
