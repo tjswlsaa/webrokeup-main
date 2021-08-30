@@ -12,10 +12,10 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import tutorialTwoIs from '../../assets/tutorialTwoIs.jpg';
-import tutorialThreeIs from '../../assets/tutorialThreeIs.jpg';
-import tutorialFourIs from '../../assets/tutorialFourIs.jpg';
-import tutorialOneIs from '../../assets/tutorialOneIs.jpg';
+import tutorialTwoIs from '../../assets/low_2.jpg';
+import tutorialThreeIs from '../../assets/low_3.jpg';
+import tutorialFourIs from '../../assets/low_4.jpg';
+import tutorialOneIs from '../../assets/low_1.jpg';
 
 
 const test2 = {
