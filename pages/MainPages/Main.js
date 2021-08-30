@@ -420,7 +420,7 @@ console.log("setSelectedList3",selectedList3)
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
-                <View style={{height:realScreen*0.45, width:"100%",}}> 
+                <View style={{height:realScreen*0.32, width:"100%",}}> 
 
                     <Swiper
                         // index={book.bookKey}
@@ -460,7 +460,7 @@ console.log("setSelectedList3",selectedList3)
 
 
 
-            <View style={{ height: realScreen*0.5, backgroundColor: "#fafafa"}}>
+            <View style={{ height: realScreen*0.55, backgroundColor: "#fafafa"}}>
                 <View style={{flex:1, flexDirection: "row", marginHorizontal: "3%"}}>
                     <View style={{flex: 4}}>
                         <Text style={{fontSize: 18, fontWeight: "700" }}> 에디터 </Text>
@@ -472,12 +472,14 @@ console.log("setSelectedList3",selectedList3)
                 </View>
                 <View style= {{flex:8}}>  
                     <ScrollView style={{ marginTop: "1%", marginHorizontal: "2%"}} horizontal = {true}>
-                            {writings.map(item => {
+                            {writings.map((item,index) => {
                                         return (
                                             <WritingItem
                                                 navigation={navigation}
                                                 key={item.writingKey}
                                                 writing={item}
+                                                list={writings}
+                                                index={index}
 
                                             />
                                         )
@@ -664,17 +666,17 @@ function QuestionComponent (props) {
 )
 }
 const WritingItem=(props)=> {
-    const {writing, navigation}=props;
+    const {writing, navigation, index, list}=props;
 
 
 
     return (
         <View style={{marginTop:10,borderRadius:10, marginLeft:10, marginRight:10, marginBottom:20}}>
-            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation}) }}>
+            <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation, index:index, list:list}) }}>
                 <View style={{backgroundColor:"#A2AD9C", width: 190, height: "100%", borderRadius: 10}}>
                     <Image style={{height:"40%", borderRadius: 10}} source={{uri:writing.image}}></Image>
                     <View style={{margin: "10%"}}>
-                        <Text style={{fontSize: 17, color: "white", fontWeight: "600"}} numberOfLines={2}>{writing.title}</Text>
+                        <Text style={{fontSize: 15, color: "white", fontWeight: "600"}} numberOfLines={3}>{writing.title}</Text>
                         <Text style={{fontSize: 13, marginTop: 10}} numberOfLines={3}>{writing.summary}</Text>
                     </View>
 

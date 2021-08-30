@@ -72,11 +72,11 @@ const AccountInfo = ({navigation}) => {
                         <View style={{ borderwidth: 5, borderColor: "grey"}}></View>
                         <Text style={{ marginTop: "5%", marginVertical: 15, fontSize: 17, fontWeight: "bold"}}>계정 정보</Text>
 
-                        <View style={{height: "7%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                        <View style={{height: "13%", flexDirection: "row", backgroundColor: "#fafafa"}}>
                                 <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 회원가입 경로 </Text>
                                 <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.method} </Text>
                             </View>
-                        <View style={{height: "7%", flexDirection: "row", backgroundColor: "#fafafa"}}>
+                        <View style={{height: "13%", flexDirection: "row", backgroundColor: "#fafafa"}}>
                             <Text style={{flex: 2, fontSize: 15, marginVertical: "3%"}}> 이메일 </Text>
                             <Text style={{flex: 3, marginVertical: "3%"}}> {userinfo.email} </Text>
                         </View>

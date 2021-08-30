@@ -793,7 +793,7 @@ const closeSwipeable = () => {
               marginBottom:10,
               marginTop:10,
 
-              backgroundColor:"#f5f5f5",
+              backgroundColor:"#EFEFEF",
               borderRadius:5,
               width:"90%",
               alignSelf:"center",}}>
@@ -833,7 +833,7 @@ const closeSwipeable = () => {
   ) : (
     
     <View style={{
-      backgroundColor:"f5f5f5",
+      backgroundColor:"#EFEFEF",
       flexDirection:"row",
       marginBottom:10,
       marginTop:10,

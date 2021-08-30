@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Dimensions ,Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions ,Image, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app';
 import { firebase_db } from '../../firebaseConfig';
@@ -25,11 +25,62 @@ const QuestionList = ({ navigation, route }) => {
         return "fourthColor"
         }
     }
+    var user = firebase.auth().currentUser;
+    var user_uid
+    if (user != null) {
+        user_uid = user.uid;
+    }
+
+    const [colorBookList, setColorBookList] = useState([]);
+
+    useEffect(()=>{
+        firebase_db.ref(`users/${user_uid}/myBooks`)
+            .on('value',(snapshot)=>{
+                let colorBookList = snapshot.val();
+                if (colorBookList>""){
+                    setColorBookList(colorBookList)
+                }
+                })
+            },[])// 여기에 colorBookList 이거 넣으면 책 삭제 되면 바로업로드 되는데... 대신 로딩이 안됨 진퇴양난
+
+            console.log("questionlist color book list", colorBookList)
+            const colorBookListValues= Object.keys(colorBookList)
+            console.log("mpaquestionlistge colorBookListValues", colorBookListValues)
+            console.log("mpaquestionlistge colorBookListValues>>>", colorBookList.firstColor)
+            console.log("mpaquestionlistge colorBookListValues>>>", colorBookList.fourthColor) //undefined
+
+
+
     const numberColor = getquestionbox(Color);
     console.log("getquestionbox",numberColor)
 
+    const Key = numberColor
+    console.log("mpaquestionlistge colorBookListValues>>>>>>", colorBookList) //undefined
+
     const colorQuestion = numberColor+"Questions"
     console.log("colorQuestion",colorQuestion)
+
+//만약 numberColor가 firstColor라면
+//colorBookList.firstColor가 undefined이면 책을 먼저 만들어주세요 alert 뜨기
+// undefined아니면 그대로,그리고 colorBookList.firstColor 전달 
+
+const istherebook =()=> {
+ 
+    if(numberColor=='firstColor'){
+        return colorBookList.firstColor
+    }
+    if(numberColor=='secondColor'){
+        return colorBookList.secondColor
+    }
+    if(numberColor=='thirdColor'){
+        return colorBookList.thirdColor
+    }
+    if(numberColor=='fourthColor'){
+        return colorBookList.fourthColor
+    }
+}
+
+console.log("istherebook>>",istherebook())
 
     const [questions, setQuestion] = useState([]);
     useEffect(()=>{
@@ -64,6 +115,8 @@ const QuestionList = ({ navigation, route }) => {
                                     navigation={navigation}
                                     key = {item.key}
                                     questions={item}
+                                    therebook={istherebook()}
+
                                 />
                             )
                         })}
@@ -78,7 +131,7 @@ const QuestionList = ({ navigation, route }) => {
 
 const PostItem=(props)=> {
 
-    const {questions, navigation, numberColor}=props;
+    const {questions, navigation, numberColor,therebook}=props;
     console.log("questions222",questions)
     const questionsKey=questions.questionsKey
     console.log("questionsKey",questionsKey)
@@ -88,7 +141,9 @@ const PostItem=(props)=> {
 
     return (
         <View style={{backgroundColor:"white", marginTop:10,borderRadius:10, marginLeft:10, marginRight:10}}>
-            <TouchableOpacity style={{ marginTop: "5%",marginHorizontal:"5%" ,marginBottom: "5%"}} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
+
+            {therebook == undefined? (
+                <TouchableOpacity style={{ marginTop: "5%",marginHorizontal:"5%" ,marginBottom: "5%"}} onPress={() =>Alert.alert("책을 먼저 만들어주세요")}>
                 <View style={{flexDirection:"row", flex:1}}>
                         <View style={{backgroundColor:questions.Color, flex:1}}>
                         </View>
@@ -98,6 +153,21 @@ const PostItem=(props)=> {
                 <Text numberOfLines={3} style={styles.bookIndexText}>{questions.summary}</Text>      
                 </View>
             </TouchableOpacity>
+
+            ):(
+                <TouchableOpacity style={{ marginTop: "5%",marginHorizontal:"5%" ,marginBottom: "5%"}} onPress={() => { navigation.navigate('QuestionWrite', { questionsKey:questionsKey, navigation: navigation}) }}>
+                <View style={{flexDirection:"row", flex:1}}>
+                        <View style={{backgroundColor:questions.Color, flex:1}}>
+                        </View>
+                        <Text style={{flex:35,fontSize:17, fontWeight:"600", marginHorizontal:"2%"}} numberOfLines={3}>{questions.title}</Text>
+                </View>
+                <View style={{flexDirection:"row",alignContent:"center",marginTop:10}}>
+                <Text numberOfLines={3} style={styles.bookIndexText}>{questions.summary}</Text>      
+                </View>
+            </TouchableOpacity>
+
+            )}
+         
             <TouchableOpacity onPress={()=>{navigation.navigate("alltheanswers",{questionsKey:questionsKey, navigation: navigation, color: questions.Color})}} style={{width:"30%", marginHorizontal:"5%", marginBottom:"5%"}}>
                 <Text style={{marginLeft:"15%",color:"gray"}}>모두의 답변보기</Text>
             </TouchableOpacity>

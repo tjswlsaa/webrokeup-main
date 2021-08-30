@@ -113,10 +113,10 @@ const emailSignup = ({ navigation }) => {
     // alert나고도 바로 회원가입이 되는 문제... 이게 둘다 true로 리턴되면 아래 함수를 시행하라는 코드는 어떻게 짜나요.?// return 고치면댐
    // console.log('.');
 
-    // if (checked == false) {
-    //   Alert.alert("약관에 동의해주세요")
-    //   return; 
-    // }
+    if (checked == false) {
+      Alert.alert("약관에 동의해주세요")
+      return; 
+    }
 
     const userCredential = await firebase.auth()
       .createUserWithEmailAndPassword(email, password)
@@ -309,24 +309,25 @@ const emailSignup = ({ navigation }) => {
 
 
               )}
-{/* 
+
                   <View>
-                    <View style={{flexDirection:"row", height:20,marginTop:10}}>
+                    <View style={{flexDirection:"row", height:20,marginTop:30, marginLeft:"2%"}}>
                       <CheckBox
+                        checkboxStyle={{height: 20, width: 20, marginTop:"3%"}}                   
                         label=''
                         value={true}
                         onChange={(checked)=>setChecked(checked)}
                       />
 
-                      <TouchableOpacity><Text style={{marginLeft:10, marginTop:3, fontWeight:"700"}} onPress={()=>navigation.navigate('policyoneforlogin')}>이용 약관</Text></TouchableOpacity>
-                      <Text style={{marginLeft:10, marginTop:3}}>및</Text>
-                      <TouchableOpacity onPress={()=>navigation.navigate('policytwoforlogin')}><Text style={{marginLeft:10, marginTop:3, fontWeight:"700"}} >개인정보 처리방침</Text></TouchableOpacity>
-                      <Text style={{marginLeft:10, marginTop:3}}>동의</Text>
+                      <TouchableOpacity onPress={()=>navigation.navigate('policyoneforlogin')}><Text style={{marginLeft:10, marginTop:2, fontWeight:"500",textDecorationLine: "underline" }} >이용 약관</Text></TouchableOpacity>
+                      <Text style={{marginLeft:5, marginTop:3}}>및</Text>
+                      <TouchableOpacity onPress={()=>navigation.navigate('policytwoforlogin')}><Text style={{marginLeft:10, marginTop:2, fontWeight:"500",textDecorationLine: "underline" }} >개인정보 처리방침</Text></TouchableOpacity>
+                      <Text style={{marginLeft:5, marginTop:3}}>동의</Text>
 
                     </View>
 
 
-                  </View> */}
+                  </View>
 
 
             </View>

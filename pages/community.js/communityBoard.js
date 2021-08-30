@@ -44,7 +44,7 @@ const communityBoard = ({ navigation, route }) => {
 
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{flex:1, backgroundColor: "#fbfbfb"}}>
                <View style={{height: realScreen*0.08, alignItems:"center", borderBottomColor: "#D9D9D9", borderBottomWidth:0.5, justifyContent:"center", backgroundColor: "white", }}>
                 <Text style={{fontSize:17, fontWeight:"700", marginTop: "2%", color: "#21381c"}}>커뮤니티</Text>
             </View>

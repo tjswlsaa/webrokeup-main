@@ -218,7 +218,7 @@ function Comment({ navigation, route }) {
                 </TouchableOpacity>
 
 
-                <View style={{ flex: 14, borderWidth: 1 }} >
+                <View style={{ flex: 14,  }} >
 
                     <ScrollView style={{ flex: 1 }}>
                         {/* <Text style = {{marginLeft: 10}}> {comments.length} </Text>  */}

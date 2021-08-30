@@ -1,26 +1,34 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import firebase from 'firebase';
 import Icon from 'react-native-vector-icons/Fontisto';
-
+import { useHeaderHeight } from '@react-navigation/stack';
+import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import "firebase/auth";
 import Icon2 from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen  = ({navigation,route}) => {
 
 
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const ScreenWidth = Dimensions.get('window').width   //height
+
+  const headerHeight = useHeaderHeight();
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight-headerHeight-BottomSpace
  
     return (
       <View style={{backgroundColor:"white", flex:1}}>
-      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "10%", }}>
-        <View style={{ flex: 2, marginTop: 50, paddingVertical: "30%" }}>
-          <Text style={{ fontSize: 35, color: "#20543F", fontWeight: "600" }}> Feel Me </Text>
-          <Text style={{ fontSize: 35, color: "#20543F", fontWeight: "600" }}> Fill Me </Text>
+      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "5%",marginTop:"15%" }}>
+        <View style={{ height:realScreen*0.4,  }}>
+          <Text style={{ fontSize: 45, color: "#20543F", fontWeight: "600" }}> Feel Me </Text>
+          <Text style={{ fontSize: 45, color: "#20543F", fontWeight: "600" }}> Fill Me </Text>
 
-          <Text style={{ fontSize: 17, marginTop: "10%", marginLeft: "3%" }}>나를 채우는 감정 기록 </Text>
+          <Text style={{ fontSize: 19, marginTop: "10%", marginLeft: "3%" }}>나를 채우는 감정 기록 </Text>
         </View>
 
-        <View style={{ flex: 3, }}>
 
           <View style={{alignSelf:"center"}}>
 
@@ -34,11 +42,11 @@ const LoginScreen  = ({navigation,route}) => {
 
             </TouchableOpacity> */}
 
-            <TouchableOpacity style={{ alignSelf: "center",marginTop:"10%" , marginLeft:"4%"}} onPress={() => { navigation.navigate("emailLogin") }}>
-              <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity style={{ alignSelf: "center",height:50, width:300,backgroundColor:"#f5f5f5", borderRadius:10, marginTop:"15%"}} onPress={() => { navigation.navigate("emailLogin") }}>
+              <View style={{ flexDirection: "row", alignSelf:"center" , justifyContent:"center", marginTop:"3.5%"}}>
 
-                <Icon name="email" size={20} color="black" style={{  }} />
-                <Text style={{ fontSize: 15, marginLeft:"5%" }}> 이메일로 시작하기 </Text>
+                <Icon name="email" size={25} color="#20543F" style={{ alignSelf:"center" ,justifyContent:"center", alignItems:"center"  }} />
+                <Text style={{ fontSize: 17, marginLeft:"5%", marginTop:"1%", alignSelf:"center",justifyContent:"center"  }}> 이메일로 시작하기 </Text>
               </View>
 
             </TouchableOpacity>
@@ -46,7 +54,7 @@ const LoginScreen  = ({navigation,route}) => {
           </View>
 
 
-          <View style={{ marginTop: "18%", alignSelf: "center" }}>
+          {/* <View style={{ marginTop: "18%", alignSelf: "center" }}>
             <View style={{ alignSelf: "center" }}>
               <Text style={{ color: "grey", fontSize: 12 }}>시작하기를 누르면서 Feel Me Fill Me의</Text>
             </View>
@@ -56,8 +64,7 @@ const LoginScreen  = ({navigation,route}) => {
               <TouchableOpacity onPress={() => navigation.navigate('policytwoforlogin')}><Text style={{ color: "grey", fontSize: 12, textDecorationLine: "underline" }}> 개인정보 취급방침</Text></TouchableOpacity>
               <Text style={{ color: "grey", fontSize: 12 }}>에 동의합니다</Text>
             </View>
-          </View>
-        </View>
+          </View> */}
       </View>
       </View>
     );           

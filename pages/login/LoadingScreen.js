@@ -2,6 +2,7 @@ import { ActivityIndicator, StyleSheet, Text, View, ImageBackground } from "reac
 import React, { Component, useEffect, useState } from "react";
 import { CommonActions } from '@react-navigation/native';
 import firebase from "firebase";
+import logo from '../../assets/logo.png';
 
 
 
@@ -39,7 +40,7 @@ const LoadingScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
 
-      <ImageBackground style={styles.splash} source={{uri:star}} ></ImageBackground>
+          <Image style={{height:200, width:200, alignSelf:"center"}} source={logo} ></Image>
     </View>
   );
 };

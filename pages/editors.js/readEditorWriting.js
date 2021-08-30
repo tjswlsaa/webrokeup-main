@@ -16,6 +16,7 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 const window = Dimensions.get("window");
+import Swiper from 'react-native-swiper'
 
 // import {
 //   FlatList,
@@ -37,7 +38,7 @@ const readEditorWriting = ({ navigation, route }) => {
   test4.navigation=navigation
 
   const text_a = useRef(null);
-  const { writingKey } = route.params;
+  const { writingKey, list, index } = route.params;
   test1.writingKey=writingKey
  // console.log('포스트키부터확인',writingKey)
 
@@ -85,6 +86,7 @@ const readEditorWriting = ({ navigation, route }) => {
   test1.comments=comments
   const commentKey = Math.random().toString().replace(".","");
 
+  const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
     firebase_db.ref(`editor/${writingKey}/` + '/comments/')    
@@ -144,128 +146,14 @@ console.log('포스트컨멘트',comments)
 
 
 
-const likeRef = firebase_db.ref(`editor/${writingKey}/` + '/likes/');
-
-  useEffect (()=>{
-      // let temp = [];
-      let arr = likeRef
-      .on('value', (snapshot) => {
-          let temp = [];
-          var likeCount = snapshot.numChildren();
-         // console.log('useEffect()');
-         // console.log({likeCount});
-          setLikeCount(likeCount)
-          //// console.log(likeCount)
-          snapshot.forEach((child) => {
-              temp.push(child.val());
-          })
-         // console.log({temp});
-          setLikedUsers(temp);
-      })
-  }, [])
-
-  const [cloverColor, setCloverColor] = useState("#c1c1c1")
-
-  useEffect(()=>{
-    let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-    if (meliked == '') {
-        // console.log("likedUsers: " + likedUsers)
-        setCloverColor("#c1c1c1")
-    } else {
-        // console.log("likedUsers: " + likedUsers)
-        setCloverColor("green")
-    }
-  }, [likedUsers])
-
-
-  useEffect (()=>{
-    let arr = firebase_db.ref(`editor/${writingKey}/` + '/comments/')
-    .on('value', (snapshot) => {
-       var commentsNumber = snapshot.numChildren();
-       setCommentsNumber(commentsNumber)
-    })
-}, [])
-
-
-const onCommentSend = () => {
-
-  
-
-  firebase_db
-      .ref(`editor/${writingKey}/`+'/comments/'+ commentKey)
-      .set({
-          creator: firebase.auth().currentUser.uid,
-          text:text,
-          regdate:new Date().toString(),
-          Kregdate:moment(new Date()).format('YYYY년 MM월 DD일'),
-          iam: userinfo.iam
-      })
-
-  dismissKeyboard()
-  text_a.current.clear();
-
-
-}
-
-
-const deleteWriting = async()=> {
-
- const deletefunction=()=>{
-  firebase_db
-  .ref(`editor/${writingKey}/`)
-  .set(null)
-  .then(function(){
-      Alert.alert("삭제 완료")
-    //   navigation.navigate("communityBoard")
- })}
-  
-
-  Alert.alert(
-    'Alert Title',
-    '삭제하겠습니까?',
-    [
-
-      {
-        text: '취소',
-        // onPress: () => console.log('취소되었습니다'),
-        style: 'cancel',
-      },
-      {text: '삭제', onPress: () => deletefunction()},
-
-    ],
-    {cancelable: false},
-  );
-
-  
- 
-}
 
 
 
-const createdAt= new Date(writing.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
-////console.log('comment.regdate',comment.regdate)
-////console.log('createdAt',createdAt)
 
-const displayedAt=(createdAt)=>{
- 
-    const milliSeconds = new Date()- createdAt
-    ////console.log('milliSeconds',milliSeconds)
-    ////console.log('new Date()',new Date()) //new Date() 2021-07-05T11:15:46.130Z
-    const seconds = milliSeconds / 1000
-    if (seconds < 60) return `방금 전`
-    const minutes = seconds / 60
-    if (minutes < 60) return `${Math.floor(minutes)}분 전`
-    const hours = minutes / 60
-    if (hours < 24) return `${Math.floor(hours)}시간 전`
-    const days = hours / 24
-    if (days < 7) return `${Math.floor(days)}일 전`
-    const weeks = days / 7
-    if (weeks < 5) return `${Math.floor(weeks)}주 전`
-    const months = days / 30
-    if (months < 12) return `${Math.floor(months)}개월 전`
-    const years = days / 365
-    return `${Math.floor(years)}년 전`
-  }
+
+
+
+
 
   return (
 
@@ -273,77 +161,41 @@ const displayedAt=(createdAt)=>{
       <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{backgroundColor:"white"}}>
 
+      <Swiper
+                                                        // index={myBook.bookKey}
+                                                        loop={false}
+                                                        index={index}
+                                                        showsPagination={false}
+                                                        onSwiper={setSwiper}
+                                                        showsButtons={true}
+                                                        nextButton={<Text style={{        color: "#f5f5f5",
+                                                        fontSize: 40,}}>›</Text>}
+                                                        prevButton={<Text style={{        color: "#f5f5f5",
+                                                        fontSize: 40,        transform: [{rotate:"180deg"}],
+                                                    }}>›</Text>}
+                                                       
+                                                    >
+                                                    
+                                                        {list.map(item => {
+                                                            test4.item=item
+                                                            return (
+                                                            <View>
+
+                                                                <ChapterItem 
+                                                                navigation={navigation}
+                                                                writing={item}/>
+                                                            
+                                                                
+                                                            </View>
+                                                            )
+                                                        })}
+
+                                          
+
+                                                    </Swiper>
 
 
-
-          <View style={{backgroundColor:"white",justifyContent:"center"}}>
-                  <Image style={{height:realScreen*0.4, width:"100%",}} source={{uri:writing.image}}></Image>
-                  
-                  <View style={{backgroundColor:"#f5f5f5"}}>
-                  <Text style={{marginLeft:"5%", fontSize:20, marginVertical:"5%",marginHorizontal:"5%",}}>{writing.title}</Text>               
-              
-                    <View style={{  flexDirection: "row", alignItems: "center", marginLeft: "5%", marginBottom:"5%"}}>
-                      <TouchableOpacity style={styles.likeButton} onPress={async () => {
-
-                        let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-                        const isMeliked = (meliked > '');
-                        const isMeliked2 = ((meliked == '') == false);
- 
-                        let likeCount = 0;
-         
-                        if (meliked == '') {
-                          await likeRef.child(user_uid).set({
-                            user_uid: user_uid,
-                            regdate: new Date().toString(),
-                          });
-                          // likeReload();
-                          likeRef.on('value', (snapshot) => {
-                            //  var likeCount = snapshot.numChildren();
-                            likeCount = snapshot.numChildren();
-                            setLikeCount(likeCount)
-                          })
-                          await setCloverColor("green")
-
-                        } else {
-                          // console.log ("좋아요 취소")
-                          // likeRef.child(user_uid).set(null)
-                          await likeRef.child(user_uid).remove();
-                          // likeReload();
-                          likeRef.on('value', (snapshot) => {
-                            //  var likeCount = snapshot.numChildren();
-                            likeCount = snapshot.numChildren();
-                            setLikeCount(likeCount)
-                          })
-                          await setCloverColor("#C1C1C1")
-
-                        }
-
-
-                        firebase_db.ref(`editor/${writingKey}/`).child("likeCount").set({ "likeCount": likeCount })
-
-                      }}>
-                        <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
-
-                      </TouchableOpacity>
-                      <Text style={{ marginLeft: 5 }}> {likeCount} </Text>
-                      {/* <TouchableOpacity style={{marginLeft:15}}>
-                                    <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
-                                  </TouchableOpacity>
-                                  <Text style = {{marginLeft: 10}}> {commentsNumber} </Text> */}
-
-                      <Text style={{marginLeft:"5%", color:"grey"}}>{displayedAt(createdAt)}</Text>                 
-                      </View>
-
-                    </View>
-
-
-
-
-
-
-
-                  <Text style={{marginLeft:"5%", fontSize:15, marginVertical:"5%", marginHorizontal:"5%", lineHeight:"25%"}}>{writing.text}</Text>               
-          </View>
+        
 
   
                  </ScrollView>
@@ -396,275 +248,110 @@ text: {
 
 
 
+function ChapterItem (props) {
 
-const WritingComment = (props)=> {
+  const { navigation, writing, } = props;
+  const ScreenHeight = Dimensions.get('window').height   //height
+  const ScreenWidth = Dimensions.get('window').width   //height
+
+  const headerHeight = useHeaderHeight();
+  const BottomSpace = getBottomSpace()
+  const statusBarHeight = getStatusBarHeight();
+  const realScreen = ScreenHeight-headerHeight-BottomSpace
 
   var user = firebase.auth().currentUser;
-  var  user_uid
-  
+  var user_uid
   if (user != null) {
-  
-    user_uid = user.uid;  
+    user_uid = user.uid;
   }
-
-  // const {comment}=props;
+  
   const [likeCount, setLikeCount] = useState(0);
   const [likedUsers, setLikedUsers] = useState([]);
-  const {comment}=props;
-  const {writingKey}=test1
-  const {item}=test3
+const likeRef = firebase_db.ref(`editor/${writing.writingKey}/` + '/likes/');
 
-  // const {user_uid}=test4
+useEffect (()=>{
+    // let temp = [];
+    let arr = likeRef
+    .on('value', (snapshot) => {
+        let temp = [];
+        var likeCount = snapshot.numChildren();
+       // console.log('useEffect()');
+       // console.log({likeCount});
+        setLikeCount(likeCount)
+        //// console.log(likeCount)
+        snapshot.forEach((child) => {
+            temp.push(child.val());
+        })
+       // console.log({temp});
+        setLikedUsers(temp);
+    })
+}, [])
 
- // console.log('얘가 가지고 있는 값',comment)
+const [cloverColor, setCloverColor] = useState("#c1c1c1")
 
-  const likeRef = firebase_db.ref(`editor/${writingKey}/`  + `/comments/${comment.key}/likes/`)    
+useEffect(()=>{
+  let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+  if (meliked == '') {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("#c1c1c1")
+  } else {
+      // console.log("likedUsers: " + likedUsers)
+      setCloverColor("green")
+  }
+}, [likedUsers])
 
-
-
-  useEffect (()=>{
-      // let temp = [];
-      let arr = likeRef
-      .on('value', (snapshot) => {
-          let temp = [];
-          var likeCount = snapshot.numChildren();
-         // console.log('useEffect()');
-         // console.log({likeCount});
-          setLikeCount(likeCount)
-          //// console.log(likeCount)
-          snapshot.forEach((child) => {
-              temp.push(child.val());
-          })
-         // console.log('이게 뜨네',temp);
-          setLikedUsers(temp);
-      })
-  }, [])
-
- // console.log('이게 들어야 확인해줌',user_uid)
-
-      const likes = async ()=>{
-     // console.log('MyArticle.likeButton.onPress()');
-      // Alert.alert('MyArticle.likeButton.onPress()');
-     // console.log({likedUsers});
-      // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
-      let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
-       const isMeliked = (meliked > '');
-       const isMeliked2 = ((meliked == '') == false);
-      // console.log("likedUsers: " +likedUsers)
-      // console.log("meliked: " + meliked)
-      // console.log({isMeliked,isMeliked2});
-       let likeCount = 0; 
-       // 바깥에 있는 likeCount라는 state는 여기서 불러봐야 씹힌다.. 
-       // 왜? 여기서부터는 let likeCount라고 선언한 변수가 그 이름을 뺴앗앗기 떄문이다
-       if (meliked == ''){
-           await likeRef.child(user_uid).set({
-               user_uid: user_uid,
-               regdate: new Date().toString(),
-           });
-           // likeReload();
-           likeRef.on('value', (snapshot) =>{
-              //  var likeCount = snapshot.numChildren();
-               likeCount = snapshot.numChildren();
-               setLikeCount(likeCount)
-           })
-       } else {
-          // console.log ("좋아요 취소")
-           // likeRef.child(user_uid).set(null)
-           await likeRef.child(user_uid).remove();
-           // likeReload();
-           likeRef.on('value', (snapshot) =>{
-              //  var likeCount = snapshot.numChildren();
-               likeCount = snapshot.numChildren();
-               setLikeCount(likeCount)
-           })
-       }
-      // console.log({likeCount});
-      // console.log("여기여기: " + likeCount) 
-       // 이전: const [likeCount, setLikeCount] = useState(0);
-       // 그러면, setLikeCount를 했으면, 당장에 likeCount도 바뀌어야 하는거 아닌가?
-       // 리액트의 특징: state는 한 템포 느리게 변경된다. state는 보통 변수처럼 =로 값으르 바꿀 수 없다. 왜? state는 사실 변수가 아니다.
-       // 이후: let likeCount = 0;
-       // likeCount는 변수다
-       // 값을 바꾸면, 다음 줄에서는 값이 바뀌어있다 (왜? 그것이 변수이니까 (끄덕))
-      //  firebase_db.ref(`book/${bookKey}/chapters/` + chapters.chapterKey).child("likeCount").set({"likeCount" : likeCount})
-       // likeRef.child(user_uid).set({
-       //     user_uid: user_uid,
-       //     regdate: new Date().toString(),
-       // })
-       // likeReload();
-      //  Alert.alert('MyArticle.likeButton.onPress() end');
-      }
-
-  const createdAt= new Date(comment.regdate) //createdAt Mon Jul 05 2021 20:00:26 GMT+0900 (KST) number()함수못쓰나
-  ////console.log('comment.regdate',comment.regdate)
-  ////console.log('createdAt',createdAt)
-
-  const displayedAt=(createdAt)=>{
-   
-      const milliSeconds = new Date()- createdAt
-      ////console.log('milliSeconds',milliSeconds)
-      ////console.log('new Date()',new Date()) //new Date() 2021-07-05T11:15:46.130Z
-      const seconds = milliSeconds / 1000
-      if (seconds < 60) return `방금 전`
-      const minutes = seconds / 60
-      if (minutes < 60) return `${Math.floor(minutes)}분 전`
-      const hours = minutes / 60
-      if (hours < 24) return `${Math.floor(hours)}시간 전`
-      const days = hours / 24
-      if (days < 7) return `${Math.floor(days)}일 전`
-      const weeks = days / 7
-      if (weeks < 5) return `${Math.floor(weeks)}주 전`
-      const months = days / 30
-      if (months < 12) return `${Math.floor(months)}개월 전`
-      const years = days / 365
-      return `${Math.floor(years)}년 전`
-    }
-
-
-    
-  const deleteCommentfunction=async()=>{
-
-  Alert.alert(
-    'Alert Title',
-    '삭제하겠습니까?',
-    [
-
-      {
-        text: '취소',
-        onPress: () => closeSwipeable(),
-        style: 'cancel',
-      },
-      {text: '삭제', onPress: () => deleteit()},
-
-    ],
-    {cancelable: false},
-  )
-
-  const deleteit=()=> {
-    firebase_db
-    .ref(`editor/${writingKey}/`+`/comments/${comment.key}`)        
-    .set(null)
-    .then(function(){
-      Alert.alert("삭제 완료") })
-          }
-
-        }
-
-const DeleteButton = () => {
-
-
-return (
-  <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={()=>deleteCommentfunction()}
-      style={styles.button}
-  >
-      <Text style={styles.text}>
-          삭제
-      </Text>
-  </TouchableOpacity>
+return(
+  <View style={{height:realScreen*1}}>
+<ScrollView style={{backgroundColor:"white", height:realScreen*1}}>
+                  <Image style={{height:realScreen*0.4, width:"100%",}} source={{uri:writing.image}}></Image>
+                  <View style={{backgroundColor:"#F5F5F5"}}>
+                  <Text style={{marginLeft:"5%", fontSize:20, marginVertical:"5%",marginHorizontal:"5%",}}>{writing.title}</Text>               
+                    <View style={{  flexDirection: "row", alignItems: "center", marginLeft: "5%", marginBottom:"5%"}}>
+                      <TouchableOpacity style={styles.likeButton} onPress={async () => {
+                        let meliked = likedUsers.filter(likedppl => likedppl.user_uid == user_uid)
+                        const isMeliked = (meliked > '');
+                        const isMeliked2 = ((meliked == '') == false);
+                        let likeCount = 0;
+                        if (meliked == '') {
+                          await likeRef.child(user_uid).set({
+                            user_uid: user_uid,
+                            regdate: new Date().toString(),
+                          });
+                          // likeReload();
+                          likeRef.on('value', (snapshot) => {
+                            //  var likeCount = snapshot.numChildren();
+                            likeCount = snapshot.numChildren();
+                            setLikeCount(likeCount)
+                          })
+                          await setCloverColor("green")
+                        } else {
+                          // console.log ("좋아요 취소")
+                          // likeRef.child(user_uid).set(null)
+                          await likeRef.child(user_uid).remove();
+                          // likeReload();
+                          likeRef.on('value', (snapshot) => {
+                            //  var likeCount = snapshot.numChildren();
+                            likeCount = snapshot.numChildren();
+                            setLikeCount(likeCount)
+                          })
+                          await setCloverColor("#C1C1C1")
+                        }
+                        firebase_db.ref(`editor/${writing.writingKey}/`).child("likeCount").set({ "likeCount": likeCount })
+                      }}>
+                        <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
+                      </TouchableOpacity>
+                      <Text style={{ marginLeft: 5 }}> {writing.likeCounts} </Text>
+                      {/* <TouchableOpacity style={{marginLeft:15}}>
+                                    <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
+                                  </TouchableOpacity>
+                                  <Text style = {{marginLeft: 10}}> {commentsNumber} </Text> */}
+                      <Text style={{marginLeft:"5%", color:"grey"}}>{writing.Kregdate}</Text>                 
+                      </View>
+                    </View>
+                  <Text style={{marginLeft:"5%", fontSize:15, marginVertical:"5%", marginHorizontal:"5%", lineHeight:"25%"}}>{writing.text}</Text>               
+          </ScrollView>
+          </View>
 )
-}
-
-const swipeableRef = useRef(null);
-
-const closeSwipeable = () => {
-  swipeableRef.current.close();
-}
-
-
-  return(
-
-<View>
-
-{comment.creator==user_uid ? (   
-
-  <View style={{
-    backgroundColor:"pink",
-    flexDirection:"row",
-    marginBottom:10,
-    marginTop:10,
-
-    // backgroundColor:"#C4C4C4",
-    borderRadius:5,
-    width:"90%",
-    alignSelf:"center",}}>
-
-
-
-              <Swipeable
-                ref={swipeableRef}
-              renderRightActions={()=><DeleteButton/>}>
-                <View style={{flexDirection:"row"}}>
-              <View style={{flexDirection: "column"}}>
-                <TouchableOpacity
-                          activeOpacity={0.8}
-                          // onPress={()=>deleteComment()}
-                          // style={{backgroundColor:"pink"}}
-                          // style={done ? styles.done : styles.check}
-                      >
-                    <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
-                    <View style={{flexDirection:"row"}}>
-                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{comment.iam}</Text>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
-                    </View>
-                  </TouchableOpacity>
-
-              </View>
-
-              <View style={{marginLeft:70,justifyContent:"center"}}>
-                  <TouchableOpacity onPress={()=>likes()} >
-                  <Icon name="like2" size={20} color="black" style={{}} />
-                  </TouchableOpacity>
-                  <Text> {likeCount} </Text>
-              </View>
-              </View>
-              </Swipeable>
-              </View>
-
-  ) : (
-    <View style={{
-      backgroundColor:"pink",
-      flexDirection:"row",
-      marginBottom:10,
-      marginTop:10,
-
-      // backgroundColor:"#C4C4C4",
-      borderRadius:5,
-      width:"90%",
-      alignSelf:"center",}}>
-              <View style={{flexDirection:"row"}}>
-              <View style={{flexDirection: "column"}}>
-                <TouchableOpacity
-                          activeOpacity={0.8}
-                          // onPress={()=>deleteComment()}
-                          // style={{backgroundColor:"pink"}}
-                          // style={done ? styles.done : styles.check}
-                      >
-                    <Text style={{fontSize:15, marginTop:10,marginBottom:10, marginLeft:30, width:200,}}>{comment.text}</Text>
-                    <View style={{flexDirection:"row"}}>
-                        <Text style={{fontSize:11,color:"gray",marginLeft:30,marginBottom:10}}>{comment.iam}</Text>
-                        <Text style={{fontSize:11,color:"gray", marginLeft:70}}>{displayedAt(createdAt)}</Text>
-                    </View>
-                  </TouchableOpacity>
-
-              </View>
-
-              <View style={{marginLeft:70,justifyContent:"center"}}>
-                  <TouchableOpacity onPress={()=>likes()} >
-                  <Icon name="like2" size={20} color="black" style={{}} />
-                  </TouchableOpacity>
-                  <Text> {likeCount} </Text>
-              </View>
-              </View>
-              </View>
-
-
-  ) }
-
-  </View>
-  )
-
 }
 
 

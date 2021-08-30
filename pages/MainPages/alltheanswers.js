@@ -245,9 +245,9 @@ const test1 = {
                     <Text style={{ alignSelf: "center", fontSize: "20", marginTop: "2%" }}>{questions.title}</Text>
                     <Text style={{ alignSelf: "center", fontSize: "14", marginTop: "2%", marginHorizontal: "10%", marginBottom: "5%" }}>{questions.intro}</Text>
                 </View>
-                {/* <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
+                <TouchableOpacity style={{ height: 30, width: "30%", alignSelf: "center", }} onPress={()=>{navigation.navigate("QuestionWrite", {questionsKey: questionsKey, navigation: navigation})}}>
                     <Text style={{ fontSize: 15, alignSelf: "center", color: "#fff", marginTop: "3%", color: questions.Color }}>  글쓰러 가기 </Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <View style={{ backgroundColor: "#fafafa", marginTop: 10 }}>
                     <View style={{ flexDirection: "row", height: 30, marginTop: "2%" }}>
                         <TouchableOpacity

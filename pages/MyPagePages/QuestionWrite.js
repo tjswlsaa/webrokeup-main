@@ -346,27 +346,27 @@ const [chapterColor, setChapterColor] = useState(titleColor)
                         </View>
                     
                 </View>
-                <View style={{marginHorizontal: "10%",  marginBottom:realScreen*0.03 }}>
-                    <Text style={{fontSize: 15}}>{question.intro}</Text>
+                <View style={{  marginBottom:realScreen*0.03,backgroundColor:"#f5f5f5"}}>
+                    <Text style={{fontSize: 15,marginHorizontal: "10%",marginVertical:"5%"}}>{question.intro}</Text>
                 </View>  
-                <View style={{ height: realScreen*0.08 , justifyContent:"center"}}>
-                    <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q1}</Text>
+                <View style={{ height: realScreen*0.12 , justifyContent:"center"}}>
+                    <Text style={{marginHorizontal: "10%", fontSize: 15,}}>{question.Q1}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
                   multiline={true} placeholder="답변을 입력하세요"
                   returnKeyType="done"
                   onChangeText={text2 => setText2(text2)}
                    />
-                <View style={{height: realScreen*0.08 , justifyContent:"center"}}>
-                    <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q2}</Text>
+                <View style={{ height: realScreen*0.12 , justifyContent:"center"}}>
+                    <Text style={{marginHorizontal: "10%", fontSize: 15,}}>{question.Q2}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
                   multiline={true} placeholder="답변을 입력하세요"
                   returnKeyType="done"
                   onChangeText={text3 => setText3(text3)}
                   />
-                <View style={{height: realScreen*0.08 , justifyContent:"center"}}>
-                    <Text style={{marginHorizontal: "10%", fontSize: 18,}}>{question.Q3}</Text>
+                <View style={{ height: realScreen*0.1 , justifyContent:"center"}}>
+                    <Text style={{marginHorizontal: "10%", fontSize: 15,}}>{question.Q3}</Text>
                 </View>  
                 <TextInput style={{ marginHorizontal: "10%", fontSize: 15, height:realScreen*0.2, marginTop:"3%", marginBottom:"3%"  }}
                   multiline={true} placeholder="답변을 입력하세요"
