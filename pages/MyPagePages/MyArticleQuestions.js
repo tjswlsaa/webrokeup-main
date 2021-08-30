@@ -36,7 +36,7 @@ const test4 = {
     item: ''
 }
 const test5 = {
-    user_uid: ''
+    userinfo: ''
 }
 
 
@@ -164,6 +164,19 @@ function ChapterItem(props) {
     const BottomSpace = getBottomSpace()
     const statusBarHeight = getStatusBarHeight();
     const realScreen = ScreenHeight-headerHeight-BottomSpace
+
+    const [userinfo, setUserinfo] = useState({});
+    test5.userinfo=userinfo
+    useEffect(() => {
+        firebase_db.ref(`users/${item.creator}/`)
+            .on('value', (snapshot) => {
+                let userinfo = snapshot.val();
+                if (userinfo > '') {
+                    setUserinfo(userinfo);
+                }
+            })
+    }, []);
+
     
     console.log("itemmyarticle",item)
     useEffect(() => {
@@ -413,15 +426,14 @@ function headerRight() {
     const navigation = useNavigation();
     const {bookKey}=test1
     const {item}=test4
-    const user = firebase.auth().currentUser;
-    var user_uid
-    if (user != null) { user_uid = user.uid }
+    const {userinfo}=test5
+
 
     return (
 
         <Icon2.Button name='book-outline' size={23}
         backgroundColor= 'white' color="black" 
-        onPress={() => navigation.navigate("MyBookPublic", {bookKey: bookKey, user_uid:user_uid })}        
+        onPress={() => navigation.navigate("MyBookPublic", {bookKey: bookKey, userinfo:userinfo })}        
         >
       </Icon2.Button>
 
