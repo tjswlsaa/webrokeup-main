@@ -282,7 +282,7 @@ function ChapterItem(props) {
 <View>
   {item.creator== user_uid? (
 
-        <TouchableOpacity  onPress={() => navigation.navigate("EditArticle", {chapters: item, })}>
+        <TouchableOpacity style={{height:realScreen*0.05, }} onPress={() => navigation.navigate("EditArticle", {chapters: item, })}>
             <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
         </TouchableOpacity>
   ):(<View>
@@ -344,7 +344,7 @@ function ChapterItem(props) {
         </View>
         <View style={{ flexDirection: "row", height: realScreen*0.1,  marginHorizontal:"4%", marginTop:"5%" }}>
 
-            <TouchableOpacity style={{marginTop:"7%", marginLeft:"4%"}} onPress={async () => {
+            <TouchableOpacity style={{marginTop:"7%", marginLeft:"9%"}} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
@@ -386,20 +386,20 @@ function ChapterItem(props) {
                 
                 <Clover name="clover" size={18} color={cloverColor} style={{marginLeft:"0%",marginTop:"7%"}} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "0%",marginTop:"7%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "0%",marginTop:"8%", fontSize: 11}}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
                 style={{marginTop:"7%", marginLeft:"4%" }}
             >
                 <Icon name="message1" size={18} color="grey" style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "0%",marginTop:"7%",  }}> {commentsNumber} </Text>
-            <View style={{marginLeft: "4%",marginTop:"7%",}}>
+            <Text style={{ marginLeft: "0%",marginTop:"8%",fontSize: 11  }}> {commentsNumber} </Text>
+            <View style={{marginLeft: "2%",marginTop:"7%",}}>
                     {item.isPublic == true ? 
                     (
                     <View style={{flexDirection: "row"}}>
                         <Icon name="unlock" size={18} color="grey" style={{ marginLeft: "4%",}}/>
-                        <Text style={{fontSize: 12, marginLeft: "1%", marginTop: "5%"}}>공개</Text>
+                        <Text style={{fontSize: 11, marginLeft: "1%", marginTop: "8%"}}>공개</Text>
 
                         
                     </View>
@@ -408,14 +408,14 @@ function ChapterItem(props) {
                     (
                     <View style={{flexDirection: "row"}}>
                         <Icon name="lock" size={18} color="#20543F" style={{ marginLeft: "4%"}}/>
-                        <Text style={{fontSize: 11, marginLeft: "1%", marginTop: "5%",}}>비공개</Text>
+                        <Text style={{fontSize: 11, marginLeft: "1%", marginTop: "8%",}}>비공개</Text>
                     </View>   
                     )
                 }
 
             </View>
-            <View style={{ flexDirection:"column", marginTop: "7%", marginLeft:"13%" }}>
-                <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
+            <View style={{ flexDirection:"column", marginTop: "8%", marginLeft:"10%" }}>
+                <Text style={{ fontSize: 11,}}>{item.Kregdate}</Text>
             </View>
             
         </View>

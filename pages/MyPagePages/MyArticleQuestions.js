@@ -292,7 +292,7 @@ function ChapterItem(props) {
         </View>
         <View style={{ flexDirection: "row", height: realScreen*0.08, backgroundColor:"white" , marginHorizontal:"8%",  }}>
        
-            <TouchableOpacity style={{marginTop:"10%", }} onPress={async () => {
+            <TouchableOpacity style={{marginTop:"10%", marginLeft:"3%"}} onPress={async () => {
                 // console.log('MyArticle.likeButton.onPress()');
                 // console.log({likedUsers});
                 // let meliked = likedUsers.filter(likedppl => likedppl.user_uid = user_uid)
@@ -331,24 +331,24 @@ function ChapterItem(props) {
                 }
                 firebase_db.ref(`book/${item.bookKey}/both/` + item.chapterKey).child("likeCount").set(likeCount)
             }}>
-                <Clover name="clover" size={20} color={cloverColor} style={styles.addIcon} />
+                <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "2%",marginTop:"10%", }}> {likeCount} </Text>
+            <Text style={{ marginLeft: "2%",marginTop:"11%", fontSize: 11, }}> {likeCount} </Text>
             <TouchableOpacity
                 onPress={() => { navigation.navigate('Comment', { navigation: navigation, bookKey: item.bookKey, chapterKey: item.chapterKey }) }}
-                style={{marginTop:"10%", marginLeft:"4%" }}
+                style={{marginTop:"10%", marginLeft:"4%", fontSize: 11, }}
             >
                 <Icon name="message1" size={20} color="grey" style={{}} />
             </TouchableOpacity>
-            <Text style={{ marginLeft: "2%",marginTop:"10%",  }}> {commentsNumber} </Text>
+            <Text style={{ marginLeft: "2%",marginTop:"11%",  fontSize: 11, }}> {commentsNumber} </Text>
             <TouchableOpacity style={{marginLeft:"3%",  width:50, height:25,marginTop:"10%",flexDirection:"row" }} onPress={()=>alert()}>                        
                 <Icon3 name="alarm-light-outline" size={18} color="grey" style={{}} />
-                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
+                <Text style={{marginLeft:"7%", marginTop:"8%",color:"grey", fontSize: 11,}}>신고</Text>
 
                 </TouchableOpacity>
 
-            <View style={{ flexDirection:"column", marginTop: "10%", marginLeft:"8%" }}>
-                <Text style={{ fontSize: 13,}}>{item.Kregdate}</Text>
+            <View style={{ flexDirection:"column", marginTop: "11%", marginLeft:"10%" }}>
+                <Text style={{ fontSize: 11,}}>{item.Kregdate}</Text>
             </View>
         </View>
         </View>

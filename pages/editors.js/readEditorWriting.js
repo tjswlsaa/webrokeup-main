@@ -340,7 +340,7 @@ return(
                       }}>
                         <Clover name="clover" size={18} color={cloverColor} style={styles.addIcon} />
                       </TouchableOpacity>
-                      <Text style={{ marginLeft: 5 }}> {writing.likeCounts} </Text>
+                      <Text style={{ marginLeft: 5 }}> {likeCount} </Text>
                       {/* <TouchableOpacity style={{marginLeft:15}}>
                                     <Icon name="message1" size={20} color="black" style={styles.addIcon}/>
                                   </TouchableOpacity>

@@ -1,6 +1,6 @@
 import "firebase/auth";
-import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, Share, TextInput, TouchableOpacity, KeyboardAvoidingView, Modal, TouchableHighlight, Platform, SafeAreaView, Button, DatePickerIOS, DatePickerAndroid, Alert } from 'react-native';
+import React, { useState,useRef } from 'react';
+import { View, ScrollView, Text, StyleSheet,Keyboard , Share, TextInput, TouchableOpacity, KeyboardAvoidingView, Modal, TouchableHighlight, Platform, SafeAreaView, Button, DatePickerIOS, DatePickerAndroid, Alert } from 'react-native';
 import { Picker, Header, Left, Body, Right, Title } from "native-base";
 import firebase from 'firebase/app';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -36,7 +36,9 @@ const emailSignup = ({ navigation }) => {
     return onDateChange
   }
 
-  
+  const passwordRef = useRef(null);
+  const confirmRef = useRef(null);
+
 
 
   const checkPassword = async (password, confirmPassword) => {
@@ -90,13 +92,27 @@ const emailSignup = ({ navigation }) => {
    // console.log(' date is',  moment(new Date(date)).format('YYYY년 MM월 DD일') )
    // console.log('default date is',  moment(new Date()).format('YYYY년 MM월 DD일') )
 
+      if (email == ""){
+      Alert.alert("이메일을 입력주세요");
+      return;
+    }
+    if (password == ""){
+      Alert.alert("비밀번호를 입력주세요");
+      return;
+    }
+    console.log("password>>>>",password)
+    console.log("password>>>>>>>",confirmPassword)
+
+    if (confirmPassword == ""){
+      Alert.alert("비밀번호 확인을 입력주세요");
+      return;
+    }
     const isCheckEmail = await checkEmail(email); // 함수와 함수 파라미터의 관계
    // console.log({ isCheckEmail });
     if (isCheckEmail == false){
-      Alert.alert ("이메일을 다시 입력해주세요")
+      Alert.alert ("이메일 형식이 올바르지 않습니다")
       return;
     }
-
 
     const isCheckPassword = await checkPassword(password, confirmPassword);
    // console.log('비번',password)
@@ -118,21 +134,21 @@ const emailSignup = ({ navigation }) => {
       return; 
     }
 
-    const isValid = (userCredential > ''); // 제가 (이은국씨가) 개인적으로 즐겨하는 truthy 체크 방법
-    if (isValid == false) {
-      Alert.alert("이미 가입되어있습니다. 로그인해주세요")
-      return; 
-    }
+
   
     const userCredential = await firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(error => {
-        //// console.log({ error }); //여기에서 기본 에러 발생한것
+        console.log({ error }); //여기에서 기본 에러 발생한것
         // alert(error);
       });
 
-   // console.log('..');
-
+   console.log('..userCredential',userCredential);
+   const isValid = (userCredential > ''); // 제가 (이은국씨가) 개인적으로 즐겨하는 truthy 체크 방법
+   if (userCredential == undefined) {
+     Alert.alert("이미 가입되어있습니다. 로그인해주세요")
+     return; 
+   }
 
   
 
@@ -275,9 +291,16 @@ const emailSignup = ({ navigation }) => {
             <View style={{ flex: 1, marginTop: "10%" }}>
               <Text style={{ fontSize: 15 }}> 비밀번호 </Text>
               <TextInput
+                ref={passwordRef}
                 placeholder="비밀번호를 입력해 주세요"
                 secureTextEntry={true}
+                textContentType="oneTimeCode"
                 autoCorrect={false}
+                value={password}
+                blurOnSubmit={false}
+
+                onSubmitEditing={()=> Keyboard.dismiss()}
+
                 autoCapitalize="none"
                 onChangeText={(password) => setPassword(password)}
                 style={{ fontSize: 15, marginVertical: 10, borderWidth: 1, borderColor: "#E2E2E2", marginTop: "2%", paddingVertical: "4%", paddingHorizontal: "4%" }}
@@ -299,6 +322,9 @@ const emailSignup = ({ navigation }) => {
                 placeholder="비밀번호를 입력해 주세요"
                 secureTextEntry={true}
                 autoCorrect={false}
+                textContentType="oneTimeCode"
+                value={confirmPassword}
+                ref={confirmRef}
                 autoCapitalize="none"
                 onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
                 style={{ fontSize: 15, marginVertical: 10, borderWidth: 1, borderColor: "#E2E2E2", paddingVertical: "4%", paddingHorizontal: "4%" }}

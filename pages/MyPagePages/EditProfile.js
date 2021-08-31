@@ -79,12 +79,12 @@ const EditProfile = ({navigation}) => {
                     {/* <View style = {{flex:2}}> */}
                     <View style={{flex: 1, flexDirection: "row"}}>
                         <Text style={{flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이</Text>
-                        <TouchableOpacity style= {{ flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%",  borderRadius: 5, marginRight:20 }}
+                        <TouchableOpacity style= {{ flex: 1, padding:5, height: "50%", width: "20%",  borderRadius: 5, marginRight:20 , marginTop:"3%"}}
                             onPress={()=>saveID()}>
                             <Text style={{color: "#20543F", alignSelf: "center",fontWeight:"700"}}>수정하기</Text>
                         </TouchableOpacity>
                         </View>    
-                        <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
+                        <View style={{flex: 1, backgroundColor:"#FAFAFA", marginHorizontal:"8%", justifyContent:"center" }}>
                             <TextInput 
                                 color = "#20543F"
                                 style={{marginLeft: 10, paddingVertical: "3%", fontWeight: "bold", fontSize: 17, alignSelf: "flex-start",}}
@@ -98,16 +98,16 @@ const EditProfile = ({navigation}) => {
                         
                         <View style={{flex: 1, flexDirection: "row"}}>
                             <Text style={{ flex: 3, marginHorizontal: "8%", marginTop: 20, fontSize: 17, fontWeight: "700"}}>지은이 소개</Text>
-                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop: 20, height: "50%", width: "20%",  borderRadius: 5, marginRight:20 }}
+                            <TouchableOpacity style= {{flex: 1, padding:5, marginTop:"3%", height: "50%", width: "20%",  borderRadius: 5, marginRight:20 }}
                             onPress={async()=>saveSelfLetter()}>
                             <Text style={{color: "#20543F", alignSelf: "center", fontWeight:"700" }}>수정하기</Text>
                         </TouchableOpacity>
                         </View>
                             
-                            <View style={{flex: 1, flexDirection: "row", backgroundColor:"#FAFAFA", marginHorizontal:"8%" }}>
+                            <View style={{flex: 1, backgroundColor:"#FAFAFA", marginHorizontal:"8%", justifyContent:"center"  }}>
                                 <TextInput 
                                     backgroundColor = "#FAFAFA"
-                                    style={{marginHorizontal: 30, paddingVertical: "3%", fontSize:15, marginLeft:10, marginBottom:10,lineHeight:23}}
+                                    style={{marginHorizontal: 30,fontSize:15, marginLeft:10, marginBottom:10,lineHeight:23}}
                                     multiline={true}
                                     maxLength={30}
                                     returnKeyType="done"
