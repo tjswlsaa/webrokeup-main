@@ -265,16 +265,16 @@ test9.bookKey = bookKey;
 
 
 
-              <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"70%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"25%" }}>
+              <View style={{backgroundColor:KeyColor(), opacity: 0.8, height:"75%", width:"7%", marginLeft:"5%", zIndex:1, marginTop:"25%" }}>
               </View>
 
               {image == undefined ? (
 
-              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
+              <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "75%",width:"85%", marginRight: "6%", marginLeft: "10%", marginTop: "25%"}}>
 
-                  <View style={{backgroundColor:"white", height:"70%", width:"80%", alignSelf:"center", marginTop:"22.5%", }}>
+                  <View style={{backgroundColor:"white", height:"80%", width:"85%", alignSelf:"center", marginTop:"15%", }}>
                   <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
-                  <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20,  }}
+                  <TextInput style={{ marginTop:"5%",marginHorizontal:"10%", fontSize: 20,  }}
                     value={bookTitle}
                     multiline={false}
                     maxLength={10}
@@ -296,7 +296,7 @@ test9.bookKey = bookKey;
                   <Text style={{ alignSelf: "flex-end", marginRight: "4%", marginTop: "10%"}}> {userID}.이별록작가 </Text>
                 </View>
                 <View style={{marginTop:"20%"}} >
-                <Button  color="#20543F"  title="표지 이미지를 넣어주세요" onPress={() => savePhoto()} />
+                <Button  color="#20543F"  title="이미지를 넣어주세요"  onPress={() => savePhoto()} />
                 </View>
              </View>
 

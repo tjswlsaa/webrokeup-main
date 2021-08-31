@@ -327,7 +327,7 @@ const displayedAt=(createdAt)=>{
               
                   <Text style={{marginTop:"5%", lineHeight:23}}>{post.text}</Text>               
 
-          <View style={{flexDirection:"row", alignItems:"center", marginBottom:10, marginTop:40, height:20,}}>
+          <View style={{flexDirection:"row", alignItems:"center", marginBottom:10, marginTop:40, height:realScreen*0.05,}}>
                 <TouchableOpacity style={styles.likeButton} onPress={async ()=>{
                    // console.log('MyArticle.likeButton.onPress()');
                    // console.log({likedUsers});
@@ -374,15 +374,15 @@ const displayedAt=(createdAt)=>{
                      firebase_db.ref(`post/${postKey}/`).child("likeCount").set({"likeCount" : likeCount})
 
                 }}>                
-                            <Clover name="clover" size={20} color={cloverColor}style={styles.addIcon}/>
+                            <Clover name="clover" size={18} color={cloverColor}style={styles.addIcon}/>
 
                 </TouchableOpacity>  
-                <Text style = {{marginLeft: 10}}> {likeCount} </Text>
-                <TouchableOpacity style={{marginLeft:15}}>
-                  <Icon name="message1" size={20} color="grey" style={styles.addIcon}/>
+                <Text style = {{marginLeft: realScreen*0.005}}> {likeCount} </Text>
+                <TouchableOpacity style={{marginLeft:realScreen*0.02}}>
+                  <Icon name="message1" size={18} color="grey" style={styles.addIcon}/>
                 </TouchableOpacity>
-                <Text style = {{marginLeft: 10}}> {commentsNumber} </Text>
-                <Text style={{alignSelf:"flex-end",marginLeft:10, color:"grey"}}>{displayedAt(createdAt)}</Text>                 
+                <Text style = {{marginLeft: realScreen*0.005}}> {commentsNumber} </Text>
+                <Text style={{marginLeft:realScreen*0.02, color:"grey"}}>{displayedAt(createdAt)}</Text>                 
                 {post.creator==user_uid ? (  <View style={{}}>
 
                 <TouchableOpacity style={{flexDirection:"row",marginLeft:70,  width:50, height:25,marginTop:"5%"}} 
@@ -393,7 +393,7 @@ const displayedAt=(createdAt)=>{
                 </TouchableOpacity> 
             </View> ) :(
 
-<TouchableOpacity style={{flexDirection:"row",marginLeft:70,  width:50, height:25,marginTop:"5%", }} onPress={()=>alert()}>                        
+<TouchableOpacity style={{flexDirection:"row",marginLeft:realScreen*0.1,  width:50, height:25,marginTop:"2%", }} onPress={()=>alert()}>                        
   <Icon2 name="alarm-light-outline" size={15} color="black" style={styles.addIcon} />
   <Text style={{marginLeft:"6%", marginTop:"3%",color:"grey"}}>신고</Text>
 

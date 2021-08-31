@@ -343,7 +343,7 @@ console.log("setSelectedList3",selectedList3)
                         </TouchableOpacity>
                     </View>
 
-                <ScrollView style={{ marginHorizontal: "5%"}} horizontal = {true}>
+                <ScrollView style={{ marginHorizontal: "5%", marginTop:"1%"}} horizontal = {true}>
 
                         {selectedList2.map(book => {
                             return(
@@ -420,7 +420,7 @@ console.log("setSelectedList3",selectedList3)
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
                     </View>
-                <View style={{height:realScreen*0.32, width:"100%",}}> 
+                <View style={{height:realScreen*0.32, width:"100%",marginTop:"2%"}}> 
 
                     <Swiper
                         // index={book.bookKey}
@@ -668,9 +668,9 @@ const WritingItem=(props)=> {
             <TouchableOpacity style={styles.bookIndexOne} onPress={() => { navigation.navigate('readEditorWriting', { writingKey:writing.key, navigation: navigation, index:index, list:list}) }}>
                 <View style={{backgroundColor:"#A2AD9C", width: 190, height: "100%", borderRadius: 10}}>
                     <Image style={{height:"40%", borderRadius: 10}} source={{uri:writing.image}}></Image>
-                    <View style={{margin: "10%"}}>
+                    <View style={{padding:20}}>
                         <Text style={{fontSize: 15, color: "white", fontWeight: "600"}} numberOfLines={3}>{writing.title}</Text>
-                        <Text style={{fontSize: 13, marginTop: 10}} numberOfLines={3}>{writing.summary}</Text>
+                        <Text style={{fontSize: 12, marginTop: 10}} numberOfLines={3}>{writing.summary}</Text>
                     </View>
 
                 </View>
