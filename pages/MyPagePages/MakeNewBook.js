@@ -305,7 +305,7 @@ test9.bookKey = bookKey;
                 <View                 
                 style={{ 
                   zIndex: 0, position: "absolute", 
-                  height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
+                  height: "75%",width:"85%", marginRight: "6%", marginLeft: "10%", marginTop: "25%"}}>
                 <TouchableOpacity 
                  style={{
                   zIndex: 0, position: "absolute", 

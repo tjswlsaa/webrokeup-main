@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "sparta-myhoneytip-ahn",
+    "name": "필미필미",
     "slug": "sparta-myhoneytip-ahn",
     "icon": "./icon.png",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "updates": {
       "fallbackToCacheTimeout": 0
