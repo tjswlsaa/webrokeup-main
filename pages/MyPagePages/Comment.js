@@ -157,6 +157,10 @@ function Comment({ navigation, route }) {
         const regdate = new Date()
         //console.log('숫자열',regdate)// 2021-07-05T11:12:35.972Z
 
+        if (text == ""){
+            Alert.alert("댓글을 입력해주세요");
+            return;
+          }
         firebase_db
             .ref(`book/${bookKey}/both/` + chapterKey + '/comments/' + commentKey)
             .set({

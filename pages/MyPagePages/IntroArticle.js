@@ -213,10 +213,13 @@ async function saveChapter() {
 function headerRight() {
   return (
 
-    <TouchableOpacity onPress={saveChapter}>
-      <Text style={{ fontSize: 15, fontWeight: "600" }}> 다음 </Text>
-    </TouchableOpacity>
 
+    <Icon.Button name='checkmark-sharp' size={25}
+    backgroundColor= 'white' color="black" 
+    onPress={saveChapter}
+    
+    >
+  </Icon.Button>
     // <Icon.Button name='save' size={25}
     // backgroundColor= 'white' color="black" 
     // onPress={saveChapter}

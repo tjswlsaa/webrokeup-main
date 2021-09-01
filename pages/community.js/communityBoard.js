@@ -175,7 +175,7 @@ const PostItem=(props)=> {
                 <Text style={{marginLeft: "3%",marginTop: "2%", color:"black", fontSize:11}}>{commentsNumber}</Text>
 
                 
-                <Text style={{marginLeft: "15%",marginTop: "2%", color:"grey", fontSize:11}}>{displayedAt(createdAt)}</Text>
+                <Text style={{marginLeft: "6%",marginTop: "2%", color:"grey", fontSize:11}}>{displayedAt(createdAt)}</Text>
                 </View>
             </TouchableOpacity>
             {/* <View style={{ borderBottomColor: "gray", borderBottomWidth: 1, }} /> */}

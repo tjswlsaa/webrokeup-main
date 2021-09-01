@@ -198,10 +198,18 @@ const readPost = ({ navigation, route }) => {
   }, [])
 
 
-  const onCommentSend = () => {
+
+  console.log("text>>>>>",text)
+
+  const onCommentSend = async() => {
 
 
+    console.log("text>>>>>",text)
 
+    if (text == ""){
+        Alert.alert("댓글을 입력해주세요");
+        return;
+      }
     firebase_db
       .ref(`post/${postKey}/` + '/comments/' + commentKey)
       .set({
@@ -390,7 +398,7 @@ const readPost = ({ navigation, route }) => {
               <Text style={{ marginLeft: realScreen * 0.02, color: "grey", fontSize: 12 }}>{displayedAt(createdAt)}</Text>
               {post.creator == user_uid ? (<View style={{}}>
 
-                <TouchableOpacity style={{ flexDirection: "row", marginLeft: realScreen * 0.1, width: 50, height: 25, marginTop: "2%",}}
+                <TouchableOpacity style={{ flexDirection: "row", marginLeft: realScreen * 0.15, width: 50, height: 25, marginTop: "2%",}}
                   onPress={() => deletePost()}>
                   <Icon name="delete" size={15} color="grey" style={styles.addIcon} />
 
@@ -398,7 +406,7 @@ const readPost = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>) : (
 
-                <TouchableOpacity style={{ flexDirection: "row", marginLeft: realScreen * 0.1, width: 50, height: 25, marginTop: "2%", }} onPress={() => alert()}>
+                <TouchableOpacity style={{ flexDirection: "row", marginLeft: realScreen * 0.15, width: 50, height: 25, marginTop: "2%", }} onPress={() => alert()}>
                   <Icon2 name="alarm-light-outline" size={15} color="black" style={styles.addIcon} />
                   <Text style={{ marginLeft: "6%", marginTop: "3%", color: "grey", fontSize: 14 }}>신고</Text>
 
