@@ -22,7 +22,21 @@ const readIntroArticle = ({navigation, route}) => {
   const BottomSpace = getBottomSpace()
   const statusBarHeight = getStatusBarHeight();
   const realScreen = ScreenHeight-headerHeight-BottomSpace
-
+  function getBookNameStart(bookKey) {
+    if (bookKey.indexOf('1') == 0){
+    return "빨간색은"
+    }
+    else if (bookKey.indexOf('2') == 0){
+    return "노란색은"
+    }
+    else if (bookKey.indexOf('3') == 0){
+    return "파란색은"
+    }
+    else if (bookKey.indexOf('4') == 0){
+    return "검은색은"
+    }
+}
+const BookNameStart = getBookNameStart(bookKey);
   var user = firebase.auth().currentUser;
 var  user_uid
 if (user != null) {
@@ -68,8 +82,17 @@ const alert = async ()=> {
         
 
 <View style={{ height: realScreen*0.9,alignSelf: "center", backgroundColor:"white" , marginVertical:"10%", width:"95%",}}>
-        <View style={{height: realScreen*0.1,  marginTop:"10%"}}>
-{authorUser_uid == user_uid ? (
+        <View style={{height: realScreen*0.1,  marginTop:"4%"}}>
+
+        </View>
+        <View style={{height:realScreen*0.1,marginHorizontal:"5%"}}>
+            <Text style={styles.bookTitle}>{BookNameStart}</Text>  
+        </View>
+        <View style={{height:realScreen*0.6}}>
+        <ScrollView style={styles.textContainer}>
+            <Text style={{lineHeight:23, marginHorizontal:"10%"}}>{intro}</Text>
+       </ScrollView>
+       {authorUser_uid == user_uid ? (
         <View >
         <TouchableOpacity  style={{alignSelf:"flex-end", marginRight:"10%"}} onPress={()=>navigation.navigate("EditIntroArticle", {navigation: navigation, intro:intro, bookKey: bookKey,})}>
             <Icon name="edit" size={18} color="grey" style={{alignSelf:"flex-end"}}></Icon>
@@ -77,20 +100,12 @@ const alert = async ()=> {
 
         </View>) : 
         (<View>
-          <TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,flexDirection:"row" }} onPress={()=>alert()}>                        
-                <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
+          <TouchableOpacity style={{marginLeft:"70%",  width:50, height:25,flexDirection:"row" ,marginTop:"10%"}} onPress={()=>alert()}>                        
+                <Icon3 name="alarm-light-outline" size={18} color="grey" style={{}} />
                 <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
 
                 </TouchableOpacity>
         </View>)}
-        </View>
-        <View style={{height:realScreen*0.1,marginHorizontal:"5%"}}>
-            <Text style={styles.bookTitle}>말머리에서</Text>  
-        </View>
-        <View style={{height:realScreen*0.6}}>
-        <ScrollView style={styles.textContainer}>
-            <Text style={{lineHeight:23, marginHorizontal:"10%"}}>{intro}</Text>
-       </ScrollView>
        </View>
 </View>
 </View>

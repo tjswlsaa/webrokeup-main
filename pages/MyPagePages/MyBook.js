@@ -189,9 +189,9 @@ const MyBook = ({ navigation, route }) => {
                                         <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
                                             <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
                                             <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
-                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
+                                                <Text style={{ marginTop: "30%", marginLeft: "10%", fontSize:12 }}>{BookNameStart}</Text>
                                                 <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
-                                                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                                <Text style={{marginTop:"20%", marginHorizontal:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                             </View>
                                         </View>
                                         </TouchableOpacity>
@@ -214,7 +214,7 @@ const MyBook = ({ navigation, route }) => {
                 <View style={{ backgroundColor: "#fafafa", marginHorizontal: "1%"}}>
                     <View style={{ marginHorizontal: "3%"}}>
                         <TouchableOpacity style={{ marginVertical: "1%", marginTop: "2%", backgroundColor: "#fff", height: realScreen * 0.14 }} onPress={() => { navigation.navigate('readIntroArticle', { myitem: myitem, chapters: myitem.chapters, authorUser_uid: myitem.user_uid, intro: myitem.intro, navigation: navigation, bookKey: bookKey, chapterKey: Object.keys(myitem.chapters).toString() }) }}>
-                            <Text style={{ marginTop: "5%", marginHorizontal: "6%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>말머리에서</Text>
+                            <Text style={{ marginTop: "5%", marginHorizontal: "6%", fontSize: 15, fontWeight: "600" }} numberOfLines={1}>{BookNameStart}</Text>
                             <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
                     </View>

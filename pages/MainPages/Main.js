@@ -540,7 +540,7 @@ function BookComponent2 (props) {
                 }}>
                     <Image source={{ uri: book.url }} style={{ zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}></Image>
                     <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
-                        <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{book.defaultTitle}</Text>
+                        <Text style={{ marginTop: "30%", marginLeft: "10%",fontSize: 12 }}>{book.defaultTitle}</Text>
                         <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{book.bookTitle}</Text>
                         <Text style={{ marginTop: "20%", marginLeft: "10%", fontSize: 10 }}>{BookItemUserinfo.iam}</Text>
                     </View>

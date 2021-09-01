@@ -31,7 +31,21 @@ const IntroArticle = ({ navigation, route }) => {
   const { bookKey } = route.params;
   test1.bookKey = bookKey
 
-  
+  function getBookNameStart(bookKey) {
+    if (bookKey.indexOf('1') == 0){
+    return "빨간색은"
+    }
+    else if (bookKey.indexOf('2') == 0){
+    return "노란색은"
+    }
+    else if (bookKey.indexOf('3') == 0){
+    return "파란색은"
+    }
+    else if (bookKey.indexOf('4') == 0){
+    return "검은색은"
+    }
+}
+const BookNameStart = getBookNameStart(bookKey);
   const headerHeight = useHeaderHeight();
   const ScreenHeight = Dimensions.get('window').height   //height
   const BottomSpace = getBottomSpace()
@@ -92,13 +106,13 @@ const IntroArticle = ({ navigation, route }) => {
           <StatusBar style="white" />
           <View style={{height: "96%", width: "90%", alignSelf: "center", marginTop: "5%", backgroundColor: "#fff"}}>
             <View style={{height: realScreen*0.08, marginHorizontal: "10%", marginTop: "20%"}}>
-              <Text style={{ fontSize: 20, fontWeight: "600"}}>말머리에서</Text>
+              <Text style={{ fontSize: 20, fontWeight: "600"}}> {BookNameStart}</Text>
             </View>
             <ScrollView style={{ marginHorizontal: "10%"}}>
               <TextInput 
                 style={{fontSize: 15, lineHeight:23}}
                 multiline={true}
-                placeholder="내용을 입력하세요"
+                placeholder="색깔에 대한 나의 감정을 적어주세요"
                 returnKeyType="done"
                 onChangeText={text => setText(text)}
                 ref={introArticle_a}
