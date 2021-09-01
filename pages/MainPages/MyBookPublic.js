@@ -171,26 +171,25 @@ const MyBookPublic = ({ navigation, route }) => {
 
                 <TouchableOpacity style={{marginLeft:"80%",  width:50, height:25,marginTop:"4%",flexDirection:"row" }} onPress={()=>alert()}>                        
                 <Icon3 name="alarm-light-outline" size={20} color="grey" style={{}} />
-                <Text style={{marginLeft:"7%", marginTop:"4%",color:"grey"}}>신고</Text>
+                <Text style={{marginLeft:"7%", marginTop:"5%",color:"grey",}}>신고</Text>
 
                 </TouchableOpacity>
-                            <View style={{ height: realScreen * 0.35, width: realScreen * 0.33, alignSelf: "center", }}>
+                            <View style={{ height: realScreen * 0.35, width: realScreen * 0.33, alignSelf: "center",  }}>
                                 <View style={{ flex: 1 }}>
             
-                                        <TouchableOpacity style={{ flexDirection: "row", height:ScreenHeight*0.3,width: ScreenWidth * 0.25,marginLeft:"10%", marginTop:"15%" }}>
-
-                                        <View style={{ backgroundColor:Color, opacity: 0.8, height: realScreen * 0.30, width: ScreenWidth * 0.04, zIndex: 1 }}>
-                                        </View>
-
-                                        <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
-                                            <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
-                                            <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
-                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
-                                                <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
-
-                                                <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                        <TouchableOpacity style={{ flexDirection: "row", height: ScreenHeight*0.3, width:ScreenWidth*0.25, marginLeft: "14%", marginTop: "15%"}}>
+                                            <View style={{ backgroundColor:Color, opacity: 0.8, height: realScreen * 0.30, width: ScreenWidth * 0.04, zIndex: 1 }}>
                                             </View>
-                                        </View>
+
+                                            <View style={{ backgroundColor: "#c5c5c5",zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center" }}>
+                                                <Image source={{uri: myitem.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.3, width: ScreenWidth * 0.38, alignItems: "center", justifyContent: "center"}}></Image>
+                                                <View style={{ backgroundColor: "white", height: realScreen * 0.22, width: ScreenWidth * 0.28, }}>
+                                                    <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{BookNameStart}</Text>
+                                                    <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{myitem.bookTitle}</Text>
+
+                                                    <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
+                                                </View>
+                                            </View>
                                         </TouchableOpacity>
                                 </View>
                             </View>
