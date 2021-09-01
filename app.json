@@ -3,7 +3,7 @@
     "name": "Feel Me",
     "slug": "sparta-myhoneytip-ahn",
     "icon": "./icon.png",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "updates": {
       "fallbackToCacheTimeout": 0
