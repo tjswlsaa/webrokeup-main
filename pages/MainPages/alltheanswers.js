@@ -304,7 +304,7 @@ const test1 = {
                         <TouchableOpacity
                             style={{ flex: 1, marginRight: "2%", marginRight: "1%" }}
                             onPress={() => viewNew()}>
-                            <Text style={{ fontize: 17, alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
+                            <Text style={{ alignSelf: "center", fontSize: 17 }}> 최신 답변 </Text>
                             <View style={{ fontSize: 17, borderBottomWidth: 3, borderBottomColor: newcolor, marginTop: "3%" }} />
                         </TouchableOpacity>
                     </View>
@@ -442,7 +442,6 @@ const styles = StyleSheet.create({
     bookTitle: {
         fontSize: 15,
         marginTop: "7%",
-        fontSize: 15,
         alignSelf: "center"
     },
     bookDesc: {
