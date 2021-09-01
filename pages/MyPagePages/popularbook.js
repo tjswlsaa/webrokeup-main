@@ -92,7 +92,7 @@ const popularbook = ({ navigation, route }) => {
                                                 listoften.push(listFiltered2[13]);
                                                 }
                                                 if (listFiltered2.length >= 15) {
-                                                        listoften.push(hotlist[14]);
+                                                        listoften.push(listFiltered2[14]);
                                                         }
         
                                     setSelectedList2(listoften);
@@ -163,7 +163,21 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
 
 
 
-
+        function getBookNameStart(bookKey) {
+                if (bookKey.indexOf('1') == 0){
+                return "빨간색은"
+                }
+                else if (bookKey.indexOf('2') == 0){
+                return "노란색은"
+                }
+                else if (bookKey.indexOf('3') == 0){
+                return "파란색은"
+                }
+                else if (bookKey.indexOf('4') == 0){
+                return "검은색은"
+                }
+            }
+            const BookNameStart = getBookNameStart(bookKey);
        
 
 
@@ -175,9 +189,9 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
                                                                                     <View style={{flexDirection:"row", height:realScreen*0.1 }}>
                                                                                             <View style={{backgroundColor:book.Color, flex:1, height:"50%", marginTop:"15%"}}> 
                                                                                             </View>
-                                                                                            <Text style={{flex:15,fontSize: 16, fontWeight: "700",  marginTop: "20%",marginHorizontal: "5%",}}>말머리에서</Text>
+                                                                                            <Text style={{flex:15,fontSize: 16, fontWeight: "700",  marginTop: "20%",marginHorizontal: "5%",}}>{BookNameStart}</Text>
                                                                                     </View>
-                                                                                            <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "5%", marginBottom:"5%", marginLeft:"5%", lineHeight:20}} numberOfLines={5} >{book.intro}</Text>
+                                                                                            <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "5%", marginBottom:"5%", marginLeft:"8%", lineHeight:20}} numberOfLines={5} >{book.intro}</Text>
                                                                             </View>
                                         </TouchableOpacity>
                                        <TouchableOpacity style={{  justifyContent:"center",marginLeft:ScreenWidth*0.05}} onPress={() => {navigation.navigate('MyBookPublic', { bookKey:book.bookKey, userinfo:userinfo}) }}>
@@ -188,7 +202,7 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
                                             zIndex: 0, position: "absolute", marginLeft: ScreenWidth * 0.025, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center" }}>
                                         <Image source={{uri: book.url}} style={{zIndex: 0, position: "absolute", marginLeft: 10, height: realScreen * 0.32, width: ScreenWidth * 0.4, alignItems: "center", justifyContent: "center"}}></Image>
                                         <View style={{ backgroundColor: "white", height: realScreen * 0.24, width: ScreenWidth * 0.29, }}>
-                                                <Text style={{ marginTop: "30%", marginLeft: "10%" }}>{book.defaultTitle}</Text>
+                                                <Text style={{ marginTop: "30%", marginLeft: "10%",fontSize:12}}>{book.defaultTitle}</Text>
                                                 <Text style={{ marginTop: "5%", marginHorizontal:"10%", fontWeight: "500" }}>{book.bookTitle}</Text>
                                                 <Text style={{marginTop:"20%", marginLeft:"10%", fontSize:10}}>{userinfo.iam}</Text>
                                         </View>

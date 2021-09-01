@@ -150,12 +150,12 @@ const startbooktitle = ()=>{
           />
         )}
         <View style={styles.bookContainer}>
-        <View style={{backgroundColor:myitemcolor, opacity: 0.8, height:"70%", width:"7%", marginLeft:"8%", zIndex:1, marginTop:"25%" }}>
+        <View style={{backgroundColor:myitemcolor, opacity: 0.8, height:"80%", width:"7%", marginLeft:"3%", zIndex:1, marginTop:"15%" }}>
               </View>
         <View                 
                 style={{ 
                   zIndex: 0, position: "absolute", 
-                  height: "70%",width:"80%", marginRight: "6%", marginLeft: "13%", marginTop: "25%"}}>
+                  height: "80%",width:"90%", marginRight: "6%", marginLeft: "8%", marginTop: "15%"}}>
 
 
                 <TouchableOpacity style={{zIndex: 0, position: "absolute", 
@@ -163,9 +163,9 @@ const startbooktitle = ()=>{
                 <Image source={{ uri: image2 }} style={{ height: "100%",width:"100%"}} />
               </TouchableOpacity>
                 <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%"}}>
-                <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
+                <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:17}}> {startbooktitle()} 감정은 </Text>
 
-                <TextInput style={{ marginTop:"5%",marginLeft:"10%", fontSize: 20, flexShrink: 1, }}
+                <TextInput style={{ marginTop:"5%",marginHorizontal:"10%", fontSize: 20, flexShrink: 1, }}
                   value={bookTitle2}
                   multiline={false}
                   maxLength={10}

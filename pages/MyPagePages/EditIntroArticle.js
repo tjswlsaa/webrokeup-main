@@ -35,7 +35,21 @@ const EditIntroArticle = ({ navigation, route }) => {
     if (user != null) {
         user_uid = user.uid
     }
-
+    function getBookNameStart(bookKey) {
+        if (bookKey.indexOf('1') == 0){
+        return "빨간색은"
+        }
+        else if (bookKey.indexOf('2') == 0){
+        return "노란색은"
+        }
+        else if (bookKey.indexOf('3') == 0){
+        return "파란색은"
+        }
+        else if (bookKey.indexOf('4') == 0){
+        return "검은색은"
+        }
+    }
+    const BookNameStart = getBookNameStart(bookKey);
     const ScreenHeight = Dimensions.get('window').height   //height
     const ScreenWidth = Dimensions.get('window').width   //height
   
@@ -84,11 +98,11 @@ const EditIntroArticle = ({ navigation, route }) => {
                     </TouchableOpacity>
 
                     <View style={{height:realScreen*0.1,marginHorizontal:"5%", marginTop:"25%"}}>
-                                <Text style={styles.bookTitle}>말머리에서</Text>  
+                                <Text style={styles.bookTitle}>{BookNameStart}</Text>  
                             </View>
                             <View style={{height:realScreen*0.6}}>
                             <ScrollView style={styles.textContainer}>
-                            <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 14,lineHeight:"25%", }}
+                            <TextInput style={{ backgroundColor: 'rgba(52,52,52,0)', padding: 30, flex: 1, fontSize: 14,lineHeight:23, }}
                                         multiline={true} defaultValue={intro}  returnKeyType="done"
                                         onChangeText={text1 => setText1(text1)} />                        
                             </ScrollView>
