@@ -214,7 +214,7 @@ const MyBookPublic = ({ navigation, route }) => {
                             <Text style={{ marginTop: "3%", marginHorizontal: "6%" }} numberOfLines={2}>{myitem.intro}</Text>
                         </TouchableOpacity>
                     </View>
-                    {chapter.map(chapters => {
+                    {chapter.map((chapters,index) => {
 
                         return (
                             <MyChapterItem
@@ -224,7 +224,9 @@ const MyBookPublic = ({ navigation, route }) => {
                                 chapterTitle={chapters.chapterTitle}
                                 bookKey={bookKey}
                                 chapterKey={Object.keys(myitem.chapters).toString()}
-                                myitem={myitem}
+                                list={chapter}
+                                index={index}
+
                             />
                         )
                     })}
@@ -238,7 +240,7 @@ const MyBookPublic = ({ navigation, route }) => {
 // () => {} : arrow function
 // Javascript의 가장 강력하고 가장 큰 특징... 중 하나: 함수 또한 값이다.
 function MyChapterItem(props) {
-    const { navigation, chapters, chapterTitle, myitem, bookKey, chapterKey } = props;
+    const { navigation, chapters, chapterTitle, myitem, bookKey, chapterKey,list,index } = props;
     // console.log('아s가 어렵다',chapters.chapterKey)
     // console.log('이것도 찾나',chapterKey)
 
@@ -284,7 +286,7 @@ function MyChapterItem(props) {
     }, [])
     return (
         <View style={{marginHorizontal: "3%", height: realScreen*0.2, backgroundColor: "#fff", marginVertical: "1%"}}>
-            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticle', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey }) }}>
+            <TouchableOpacity style={{marginTop: "3%", marginHorizontal: "3%", marginBottom: "5%",}} onPress={() => { navigation.navigate('MyArticlePublic', {  navigation: navigation, bookKey: bookKey, chapterKey: chapters.chapterKey , list:list, index:index}) }}>
             <View style={{height: realScreen*0.12, flexDirection: "row", marginTop:"3%"}}>
                     
                     <View style={{flex: 1, backgroundColor: chapters.chColor, marginRight: "5%", marginBottom: "5%"}} /> 

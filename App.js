@@ -49,6 +49,7 @@ import EditQuestion from './pages/MyPagePages/EditQuestion';
 import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
 import popularbook from './pages/MyPagePages/popularbook';
 import feelingtutorial from './pages/MyPagePages/feelingtutorial';
+import MyArticlePublic from './pages/MyPagePages/MyArticlePublic';
 const defaultScreenOptions = {
   headerLeft: function () {
     const navigation = useNavigation();
@@ -161,7 +162,17 @@ const App = ({ navigation }) => {
             ...MyArticleQuestions.options
           }}
         />
+        <Stack.Screen
+          name="MyArticlePublic"
+          component={MyArticlePublic.component}
+          options={{
+            title: "감정록",
 
+            headerShown: true,
+            ...defaultScreenOptions,
+            ...MyArticlePublic.options
+          }}
+        />
 
         <Stack.Screen
           name="QuestionList"
