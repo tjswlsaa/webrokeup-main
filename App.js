@@ -43,7 +43,6 @@ import readEditorWriting from "./pages/editors.js/readEditorWriting";
 import alltheanswers from './pages/MainPages/alltheanswers';
 import communityMakeNewPost from "./pages/community.js/communityMakeNewPost";
 import readPost from "./pages/community.js/readPost";
-import editPost from "./pages/community.js/editPost";
 import QuestionPallete from './pages/MyPagePages/QuestionPallete';
 import EditQuestion from './pages/MyPagePages/EditQuestion';
 import MyArticleQuestions from './pages/MyPagePages/MyArticleQuestions';
