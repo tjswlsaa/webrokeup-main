@@ -15,8 +15,9 @@ const Notification = ({navigation}) => {
               setnotification(notification);
           })
   }, []);
-  
-  console.log("공지사항",notification)
+              const list = Object.values(notification);
+
+  console.log("공지사항",list)
     return(
         
         <SafeAreaView style={{ flex: 1 }}>
@@ -24,7 +25,7 @@ const Notification = ({navigation}) => {
              <View style={{height:"90%", backgroundColor:"white", marginHorizontal:"5%", marginVertical:"10%", }}>
                 
                         <ScrollView style={styles.textContainer}>
-                        {/* <Text style={{marginVertical:"10%", marginHorizontal:"10%"}}>{notification}</Text>   */}
+                        <Text style={{marginVertical:"10%", marginHorizontal:"10%"}}>{list}</Text>  
                         </ScrollView>
             </View>
 

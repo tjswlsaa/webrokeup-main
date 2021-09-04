@@ -322,7 +322,7 @@ function headerRight() {
   return (
     <Button
       onPress={EditChapter}
-      title="저장하기"
+      title="저장"
       color="#000"
     />
 

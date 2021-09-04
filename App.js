@@ -152,24 +152,22 @@ const App = ({ navigation }) => {
 
         <Stack.Screen
           name="MyArticleQuestions"
-          component={MyArticleQuestions.component}
+          component={MyArticleQuestions}
           options={{
             title: "감정록",
 
             headerShown: true,
             ...defaultScreenOptions,
-            ...MyArticleQuestions.options
           }}
         />
         <Stack.Screen
           name="MyArticlePublic"
-          component={MyArticlePublic.component}
+          component={MyArticlePublic}
           options={{
             title: "감정록",
 
             headerShown: true,
             ...defaultScreenOptions,
-            ...MyArticlePublic.options
           }}
         />
 
@@ -259,11 +257,9 @@ const App = ({ navigation }) => {
           component={MakeNewBook.component}
           options={{
             title: "책 만들기",
-            ...defaultScreenOptions2,
+            ...defaultScreenOptions,
             ...MakeNewBook.options,
-            headerStyle: {
-              backgroundColor: "#F6F6F6",
-            },
+
           }} />
 
         <Stack.Screen

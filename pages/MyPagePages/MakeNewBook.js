@@ -236,7 +236,7 @@ test9.bookKey = bookKey;
         {spinner && (
           <Spinner
             visible={true}
-            textContent={'Loading...'}
+            textContent={'로딩중'}
             textStyle={{ color: '#FFF' }}
           />
         )}
@@ -272,7 +272,7 @@ test9.bookKey = bookKey;
 
               <View style={{ backgroundColor:"#c4c4c4",  zIndex: 0, position: "absolute", height: "75%",width:"85%", marginRight: "6%", marginLeft: "10%", marginTop: "25%"}}>
 
-                  <View style={{backgroundColor:"white", height:"80%", width:"85%", alignSelf:"center", marginTop:"15%", }}>
+                  <View style={{backgroundColor:"white", height:"75%", width:"80%", alignSelf:"center", marginTop:"20%", }}>
                   <Text style={{marginTop:"20%", marginLeft:"8%", fontSize:20}}> {startbooktitle()} 감정은 </Text>
                   <TextInput style={{ marginTop:"5%",marginHorizontal:"10%", fontSize: 20,  }}
                     value={bookTitle}
@@ -574,15 +574,15 @@ async function handleChapter() {
 
 function headerRight() {
   return (
-    <TouchableOpacity onPress={handleChapter}>
-      <Text style={{fontSize: 16, fontWeight: "600", marginRight:10}}> 다음 </Text>
-    </TouchableOpacity>
-    // <Icon.Button name='save' size={25}
-    //   backgroundColor='white' color="black"
-    //   onPress={handleChapter}
+    // <TouchableOpacity onPress={handleChapter}>
+    //   <Text style={{fontSize: 16, fontWeight: "600", marginRight:10}}> 다음 </Text>
+    // </TouchableOpacity>
+    <Icon.Button name='checkmark-sharp' size={25}
+      backgroundColor='white' color="black"
+      onPress={handleChapter}
 
-    // >
-    // </Icon.Button>
+    >
+    </Icon.Button>
 
   );
 }

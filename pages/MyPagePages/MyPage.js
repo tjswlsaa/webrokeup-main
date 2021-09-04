@@ -275,7 +275,7 @@ const MyPage = ({ navigation }) => {
                     
                     <View style={{flexDirection:"row", marginLeft:"3.5%", height:realScreen*0.05}}>
                         <Text style={{width:ScreenWidth*0.65, marginTop:"2%"}}>내 감정의 색깔은? </Text>
-                        <TouchableOpacity onPress={() => { navigation.navigate('feelingtutorial') }} style={{height:ScreenWidth*0.35, marginTop:"2%"}}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('onboarding') }} style={{height:ScreenWidth*0.35, marginTop:"2%"}}>
                             <Text>감정도움말</Text>
                         </TouchableOpacity>
                     </View>
