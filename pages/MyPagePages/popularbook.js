@@ -133,6 +133,7 @@ const popularbook = ({ navigation, route }) => {
 
 const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => {
 
+        // console.log("bookKEY",bookkey)
         
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
@@ -163,21 +164,21 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
 
 
 
-        function getBookNameStart(bookKey) {
-                if (bookKey.indexOf('1') == 0){
-                return "빨간색은"
-                }
-                else if (bookKey.indexOf('2') == 0){
-                return "노란색은"
-                }
-                else if (bookKey.indexOf('3') == 0){
-                return "파란색은"
-                }
-                else if (bookKey.indexOf('4') == 0){
-                return "검은색은"
-                }
-            }
-            const BookNameStart = getBookNameStart(bookKey);
+        // function getBookNameStart(bookKey) {
+        //         if (bookKey.indexOf('1') == 0){
+        //         return "빨간색은"
+        //         }
+        //         else if (bookKey.indexOf('2') == 0){
+        //         return "노란색은"
+        //         }
+        //         else if (bookKey.indexOf('3') == 0){
+        //         return "파란색은"
+        //         }
+        //         else if (bookKey.indexOf('4') == 0){
+        //         return "검은색은"
+        //         }
+        //     }
+        //     const BookNameStart = getBookNameStart(bookKey);
        
 
 
@@ -189,7 +190,7 @@ const ChapterItem = ({ navigation, book, bookKey, CountLikes, selectedList}) => 
                                                                                     <View style={{flexDirection:"row", height:realScreen*0.1 }}>
                                                                                             <View style={{backgroundColor:book.Color, flex:1, height:"50%", marginTop:"15%"}}> 
                                                                                             </View>
-                                                                                            <Text style={{flex:15,fontSize: 16, fontWeight: "700",  marginTop: "20%",marginHorizontal: "5%",}}>{BookNameStart}</Text>
+                                                                                            <Text style={{flex:15,fontSize: 16, fontWeight: "700",  marginTop: "20%",marginHorizontal: "5%",}}>{book.default}</Text>
                                                                                     </View>
                                                                                             <Text style={{ fontWeight: "500", marginHorizontal: "5%", marginTop: "5%", marginBottom:"5%", marginLeft:"8%", lineHeight:20}} numberOfLines={5} >{book.intro}</Text>
                                                                             </View>
