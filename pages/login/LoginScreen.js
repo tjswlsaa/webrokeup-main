@@ -22,30 +22,30 @@ const LoginScreen  = ({navigation,route}) => {
  
     return (
       <View style={{backgroundColor:"white", flex:1}}>
-      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "5%",marginTop:"15%" ,  }}>
-        <View style={{ height:realScreen*0.4,   }}>
+      <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: "10%", marginVertical: "5%",marginTop:"40%" ,  }}>
+        <View style={{ height:realScreen*0.3,   }}>
         <View style={{}}>
           <Text style={{ fontSize: 35, fontWeight: "700" ,  color: "#20543F", alignSelf: "center"}}> Feel Me Fill me </Text>
           <Text style={{ fontSize: 20, marginTop: "5%", marginLeft: "3%", color: "#000", alignSelf: "center" }}>나를 채우는 감정 기록 </Text>
         </View>
-        < Image style={{marginTop: "20%", height: realScreen*0.25, width: realScreen*0.25, alignSelf: "center"}} source={logo}/>
+        {/* < Image style={{marginTop: "20%", height: realScreen*0.25, width: realScreen*0.25, alignSelf: "center"}} source={logo}/> */}
 
       </View>
 
 
-          <View style={{alignSelf:"center", width: "100%", marginTop: "25%"}}>
+          <View style={{alignSelf:"center", width: "100%", marginTop: "5%"}}>
 
-          {/* <TouchableOpacity style={{ alignSelf: "center", }} onPress={() => navigation.navigate('GoogleCheck')}>
+          <TouchableOpacity style={{ alignSelf: "center",height:50, width:"100%",backgroundColor:"#f5f5f5", borderRadius:10, marginTop:"15%"}} onPress={() => navigation.navigate('GoogleCheck')}>
               <View style={{ justifyContent: 'center', marginTop: 15, flexDirection: "row" }}>
 
-                <Icon2 name="logo-google" size={20} color="black" style={{ }} />
+                <Icon2 name="logo-google" size={25} color="#20543F" style={{ }} />
 
-                <Text style={{ fontSize: 15,marginLeft:"5%" }}> 구글로 시작하기 </Text>
+                <Text style={{ fontSize: 18,marginLeft:"5%" }}> 구글로 시작하기 </Text>
               </View>
 
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
-            <TouchableOpacity style={{ alignSelf: "center",height:50, width:"100%",backgroundColor:"#f5f5f5", borderRadius:10, marginTop:"15%"}} onPress={() => { navigation.navigate("emailLogin") }}>
+            <TouchableOpacity style={{ alignSelf: "center",height:50, width:"100%",backgroundColor:"#f5f5f5", borderRadius:10, marginTop:"5%"}} onPress={() => { navigation.navigate("emailLogin") }}>
               <View style={{ flexDirection: "row", alignSelf:"center" , justifyContent:"center", marginTop:"3.5%"}}>
 
                 <Icon name="email" size={25} color="#20543F" style={{ alignSelf:"center" ,justifyContent:"center", alignItems:"center"  }} />
@@ -57,7 +57,7 @@ const LoginScreen  = ({navigation,route}) => {
           </View>
 
 
-          {/* <View style={{ marginTop: "18%", alignSelf: "center" }}>
+          <View style={{ marginTop: "18%", alignSelf: "center" }}>
             <View style={{ alignSelf: "center" }}>
               <Text style={{ color: "grey", fontSize: 12 }}>시작하기를 누르면서 Feel Me Fill Me의</Text>
             </View>
@@ -67,7 +67,7 @@ const LoginScreen  = ({navigation,route}) => {
               <TouchableOpacity onPress={() => navigation.navigate('policytwoforlogin')}><Text style={{ color: "grey", fontSize: 12, textDecorationLine: "underline" }}> 개인정보 취급방침</Text></TouchableOpacity>
               <Text style={{ color: "grey", fontSize: 12 }}>에 동의합니다</Text>
             </View>
-          </View> */}
+          </View>
       </View>
       </View>
     );           

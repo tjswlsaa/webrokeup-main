@@ -337,7 +337,7 @@ console.log("setSelectedList3",selectedList3)
                         <View style={{ flex: 4 }} >
                             <Text style={{ fontSize: 18, fontWeight: "700", }}> 오늘의 감정책 </Text>
                         </View>
-                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center" }}
+                        <TouchableOpacity style={{ flex: 1, borderRadius: 5, height: realScreen*0.045,justifyContent:"center", }}
                         onPress={() => { navigation.navigate('popularbook')}}>
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
@@ -363,19 +363,19 @@ console.log("setSelectedList3",selectedList3)
 
                 </View>
 
-            <View style={{ height: realScreen*0.4, backgroundColor:"#F1F3F2"}}>
-                <View style={{flex:1, marginTop: "3%", flexDirection: "row", marginHorizontal: "3%"}}>
-                        <View style={{ flex: 4, marginTop: "3%", height: realScreen*0.045}}> 
+            <View style={{ height: realScreen*0.43, backgroundColor:"#F1F3F2"}}>
+                <View style={{height:realScreen*0.08, marginTop: "3%", flexDirection: "row", marginHorizontal: "3%"}}>
+                        <View style={{ flex: 4, marginTop: "3%", height: realScreen*0.08}}> 
                             <Text style={{ fontSize: 18, fontWeight: "700" }}> 감정 질문지 </Text>
                         </View>
-                        <TouchableOpacity style={{ marginTop: "1.5%", flex: 1, height: realScreen*0.045, justifyContent:'center'}}
+                        <TouchableOpacity style={{ marginTop: "0.1%", flex: 1, height: realScreen*0.08, justifyContent:'center', }}
                             onPress={() => { navigation.navigate('QuestionPallete')}}>
                             <Text style={{alignSelf: "center", color: "#20543F", fontWeight:"800", fontSize:17}}>더보기</Text>
                         </TouchableOpacity>
 
                 </View>
 
-                <View style={{flex: 20,marginHorizontal:"2%", }} horizontal={true}>
+                <View style={{height:realScreen*0.3,marginHorizontal:"2%", }} horizontal={true}>
                 <Swiper
                         index={selectedList3.questionsKey}
                         loop={true}
@@ -639,7 +639,7 @@ function QuestionComponent (props) {
     return (
         <View style={{ height: realScreen * 0.3, width: ScreenWidth*0.95}}>
 
-            <TouchableOpacity style={{ width: ScreenWidth * 0.96, height: realScreen * 0.28, marginTop: "5%",  }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.Color })}>
+            <TouchableOpacity style={{ width: ScreenWidth * 0.96, height: realScreen * 0.28,   }} onPress={() => navigation.navigate("alltheanswers", { questionsKey: question.questionsKey, color: question.Color })}>
                 <View style={{ width: ScreenWidth * 0.85, padding: "5%", backgroundColor: "white", marginHorizontal: "5%", flex: 1,  height: realScreen * 0.3, borderRadius: 10,  }}>
                     <View style={{ flexDirection: "row", flex: 2,}}>
                         <View style={{ backgroundColor: question.Color, flex: 1, marginTop: "2%", height:"70%" }}>

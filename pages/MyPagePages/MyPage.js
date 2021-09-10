@@ -12,6 +12,9 @@ import { useHeaderHeight } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import Icon3 from 'react-native-vector-icons/Foundation';
+
+
 const test2 = {
     item: ""
 }
@@ -372,7 +375,14 @@ const MyPage = ({ navigation }) => {
  
                     </View>
 
-
+                    {colorBookListValues.length == 0 ? (
+                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#44705E", height:120, justifyContent:"center", width:150, alignItems:"center", marginLeft:"30%", borderRadius:"20%", marginTop:"45%"}}>
+                                        <Icon3 name="lightbulb" size={25} color="#20543F" style={{  marginBottom:"15%"  }} />
+                                        <Text style={{color: "white", alignSelf:"center", fontSize:17, alignContent:"center"}}>필미필미</Text>
+                                        <Text style={{color: "white", alignSelf:"center", fontSize:17, alignContent:"center", marginTop:"3%"}}>이렇게 시작하세요</Text>
+                                    </TouchableOpacity>) :(
+                                        <View></View>
+                                    )}
 
                     <View style={{ flexDirection: "row",marginLeft:"2.5%" }}>
 
@@ -467,12 +477,7 @@ const MyPage = ({ navigation }) => {
 
                         )}
 
-                        {colorBookListValues.length == 0 ? (
-                                    <TouchableOpacity onPress={()=>navigation.navigate("onboarding")} style={{zIndex:2, position: "absolute",backgroundColor:"#44705E", height:30, justifyContent:"center", width:100, alignItems:"center", marginTop:"45%", marginLeft:"65%", borderRadius:"20%"}}>
-                                        <Text style={{color: "white"}}>도움말보기</Text>
-                                    </TouchableOpacity>) :(
-                                        <View></View>
-                                    )}
+
                     </View>
 
 

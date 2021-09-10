@@ -17,15 +17,7 @@ const PopularArticle = ({ navigation, route }) => {
         const [newcolor, setNewColor] = useState("#E9E9E9")
         const [likeCount, setLikeCount] = useState(0)
         const [commentsCount, setCommentsCount] = useState(0);
-        const [myitem, setMyitem] = useState({
-                bookKey: '',
-                bookTitle: '',
-                chapters: {},
-                intro: '',
-                regdate: '',
-                url: '',
-                user_uid: '',
-        });
+
        
 
         const headerHeight = useHeaderHeight();
@@ -234,44 +226,44 @@ const PopularArticle = ({ navigation, route }) => {
                 setNewColor("#21381C")
         }
 
-        const bookKey = list.bookKey;
-        const chapterKey = list.chapterKey;
-        const likeRef = firebase_db.ref(`book/${bookKey}/both/${chapterKey}/likes/`);
-        console.log("새로운 likeRef: " + likeRef)
-        console.log("새로운 bookKey: " + bookKey)
+        // const bookKey = list.bookKey;
+        // const chapterKey = list.chapterKey;
+        // const likeRef = firebase_db.ref(`book/${bookKey}/both/${chapterKey}/likes/`);
+        // console.log("새로운 likeRef: " + likeRef)
+        // console.log("새로운 bookKey: " + bookKey)
 
-        useEffect(() => {
-                // let temp = [];
-                let arr = likeRef
-                        .on('value', (snapshot) => {
-                                let temp = [];
-                                var likeCount = snapshot.numChildren();
-                                // console.log('useEffect()');  
-                                setLikeCount(likeCount)
-                                //// console.log(likeCount)
-                                snapshot.forEach((child) => {
-                                        temp.push(child.val());
-                                })
-                        })
-        }, [])
+        // useEffect(() => {
+        //         // let temp = [];
+        //         let arr = likeRef
+        //                 .on('value', (snapshot) => {
+        //                         let temp = [];
+        //                         var likeCount = snapshot.numChildren();
+        //                         // console.log('useEffect()');  
+        //                         setLikeCount(likeCount)
+        //                         //// console.log(likeCount)
+        //                         snapshot.forEach((child) => {
+        //                                 temp.push(child.val());
+        //                         })
+        //                 })
+        // }, [])
 
-        useEffect(()=>{
-                firebase_db.ref(`book/${bookKey}/`)
-                .on('value', (snapshot) => {
-                        const newMyitem = {};
-                        snapshot.forEach((child) => {
-                                const key = child.key;
-                                const value = child.val();
-                                // newMyitem[key] = value;
-                })
-                setMyitem({
-                        ...myitem,
-                        ...newMyitem,
-                })
-        })
-        }, [])
+        // useEffect(()=>{
+        //         firebase_db.ref(`book/${bookKey}/`)
+        //         .on('value', (snapshot) => {
+        //                 const newMyitem = {};
+        //                 snapshot.forEach((child) => {
+        //                         const key = child.key;
+        //                         const value = child.val();
+        //                         // newMyitem[key] = value;
+        //         })
+        //         setMyitem({
+        //                 ...myitem,
+        //                 ...newMyitem,
+        //         })
+        // })
+        // }, [])
 
-        console.log("firstselectedlist",selectedList)
+        // console.log("firstselectedlist",selectedList)
 
         return (
                 <View style={{ flex: 1 }}>
@@ -316,17 +308,9 @@ const PopularArticle = ({ navigation, route }) => {
 
 const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, selectedList, index}) => {
         
-        // const [list, setList] = useState([]);
-        const [myitem, setMyitem] = useState({
-                bookKey: '',
-                bookTitle: '',
-                chapters: {},
-                intro: '',
-                regdate: '',
-                url: '',
-                user_uid: '',
-        });
-        
+
+ 
+console.log("chapters>>>>>>>>",chapters)
         const headerHeight = useHeaderHeight();
         const ScreenHeight = Dimensions.get('window').height   //height
         const BottomSpace = getBottomSpace()
@@ -352,46 +336,6 @@ const ChapterItem = ({ navigation, chapters, bookKey, likeCount, commentsCount, 
                                 }
                         })
         }
-
-        useEffect(()=>{
-                firebase_db.ref(`book/${bookKey}/`)
-                .on('value', (snapshot) => {
-                        const newMyitem = {};
-                        snapshot.forEach((child) => {
-                                const key = child.key;
-                                const value = child.val();
-                                newMyitem[key] = value;
-                })
-                setMyitem({
-                        ...myitem,
-                        ...newMyitem,
-                })
-        })
-        }, [])
-
-
-
-        const firstColor = "#9E001C"
-        const secondColor = "#F6AE2D"
-        const thirdColor = "#33658A"
-        const fourthColor = "#494949"
-
-        function getColor(bookKey) {
-                if (bookKey.indexOf('1') == 0) {
-                        return firstColor
-                }
-                else if (bookKey.indexOf('2') == 0) {
-                        return secondColor
-                }
-                else if (bookKey.indexOf('3') == 0) {
-                        return thirdColor
-                }
-                else if (bookKey.indexOf('4') == 0) {
-                        return fourthColor
-                }
-        }
-        const Color = getColor(bookKey);
-        //     console.log("populararticle Color", Color)
 
 
 
