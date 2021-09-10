@@ -1,4 +1,9 @@
 import * as React from 'react';
+// import { Updates } from "expo";
+import { Alert } from "react-native";
+// import ExpoCustomUpdater from 'expo-custom-updater'
+import * as Updates from 'expo-updates';
+
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
@@ -88,6 +93,62 @@ const defaultScreenOptions2 = {
 const App = ({ navigation }) => {
   // console.log('App()');
   // console.log({navigation}); // undefined: 못 쓴다, 아직 준비가 안 됐다!
+  checkForUpdates = async () => {
+
+
+  try {
+    const update = await Updates.checkForUpdateAsync();
+    if (update.isAvailable) {
+      await Updates.fetchUpdateAsync();
+        Alert.alert("업데이트가 필요합니다")
+      await Updates.reloadAsync();
+    }
+  } catch (e) {
+    // handle or log error
+  }}
+// const customUpdater = new ExpoCustomUpdater()
+
+// customUpdater.doUpdateIfAvailable()
+//   checkForUpdates = async () => {
+//     try {
+//       const update = await Updates.checkForUpdateAsync();expo publish --release-channel production
+
+//       if (update.isAvailable) {
+//         Alert.alert(
+//           '알림!',
+//           '새로운 버전이 있습니다. 업데이트 하시겠습니까?',
+//           [
+//            {
+//              text: 'Cancel',
+//              onPress: () => console.log('Cancel Pressed'),
+//              style: 'cancel',
+//            },
+//            {text: 'OK', onPress: () => this.runUpdate()},
+//           ],
+//           {cancelable: false},
+//         );
+//       }
+//     } catch (e) {
+//       alert(e)
+//     // handle or log error
+//     }
+//     }
+//     runUpdate = async () => {
+//       await Updates.fetchUpdateAsync(); //최신업데이트 동기화, 로컬 캐시에 저장
+//       // ... notify user of update ...
+//       Updates.reloadFromCache();
+//     }
+
+// try {
+//   const update = await Updates.checkForUpdateAsync();
+//   if (update.isAvailable) {
+//     await Updates.fetchUpdateAsync();
+//     // ... notify user of update ...
+//     await Updates.reloadAsync();
+//   }
+// } catch (e) {
+//   // handle or log error
+// }
 
   return (
     <NavigationContainer>

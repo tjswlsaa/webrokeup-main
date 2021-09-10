@@ -2,11 +2,13 @@
   "expo": {
     "name": "Feel Me",
     "slug": "sparta-myhoneytip-ahn",
-    "icon": "./icon.png",
+    "icon": "./icon.jpg",
     "version": "2.0.0",
     "orientation": "portrait",
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled":true,
+      "checkAutomatically":"ON_ERROR_RECOVERY"
     },
     "assetBundlePatterns": [
       "**/*"
