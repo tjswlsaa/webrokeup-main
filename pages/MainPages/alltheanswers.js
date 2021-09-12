@@ -136,7 +136,6 @@ const test1 = {
                     //      console.log("useeffectbook",book)
 
                     if (both == undefined) {
-                        console.log("PopularArticle() 챕터가 없습니다")
                     } else {
                         list = [...list, ...Object.values(both)]; // spread를 통한 리스트 병합
                     }
@@ -270,7 +269,6 @@ const test1 = {
         setHotColor("#E9E9E9")
         setNewColor(questions.Color)
     }
-    console.log("liestalltheanswers", list)
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

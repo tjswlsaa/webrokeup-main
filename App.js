@@ -93,19 +93,34 @@ const defaultScreenOptions2 = {
 const App = ({ navigation }) => {
   // console.log('App()');
   // console.log({navigation}); // undefined: 못 쓴다, 아직 준비가 안 됐다!
-  checkForUpdates = async () => {
+  // checkForUpdates = async () => {
 
 
-  try {
-    const update = await Updates.checkForUpdateAsync();
-    if (update.isAvailable) {
-      await Updates.fetchUpdateAsync();
+  // try {
+  //   const update = await Updates.checkForUpdateAsync();
+  //   if (update.isAvailable) {
+  //     await Updates.fetchUpdateAsync();
+  //       Alert.alert("업데이트가 필요합니다")
+  //     await Updates.reloadAsync();
+  //   }
+  // } catch (e) {
+  //   // handle or log error
+  // }}
+
+  (async () => {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      console.log({ update, 'where': 'App.js' });
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
         Alert.alert("업데이트가 필요합니다")
-      await Updates.reloadAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (e) {
+      // handle or log error
     }
-  } catch (e) {
-    // handle or log error
-  }}
+  })();
+
 // const customUpdater = new ExpoCustomUpdater()
 
 // customUpdater.doUpdateIfAvailable()

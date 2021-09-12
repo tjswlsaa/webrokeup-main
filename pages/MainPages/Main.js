@@ -268,7 +268,6 @@ useEffect(() => {
                     let temp = [];
                     snapshot.forEach((child) => {
                             const question = child.val();
-                            console.log("useeffectbookquestion",question)
 
                             if (question == undefined) {
                                     console.log("PopularArticle() 챕터가 없습니다")
@@ -282,7 +281,6 @@ useEffect(() => {
                             })
                             
                             setList3(listFiltered);
-                            console.log("setList3 " + list3)
 
 
                             const listoften = [];
@@ -321,7 +319,6 @@ useEffect(() => {
                     })
             })
 }, []) 
-console.log("setSelectedList3",selectedList3)
 
 
     return (
@@ -619,7 +616,6 @@ function QuestionComponent (props) {
 
     // console.log("BookComponentchapter2222",chapter)
     // console.log("BookComponentchapter",chapter.bookKey)
-    console.log("BookComponentquestioney",question)
 
     // const bookKey = chapter.bookKey
     // console.log("BookComponentbookKey",bookKey)
